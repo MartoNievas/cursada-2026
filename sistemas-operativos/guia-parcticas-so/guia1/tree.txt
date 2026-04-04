@@ -1,0 +1,43 @@
+.
+├── code
+│   ├── ej10.c
+│   ├── ej16.c
+│   ├── ej17.c
+│   ├── ej19b.c
+│   ├── ej20a
+│   │   ├── proceso1
+│   │   ├── proceso1.c
+│   │   ├── proceso2
+│   │   └── proceso2.c
+│   ├── ej20b
+│   │   ├── proceso1
+│   │   ├── proceso1.c
+│   │   ├── proceso2
+│   │   ├── proceso2.c
+│   │   ├── proceso3
+│   │   └── proceso3.c
+│   ├── ej21
+│   │   ├── client
+│   │   ├── client.c
+│   │   ├── server
+│   │   └── servidor.c
+│   ├── ej22
+│   │   ├── client
+│   │   ├── client.c
+│   │   ├── server
+│   │   └── server.c
+│   ├── ej5a.c
+│   ├── ej5b.c
+│   ├── ej6.c
+│   ├── ej9.c
+│   ├── -f
+│   └── temp.c
+├── guia1.md
+├── img
+│   ├── ej14.png
+│   ├── grafo_state.png
+│   └── secuencia.png
+├── P1.pdf
+└── tree.txt
+
+7 directories, 34 files
