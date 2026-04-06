@@ -41,8 +41,9 @@ _Por el momento no hay material cargado._
 
 | Nombre | Descripción |
 | ------ | ----------- |
-| [Práctica 0 — Bash Scripting y Makefile](sistemas-operativos/guias-practicas-so/guia0/guia0-bash.md) | Terminal de Linux, Bash scripting y compilación con Makefile. |
-| [Práctica 1 — Procesos y API del SO](sistemas-operativos/guias-practicas-so/guia1/guia1.md) | Procesos, comunicación entre procesos y API del SO. |
+| [Práctica 0 — Bash Scripting y Makefile](sistemas-operativos/guias-practicas-so/guia0-bash-makefile/guia0-bash.md) | Terminal de Linux, Bash scripting y compilación con Makefile. |
+| [Práctica 1 — Procesos y API del SO](sistemas-operativos/guias-practicas-so/guia1-procesos/guia1.md) | Procesos, comunicación entre procesos y API del SO. |
+| [Práctica 2 — Scheduling](sistemas-operativos/guias-practicas-so/guia2-scheduling/guia2-scheduling.md) | Politicas, tipos y algortimos de scheduling |
 
 ### Resúmenes
 _Por el momento no hay material cargado._
