@@ -14,7 +14,10 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 ## ISW
 
 ### Guías Resueltas
-_Por el momento no hay material cargado._
+
+| Nombre | Descripción |
+| ------ | ----------- |
+| [Guía 1 — Parte 1](isw/guias/guia1/parte1) | Terminada. |
 
 ### Resúmenes
 
