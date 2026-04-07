@@ -17,7 +17,8 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 
 | Nombre | Descripción |
 | ------ | ----------- |
-| [Guía 1 — Parte 1](isw/guias/guia1/parte1) | Terminada. |
+| [Guía 1 — Seccion 1](isw/guias/guia1/parte1) | Terminada. |
+| [Guía 2 — Seccion 2](isw/guias/guia1/parte2/guia1-parte2.md) | Hasta ejercicio 1 inclusive. |
 
 ### Resúmenes
 
