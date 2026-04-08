@@ -8,7 +8,7 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 
 - [ISW](#isw)
 - [Sistemas Operativos](#sistemas-operativos)
-
+- [Complejidad Computacional](#complejidad-computacional)
 ---
 
 ## ISW
@@ -54,3 +54,14 @@ _Por el momento no hay material cargado._
 
 ### Talleres
 _Por el momento no hay material cargado._
+
+## Complejidad Computacional
+
+### Resúmenes
+
+| Nombre | Descripción |
+| -------------- | --------------- |
+|[Clase 1 — Resumen](complejidad-computacional/resumenes/clase1-resumen.md) | Introducción a las Máquinas de Turing, lenguajes y conceptos básicos de computabilidad. |
+|[Clase 2 — Resumen](complejidad-computacional/resumenes/clase2-resumen.md) | Funciones (totales y parciales), tiempo de cómputo, notación Big-O y equivalencia de variantes de máquinas. |
+|[Clase 3 — Resumen](complejidad-computacional/resumenes/clase3-resumen.md) | El problema de la detención (*Halting problem*), la Máquina Universal y las clases de complejidad P y NP. |
+|[Clase 4 — Resumen](complejidad-computacional/resumenes/clase4-resumen.md) | Máquinas no-determinísticas, reducibilidad polinomial (Karp), NP-completitud y Lógica Proposicional (SAT/3SAT). |
