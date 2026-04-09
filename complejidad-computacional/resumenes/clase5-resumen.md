@@ -2,11 +2,6 @@
 
 ## Mini-configuración
 
-$$
-\newcommand{\la}{\langle}
-\newcommand{\ra}{\rangle}
-$$
-
 Consideremos una máquina determinística $M = (\Sigma, Q, \delta)$:
 - Sin cinta de salida.
 - Con una cinta de entrada.
@@ -31,29 +26,29 @@ Suponemos además que $M$ es oblivious: podemos calcular la posición de las cab
 
 - $e(i,n)$: posición de la cabeza de entrada en el paso $i$ en el cómputo de $M$ con entrada $0^n$.
 - $t(i,n)$: posición de la cabeza de trabajo en el paso $i$ en el cómputo de $M$ con entrada $0^n$.
-- $\operatorname{prev}(i,n) = \max\!\Big(\big\{\, j < i \mid t(j,n) = t(i,n) \,\big\} \cup \{1\}\Big)$: el último paso anterior al paso $i$ en que la cabeza de trabajo visitó la misma celda, en el cómputo de $M$ con entrada $0^n$.
+- $\mathrm{prev}(i,n) = \max( \{ j < i \mid t(j,n) = t(i,n) \} \cup \{1\} )$: el último paso anterior al paso $i$ en que la cabeza de trabajo visitó la misma celda, en el cómputo de $M$ con entrada $0^n$.
 
 ### Mini-configuración: del paso $i-1$ al paso $i$
 
-<center>
-  ![Imagen transición](img/mini-configuracion.png)
-</center>
+<p align="center">
+  <img src="img/mini-configuracion.png" alt="Imagen transición">
+</p>
 
-> **Nota**: $\texttt{B}$ denota el blanco.
+> **Nota**: $\mathtt{B}$ denota el blanco.
 
 Sea $z_i$ la $i$-ésima mini-configuración en el cómputo de $M$ con entrada $x$. La condición inicial es $z_0 = (x(0), \texttt{B}, q_0)$ y para $i > 0$ calculamos $z_i$ con:
 
 - El estado y símbolos leídos en el paso $i-1$, contenidos en $z_{i-1}$.
 - La función de transición $\delta$ de $M$.
 - El contenido de la cinta de entrada en la posición $e(i,|x|)$.
-- El contenido de la cinta de trabajo en la posición $t(i,|x|)$, que se encuentra en $z_{\operatorname{prev}(i,|x|)}$.
+- El contenido de la cinta de trabajo en la posición $t(i,|x|)$, que se encuentra en $z_{\mathrm{prev}(i,|x|)}$.
 
 ### La función $F$ representa la evolución en un paso
 
 Definimos para $i > 0$, $F : \{0,1\}^k \times \{0,1\}^k \times \{0,1\}^2 \to \{0,1\}^k$ como
 
 $$
-F\!\left(\langle z_{i-1}\rangle,\; \langle z_{\operatorname{prev}(i,|x|)}\rangle,\; \langle x(e(i,|x|))\rangle\right) = \langle z_i \rangle,
+F\left(\langle z_{i-1}\rangle,\; \langle z_{\mathrm{prev}(i,|x|)}\rangle,\; \langle x(e(i,|x|))\rangle\right) = \langle z_i \rangle,
 $$
 
 y $F(w) = 0^k$ para los demás casos.
@@ -69,7 +64,7 @@ $$
 Existe una fórmula booleana $\varphi_F(\bar{p},\bar{q},\bar{r},\bar{s})$ en CNF con variables libres:
 
 - $\bar{p} = p_1,\dots,p_k$ que codifica $\langle z_{i-1} \rangle$,
-- $\bar{q} = q_1,\dots,q_k$ que codifica $\langle z_{\operatorname{prev}(i,|y|)}\rangle$,
+- $\bar{q} = q_1,\dots,q_k$ que codifica $\langle z_{\mathrm{prev}(i,|y|)}\rangle$,
 - $\bar{r} = r_1, r_2$ que codifica $\langle y(e(i,|y|)) \rangle$,
 - $\bar{s} = s_1,\dots,s_k$ que codifica $\langle z_i \rangle$,
 
@@ -100,7 +95,7 @@ Podemos computar $\varphi_F$ a partir de $\langle F \rangle$ en tiempo polinomia
 Ya vimos que **3SAT** $\in$ **NP**. Para ver que **3SAT** es **NP-hard** probamos:
 
 $$
-\textbf{SAT} \leq_p \textbf{3SAT}.
+\mathbf{SAT} \leq_p \mathbf{3SAT}.
 $$
 
 #### Demostración
