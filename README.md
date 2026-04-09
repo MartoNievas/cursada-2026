@@ -65,3 +65,4 @@ _Por el momento no hay material cargado._
 |[Clase 2 — Resumen](complejidad-computacional/resumenes/clase2-resumen.md) | Funciones (totales y parciales), tiempo de cómputo, notación Big-O y equivalencia de variantes de máquinas. |
 |[Clase 3 — Resumen](complejidad-computacional/resumenes/clase3-resumen.md) | El problema de la detención (*Halting problem*), la Máquina Universal y las clases de complejidad P y NP. |
 |[Clase 4 — Resumen](complejidad-computacional/resumenes/clase4-resumen.md) | Máquinas no-determinísticas, reducibilidad polinomial (Karp), NP-completitud y Lógica Proposicional (SAT/3SAT). |
+|[clase5 — Resumen](complejidad-computacional/resumenes/clase5-resumen.md) | Teorema Cook-Levin, Problemas **NP-completos**, clase **coNP**, las clases **EXPTIME** y **NEXPTIME**|

@@ -2,7 +2,7 @@
 
 ## 1. Funciones computables
 
-**Definicion.** Sean $f : \Gamma^* \to \Gamma^*$ y $M = (\Gamma', Q, \delta)$ una maquina. Se dice que $M$ **computa** $f$ si para todo $x \in \Gamma^*$ hay un computo $C_0, \ldots, C_\ell$ de $M$ a partir de $x$ tal que en $C_\ell$ la cinta de salida tiene escrito $f(x)$ seguido de blancos. En este caso se nota $M(x) = f(x)$. Se dice que $f$ es **computable** si existe una maquina que la computa.
+**Definicion.** Sean $f$ : \Gamma^* \to \Gamma^*$ y $M = (\Gamma', Q, \delta)$ una maquina. Se dice que $M$ **computa** $f$ si para todo $x \in \Gamma^*$ hay un computo $C_0, \ldots, C_\ell$ de $M$ a partir de $x$ tal que en $C_\ell$ la cinta de salida tiene escrito $f(x)$ seguido de blancos. En este caso se nota $M(x) = f(x)$. Se dice que $f$ es **computable** si existe una maquina que la computa.
 
 **Definicion (funcion parcial).** Una **funcion parcial** $f : \subseteq \Gamma^* \to \Gamma^*$ es un mapeo posiblemente incompleto. Se usa la notacion:
 - $f(x) \uparrow$: $f$ esta indefinida en $x$.
