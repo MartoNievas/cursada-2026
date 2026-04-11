@@ -48,7 +48,13 @@ _Por el momento no hay material cargado._
 | [Práctica 2 — Scheduling](sistemas-operativos/guias-practicas-so/guia2-scheduling/guia2-scheduling.md) | Politicas, tipos y algortimos de scheduling |
 
 ### Resúmenes
-_Por el momento no hay material cargado._
+
+| Nombre | Descripción |
+| -------------- | --------------- |
+| [Teorica 1 — Procesos y API del SO](sistemas-operativos/teoricas/teo1-procesos.md) | Syscalls, procesos. |
+| [Teorica 2 — IPC](sistemas-operativos/teoricas/teo2-ipc.md) | InterProcess Comunication, Sockets, Pipes, etc.  |
+| [Teorica 3 — Scheduling](sistemas-operativos/teoricas/teo3-scheduling.md) | Politicas, algortimos y tipos de schedulers. |
+
 
 ### Parciales
 _Por el momento no hay material cargado._
