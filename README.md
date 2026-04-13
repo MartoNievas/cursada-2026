@@ -54,7 +54,7 @@ _Por el momento no hay material cargado._
 | [Teorica 1 — Procesos y API del SO](sistemas-operativos/teoricas/teo1-procesos.md) | Syscalls, procesos. |
 | [Teorica 2 — IPC](sistemas-operativos/teoricas/teo2-ipc.md) | InterProcess Comunication, Sockets, Pipes, etc.  |
 | [Teorica 3 — Scheduling](sistemas-operativos/teoricas/teo3-scheduling.md) | Politicas, algortimos y tipos de schedulers. |
-
+|[Teorica 4 — Sincronizacion entre procesos p1](sistemas-operativos/teoricas/teo4-sincronizacion-p1.md)|Semaforos, Condiciones de carrera, Deadlocks y Sincronizacion en tre procesos. |
 
 ### Parciales
 _Por el momento no hay material cargado._
