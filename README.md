@@ -55,6 +55,7 @@ _Por el momento no hay material cargado._
 | [Teorica 2 — IPC](sistemas-operativos/teoricas/teo2-ipc.md) | InterProcess Comunication, Sockets, Pipes, etc.  |
 | [Teorica 3 — Scheduling](sistemas-operativos/teoricas/teo3-scheduling.md) | Politicas, algortimos y tipos de schedulers. |
 |[Teorica 4 — Sincronizacion entre procesos p1](sistemas-operativos/teoricas/teo4-sincronizacion-p1.md)|Semaforos, Condiciones de carrera, Deadlocks y Sincronizacion en tre procesos. |
+|[Teorica 5 — Sincronizacion entre procesos p2](sistemas-operativos/teoricas/teo5-sincronizacion-p2.md)|Ejemplos practicos|
 
 ### Parciales
 _Por el momento no hay material cargado._
@@ -73,5 +74,6 @@ _Por el momento no hay material cargado._
 |[Clase 3 — Resumen](complejidad-computacional/resumenes/clase3-resumen.md) | El problema de la detención (*Halting problem*), la Máquina Universal y las clases de complejidad P y NP. |
 |[Clase 4 — Resumen](complejidad-computacional/resumenes/clase4-resumen.md) | Máquinas no-determinísticas, reducibilidad polinomial (Karp), NP-completitud y Lógica Proposicional (SAT/3SAT). |
 |[Clase5 — Resumen](complejidad-computacional/resumenes/clase5-resumen.md) | Teorema Cook-Levin, Problemas **NP-completos**, clase **coNP**, las clases **EXPTIME** y **NEXPTIME** y **P VS NP**|
+|[Clase6 — Resumen](complejidad-computacional/resumenes/clase6-resumen.md)|Jerarqui de tiempos deterministicos y no-determinísticas, Teorema de Ladner|
 
 >**Aclaracion:** Se recomienda decargar los Markdown y renderizarlos mediante VsCode utilizando `Ctrl + Shift + v`
