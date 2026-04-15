@@ -45,8 +45,8 @@ _Por el momento no hay material cargado._
 | ------ | ----------- |
 | [Práctica 0 — Bash Scripting y Makefile](sistemas-operativos/guias-practicas-so/guia0-bash-makefile/guia0-bash.md) | Terminal de Linux, Bash scripting y compilación con Makefile. |
 | [Práctica 1 — Procesos y API del SO](sistemas-operativos/guias-practicas-so/guia1-procesos/guia1.md) | Procesos, comunicación entre procesos y API del SO. |
-| [Práctica 2 — Scheduling](sistemas-operativos/guias-practicas-so/guia2-scheduling/guia2-scheduling.md) | Politicas, tipos y algortimos de scheduling |
-
+| [Práctica 2 — Scheduling](sistemas-operativos/guias-practicas-so/guia2-scheduling/guia2-scheduling.md) | Politicas, tipos y algortimos de scheduling. |
+|[Práctica 3 — Sincronizacion](sistemas-operativos/guias-practicas-so/guia3-sincronizacion/guia3-sincronizacion.md)|Sincronizacion entre procesos, semaforos.|
 ### Resúmenes
 
 | Nombre | Descripción |
@@ -55,7 +55,7 @@ _Por el momento no hay material cargado._
 | [Teorica 2 — IPC](sistemas-operativos/teoricas/teo2-ipc.md) | InterProcess Comunication, Sockets, Pipes, etc.  |
 | [Teorica 3 — Scheduling](sistemas-operativos/teoricas/teo3-scheduling.md) | Politicas, algortimos y tipos de schedulers. |
 |[Teorica 4 — Sincronizacion entre procesos p1](sistemas-operativos/teoricas/teo4-sincronizacion-p1.md)|Semaforos, Condiciones de carrera, Deadlocks y Sincronizacion en tre procesos. |
-|[Teorica 5 — Sincronizacion entre procesos p2](sistemas-operativos/teoricas/teo5-sincronizacion-p2.md)|Ejemplos practicos|
+|[Teorica 5 — Sincronizacion entre procesos p2](sistemas-operativos/teoricas/teo5-sincronizacion-p2.md)|Ejemplos practicos.|
 
 ### Parciales
 _Por el momento no hay material cargado._
