@@ -286,3 +286,165 @@ A pesar de que se genera un **deadlock**, también puede haber inanición. Vamos
 - Antes de que `bar` pueda ejecutar `semWait(R)`, el scheduler le da la **CPU** a `foo`.
 - `foo` vuelve a entrar al do-while, toma S y R de nuevo.
 - Si este ciclo se repite indefinidamente, puede generar inanición al proceso `bar`.
+
+## Ejercicio 11
+
+Queremos simular la comunicación entre pipes usando memoria compartida sin usar file descriptors. Contamos con un buffer con dos métodos `pop()` y `push()`.
+
+[Ver código](code/ej11.c)
+
+## Ejercicio 12
+
+Acá tenemos un clásico problema de barreras, ya que primero queremos terminar una sentencia y posteriormente ejecutar otra. En este caso primero queremos `implementarTp()` y posteriormente `experimentar()`.
+
+[Ver código](code/ej12.c)
+
+## Ejercicio 13
+
+### a)
+
+Tenemos varios procesos:
+
+- `estoyListo()` indica que la ropa puede empezar a entrar.
+- Una vez que está lleno invoca a `lavar()`.
+- Por último cuando está vacío invoca a `puedenDescargarme()` y queda listo para empezar de nuevo.
+
+Es básicamente un esquema productor-consumidor. Vamos con el pseudocódigo:
+
+```C
+sem_t sem_lavarropas_listo = 0;
+sem_t sem_lavado_terminado = 0;
+sem_t sem_carga_completa = 0;
+sem_t sem_vacio = 0;
+sem_t mutex = 1; // empieza en 1 ya que es para proteger al contador de prendas.
+
+// Cantidad de prendas en el tambor
+int contador = 0;
+
+void prenda() {
+  semWait(sem_lavarropas_listo); // Esperamos a que el lavarropas esté listo para empezar a cargar
+
+  semWait(mutex);
+  contador++;
+  if (contador == 10) {
+    semSignal(sem_carga_completa);
+  }
+  semSignal(mutex);
+
+  // Fase de lavado y descarga, esperamos a que se termine el lavado
+  semWait(sem_lavado_terminado);
+
+  // Ahora debemos descargar las prendas del lavarropas.
+  semWait(mutex);
+  contador--;
+  if (contador == 0) {
+    semSignal(sem_vacio);
+  }
+  semSignal(mutex);
+}
+
+// Ahora vamos con el proceso lavarropas
+
+void lavarropas(void) {
+  while(1) {
+    // Avisamos que podemos empezar a cargar ropa
+    estoyListo();
+
+    // Damos 10 permisos para meter ropa
+    for (int i = 0; i < 10; i++) semSignal(sem_lavarropas_listo);
+
+    // Una vez listo debemos esperar a que la carga esté completa
+    semWait(sem_carga_completa);
+
+    // Cuando tenemos la carga completa empezamos a lavar
+    lavar();
+
+    // Cuando terminamos de lavar, avisamos a prenda que puede empezar con la descarga
+    for (int i = 0; i < 10; i++) semSignal(sem_lavado_terminado);
+
+    // Esperamos a que esté vacío el lavarropas.
+    semWait(sem_vacio);
+  }
+}
+```
+
+### b)
+
+Ahora cambia ligeramente el ejercicio, ya que la carga es secuencial pero la descarga es en paralelo. Vamos con el pseudocódigo:
+
+```C
+sem_t sem_lavarropas_listo = 0;
+sem_t sem_lavado_terminado = 0;
+sem_t sem_carga_completa = 0;
+sem_t sem_vacio = 0;
+sem_t mutex_contador = 1; // empieza en 1 ya que es para proteger al contador de prendas.
+sem_t mutex_carga = 1;    // para ir cargando secuencialmente las prendas
+
+// Cantidad de prendas en el tambor
+int contador = 0;
+
+void prenda(void) {
+  // Esperamos que el lavarropas esté listo
+  semWait(sem_lavarropas_listo);
+
+  // Una vez listo, tenemos que ir metiendo prendas.
+  semWait(mutex_carga);
+  entroAlLavarropas();
+
+  semWait(mutex_contador);
+  contador++;
+  if (contador < 10) {
+    // Si no está lleno, llamo a la siguiente prenda
+    semSignal(sem_lavarropas_listo);
+  } else {
+    // Soy la 10, entonces la carga está completa
+    semSignal(sem_carga_completa);
+  }
+  // Avisamos al mutex del contador que puede ir el siguiente
+  semSignal(mutex_contador);
+
+  // Avisamos al mutex de carga que siga con el siguiente
+  semSignal(mutex_carga);
+
+  // Ahora tenemos que esperar que termine el lavado
+  semWait(sem_lavado_terminado);
+
+  // Una vez que terminó de lavar, hacemos la descarga en paralelo
+  semSignal(sem_lavado_terminado);
+
+  saqueenmeDeAqui();
+
+  // Por último descargamos
+  semWait(mutex_contador);
+  contador--;
+  if (contador == 0) {
+    semWait(sem_lavado_terminado);
+    semSignal(sem_vacio);
+  }
+  semSignal(mutex_contador);
+}
+
+// Ahora vamos con el proceso lavarropas
+
+void lavarropas(void) {
+  while(1) {
+    // Decimos que estamos listos
+    estoyListo();
+
+    // Avisamos que estamos listos para cargar las prendas
+    semSignal(sem_lavarropas_listo);
+
+    // Ahora esperamos a que la carga esté completa
+    semWait(sem_carga_completa);
+
+    // Ahora lavamos
+    lavar();
+
+    puedenDescargarme();
+    semSignal(sem_lavado_terminado);
+
+    // Por último esperamos a que salgan todas las prendas
+    semWait(sem_vacio);
+  }
+}
+```
