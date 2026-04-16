@@ -61,7 +61,11 @@ _Por el momento no hay material cargado._
 _Por el momento no hay material cargado._
 
 ### Talleres
-_Por el momento no hay material cargado._
+
+| Nombre | Descripción|
+| -------------- | --------------- |
+| [Taller 1](sistemas-operativos/talleres/taller1-syscall-y-señales) | Syscall y señales |
+| [Taller 2](sistemas-operativos/talleres/taller2-ipc) | InterProcess Comunication (IPC). |
 
 ## Complejidad Computacional
 

@@ -48,6 +48,115 @@ while(1) {
     x--;
   }
 }
+```
+
+El programa como tal cumple con lo planteado ya que antes de leer la varible se hace un wait, hasta que se libere el mutex, se lee y por utlimo se libera con un signal. Pero este programa puede ser victima de una **race condition** debido a que el if que se ejecuta posteriormente depende de una variable compartida que puede ser modificada apenas se solto el mutex.
+
+Ademas `x++` y `x--` no son escrituras atomicas pueden sufrir de interrupciones.
+
+Pongamos un ejemplo para que se vea mejor:
+
+- Si x = 5. El proceso 1 lee 5 y suelta el mutex. El proceso 2 entra, lee 5 y suelta el mutex.
+
+- Ambos entran al `if (y <= 5)`.
+
+- Ambos ejecutan `x++`.
+
+- Resultado: x = 7.
+
+Fallo ya que el segundo proceso deberia haber leido un 6 y restado 1.
+
+## Ejercicio 3
+
+Si utilizamos una cola, los pedidos se ejecutan en orden, por lo tanto los más viejos son los que se procesan primero.
+Si en cambio utilizamos una pila (LIFO, Last In, First Out), los pedidos más nuevos tienen prioridad sobre los viejos. En un sistema en el cual se hacen muchos pedidos, los más viejos no llegarán a ejecutarse antes de que los más nuevos se terminen, por lo tanto esto genera inanición.
+
+## Ejercicio 4
+
+Recordemos el funcionamiento de `wait()` y `signal()` el cual es el siguiente: 
+
+```plaintext
+wait(s):   while (s <= 0) dormir(); s--;
+signal(s): s++; if (alguien espera por s) despertar a alguno;
+```
+
+Es decir la operacion `wait` lee una variable compartida s y se fija si es menor o igual a 0, en caso de serlo lo pone a dormir, si no decrementa la variable compartida.
+
+Por otro lado `signal` utiliza tambien esa variable compartida, primero la incrementa si hay alguien esperando despierta.
+
+**q.v.q:** En caso de que las operaciones `wait` y `signal` no se ejecuten de manera atomica, entonces se viola la propiedad de exclusion mutua.
+
+Supongamos que las operaciones no se ejecutan de manera atomica, entonces lo que podria pasar es que durante el FETCH del valor de s en memoria, mas de un proceso capture el valor de la misma siendo s > 0 en ese instante por lo que podria ingresar en la seccion critica. Por lo tanto rompre con la exclusion mutua.
+
+## Ejercicio 5
+
+Contamos con el siguiente codigo:
+
+```C
+
+semaphore mutex = 1;
+semaphore barrera = 0;
+int count = 0;
+
+preparado();
+
+mutex.wait();
+count = count + 1;
+mutex.signal();
+
+if (count == n) {
+  barrera.signal();
+}
+
+barrera.wait();
+
+critica();
+```
+
+Notemos que `signal` de barrera se ejecuta una sola vez es decir que cuando llega el problema n se libera solo para el n-1. 
+
+Para corregir el codigo podemos hacer lo siguiente cada vez que se llama `barrera.signal()` se mete la ficha en la caja, podemos asumir que podemos meter tantas fichas como sea.
+
+>**Aclaracion:** Asumo que critica() se puede ejecutar en paralelo.
+
+```C
+semaphore mutex = 1;
+semaphore barrera = 0;
+int count = 0;
+
+preparado();
+
+mutex.wait();
+count = count + 1;
+if (count == n) {
+  barrera.signal(); //Aqui libero el ultimo proceso en llegar.
+}
+mutex.signal();
 
 
+barrera.wait();   // El proceso se bloquea aqui hasta recibir la señal de barrea.
+barrera.signal(); // Aqui el proceso despierta y libera al siguiente
+critica();
+```
+
+Con esto resolvemos la inanición debido a que se van liberando de forma secuencial.
+
+## Ejercicio 6
+
+Contamos con el codigo del ejercicio anterior, y debemos corregirlo utilizando solo herramientas atomicas vistas en clase:
+
+```C
+preparado();
+
+mutex.wait();
+count = count + 1;
+mutex.signal();
+
+if (count == n) {
+  barrera.signal();
+}
+
+barrera.wait();
+
+critica();
 ```
