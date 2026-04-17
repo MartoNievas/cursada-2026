@@ -205,11 +205,11 @@ A diferencia del deadlock (donde los procesos se bloquean sin hacer nada), en el
 Generalización del problema de exclusión mutua: se permite que hasta $M \leq N$ procesos estén en la sección crítica simultáneamente. La propiedad a garantizar es:
 
 $$
-1) \quad \# \{i \mid \tau_k(i) = CRIT\} \leq M \quad \forall \tau, \forall k
+1) \quad \#\{i \mid \tau_k(i) = \text{CRIT}\} \leq M \quad \forall \tau, \forall k
 $$
 
 $$
-2) \quad \forall i. \tau_k(i) = TRY \land \# \{j \mid \tau_k(j) = CRIT\} < M \Rightarrow \exists k' > k. \tau_{k'}(i) = CRIT
+2) \quad \forall i.\ \tau_k(i) = \text{TRY} \land \#\{j \mid \tau_k(j) = \text{CRIT}\} < M \Rightarrow \exists k' > k.\ \tau_{k'}(i) = \text{CRIT}
 $$
 
 La condición 1 es de safety (no más de M en $CRIT$) y la condición 2 es la de liveness (si hay lugar, quien espera entra). La solución es directa con un semáforo inicializado en M:
