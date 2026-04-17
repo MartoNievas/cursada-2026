@@ -24,7 +24,7 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 
 | Nombre | Descripción |
 | ------ | ----------- |
-| [Resumen Teorico — Primer parcial](isw/resumen-teoricas/teorica-primer-parcial.md) | Resumen del paper de Fred Brooks. |
+| [Resumen Teorico — Primer parcial](isw/resumen-teoricas/teorica-primer-parcial.md) |Resumen teorico de la clase primer parcial.| 
 | [Programming as Theory Building](isw/papers-resumenes/Programming-as-Theory-Building.md) | Resumen del paper de Peter Naur. |
 | [The Design of Everyday Things](isw/papers-resumenes/Norman-The-Desing-of-Everyday-Things.md) | Resumen del libro de Donald Norman. |
 | [No Silver Bullet](isw/papers-resumenes/No-Silver-Bullets.md) | Resumen del paper de Fred Brooks. |
