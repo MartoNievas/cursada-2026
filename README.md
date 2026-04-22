@@ -19,7 +19,7 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | ------ | ----------- |
 | [Guía 1 — Seccion 1](isw/guias/guia1/parte1) | Terminada. |
 | [Guía 1 — Seccion 2](isw/guias/guia1/parte2/guia1-parte2.md) | Terminada. |
-| [Guía 2 — Sacar ifs y codigo repetido](isw/guias/guia2/) | Hasta ejercicio IRobot |
+| [Guía 2 — Sacar ifs y codigo repetido](isw/guias/guia2/) | Hasta ejercicio extra limited stack |
 ### Resúmenes
 
 | Nombre | Descripción |
@@ -77,7 +77,7 @@ _Por el momento no hay material cargado._
 |[Clase 2 — Resumen](complejidad-computacional/resumenes/clase2-resumen.md) | Funciones (totales y parciales), tiempo de cómputo, notación Big-O y equivalencia de variantes de máquinas. |
 |[Clase 3 — Resumen](complejidad-computacional/resumenes/clase3-resumen.md) | El problema de la detención (*Halting problem*), la Máquina Universal y las clases de complejidad P y NP. |
 |[Clase 4 — Resumen](complejidad-computacional/resumenes/clase4-resumen.md) | Máquinas no-determinísticas, reducibilidad polinomial (Karp), NP-completitud y Lógica Proposicional (SAT/3SAT). |
-|[Clase5 — Resumen](complejidad-computacional/resumenes/clase5-resumen.md) | Teorema Cook-Levin, Problemas **NP-completos**, clase **coNP**, las clases **EXPTIME** y **NEXPTIME** y **P VS NP**|
-|[Clase6 — Resumen](complejidad-computacional/resumenes/clase6-resumen.md)|Jerarqui de tiempos deterministicos y no-determinísticas, Teorema de Ladner|
-
+|[Clase5 — Resumen](complejidad-computacional/resumenes/clase5-resumen.md) | Teorema Cook-Levin, Problemas **NP-completos**, clase **coNP**, las clases **EXPTIME** y **NEXPTIME** y **P VS NP**.|
+|[Clase6 — Resumen](complejidad-computacional/resumenes/clase6-resumen.md)|Jerarquia de tiempos deterministicos y no-determinísticas, Teorema de Ladner.|
+|[Clase7 — Resumen](complejidad-computacional/resumenes/clase7-resumen)|Espacio usado por un cómputo, espacio polinomial y teorema de Savicth. |
 >**Aclaracion:** Se recomienda decargar los Markdown y renderizarlos mediante VsCode utilizando `Ctrl + Shift + v`

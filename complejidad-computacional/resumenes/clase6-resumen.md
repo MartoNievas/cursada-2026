@@ -1,4 +1,4 @@
-# Complejidad Computacional — Clase 5
+# Complejidad Computacional — Clase 6
 
 ## La jerarquía de tiempos determinísticos
 
