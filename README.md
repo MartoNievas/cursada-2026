@@ -19,7 +19,7 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | ------ | ----------- |
 | [Guía 1 — Seccion 1](isw/guias/guia1/parte1) | Terminada. |
 | [Guía 1 — Seccion 2](isw/guias/guia1/parte2/guia1-parte2.md) | Terminada. |
-| [Guía 2 — Sacar ifs y codigo repetido](isw/guias/guia2/) | Hasta ejercicio extra limited stack |
+| [Guía 2 — Sacar ifs y codigo repetido](isw/guias/guia2/) | Terminada. |
 ### Resúmenes
 
 | Nombre | Descripción |
@@ -29,6 +29,7 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | [The Design of Everyday Things](isw/papers-resumenes/Norman-The-Desing-of-Everyday-Things.md) | Resumen del libro de Donald Norman. |
 | [No Silver Bullet](isw/papers-resumenes/No-Silver-Bullets.md) | Resumen del paper de Fred Brooks. |
 | [Self: The Power Of Simplicity](isw/papers-resumenes/Self:The-Power-Of-Simplicity.md) | Resumen del paper SELF: The Power of Simplicity de David Ungar y Randall B. Smith |
+
 ### Parciales
 _Por el momento no hay material cargado._
 
