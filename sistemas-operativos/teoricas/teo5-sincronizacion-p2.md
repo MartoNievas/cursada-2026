@@ -129,7 +129,7 @@ Notemos que esta solución no es correcta, ya que $N-1$ procesos se quedan bloqu
 Para demostrar formalmente propiedades, podemos modelar el ciclo de vida de un proceso basándonos en la formalización de Nancy Lynch (*Distributed Algorithms*):
 
 <p align="center">
-  <img src="img/modelo.png" alt="Modelo de proceso">
+  <img src="https://github.com/user-attachments/assets/1791ac24-014f-4cf1-94c3-05d4180a2f2c" alt="Modelo de proceso">
 </p>
 
 * **REM (Remainder):** El proceso ejecuta código local, sin interés en acceder a recursos compartidos. Corresponde a la sección restante.

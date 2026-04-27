@@ -566,7 +566,7 @@ La representación de un tipo monitor no puede ser utilizada directamente por lo
 La construcción del monitor garantiza que **solo un proceso a la vez esté activo dentro del monitor**. En consecuencia, el programador no necesita codificar esta restricción de sincronización de forma explícita.
 
 <p align="center">
-  <img src="img/monitor.png" alt="Esquema de monitor">
+  <img src="https://github.com/user-attachments/assets/1c0f7ea4-1b73-4981-98d7-5825252a4c4d" alt="Esquema de monitor">
 </p>
 
 ### Variables de condición

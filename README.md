@@ -56,6 +56,7 @@ _Por el momento no hay material cargado._
 | [Teorica 3 — Scheduling](sistemas-operativos/teoricas/teo3-scheduling.md) | Politicas, algortimos y tipos de schedulers. |
 |[Teorica 4 — Sincronizacion entre procesos p1](sistemas-operativos/teoricas/teo4-sincronizacion-p1.md)|Semaforos, Condiciones de carrera, Deadlocks y Sincronizacion en tre procesos. |
 |[Teorica 5 — Sincronizacion entre procesos p2](sistemas-operativos/teoricas/teo5-sincronizacion-p2.md)|Ejemplos practicos.|
+|[Teorica 6 — Administración de memoria](sistemas-operativos/teoricas/teo6-memoria.md)|Organización de la memoria, segmentación, paginación, algoritmos de paginación, etc.|
 
 ### Parciales
 _Por el momento no hay material cargado._
