@@ -31,7 +31,11 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | [Self: The Power Of Simplicity](isw/papers-resumenes/Self:The-Power-Of-Simplicity.md) | Resumen del paper SELF: The Power of Simplicity de David Ungar y Randall B. Smith |
 
 ### Parciales
-_Por el momento no hay material cargado._
+
+| Fecha | Nombre |
+| -------------- | --------------- |
+| [2025-2C](isw/primeros-parciales/2025) | RoverMarino |
+
 
 ### Talleres
 _Por el momento no hay material cargado._
