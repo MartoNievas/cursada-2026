@@ -52,6 +52,8 @@ _Por el momento no hay material cargado._
 | [Práctica 1 — Procesos y API del SO](sistemas-operativos/guias-practicas-so/guia1-procesos/guia1.md) | Procesos, comunicación entre procesos y API del SO. |
 | [Práctica 2 — Scheduling](sistemas-operativos/guias-practicas-so/guia2-scheduling/guia2-scheduling.md) | Politicas, tipos y algortimos de scheduling. |
 |[Práctica 3 — Sincronizacion](sistemas-operativos/guias-practicas-so/guia3-sincronizacion/guia3-sincronizacion.md)|Sincronizacion entre procesos, semaforos.|
+|[Práctica 4 — Drivers y Administración de E/S](sistemas-operativos/guias-practicas-so/guia4-drivers/guia4-drivers.md)|Administración de la Entrada/Salida y creación de drivers|
+
 ### Resúmenes
 
 | Nombre | Descripción |

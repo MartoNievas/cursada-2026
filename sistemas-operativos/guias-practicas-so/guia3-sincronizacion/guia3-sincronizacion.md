@@ -1,4 +1,4 @@
-# Práctica 3: Sincronización entre procesos
+# Práctica2: Sincronización entre procesos
 
 > Los enunciados de los ejercicios se encuentran en el PDF aparte [Enunciados](p3.pdf).
 
