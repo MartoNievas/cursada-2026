@@ -24,11 +24,13 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 
 | Nombre | Descripción |
 | ------ | ----------- |
-| [Resumen Teorico — Primer parcial](isw/resumen-teoricas/teorica-primer-parcial.md) |Resumen teorico de la clase primer parcial.| 
+| [Resumen Teorico — Primer parcial](isw/resumen-teoricas/teorica-primer-parcial.md) |Resumen teorico de clase primer parcial.| 
 | [Programming as Theory Building](isw/papers-resumenes/Programming-as-Theory-Building.md) | Resumen del paper de Peter Naur. |
 | [The Design of Everyday Things](isw/papers-resumenes/Norman-The-Desing-of-Everyday-Things.md) | Resumen del libro de Donald Norman. |
 | [No Silver Bullet](isw/papers-resumenes/No-Silver-Bullets.md) | Resumen del paper de Fred Brooks. |
-| [Self: The Power Of Simplicity](isw/papers-resumenes/Self:The-Power-Of-Simplicity.md) | Resumen del paper SELF: The Power of Simplicity de David Ungar y Randall B. Smith |
+| [Self: The Power Of Simplicity](isw/papers-resumenes/Self:The-Power-Of-Simplicity.md) | Resumen del paper SELF: The Power of Simplicity de David Ungar y Randall B. Smith. |
+|[Desing Principles Behind Smalltalk](isw/papers-resumenes/Desing-Principles-Behind-Smalltalk.md)| Resumen del paper Desgin Principles Behind Smalltalk de Daniel H. Ingalls. |
+|[Polymorphic Hierarchy](isw/papers-resumenes/Polymorphic-Hierarchy.md)| Resumen del paper Polymorphic Hierarchy de Bobby Woolf. |
 
 ### Parciales
 
