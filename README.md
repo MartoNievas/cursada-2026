@@ -36,7 +36,8 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 
 | Fecha | Nombre |
 | -------------- | --------------- |
-| [2025-2C](isw/primeros-parciales/2025) | RoverMarino |
+| [2025-2C](isw/primeros-parciales/2025-2C) | RoverMarino. |
+| [2025-1C](isw/primeros-parciales/2025-1C) | NaveEspacial. |
 
 
 ### Talleres
@@ -53,8 +54,8 @@ _Por el momento no hay material cargado._
 | [Práctica 0 — Bash Scripting y Makefile](sistemas-operativos/guias-practicas-so/guia0-bash-makefile/guia0-bash.md) | Terminal de Linux, Bash scripting y compilación con Makefile. |
 | [Práctica 1 — Procesos y API del SO](sistemas-operativos/guias-practicas-so/guia1-procesos/guia1.md) | Procesos, comunicación entre procesos y API del SO. |
 | [Práctica 2 — Scheduling](sistemas-operativos/guias-practicas-so/guia2-scheduling/guia2-scheduling.md) | Politicas, tipos y algortimos de scheduling. |
-|[Práctica 3 — Sincronizacion](sistemas-operativos/guias-practicas-so/guia3-sincronizacion/guia3-sincronizacion.md)|Sincronizacion entre procesos, semaforos.|
-|[Práctica 4 — Drivers y Administración de E/S](sistemas-operativos/guias-practicas-so/guia4-drivers/guia4-drivers.md)|Administración de la Entrada/Salida y creación de drivers|
+|[Práctica 3 — Sincronizacion](sistemas-operativos/guias-practicas-so/guia3-sincronizacion/guia3-sincronizacion.md)|Sincronizacion entre procesos, semaforos. |
+|[Práctica 4 — Drivers y Administración de E/S](sistemas-operativos/guias-practicas-so/guia4-drivers/guia4-drivers.md)|Administración de la Entrada/Salida y creación de drivers. |
 
 ### Resúmenes
 
@@ -65,8 +66,8 @@ _Por el momento no hay material cargado._
 | [Teorica 3 — Scheduling](sistemas-operativos/teoricas/teo3-scheduling.md) | Politicas, algortimos y tipos de schedulers. |
 |[Teorica 4 — Sincronizacion entre procesos p1](sistemas-operativos/teoricas/teo4-sincronizacion-p1.md)|Semaforos, Condiciones de carrera, Deadlocks y Sincronizacion en tre procesos. |
 |[Teorica 5 — Sincronizacion entre procesos p2](sistemas-operativos/teoricas/teo5-sincronizacion-p2.md)|Ejemplos practicos.|
-|[Teorica 6 — Entrada/Salida — Drivers](sistemas-operativos/teoricas/teo6-drivers.md)|Organización de la memoria, segmentación, paginación, algoritmos de paginación, etc.|
-|[Teorica 7 — Administración de memoria](sistemas-operativos/teoricas/teo6-memoria.md)|Organización de la memoria, segmentación, paginación, algoritmos de paginación, etc.|
+|[Teorica 6 — Entrada/Salida — Drivers](sistemas-operativos/teoricas/teo6-drivers.md)|Organización de la memoria, segmentación, paginación, algoritmos de paginación, etc. |
+|[Teorica 7 — Administración de memoria](sistemas-operativos/teoricas/teo6-memoria.md)|Organización de la memoria, segmentación, paginación, algoritmos de paginación, etc. |
 
 ### Parciales
 _Por el momento no hay material cargado._
@@ -88,8 +89,8 @@ _Por el momento no hay material cargado._
 |[Clase 2 — Resumen](complejidad-computacional/resumenes/clase2-resumen.md) | Funciones (totales y parciales), tiempo de cómputo, notación Big-O y equivalencia de variantes de máquinas. |
 |[Clase 3 — Resumen](complejidad-computacional/resumenes/clase3-resumen.md) | El problema de la detención (*Halting problem*), la Máquina Universal y las clases de complejidad P y NP. |
 |[Clase 4 — Resumen](complejidad-computacional/resumenes/clase4-resumen.md) | Máquinas no-determinísticas, reducibilidad polinomial (Karp), NP-completitud y Lógica Proposicional (SAT/3SAT). |
-|[Clase5 — Resumen](complejidad-computacional/resumenes/clase5-resumen.md) | Teorema Cook-Levin, Problemas **NP-completos**, clase **coNP**, las clases **EXPTIME** y **NEXPTIME** y **P VS NP**.|
-|[Clase6 — Resumen](complejidad-computacional/resumenes/clase6-resumen.md)|Jerarquia de tiempos deterministicos y no-determinísticas, Teorema de Ladner.|
+|[Clase5 — Resumen](complejidad-computacional/resumenes/clase5-resumen.md) | Teorema Cook-Levin, Problemas **NP-completos**, clase **coNP**, las clases **EXPTIME** y **NEXPTIME** y **P VS NP**. |
+|[Clase6 — Resumen](complejidad-computacional/resumenes/clase6-resumen.md)|Jerarquia de tiempos deterministicos y no-determinísticas, Teorema de Ladner. |
 |[Clase7 — Resumen](complejidad-computacional/resumenes/clase7-resumen)|Espacio usado por un cómputo, espacio polinomial y teorema de Savicth. |
 |[Clase8 — Resumen](complejidad-computacional/resumenes/clase8-resumen)| Espacio logarítmicos y Teorema de Immerman-Szelepcsényi. |
 

@@ -1,541 +1,584 @@
-!classDefinition: #FleetRun category: #'ISW-Parcial1-1C25'!
-Object subclass: #FleetRun
-	instanceVariableNames: 'fleet'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'ISW-Parcial1-1C25'!
-
-!FleetRun methodsFor: 'initialization' stamp: 'HAW 5/6/2025 08:51:21'!
-initializeAssemble: aFleet 
-	
-	fleet := aFleet.! !
-
-
-!FleetRun methodsFor: 'run by sectors' stamp: 'HAW 5/6/2025 13:47:42'!
-runThrough: sectors 
-	
-	self shouldBeImplemented ! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'FleetRun class' category: #'ISW-Parcial1-1C25'!
-FleetRun class
-	instanceVariableNames: ''!
-
-!FleetRun class methodsFor: 'message error' stamp: 'HAW 5/6/2025 13:26:28'!
-allSpaceshipsShouldBeDifferentErrorDescription
-
-	^ 'All the spaceships in the fleet must be unique'! !
-
-!FleetRun class methodsFor: 'message error' stamp: 'HAW 5/6/2025 11:19:11'!
-emptyRouteErrorDescription
-
-	^ 'The route cannot be empty'! !
-
-!FleetRun class methodsFor: 'message error' stamp: 'HAW 5/6/2025 13:26:42'!
-fleetWithoutSpaceshipsErrorDescription
-
-	^ 'The fleet cannot be empty'! !
-
-
-!FleetRun class methodsFor: 'instance creation' stamp: 'HAW 5/6/2025 13:47:04'!
-assemble: aFleet 
-	
-	^self new initializeAssemble: aFleet ! !
-
-
-!classDefinition: #SpaceShip category: #'ISW-Parcial1-1C25'!
-Object subclass: #SpaceShip
-	instanceVariableNames: 'thrusters maneuverability shields fuel maxDamageLevel'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'ISW-Parcial1-1C25'!
-
-!SpaceShip methodsFor: 'initialization' stamp: 'HAW 5/6/2025 13:48:47'!
-initializeWithThrusters: aThrusters maneuverability: aManeuverability shileds: aShields fuel: aFuel damageLevel: aMaxDamageLevel     
-	
-	thrusters := aThrusters.
-	maneuverability := aManeuverability.
-	shields := aShields.
-	fuel := aFuel.
-	maxDamageLevel := aMaxDamageLevel.
-	! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'SpaceShip class' category: #'ISW-Parcial1-1C25'!
-SpaceShip class
-	instanceVariableNames: ''!
-
-!SpaceShip class methodsFor: 'instance creation' stamp: 'HAW 5/6/2025 11:29:22'!
-heavyCruiserWithThrusters: aThrusters 
-	
-	^self new initializeWithThrusters: aThrusters maneuverability: 50 shileds: 100 fuel: 50 damageLevel: 5 ! !
-
-!SpaceShip class methodsFor: 'instance creation' stamp: 'HAW 5/6/2025 11:32:34'!
-lightInterceptorWithThrusters: aThrusters 
-	
-	^self new initializeWithThrusters: aThrusters maneuverability: 90 shileds: 30 fuel: 30 damageLevel: 2 
-! !
-
-!SpaceShip class methodsFor: 'instance creation' stamp: 'HAW 5/6/2025 11:33:41'!
-smugglerTransportWithThrusters: aThrusters 
-	
-	^self new initializeWithThrusters: aThrusters maneuverability: 70 shileds: 50 fuel: 95 damageLevel: 2 
-! !
-
-
-!classDefinition: #FleetRunTests category: #'ISW-Parcial1-1C25'!
-TestCase subclass: #FleetRunTests
+!classDefinition: #EscapeDeFlotaTests category: 'ISW-Parcial1-1C25'!
+TestCase subclass: #EscapeDeFlotaTests
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ISW-Parcial1-1C25'!
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:26:42'!
-test01TheFleetShouldHaveAtLeastOneSpaceship
+!EscapeDeFlotaTests methodsFor: 'tests' stamp: 'NR 7/10/2025 19:58:18'!
+test01LaFlotaDebeTenerAlMenosUnaNave
 	
 	self 
-		should: [ FleetRun assemble: {  } ] 
+		should: [ EscapeDeFlota enrolar: {  } ] 
 		raise: Error-MessageNotUnderstood 
-		withMessageText: FleetRun fleetWithoutSpaceshipsErrorDescription ! !
+		withMessageText: EscapeDeFlota flotaSinNavesDescripcionDeError ! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:26:28'!
-test02TheFleetCannotHaveDuplicatedShips
+!EscapeDeFlotaTests methodsFor: 'tests' stamp: 'NR 7/10/2025 19:58:49'!
+test02LaFlotaNoPuedeTenerNavesDuplicadas
 
-	| heavyCruiserOnImpulse |
+	| cruceroPesadoConImpulsoEstandar |
 	
-	heavyCruiserOnImpulse := self newHeavyCruiserShipOnImpulse.
+	cruceroPesadoConImpulsoEstandar := self nuevoCruceroPesadoConImpulsoEstandar.
 	
 	self 
-		should: [ FleetRun assemble: { heavyCruiserOnImpulse. heavyCruiserOnImpulse } ] 
+		should: [ EscapeDeFlota enrolar: { cruceroPesadoConImpulsoEstandar. cruceroPesadoConImpulsoEstandar } ] 
 		raise: Error-MessageNotUnderstood 
-		withMessageText: FleetRun allSpaceshipsShouldBeDifferentErrorDescription ! !
+		withMessageText: EscapeDeFlota todasLasNavesDebenSerDiferentesDescripcionDeError ! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 11:19:11'!
-test03TheSequenceRouteOfSectorsToGoThroughShouldNotBeEmpty
+!EscapeDeFlotaTests methodsFor: 'tests' stamp: 'NR 7/17/2025 05:58:13'!
+test03LaRutaDeSectoresARecorrerNoPuedeSerVacia
 
-	| heavyCruiserOnImpulse fleet |
+	| cruceroPesadoConImpulso flota |
 	
-	heavyCruiserOnImpulse := self newHeavyCruiserShipOnImpulse.
-	self assert: (heavyCruiserOnImpulse hasFuel: 50).
+	cruceroPesadoConImpulso := self nuevoCruceroPesadoConImpulsoEstandar.
+	self assert: (cruceroPesadoConImpulso valorCombustible: 50).
 	
-	fleet := FleetRun assemble: { heavyCruiserOnImpulse }.
+	flota := EscapeDeFlota enrolar: { cruceroPesadoConImpulso }.
 	
 	self 
-		should: [ fleet runThrough: {  } ] 
+		should: [ flota atravesar: {  } ] 
 		raise: Error-MessageNotUnderstood  
 		withExceptionDo: [ :error | 
-			self assert: FleetRun emptyRouteErrorDescription equals: error messageText.
-			self assert: (heavyCruiserOnImpulse hasFuel: 50) ]
+			self assert: EscapeDeFlota rutaVaciaDescripcionDeError equals: error messageText.
+			self assert: (cruceroPesadoConImpulso valorCombustible: 50) ]
 ! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:50:17'!
-test04FuelOfSpaceshipShouldSufficeSingleNormalPlanetarySectorRunAndSurvive
+!EscapeDeFlotaTests methodsFor: 'tests' stamp: 'NR 7/17/2025 05:58:22'!
+test04CombustibleDeLaNaveDebeSerSuficienteParaAtravesarUnicoSectorPlanetarioYSobrevivir
 
-	| planetarySector fleet heavyCruiserOnImpulse |
+	| sector flota cruceroPesadoConImpulso |
 	
-	heavyCruiserOnImpulse := self newHeavyCruiserShipOnImpulse.
-	self assert: (heavyCruiserOnImpulse hasFuel: 50).
+	"Crucero Pesado -> Maniobravilidad: 50. Escudos: 100. Combustible: 50. NivelesDeDañoCasco: 5."
+	cruceroPesadoConImpulso := self nuevoCruceroPesadoConImpulsoEstandar.
+	self assert: (cruceroPesadoConImpulso valorCombustible: 50).
 	
-	fleet := FleetRun assemble: { heavyCruiserOnImpulse }.
+	flota := EscapeDeFlota enrolar: { cruceroPesadoConImpulso }.
 	
-	planetarySector := self newPlanetarySectorWithGravity: 50 andRadiation: 50.
+	sector := self nuevoSectorPlanetarioConGravedad: 50 yRadiacion: 50.
 	
-	fleet runThrough: { planetarySector }.
+	flota atravesar: { sector }.
 	
-	self assert: (fleet isNumberOfSurvivors: 1).
-	self assert: (fleet hasSurvived: heavyCruiserOnImpulse ).
-	self assert: (heavyCruiserOnImpulse hasFuel: (50 - 10))
+	self assert: (flota numeroDeSobrevivientesEs: 1).
+	self assert: (flota haSobrevivido: cruceroPesadoConImpulso ).
+	self assert: (cruceroPesadoConImpulso valorCombustible: (50 - 10))
 	
 	
 	
 	! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:50:17'!
-test05SpaceshipCanRunOutOfFuelButSurviveAnyway
+!EscapeDeFlotaTests methodsFor: 'tests' stamp: 'NR 7/17/2025 21:06:58'!
+test05LaRutaDeSectoresARecorrerNoPuedeTenerSectoresRepetidos
 
-	| fleet heavyCruiserOnImpulse |
+	| cruceroPesadoConImpulso flota sector |
 	
-	heavyCruiserOnImpulse := self newHeavyCruiserShipOnImpulse.
-	self deny: heavyCruiserOnImpulse isDepleted.
+	cruceroPesadoConImpulso := self nuevoCruceroPesadoConImpulsoEstandar.
+	self assert: (cruceroPesadoConImpulso valorCombustible: 50).
 	
-	fleet := FleetRun assemble: { heavyCruiserOnImpulse }.
+	flota := EscapeDeFlota enrolar: { cruceroPesadoConImpulso }.
 	
-	fleet runThrough: (self newPlanetarySectorJourneySequenceOfSize: 5 withGravity: 50 withRadiation: 50).
+	sector := self nuevoSectorPlanetarioConGravedad: 50 yRadiacion: 50.
 	
-	self assert: (fleet isNumberOfSurvivors: 1).
-	self assert: (fleet hasSurvived: heavyCruiserOnImpulse ).
-	self assert: heavyCruiserOnImpulse isDepleted
+	self 
+		should: [ flota atravesar: { sector. sector } ] 
+		raise: Error-MessageNotUnderstood  
+		withExceptionDo: [ :error | 
+			self assert: EscapeDeFlota sectoresRepetidosDescripcionDeError equals: error messageText.
+			self assert: (cruceroPesadoConImpulso valorCombustible: 50) ]
+! !
+
+!EscapeDeFlotaTests methodsFor: 'tests' stamp: 'NR 7/17/2025 21:06:39'!
+test06NaveQueSeQuedaSinCombustibleMientrasCruzaSectorNoSobrevive
+
+	| flota naveContrabandistaConImpulso |
+	
+	"Nave Contrabandista: -> Maniobravilidad: 70. Escudos: 50. Combustible: 95. NivelesDeDañoCasco: 2."
+	naveContrabandistaConImpulso := self nuevaNaveContrabandistaConImpulsoEstandar.
+	self deny: naveContrabandistaConImpulso sinCombustible.
+
+	flota := EscapeDeFlota enrolar: { naveContrabandistaConImpulso }.
+	
+	"Secuencia de 10 sistemas planetarios seguidos con combustible para 9.5..."
+	flota atravesar: (self nuevoTrayectoDeSectoresPlanetariosDeLongitud: 10 conGravedad: 50 yRadiacion: 50).
+	
+	self assert: (flota numeroDeSobrevivientesEs: 0).
+	self deny: (flota haSobrevivido: naveContrabandistaConImpulso).
+	self assert: naveContrabandistaConImpulso sinCombustible
+	
+	
+	! !
+
+!EscapeDeFlotaTests methodsFor: 'tests' stamp: 'NR 7/17/2025 21:06:34'!
+test07NavePuedeQuedarseSinCombustiblePeroSobrevivir
+
+	| flota cruceroPesadoConImpulso |
+	
+	"Crucero Pesado -> Maniobravilidad: 50. Escudos: 100. Combustible: 50. NivelesDeDañoCasco: 5."
+	cruceroPesadoConImpulso := self nuevoCruceroPesadoConImpulsoEstandar.
+	self deny: cruceroPesadoConImpulso sinCombustible.
+	
+	flota := EscapeDeFlota enrolar: { cruceroPesadoConImpulso }.
+	
+	"Secuencia de 5 sistemas planetarios seguidos... Llega justo!!"
+	flota atravesar: (self nuevoTrayectoDeSectoresPlanetariosDeLongitud: 5 conGravedad: 50 yRadiacion: 50).
+	
+	self assert: (flota numeroDeSobrevivientesEs: 1).
+	self assert: (flota haSobrevivido: cruceroPesadoConImpulso ).
+	self assert: cruceroPesadoConImpulso sinCombustible.
+	self assert: (cruceroPesadoConImpulso valorCombustible: 0).
 	
 	
 	
 	! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:50:17'!
-test06SpaceshipThatRunsOutOfFuelBeforeFinishingRunDoesntSurvive
+!EscapeDeFlotaTests methodsFor: 'tests' stamp: 'NR 7/17/2025 21:06:30'!
+test08NaveQueSeQuedaSinCombustibleAntesDePasarPorTodosLosSectoresNoSobrevive
 
-	| fleet heavyCruiserOnImpulse |
+	| flota cruceroPesadoConImpulso |
 	
-	heavyCruiserOnImpulse := self newHeavyCruiserShipOnImpulse.
-	self deny: heavyCruiserOnImpulse isDepleted.
+	"Crucero Pesado -> Maniobravilidad: 50. Escudos: 100. Combustible: 50. NivelesDeDañoCasco: 5."
+	cruceroPesadoConImpulso := self nuevoCruceroPesadoConImpulsoEstandar.
+	self deny: cruceroPesadoConImpulso sinCombustible.
 
-	fleet := FleetRun assemble: { heavyCruiserOnImpulse }.
+	flota := EscapeDeFlota enrolar: { cruceroPesadoConImpulso }.
 	
-	"Secuencia de 6 sistemas planetarios seguidos..."
-	fleet runThrough: (self newPlanetarySectorJourneySequenceOfSize: 6 withGravity: 50 withRadiation: 50).
+	"Secuencia de 6 sistemas planetarios seguidos con combustible para 5..."
+	flota atravesar: (self nuevoTrayectoDeSectoresPlanetariosDeLongitud: 6 conGravedad: 50 yRadiacion: 50).
 	
-	self assert: (fleet isNumberOfSurvivors: 0).
-	self deny: (fleet hasSurvived: heavyCruiserOnImpulse).
-	self assert: heavyCruiserOnImpulse isDepleted
+	self assert: (flota numeroDeSobrevivientesEs: 0).
+	self deny: (flota haSobrevivido: cruceroPesadoConImpulso).
+	self assert: cruceroPesadoConImpulso sinCombustible
+	
+	
+	! !
+
+!EscapeDeFlotaTests methodsFor: 'tests' stamp: 'NR 7/17/2025 21:06:25'!
+test09NaveQueAtraviesaSectorConMayorGravedadQueSuManiobravilidadSufreDaños
+
+	| flota cruceroPesadoConImpulso |
+	
+	"Crucero Pesado -> Maniobravilidad: 50. Escudos: 100. Combustible: 50. NivelesDeDañoCasco: 5."
+	cruceroPesadoConImpulso := self nuevoCruceroPesadoConImpulsoEstandar.
+	self deny: cruceroPesadoConImpulso dañada.
+	self assert: (cruceroPesadoConImpulso nivelDeDañoEs: 0).
+	
+	flota := EscapeDeFlota enrolar: { cruceroPesadoConImpulso }.
+	
+	flota atravesar: { self nuevoSectorPlanetarioConGravedad: 70 yRadiacion: 50 }.
+	
+	self assert: (flota numeroDeSobrevivientesEs: 1).
+	self assert: (flota haSobrevivido: cruceroPesadoConImpulso ).
+	self assert: cruceroPesadoConImpulso dañada.
+	self assert: (cruceroPesadoConImpulso nivelDeDañoEs: 1).
+
 	
 	
 	
 	! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:50:17'!
-test07SpaceshipPassingThroughSectorWithHigherGravityThanManeuverabilityGetsDamaged
+!EscapeDeFlotaTests methodsFor: 'tests' stamp: 'NR 7/17/2025 21:06:21'!
+test10NaveQueAtraviesaSectorConMayorRadiacionQueSusEscudosDeEnergiaSufreDaños
 
-	| fleet heavyCruiserOnImpulse |
+	| flota cruceroPesadoConImpulso |
 	
-	heavyCruiserOnImpulse := self newHeavyCruiserShipOnImpulse.
-	self assert: (heavyCruiserOnImpulse hasDamageLevel: 0).
-	self deny: heavyCruiserOnImpulse isDamaged.
+	"Crucero Pesado -> Maniobravilidad: 50. Escudos: 100. Combustible: 50. NivelesDeDañoCasco: 5."
+	cruceroPesadoConImpulso := self nuevoCruceroPesadoConImpulsoEstandar.
+	self deny: cruceroPesadoConImpulso dañada.
+	self assert: (cruceroPesadoConImpulso nivelDeDañoEs: 0).
 	
-	fleet := FleetRun assemble: { heavyCruiserOnImpulse }.
+	flota := EscapeDeFlota enrolar: { cruceroPesadoConImpulso }.
 	
-	fleet runThrough: { self newPlanetarySectorWithGravity: 70 andRadiation: 50 }.
+	flota atravesar: { self nuevoSectorPlanetarioConGravedad: 50 yRadiacion: 200 }.
 	
-	self assert: (fleet isNumberOfSurvivors: 1).
-	self assert: (fleet hasSurvived: heavyCruiserOnImpulse ).
-	self assert: (heavyCruiserOnImpulse hasDamageLevel: 1).
-	self assert: heavyCruiserOnImpulse isDamaged.
+	self assert: (flota numeroDeSobrevivientesEs: 1).
+	self assert: (flota haSobrevivido: cruceroPesadoConImpulso ).
+	self assert: cruceroPesadoConImpulso dañada.
+	self assert: (cruceroPesadoConImpulso nivelDeDañoEs: 1).
 	
-	
-	
-	! !
-
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:50:17'!
-test08SpaceshipPassingThroughSectorWithHigherRadiationThanShieldsGetsDamaged
-
-	| fleet heavyCruiserOnImpulse |
-	
-	heavyCruiserOnImpulse := self newHeavyCruiserShipOnImpulse.
-	self assert: (heavyCruiserOnImpulse hasDamageLevel: 0).
-	self deny: heavyCruiserOnImpulse isDamaged.
-
-	fleet := FleetRun assemble: { heavyCruiserOnImpulse }.
-	
-	fleet runThrough: { self newPlanetarySectorWithGravity: 50 andRadiation: 200 }.
-	
-	self assert: (fleet isNumberOfSurvivors: 1).
-	self assert: (fleet hasSurvived: heavyCruiserOnImpulse ).
-	self assert: (heavyCruiserOnImpulse hasDamageLevel: 1).
-	self assert: heavyCruiserOnImpulse isDamaged.
 
 	
 	
 	! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:50:17'!
-test09SpaceshipPassingThroughSectorWithHigherGravityAndRadiationThanManeuverabilityAndShieldsGetsDoubleDamaged
+!EscapeDeFlotaTests methodsFor: 'tests' stamp: 'NR 7/17/2025 21:06:15'!
+test11NaveAtravesandoSectorConMayorGravedadYRadiacionQueSuManiobravilidadYEscudosDeEnergiaSufreElDobleDeDaño
 
-	| fleet heavyCruiserOnImpulse |
+	| flota cruceroPesadoConImpulso |
 	
-	heavyCruiserOnImpulse := self newHeavyCruiserShipOnImpulse.
-	self assert: (heavyCruiserOnImpulse hasDamageLevel: 0).
-	self deny: heavyCruiserOnImpulse isDamaged.
+	"Crucero Pesado -> Maniobravilidad: 50. Escudos: 100. Combustible: 50. NivelesDeDañoCasco: 5."
+	cruceroPesadoConImpulso := self nuevoCruceroPesadoConImpulsoEstandar.
+	self deny: cruceroPesadoConImpulso dañada.
+	self assert: (cruceroPesadoConImpulso nivelDeDañoEs: 0).
 
-	fleet := FleetRun assemble: { heavyCruiserOnImpulse }.
+	flota := EscapeDeFlota enrolar: { cruceroPesadoConImpulso }.
 	
-	fleet runThrough: { self newPlanetarySectorWithGravity: 70 andRadiation: 200 }.
+	flota atravesar: { self nuevoSectorPlanetarioConGravedad: 70 yRadiacion: 200 }.
 	
-	self assert: (fleet isNumberOfSurvivors: 1).
-	self assert: (fleet hasSurvived: heavyCruiserOnImpulse ).
-	self assert: (heavyCruiserOnImpulse hasDamageLevel: 2).
-	self assert: heavyCruiserOnImpulse isDamaged.
+	self assert: (flota numeroDeSobrevivientesEs: 1).
+	self assert: (flota haSobrevivido: cruceroPesadoConImpulso ).
+	self assert: cruceroPesadoConImpulso dañada.
+	self assert: (cruceroPesadoConImpulso nivelDeDañoEs: 2).
+	
 	
 	
 	
 	! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:50:17'!
-test10SpaceshipTakingMoreDamageLevelsThanTheirHullCapacityGetsDestroyedAndDoesntSurvive
+!EscapeDeFlotaTests methodsFor: 'tests' stamp: 'NR 7/17/2025 21:06:11'!
+test12NaveQueSufreMasNivelesDeDañoQueLaCapacidadDeSuCascoEsDestruidaYNoSobreviveAlEscape
 
-	| fleet heavyCruiserOnImpulse |
+	| flota cruceroPesadoConImpulso |
 	
-	heavyCruiserOnImpulse := self newHeavyCruiserShipOnImpulse.
-	self deny: heavyCruiserOnImpulse isDestroyed.
+	"Crucero Pesado -> Maniobravilidad: 50. Escudos: 100. Combustible: 50. NivelesDeDañoCasco: 5."
+	cruceroPesadoConImpulso := self nuevoCruceroPesadoConImpulsoEstandar.
+	self deny: cruceroPesadoConImpulso destruida.
 	
-	fleet := FleetRun assemble: { heavyCruiserOnImpulse }.
+	flota := EscapeDeFlota enrolar: { cruceroPesadoConImpulso }.
 	
 	"6 niveles de daño en una clase de naves que sólo admite 5 como máximo..."
-	fleet runThrough: (self newPlanetarySectorJourneySequenceOfSize: 3 withGravity: 70 withRadiation: 200).
+	flota atravesar: (self nuevoTrayectoDeSectoresPlanetariosDeLongitud: 3 conGravedad: 70 yRadiacion: 200).
 	
-	self assert: (fleet isNumberOfSurvivors: 0).
-	self deny: (fleet hasSurvived: heavyCruiserOnImpulse).
-	self assert: heavyCruiserOnImpulse isDestroyed
+	self assert: (flota numeroDeSobrevivientesEs: 0).
+	self deny: (flota haSobrevivido: cruceroPesadoConImpulso).
+	self assert: cruceroPesadoConImpulso destruida
 	
 	
 	
 	! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:50:17'!
-test11IntactHullSpaceshipPassingThroughPlanetarySectorUsingWarpIgnoresRadiationLevelsOfSector
+!EscapeDeFlotaTests methodsFor: 'tests' stamp: 'NR 7/17/2025 21:06:07'!
+test13NaveAtravesandoSectorPlanetarioUsandoVelocidadLuzIgnoraRadiacionDelSector
 
-	| fleet smugglerTransportOnWarp |
+	| flota naveContrabandistaConVelocidadLuz |
 	
-	"Si el casco de la nave no ha sido dañado y se viaja en Warp (o Light Speed, Subluminal, FTL: Faster Than Light, o como tu autor de ciencia ficción favorito lo llame) en un sector de sistema de planetas, se puede pasar tan rápido que se ignoran los efectos de la radiación"
+	"Si se atraviesa un sector planetario utilizando velocidad luz (Warp, Light Speed, Subluminal, FTL: Faster Than Light, o como tu autor de ciencia ficción favorito lo llame), se puede pasar tan rápido que se ignoran los efectos de la radiación"
 	
-	smugglerTransportOnWarp := self newSmugglerTransportShipOnWarp.
-	self assert: (smugglerTransportOnWarp hasDamageLevel: 0).
-	self deny: smugglerTransportOnWarp isDamaged.
+	"Nave Contrabandista: -> Maniobravilidad: 70. Escudos: 50. Combustible: 95. NivelesDeDañoCasco: 2."
+	naveContrabandistaConVelocidadLuz := self nuevaNaveContrabandistaConVelocidadLuz.
+	self deny: naveContrabandistaConVelocidadLuz dañada.
+	self assert: (naveContrabandistaConVelocidadLuz nivelDeDañoEs: 0).
 
-	fleet := FleetRun assemble: { smugglerTransportOnWarp}.
+	flota := EscapeDeFlota enrolar: { naveContrabandistaConVelocidadLuz}.
 	
-	fleet runThrough: { self newPlanetarySectorWithGravity: 50 andRadiation: 200 }.
+	flota atravesar: { self nuevoSectorPlanetarioConGravedad: 50 yRadiacion: 200 }.
 	
-	self assert: (fleet isNumberOfSurvivors: 1).
-	self assert: (fleet hasSurvived: smugglerTransportOnWarp).
-	self assert: (smugglerTransportOnWarp hasDamageLevel: 0).
-	self deny: smugglerTransportOnWarp isDamaged.
-	self assert: (smugglerTransportOnWarp hasFuel: (95 - 10)).
+	self assert: (flota numeroDeSobrevivientesEs: 1).
+	self assert: (flota haSobrevivido: naveContrabandistaConVelocidadLuz).
+	self deny: naveContrabandistaConVelocidadLuz dañada.
+	self assert: (naveContrabandistaConVelocidadLuz nivelDeDañoEs: 0).
+	self assert: (naveContrabandistaConVelocidadLuz valorCombustible: (95 - 10)).
+	
+	flota atravesar: { self nuevoSectorPlanetarioConGravedad: 90 yRadiacion: 200 }.
+	
+	self assert: (flota numeroDeSobrevivientesEs: 1).
+	self assert: (flota haSobrevivido: naveContrabandistaConVelocidadLuz).
 	
 	"El daño proviene aquí de la alta gravedad y no de la radiación..."	
-	fleet runThrough: { self newPlanetarySectorWithGravity: 90 andRadiation: 200 }.
-	
-	self assert: (fleet isNumberOfSurvivors: 1).
-	self assert: (fleet hasSurvived: smugglerTransportOnWarp).
-	self assert: (smugglerTransportOnWarp hasDamageLevel: 1).
-	self assert: smugglerTransportOnWarp isDamaged.
-	self assert: (smugglerTransportOnWarp hasFuel: (95 - 20))
+	self assert: naveContrabandistaConVelocidadLuz dañada.
+	self assert: (naveContrabandistaConVelocidadLuz nivelDeDañoEs: 1).
+	self assert: (naveContrabandistaConVelocidadLuz valorCombustible: (95 - 20))
 	
 	
 	
 	! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:50:17'!
-test12SpaceshipPassingThroughAsteroidSystemUsingImpulseThrustersLowersShields
+!EscapeDeFlotaTests methodsFor: 'tests' stamp: 'NR 7/17/2025 21:06:02'!
+test14NaveAtravesandoSectorPlanetarioUsandoGravitonesDecrementaManiobravilidadEn20Porciento
 
-	| fleet smugglerTransportOnImpulse |
+	| flota naveContrabandistaConGravitones |
 	
-	"Si el casco de la nave no ha sido dañado y se viaja en un sector de asteroidos utilizando el propulsor básico, los shields indefectiblemente reciben el impacto de los asteroides (nada que pueda hacer el piloto con ese tipo de propulsores) y se reducen permanentemente en 20"
+	"Si se atraviesa un sector planetario utilizando propulsion por gravitones el piloto tiene mayor dificultad en controlar la nave en el sector. 20% de penalización en su maniobravilidad"
 	
-	smugglerTransportOnImpulse := self newSmugglerTransportShipOnImpulse.
-	self assert: (smugglerTransportOnImpulse hasDamageLevel: 0).
-	self deny: smugglerTransportOnImpulse isDamaged.
-	self assert: (smugglerTransportOnImpulse hasShieldLevelsAt: 50).
+	"Nave Contrabandista: -> Maniobravilidad: 70. Escudos: 50. Combustible: 95. NivelesDeDañoCasco: 2."
+	naveContrabandistaConGravitones := self nuevaNaveContrabandistaConGravitones.
+	self deny: naveContrabandistaConGravitones dañada.
+	self assert: (naveContrabandistaConGravitones valorCombustible: 95).
 
-	fleet := FleetRun assemble: { smugglerTransportOnImpulse}.
+	flota := EscapeDeFlota enrolar: { naveContrabandistaConGravitones }.
 	
-	fleet runThrough: { self newAsteroidsSystemWithGravity: 65 andRadiation: 35 }.
+	flota atravesar: { self nuevoSectorPlanetarioConGravedad: 70 * 0.8 yRadiacion: 40 }.
 	
-	self assert: (fleet isNumberOfSurvivors: 1).
-	self assert: (fleet hasSurvived: smugglerTransportOnImpulse).
-	self assert: (smugglerTransportOnImpulse hasDamageLevel: 1).
-	self assert: smugglerTransportOnImpulse isDamaged.
-	self assert: (smugglerTransportOnImpulse hasShieldLevelsAt: 50 - 20).
+	self assert: (flota numeroDeSobrevivientesEs: 1).
+	self assert: (flota haSobrevivido: naveContrabandistaConGravitones).
+	self deny: naveContrabandistaConGravitones dañada.
+	self assert: (naveContrabandistaConGravitones valorCombustible: 95 - 10).
+	
+	flota atravesar: { self nuevoSectorPlanetarioConGravedad: (70 * 0.8) + 1 yRadiacion: 40 }.
+	
+	self assert: (flota numeroDeSobrevivientesEs: 1).
+	self assert: (flota haSobrevivido: naveContrabandistaConGravitones).
+	
+	"La gravedad supera la coordinacion del piloto navegando sector planetario con gravitones, luego la nave es dañada"
+	self assert: naveContrabandistaConGravitones dañada.
+	self assert: (naveContrabandistaConGravitones nivelDeDañoEs: 1).
+	self assert: (naveContrabandistaConGravitones valorCombustible: 95 - 20).
+
+! !
+
+!EscapeDeFlotaTests methodsFor: 'tests' stamp: 'NR 7/17/2025 21:05:58'!
+test15NaveAtravesandoSectorDeAsteroidesUsandoImpulsoEstandarReduceSusEscudosDeEnergia
+
+	| flota naveContrabandistaConImpulso |
+	
+	"Si se atraviesa un sector de asteroides utilizando el propulsor de impulso estandar, los escudos indefectiblemente reciben el impacto de los asteroides (nada que pueda hacer el piloto con ese tipo de propulsores) y se reducen permanentemente en 20"
+	
+	"Nave Contrabandista: -> Maniobravilidad: 70. Escudos: 50. Combustible: 95. NivelesDeDañoCasco: 2."
+	naveContrabandistaConImpulso := self nuevaNaveContrabandistaConImpulsoEstandar.
+	self deny: naveContrabandistaConImpulso dañada.
+	self assert: (naveContrabandistaConImpulso nivelDeDañoEs: 0).
+	self assert: (naveContrabandistaConImpulso fuerzaDeEscudosEn: 50).
+
+	flota := EscapeDeFlota enrolar: { naveContrabandistaConImpulso}.
+	flota atravesar: { self nuevoSectorDeAsteroidesConGravedad: 65 yRadiacion: 35 }.
+	
+	self assert: (flota numeroDeSobrevivientesEs: 1).
+	self assert: (flota haSobrevivido: naveContrabandistaConImpulso).
+	self assert: (naveContrabandistaConImpulso fuerzaDeEscudosEn: 50 - 20).
+	
+	"La nave sufre daño porque los escudos de energia descendieron por debajo de la radiacion del sector"
+	self assert: naveContrabandistaConImpulso dañada.
+	self assert: (naveContrabandistaConImpulso nivelDeDañoEs: 1).
+	
+	
 
 	
 	
 	! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:50:17'!
-test13SpaceshipPassingThroughAsteroidSystemUsingGravitonThrustersIgnoresGravityButConsumesDoubleFuel
+!EscapeDeFlotaTests methodsFor: 'tests' stamp: 'NR 7/17/2025 21:05:53'!
+test16NaveAtravesandoSectorDeAsteroidesUsandoVelocidadLuzAgotaSusEscudosACeroYSufreDaños
 
-	| fleet smugglerTransportOnGravitons |
+	| flota naveContrabandistaConVelocidadLuz |
 	
-	"Si el casco de la nave no ha sido dañado y se viaja en un sector de asteroides utilizando el avanzado sistema de propulsores basado en Gravitones, el piloto automático de la nave puede sin problema eludirlos sin impactos. Como el piloto no participa, no se tiene en cuenta el rating de maniobrabilidad de la nave, ni la gravedad del sector"
+	"Si se atraviesa un sector de asteroides utilizando velocidad luz, vas derecho al desastre... quien sea que haya trazado ese curso estará condenado, porque irá en linea recta contra un cinturón de asteroides a la velocidad de la luz (duh!!). En terminos prácticos, la nave pierde todos sus escudos de energía permanentemente (pasan a 0) debido a los impactos con los asteroides, se le inflinje 1 nivel de daño al casco y además casi seguro se le suma otro nivel más por radiación al esta no contar más con sus escudos"
+	
+	"Nave Contrabandista: -> Maniobravilidad: 70. Escudos: 50. Combustible: 95. NivelesDeDañoCasco: 2."
+	naveContrabandistaConVelocidadLuz := self nuevaNaveContrabandistaConVelocidadLuz.
+	self deny: naveContrabandistaConVelocidadLuz dañada.
+	self assert: (naveContrabandistaConVelocidadLuz nivelDeDañoEs: 0).
+	self assert: (naveContrabandistaConVelocidadLuz fuerzaDeEscudosEn: 50).
+	
+	flota := EscapeDeFlota enrolar: { naveContrabandistaConVelocidadLuz }.
+	
+	flota atravesar: { self nuevoSectorDeAsteroidesConGravedad: 65 yRadiacion: 30 }.
+	
+	self assert: (flota numeroDeSobrevivientesEs: 1).
+	self assert: (flota haSobrevivido: naveContrabandistaConVelocidadLuz).
+	
+	"Usar Velocidad Luz con asteroides acaba con los escudos y suma 1 nivel de daño al casco".
+	"La radición daña adicionalmente al casco de la nave ya que sus escudos se reducen a 0"
+	self assert: (naveContrabandistaConVelocidadLuz fuerzaDeEscudosEn: 0).
+	self assert: naveContrabandistaConVelocidadLuz dañada.
+	self assert: (naveContrabandistaConVelocidadLuz nivelDeDañoEs: 1 + 1).
+	
+	! !
+
+!EscapeDeFlotaTests methodsFor: 'tests' stamp: 'NR 7/17/2025 21:05:48'!
+test17NaveAtravesandoSectorDeAsteroidesUsandoGravitonesIgnoraGravedadPeroConsumeElDobleDeCombustible
+
+	| flota naveContrabandistaConGravitones |
+	
+	"Si se atraviesa un sector de asteroides utilizando el avanzado sistema de propulsores basado en Gravitones, el piloto automático de la nave puede sin problema eludirlos sin impactos. Como el piloto no participa, no se tiene en cuenta el rating de maniobrabilidad de la nave, ni la gravedad del sector"
 	
 	"Al mismo tiempo, lamentablemente el sistema consume el doble de combustible que lo normal"
 	
-	smugglerTransportOnGravitons := self newSmugglerTransportShipOnGravitons.
+	"Nave Contrabandista: -> Maniobravilidad: 70. Escudos: 50. Combustible: 95. NivelesDeDañoCasco: 2."
+	naveContrabandistaConGravitones := self nuevaNaveContrabandistaConGravitones.
 	
-	fleet := FleetRun assemble: { smugglerTransportOnGravitons}.
+	flota := EscapeDeFlota enrolar: { naveContrabandistaConGravitones}.
 	
 	"La alta gravedad no son nada para el sistema avanzado de propulsores de Gravitones"
-	fleet runThrough: { self newAsteroidsSystemWithGravity: 90 andRadiation: 30 }.
+	flota atravesar: { self nuevoSectorDeAsteroidesConGravedad: 90 yRadiacion: 30 }.
 	
-	self assert: (fleet isNumberOfSurvivors: 1).
-	self assert: (fleet hasSurvived: smugglerTransportOnGravitons).
-	self deny: smugglerTransportOnGravitons isDamaged.
+	self assert: (flota numeroDeSobrevivientesEs: 1).
+	self assert: (flota haSobrevivido: naveContrabandistaConGravitones).
+	self deny: naveContrabandistaConGravitones dañada.
 	"Doble gasto de combustible"
-	self assert: (smugglerTransportOnGravitons hasFuel: (95 - 20)).
+	self assert: (naveContrabandistaConGravitones valorCombustible: (95 - 20)).
 
-	"La radiación del sector es la que produce el daño (60 supera a los 50 de los shields de la nave) y no la gravedad..."
-	fleet runThrough: { self newAsteroidsSystemWithGravity: 90 andRadiation: 60 }.
+	"La radiación del sector es la que produce el daño (60 supera a los 50 de los escudos de la nave) y no la gravedad..."
+	flota atravesar: { self nuevoSectorDeAsteroidesConGravedad: 90 yRadiacion: 60 }.
 	
-	self assert: (fleet isNumberOfSurvivors: 1).
-	self assert: (fleet hasSurvived: smugglerTransportOnGravitons).
-	self assert: (smugglerTransportOnGravitons hasDamageLevel: 1).
-	self assert: smugglerTransportOnGravitons isDamaged.
+	self assert: (flota numeroDeSobrevivientesEs: 1).
+	self assert: (flota haSobrevivido: naveContrabandistaConGravitones).
+	self assert: naveContrabandistaConGravitones dañada.
+	self assert: (naveContrabandistaConGravitones nivelDeDañoEs: 1).
 	"Doble gasto de combustible"
-	self assert: (smugglerTransportOnGravitons hasFuel: (95 - 40))
+	self assert: (naveContrabandistaConGravitones valorCombustible: (95 - 40))
 	! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 20:08:31'!
-test14SpaceshipPassingThroughAsteroidSystemUsingWarpLowersShieldsToZeroAndGetsDamaged
+!EscapeDeFlotaTests methodsFor: 'tests' stamp: 'NR 7/17/2025 22:47:51'!
+test18NaveAtravesandoSectorNebulosaUsandoImpulsoEstandarDecrementaEscudosAl30Porciento
 
-	| fleet smugglerTransportOnWarp |
+	| flota naveContrabandistaConImpulso |
 	
-	"Si el casco de la nave no ha sido dañado y se atraviesa un sector de asteroides utilizando warp, vas derecho al desastre... quien sea que haya trazado ese curso estará condenado, porque irá en linea recta contra un cinturón de asteroides a la velocidad de la luz (duh!!). En terminos prácticos, la nave pierde todos sus escudos permanentemente (pasan a 0) debido a los impactos con los asteroides, se le inflinje 1 nivel de daño al casco y además casi seguro se le suma otro nivel más por radiación al esta no contar más con sus escudos"
+	"Si se atraviesa una nebulosa con propulsores de impulso estandar, se esta mucho tiempo dentro de la misma y los escudos empiezan a perder efectividad. 30% de penalizacion a los escudos mientras se la cruza"
 	
-	smugglerTransportOnWarp := self newSmugglerTransportShipOnWarp.
-	self assert: (smugglerTransportOnWarp hasDamageLevel: 0).
-	self deny: smugglerTransportOnWarp isDamaged.
-	self assert: (smugglerTransportOnWarp hasShieldLevelsAt: 50).
+	"Nave Contrabandista: -> Maniobravilidad: 70. Escudos: 50. Combustible: 95. NivelesDeDañoCasco: 2."
+	naveContrabandistaConImpulso := self nuevaNaveContrabandistaConImpulsoEstandar .
+	self deny: naveContrabandistaConImpulso dañada.
+	self assert: (naveContrabandistaConImpulso valorCombustible: 95).
+
+	flota := EscapeDeFlota enrolar: { naveContrabandistaConImpulso }.
 	
-	fleet := FleetRun assemble: { smugglerTransportOnWarp }.
+	flota atravesar: { self nuevoSectorNebulosaConGravedad: 50 yRadiacion: 50 * 0.7 }.
 	
-	"Usar Warp con asteroides acaba con los shields y suma 1 nivel de daño al casco".
-	"La radición daña al casco de la nave ya que sus shields se reducen a 0"
-	fleet runThrough: { self newAsteroidsSystemWithGravity: 65 andRadiation: 30 }.
+	self assert: (flota numeroDeSobrevivientesEs: 1).
+	self assert: (flota haSobrevivido: naveContrabandistaConImpulso).
+	self deny: naveContrabandistaConImpulso dañada.
+	self assert: (naveContrabandistaConImpulso valorCombustible: 95 - 10).
+
+
+	flota atravesar: { self nuevoSectorNebulosaConGravedad: 50 yRadiacion: (50 * 0.7) + 1}.
 	
-	self assert: (fleet isNumberOfSurvivors: 1).
-	self assert: (fleet hasSurvived: smugglerTransportOnWarp).
-	self assert: smugglerTransportOnWarp isDamaged.
-	self assert: (smugglerTransportOnWarp hasDamageLevel: 2).
-	self assert: (smugglerTransportOnWarp hasShieldLevelsAt: 0).
+	self assert: (flota numeroDeSobrevivientesEs: 1).
+	self assert: (flota haSobrevivido: naveContrabandistaConImpulso).
+	"La radiación supera el desgaste extremo de los escudos, y por lo tanto la nave es dañada"
+	self assert: naveContrabandistaConImpulso dañada.
+	self assert: (naveContrabandistaConImpulso nivelDeDañoEs: 1).
+	self assert: (naveContrabandistaConImpulso valorCombustible: 95 - 20).
+! !
+
+!EscapeDeFlotaTests methodsFor: 'tests' stamp: 'NR 7/17/2025 21:05:37'!
+test19NaveAtravesandoSectorNebulosaUsandoVelocidadLuzNoConsumeCombustibleEIgnoraGravedadYRadiacionDelSector
+
+	| flota naveContrabandistaConVelocidadLuz |
+	
+	"Si se viaja hacia una nebulosa utilizando velocidad luz, el modulo Warp se revigoriza por un efecto cuántico bien conocido por el contacto con los gases de la nébula, y casi la teletransporta de inmediato al próximo sector galáctico de la trayectoria del viaje. Luego no se consume combustible, y no se efectua ninguno de los chequeos típicos de supervivencia en el sector"
+	
+	"Nave Contrabandista: -> Maniobravilidad: 70. Escudos: 50. Combustible: 95. NivelesDeDañoCasco: 2."
+	naveContrabandistaConVelocidadLuz := self nuevaNaveContrabandistaConVelocidadLuz.
+	self deny: naveContrabandistaConVelocidadLuz dañada.
+	self assert: (naveContrabandistaConVelocidadLuz valorCombustible: 95).
+
+	flota := EscapeDeFlota enrolar: { naveContrabandistaConVelocidadLuz }.
+	
+	flota atravesar: { self nuevoSectorNebulosaConGravedad: 90 yRadiacion: 90 }.
+	
+	self assert: (flota numeroDeSobrevivientesEs: 1).
+	self assert: (flota haSobrevivido: naveContrabandistaConVelocidadLuz).
+	self deny: naveContrabandistaConVelocidadLuz dañada.
+	self assert: (naveContrabandistaConVelocidadLuz valorCombustible: 95).
+! !
+
+!EscapeDeFlotaTests methodsFor: 'tests' stamp: 'NR 7/17/2025 21:05:31'!
+test20NaveAtravesandoSectorNebulosaUsandoGravitonesEsAfectadaPorGravedadYRadiacionNormalmentePeroConsumientoElTripleDeCombustible
+
+	| flota naveContrabandistaConGravitones |
+	
+	"La nebulosa afecta los propulsores de gravitones haciendolos menos eficientes. Consume 3 veces el valor de combustible normal sin ningun otro beneficio"
+	
+	"Nave Contrabandista: -> Maniobravilidad: 70. Escudos: 50. Combustible: 95. NivelesDeDañoCasco: 2."
+	naveContrabandistaConGravitones := self nuevaNaveContrabandistaConGravitones .
+	self deny: naveContrabandistaConGravitones dañada.
+	self assert: (naveContrabandistaConGravitones valorCombustible: 95).
+
+	flota := EscapeDeFlota enrolar: { naveContrabandistaConGravitones }.
+	
+	flota atravesar: { self nuevoSectorNebulosaConGravedad: 70 yRadiacion: 50 }.
+	
+	self assert: (flota numeroDeSobrevivientesEs: 1).
+	self assert: (flota haSobrevivido: naveContrabandistaConGravitones).
+	self deny: naveContrabandistaConGravitones dañada.
+	self assert: (naveContrabandistaConGravitones valorCombustible: 95 - 30).
+
+	flota atravesar: { self nuevoSectorNebulosaConGravedad: 71 yRadiacion: 51 }.
+	
+	self assert: (flota numeroDeSobrevivientesEs: 1).
+	self assert: (flota haSobrevivido: naveContrabandistaConGravitones).
+	self assert: naveContrabandistaConGravitones dañada.
+	self assert: (naveContrabandistaConGravitones nivelDeDañoEs: 2).
+	self assert: (naveContrabandistaConGravitones valorCombustible: 95 - 60)! !
+
+
+!EscapeDeFlotaTests methodsFor: 'naves' stamp: 'NR 9/28/2025 00:35:36'!
+nuevaNaveContrabandistaConGravitones
+
+	self shouldBeImplemented ! !
+
+!EscapeDeFlotaTests methodsFor: 'naves' stamp: 'NR 9/28/2025 00:35:43'!
+nuevaNaveContrabandistaConImpulsoEstandar
+
+	self shouldBeImplemented ! !
+
+!EscapeDeFlotaTests methodsFor: 'naves' stamp: 'NR 9/28/2025 00:35:47'!
+nuevaNaveContrabandistaConVelocidadLuz
+
+	self shouldBeImplemented ! !
+
+!EscapeDeFlotaTests methodsFor: 'naves' stamp: 'NR 9/28/2025 00:35:54'!
+nuevoCruceroPesadoConImpulsoEstandar
+
+	self shouldBeImplemented ! !
+
+
+!EscapeDeFlotaTests methodsFor: 'sectores' stamp: 'NR 9/28/2025 00:33:08'!
+nuevoSectorDeAsteroidesConGravedad: gravedad yRadiacion: radiacion
+
+	self shouldBeImplemented  ! !
+
+!EscapeDeFlotaTests methodsFor: 'sectores' stamp: 'NR 9/28/2025 00:33:12'!
+nuevoSectorNebulosaConGravedad: gravedad yRadiacion: radiacion
+ 
+	self shouldBeImplemented ! !
+
+!EscapeDeFlotaTests methodsFor: 'sectores' stamp: 'NR 9/28/2025 00:33:16'!
+nuevoSectorPlanetarioConGravedad: gravedad yRadiacion: radiacion
+
+	self shouldBeImplemented 
+! !
+
+!EscapeDeFlotaTests methodsFor: 'sectores' stamp: 'NR 9/28/2025 00:33:21'!
+nuevoTrayectoDeSectoresPlanetariosDeLongitud: numeroDeSectores conGravedad: gravedad yRadiacion: radiacion
+
+	self shouldBeImplemented 
 	! !
 
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 20:08:37'!
-test15SpaceshipPassingThroughNebulaUsingWarpIgnoresAllSectorChecksAndConsumesNoFuel
 
-	| fleet smugglerTransportOnWarp |
-	
-	"Si el casco de la nave no ha sido dañado y se viaja hacia una nebula utilizando Warp, el modulo Warp se revigoriza por un efecto cuántico bien conocido por el contacto con los gases de la nébula, y casi la teletransporta de inmediato al próximo sector galáctico de la trayectoria del viaje. Luego no se consume combustible, y no se efectua ninguno de los chequeos típicos de supervivencia en el sector"
-	
-	smugglerTransportOnWarp := self newSmugglerTransportShipOnWarp.
-	self deny: smugglerTransportOnWarp isDamaged.
-	self assert: (smugglerTransportOnWarp hasFuel: 95).
-
-	fleet := FleetRun assemble: { smugglerTransportOnWarp }.
-	
-	fleet runThrough: { self newNebulaCloudWithGravity: 90 andRadiation: 90 }.
-	
-	self assert: (fleet isNumberOfSurvivors: 1).
-	self assert: (fleet hasSurvived: smugglerTransportOnWarp).
-	self deny: smugglerTransportOnWarp isDamaged.
-	self assert: (smugglerTransportOnWarp hasFuel: 95).
-! !
-
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 20:08:42'!
-test16SpaceshipPassingThroughNebulaUsingImpulseCosumesFuelsAndIsSubjectToGravityAndRadiation
-
-	| fleet smugglerTransportOnImpulse |
-	
-	smugglerTransportOnImpulse := self newSmugglerTransportShipOnImpulse .
-	self deny: smugglerTransportOnImpulse isDamaged.
-	self assert: (smugglerTransportOnImpulse hasFuel: 95).
-
-	fleet := FleetRun assemble: { smugglerTransportOnImpulse }.
-	
-	fleet runThrough: { self newNebulaCloudWithGravity: 90 andRadiation: 90 }.
-	
-	self assert: (fleet isNumberOfSurvivors: 1).
-	self assert: (fleet hasSurvived: smugglerTransportOnImpulse).
-	self assert: (smugglerTransportOnImpulse hasDamageLevel: 2).
-	self assert: smugglerTransportOnImpulse isDamaged.
-	self assert: (smugglerTransportOnImpulse hasFuel: 95 - 10).
-! !
-
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 20:08:47'!
-test17SpaceshipPassingThroughNebulaUsingGravitonsOnlyCosumesFuels
-
-	| fleet smugglerTransportOnGravitons |
-	
-	smugglerTransportOnGravitons := self newSmugglerTransportShipOnGravitons .
-	self deny: smugglerTransportOnGravitons isDamaged.
-	self assert: (smugglerTransportOnGravitons hasFuel: 95).
-
-	fleet := FleetRun assemble: { smugglerTransportOnGravitons }.
-	
-	fleet runThrough: { self newNebulaCloudWithGravity: 90 andRadiation: 90 }.
-	
-	self assert: (fleet isNumberOfSurvivors: 1).
-	self assert: (fleet hasSurvived: smugglerTransportOnGravitons).
-	self deny: smugglerTransportOnGravitons isDamaged.
-	self assert: (smugglerTransportOnGravitons hasFuel: 95 - 20).
-! !
-
-!FleetRunTests methodsFor: 'tests' stamp: 'HAW 5/6/2025 13:50:17'!
-test18PassingByPlanetarySectorWithGravitonsCosumesDoubleFuel
-
-	| fleet smugglerTransportOnGravitons |
-	
-	smugglerTransportOnGravitons := self newSmugglerTransportShipOnGravitons .
-	self deny: smugglerTransportOnGravitons isDamaged.
-	self assert: (smugglerTransportOnGravitons hasFuel: 95).
-
-	fleet := FleetRun assemble: { smugglerTransportOnGravitons }.
-	
-	fleet runThrough: { self newPlanetarySectorWithGravity: 90 andRadiation: 90 }.
-	
-	self assert: (fleet isNumberOfSurvivors: 1).
-	self assert: (fleet hasSurvived: smugglerTransportOnGravitons).
-	self deny: smugglerTransportOnGravitons isDamaged.
-	self assert: (smugglerTransportOnGravitons hasFuel: 95 - 20).
-! !
-
-
-!FleetRunTests methodsFor: 'spaceships' stamp: 'HAW 5/6/2025 13:42:36'!
-newHeavyCruiserShipOnImpulse
-
-	^SpaceShip heavyCruiserWithThrusters: self impulseThrusters! !
-
-!FleetRunTests methodsFor: 'spaceships' stamp: 'HAW 5/6/2025 13:42:46'!
-newLightInterceptorShipOnWarp
-
-	^SpaceShip lightInterceptorWithThrusters: self warpThrusters! !
-
-!FleetRunTests methodsFor: 'spaceships' stamp: 'HAW 5/6/2025 13:43:00'!
-newSmugglerTransportShipOnGravitons
-
-	^SpaceShip smugglerTransportWithThrusters: self gravitonsThrusters ! !
-
-!FleetRunTests methodsFor: 'spaceships' stamp: 'HAW 5/6/2025 13:42:36'!
-newSmugglerTransportShipOnImpulse
-
-	^SpaceShip smugglerTransportWithThrusters: self impulseThrusters! !
-
-!FleetRunTests methodsFor: 'spaceships' stamp: 'HAW 5/6/2025 13:42:46'!
-newSmugglerTransportShipOnWarp
-
-	^SpaceShip smugglerTransportWithThrusters: self warpThrusters! !
-
-
-!FleetRunTests methodsFor: 'space sectors' stamp: 'HAW 5/6/2025 13:44:17'!
-newAsteroidsSystemWithGravity: gravity andRadiation: radiation
+!EscapeDeFlotaTests methodsFor: 'propulsores' stamp: 'NR 9/28/2025 00:33:03'!
+propulsoresDeGravitones
 
 	self shouldBeImplemented ! !
 
-!FleetRunTests methodsFor: 'space sectors' stamp: 'HAW 5/6/2025 13:44:21'!
-newNebulaCloudWithGravity: gravity andRadiation: radiation
+!EscapeDeFlotaTests methodsFor: 'propulsores' stamp: 'NR 9/28/2025 00:32:59'!
+propulsoresDeImpulsoEstandar
 
 	self shouldBeImplemented ! !
 
-!FleetRunTests methodsFor: 'space sectors' stamp: 'HAW 5/6/2025 13:44:43'!
-newPlanetarySectorJourneySequenceOfSize: numberOfSectors withGravity: gravity withRadiation: radiation 
+!EscapeDeFlotaTests methodsFor: 'propulsores' stamp: 'NR 9/28/2025 00:32:53'!
+propulsoresDeVelocidadLuz
 
 	self shouldBeImplemented ! !
 
-!FleetRunTests methodsFor: 'space sectors' stamp: 'HAW 5/6/2025 13:44:27'!
-newPlanetarySectorWithGravity: gravity andRadiation: radiation
+
+!classDefinition: #EscapeDeFlota category: 'ISW-Parcial1-1C25'!
+Object subclass: #EscapeDeFlota
+	instanceVariableNames: 'flota'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ISW-Parcial1-1C25'!
 
-	self shouldBeImplemented ! !
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
+!classDefinition: 'EscapeDeFlota class' category: 'ISW-Parcial1-1C25'!
+EscapeDeFlota class
+	instanceVariableNames: ''!
 
-!FleetRunTests methodsFor: 'thrusters' stamp: 'HAW 5/6/2025 13:44:12'!
-gravitonsThrusters
+!EscapeDeFlota class methodsFor: 'message error' stamp: 'NR 9/28/2025 00:38:12'!
+flotaSinNavesDescripcionDeError
 
-	self shouldBeImplemented ! !
+	^ 'La flota no puede estar vacia'! !
 
-!FleetRunTests methodsFor: 'thrusters' stamp: 'HAW 5/6/2025 13:44:07'!
-impulseThrusters
+!EscapeDeFlota class methodsFor: 'message error' stamp: 'NR 9/28/2025 00:38:25'!
+rutaVaciaDescripcionDeError
 
-	self shouldBeImplemented ! !
+	^ 'La ruta no puede ser vacia'! !
 
-!FleetRunTests methodsFor: 'thrusters' stamp: 'HAW 5/6/2025 13:44:00'!
-warpThrusters
+!EscapeDeFlota class methodsFor: 'message error' stamp: 'NR 9/28/2025 00:40:29'!
+sectoresRepetidosDescripcionDeError
 
-	self shouldBeImplemented ! !
+	^ 'La ruta no puede tener sectores repetidos'! !
+
+!EscapeDeFlota class methodsFor: 'message error' stamp: 'NR 9/28/2025 00:38:52'!
+todasLasNavesDebenSerDiferentesDescripcionDeError
+
+	^ 'Todas las naves de la flota deben ser unicas'! !
