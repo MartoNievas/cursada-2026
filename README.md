@@ -38,6 +38,7 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | -------------- | --------------- |
 | [2025-2C](isw/primeros-parciales/2025-2C) | RoverMarino. |
 | [2025-1C](isw/primeros-parciales/2025-1C) | NaveEspacial. |
+| [2024-2C](isw/primeros-parciales/2024-2C) | Aventura (No emepzado). |
 
 
 ### Talleres
