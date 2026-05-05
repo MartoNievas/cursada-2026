@@ -1,4 +1,3 @@
-
 # Resumen Primer Parcial — TEO
 
 ---

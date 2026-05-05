@@ -25,6 +25,8 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | Nombre | Descripción |
 | ------ | ----------- |
 | [Resumen Teorico — Primer parcial](isw/resumen-teoricas/teorica-primer-parcial.md) |Resumen teorico de clase primer parcial.| 
+[isw/resumen-teoricas/teorica-segundo-parcial.md]| Resumen teorico del segundo parcial. (No terminado, hasta TDD) |
+|[Resumen Method Lookup, Metamodelo y Excepciones](isw/resumen-teoricas/metamodelo-method-lookup-excepciones.md)|Metamodelo de Smalltalk, algoritmo Method Lookup y Excepciones como mecanismo de error. (No terminado) |
 | [Programming as Theory Building](isw/papers-resumenes/Programming-as-Theory-Building.md) | Resumen del paper de Peter Naur. |
 | [The Design of Everyday Things](isw/papers-resumenes/Norman-The-Desing-of-Everyday-Things.md) | Resumen del libro de Donald Norman. |
 | [No Silver Bullet](isw/papers-resumenes/No-Silver-Bullets.md) | Resumen del paper de Fred Brooks. |
@@ -38,7 +40,7 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | -------------- | --------------- |
 | [2025-2C](isw/primeros-parciales/2025-2C) | RoverMarino. |
 | [2025-1C](isw/primeros-parciales/2025-1C) | NaveEspacial. |
-| [2024-2C](isw/primeros-parciales/2024-2C) | Aventura (No emepzado). |
+| [2024-2C](isw/primeros-parciales/2024-2C) | Aventura. |
 
 
 ### Talleres
