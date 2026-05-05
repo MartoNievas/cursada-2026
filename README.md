@@ -41,10 +41,7 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | [2025-2C](isw/primeros-parciales/2025-2C) | RoverMarino. |
 | [2025-1C](isw/primeros-parciales/2025-1C) | NaveEspacial. |
 | [2024-2C](isw/primeros-parciales/2024-2C) | Aventura. |
-
-
-### Talleres
-_Por el momento no hay material cargado._
+| [2024-1C](isw/primeros-parciales/2024-1C) | Perforadora. |
 
 ---
 
@@ -81,7 +78,7 @@ _Por el momento no hay material cargado._
 | -------------- | --------------- |
 | [Taller 1](sistemas-operativos/talleres/taller1-syscall-y-señales) | Syscall y señales |
 | [Taller 2](sistemas-operativos/talleres/taller2-ipc) | InterProcess Comunication (IPC). |
-
+|[Taller 3](sistemas-operativos/talleres/taller3-drivers)| Creación de drivers. |
 ## Complejidad Computacional
 
 ### Resúmenes
