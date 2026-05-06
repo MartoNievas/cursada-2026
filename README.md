@@ -15,24 +15,25 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 
 ### Guías Resueltas
 
-| Nombre | Descripción |
-| ------ | ----------- |
-| [Guía 1 — Seccion 1](isw/guias/guia1/parte1) | Terminada. |
-| [Guía 1 — Seccion 2](isw/guias/guia1/parte2/guia1-parte2.md) | Terminada. |
-| [Guía 2 — Sacar ifs y codigo repetido](isw/guias/guia2/) | Terminada. |
+| Nombre                                                         | Descripción |
+| -------------------------------------------------------------- | ----------- |
+| [Guía 1 — Seccion 1](isw/guias/guia1/parte1/guia1.seccion1.md) | Terminada.  |
+| [Guía 1 — Seccion 2](isw/guias/guia1/parte2/guia1-parte2.md)`  | Terminada.  |
+| [Guía 2 — Sacar ifs y codigo repetido](isw/guias/guia2/)       | Terminada.  |
+
 ### Resúmenes
 
-| Nombre | Descripción |
-| ------ | ----------- |
-| [Resumen Teorico — Primer parcial](isw/resumen-teoricas/teorica-primer-parcial.md) |Resumen teorico de clase primer parcial.| 
-[isw/resumen-teoricas/teorica-segundo-parcial.md]| Resumen teorico del segundo parcial. (No terminado, hasta TDD) |
-|[Resumen Method Lookup, Metamodelo y Excepciones](isw/resumen-teoricas/metamodelo-method-lookup-excepciones.md)|Metamodelo de Smalltalk, algoritmo Method Lookup y Excepciones como mecanismo de error. (No terminado) |
-| [Programming as Theory Building](isw/papers-resumenes/Programming-as-Theory-Building.md) | Resumen del paper de Peter Naur. |
-| [The Design of Everyday Things](isw/papers-resumenes/Norman-The-Desing-of-Everyday-Things.md) | Resumen del libro de Donald Norman. |
-| [No Silver Bullet](isw/papers-resumenes/No-Silver-Bullets.md) | Resumen del paper de Fred Brooks. |
-| [Self: The Power Of Simplicity](isw/papers-resumenes/Self:The-Power-Of-Simplicity.md) | Resumen del paper SELF: The Power of Simplicity de David Ungar y Randall B. Smith. |
-|[Desing Principles Behind Smalltalk](isw/papers-resumenes/Desing-Principles-Behind-Smalltalk.md)| Resumen del paper Desgin Principles Behind Smalltalk de Daniel H. Ingalls. |
-|[Polymorphic Hierarchy](isw/papers-resumenes/Polymorphic-Hierarchy.md)| Resumen del paper Polymorphic Hierarchy de Bobby Woolf. |
+| Nombre                                                                                                          | Descripción                                                                                             |     |
+| --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | --- |
+| [Resumen Teórico — Primer parcial](isw/resumen-teoricas/teorica-primer-parcial.md)                              | Resumen teorico de clase primer parcial.                                                                |     |
+| [Resumen Teórico —  Segundo parcial](isw/resumen-teoricas/teorica-segundo-parcial.md)                           | Resumen teorico del segundo parcial. (No terminado, hasta TDD)                                          |     |
+| [Resumen Method Lookup, Metamodelo y Excepciones](isw/resumen-teoricas/metamodelo-method-lookup-excepciones.md) | Meta-modelo de Smalltalk, algoritmo Method Lookup y Excepciones como mecanismo de error. (No terminado) |     |
+| [Programming as Theory Building](isw/papers-resumenes/Programming-as-Theory-Building.md)                        | Resumen del paper de Peter Naur.                                                                        |     |
+| [The Design of Everyday Things](isw/papers-resumenes/Norman-The-Desing-of-Everyday-Things.md)                   | Resumen del libro de Donald Norman.                                                                     |     |
+| [No Silver Bullet](isw/papers-resumenes/No-Silver-Bullets.md)                                                   | Resumen del paper de Fred Brooks.                                                                       |     |
+| [Self: The Power Of Simplicity](isw/papers-resumenes/Self:The-Power-Of-Simplicity.md)                           | Resumen del paper SELF: The Power of Simplicity de David Ungar y Randall B. Smith.                      |     |
+| [Desing Principles Behind Smalltalk](isw/papers-resumenes/Desing-Principles-Behind-Smalltalk.md)                | Resumen del paper Desgin Principles Behind Smalltalk de Daniel H. Ingalls.                              |     |
+| [Polymorphic Hierarchy](isw/papers-resumenes/Polymorphic-Hierarchy.md)                                          | Resumen del paper Polymorphic Hierarchy de Bobby Woolf.                                                 |     |
 
 ### Parciales
 
@@ -67,7 +68,8 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 |[Teorica 4 — Sincronizacion entre procesos p1](sistemas-operativos/teoricas/teo4-sincronizacion-p1.md)|Semaforos, Condiciones de carrera, Deadlocks y Sincronizacion en tre procesos. |
 |[Teorica 5 — Sincronizacion entre procesos p2](sistemas-operativos/teoricas/teo5-sincronizacion-p2.md)|Ejemplos practicos.|
 |[Teorica 6 — Entrada/Salida — Drivers](sistemas-operativos/teoricas/teo6-drivers.md)|Organización de la memoria, segmentación, paginación, algoritmos de paginación, etc. |
-|[Teorica 7 — Administración de memoria](sistemas-operativos/teoricas/teo6-memoria.md)|Organización de la memoria, segmentación, paginación, algoritmos de paginación, etc. |
+|[Teorica 7 — Administración de memoria](sistemas-operativos/teoricas/teo7-memoria.md)|Organización de la memoria, segmentación, paginación, algoritmos de paginación, etc. |
+|[Teorica 8 — Sistema de archivos](sistemas-operativos/teoricas/teo8-sistema-de-archivos.md)| Sistema de archivos de un **SO**. |
 
 ### Parciales
 _Por el momento no hay material cargado._
@@ -79,6 +81,7 @@ _Por el momento no hay material cargado._
 | [Taller 1](sistemas-operativos/talleres/taller1-syscall-y-señales) | Syscall y señales |
 | [Taller 2](sistemas-operativos/talleres/taller2-ipc) | InterProcess Comunication (IPC). |
 |[Taller 3](sistemas-operativos/talleres/taller3-drivers)| Creación de drivers. |
+
 ## Complejidad Computacional
 
 ### Resúmenes
@@ -94,4 +97,4 @@ _Por el momento no hay material cargado._
 |[Clase7 — Resumen](complejidad-computacional/resumenes/clase7-resumen)|Espacio usado por un cómputo, espacio polinomial y teorema de Savicth. |
 |[Clase8 — Resumen](complejidad-computacional/resumenes/clase8-resumen)| Espacio logarítmicos y Teorema de Immerman-Szelepcsényi. |
 
->**Aclaracion:** Se recomienda decargar los Markdown y renderizarlos mediante VsCode utilizando `Ctrl + Shift + v`
+>**Aclaracion:** Se recomienda descargar los Markdown y renderizarlos mediante VsCode utilizando `Ctrl + Shift + v`
