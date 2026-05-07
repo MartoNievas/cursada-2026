@@ -113,18 +113,18 @@ Una mejora natural al esquema anterior es sacar los punteros de los bloques y co
 
 Veamos un ejemplo concreto. Supongamos que el archivo A ocupa los bloques 1, 2, 5, 7 y 9, y el archivo B ocupa los bloques 4, 3 y 8:
 
-| Bloque | Siguiente  |
-| ------ | ---------- |
-| 0      | — (vacío)  |
-| 1      | 2          |
-| 2      | 5          |
-| 3      | 8          |
-| 4      | 3          |
-| 5      | 7          |
-| 6      | — (vacío)  |
-| 7      | 9          |
-| 8      | -1 (fin)   |
-| 9      | -1 (fin)   |
+| Bloque | Siguiente |
+| ------ | --------- |
+| 0      | — (vacío) |
+| 1      | 2         |
+| 2      | 5         |
+| 3      | 8         |
+| 4      | 3         |
+| 5      | 7         |
+| 6      | — (vacío) |
+| 7      | 9         |
+| 8      | -1 (fin)  |
+| 9      | -1 (fin)  |
 
 Para leer el archivo A, el FS consulta la tabla: empieza en el bloque 1, que apunta al 2, luego al 5, luego al 7 y finalmente al 9 (donde encuentra -1, indicando el fin del archivo). Todo el recorrido se hace sobre la tabla, que reside en memoria RAM, sin necesidad de leer bloques del disco hasta buscar el dato real.
 

@@ -1,5 +1,6 @@
 # Práctica 4: Drivers y Administración de E/S
 
+>[Lee los enunciados de los ejercicios aqui](p4.pdf)
 ## Parte 1 – Interfaz de E/S
 
 ### Ejercicio 1
