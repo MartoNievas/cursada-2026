@@ -2,7 +2,7 @@
 
 ## ¿Qué es TDD?
 
-Empezemos por responder una pregunta elementar, el **TDD** es una tecnica tanto de aprendizaje como de desarrollo de software, que tiene las siguientes caracterisiticas:
+Empezamos por responder una pregunta elemental, el **TDD** es una técnica tanto de aprendizaje como de desarrollo de software, que tiene las siguientes características:
 
 - Es iterativa e incremental, es decir la solución se va armando de manera gradual.
 
