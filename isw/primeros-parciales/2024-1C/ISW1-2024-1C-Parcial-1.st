@@ -1,11 +1,11 @@
-!classDefinition: #TestDePerforación category: 'ISW1-2023-1C-Parcial-1'!
+!classDefinition: #TestDePerforación category: 'ISW1-2024-1C-Parcial-1'!
 TestCase subclass: #TestDePerforación
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'ISW1-2023-1C-Parcial-1'!
+	category: 'ISW1-2024-1C-Parcial-1'!
 
-!TestDePerforación methodsFor: 'test' stamp: 'ARM 5/5/2023 17:58:53'!
+!TestDePerforación methodsFor: 'test' stamp: 'ARM 5/5/2024 17:58:53'!
 test01CuandoExcavaSueloArenosoConMechaSoftRemueveCapaArenosa
 
 	| excavadora sueloAExcavar |
@@ -25,7 +25,7 @@ test01CuandoExcavaSueloArenosoConMechaSoftRemueveCapaArenosa
 	
 	! !
 
-!TestDePerforación methodsFor: 'test' stamp: 'ARM 5/5/2023 17:58:58'!
+!TestDePerforación methodsFor: 'test' stamp: 'ARM 5/5/2024 17:58:58'!
 test02CuandoExcavaSueloTierraConMechaSoftNoModificaElSuelo
 
 	| excavadora sueloAExcavar |
@@ -44,7 +44,7 @@ test02CuandoExcavaSueloTierraConMechaSoftNoModificaElSuelo
 	
 	! !
 
-!TestDePerforación methodsFor: 'test' stamp: 'ARM 5/5/2023 18:02:52'!
+!TestDePerforación methodsFor: 'test' stamp: 'ARM 5/5/2024 18:02:52'!
 test03CuandoExcavaConcretoConMechaSoftSeRompeLaMecha
 
 	| excavadora sueloAExcavar |
@@ -64,7 +64,7 @@ test03CuandoExcavaConcretoConMechaSoftSeRompeLaMecha
 			self assert: excavadora conMechaRota.].
 	! !
 
-!TestDePerforación methodsFor: 'test' stamp: 'ARM 5/5/2023 17:59:05'!
+!TestDePerforación methodsFor: 'test' stamp: 'ARM 5/5/2024 17:59:05'!
 test04CuandoExcavaSueloArenosoConMechaWidiaRemueveCapaArenosa
 
 	| excavadora sueloAExcavar |
@@ -84,7 +84,7 @@ test04CuandoExcavaSueloArenosoConMechaWidiaRemueveCapaArenosa
 	
 	! !
 
-!TestDePerforación methodsFor: 'test' stamp: 'ARM 5/5/2023 17:59:09'!
+!TestDePerforación methodsFor: 'test' stamp: 'ARM 5/5/2024 17:59:09'!
 test05CuandoExcavaSueloTierraConMechaWidiaEnDosImpactosTransformaLaCapaEnArenoso
 
 	| excavadora sueloAExcavar |
@@ -104,7 +104,7 @@ test05CuandoExcavaSueloTierraConMechaWidiaEnDosImpactosTransformaLaCapaEnArenoso
 	
 	! !
 
-!TestDePerforación methodsFor: 'test' stamp: 'ARM 5/5/2023 18:02:45'!
+!TestDePerforación methodsFor: 'test' stamp: 'ARM 5/5/2024 18:02:45'!
 test06CuandoExcavaSueloConcretoConMechaWidiaEnTresImpactosRompeLaMecha
 
 	| excavadora sueloAExcavar |
@@ -129,7 +129,7 @@ test06CuandoExcavaSueloConcretoConMechaWidiaEnTresImpactosRompeLaMecha
 	
 	! !
 
-!TestDePerforación methodsFor: 'test' stamp: 'ARM 5/5/2023 18:03:00'!
+!TestDePerforación methodsFor: 'test' stamp: 'ARM 5/5/2024 18:03:00'!
 test07CuandoExcavaSueloArenosoConMechaDiamanteRompeLaMecha
 
 	| excavadora sueloAExcavar |
@@ -151,7 +151,7 @@ test07CuandoExcavaSueloArenosoConMechaDiamanteRompeLaMecha
 	
 	! !
 
-!TestDePerforación methodsFor: 'test' stamp: 'ARM 5/8/2023 13:10:43'!
+!TestDePerforación methodsFor: 'test' stamp: 'ARM 5/8/2024 13:10:43'!
 test08CuandoExcavaSueloTierraConMechaDiamanteRemueveCapa
 
 	| excavadora sueloAExcavar |
@@ -171,7 +171,7 @@ test08CuandoExcavaSueloTierraConMechaDiamanteRemueveCapa
 	
 	! !
 
-!TestDePerforación methodsFor: 'test' stamp: 'ARM 5/8/2023 13:10:48'!
+!TestDePerforación methodsFor: 'test' stamp: 'ARM 5/8/2024 13:10:48'!
 test09CuandoExcavaSueloConcretoConMechaDiamanteBajaUnDecimoDeResistencia
 
 	| excavadora sueloAExcavar |
@@ -193,7 +193,7 @@ test09CuandoExcavaSueloConcretoConMechaDiamanteBajaUnDecimoDeResistencia
 	
 	! !
 
-!TestDePerforación methodsFor: 'test' stamp: 'ARM 4/27/2023 21:54:59'!
+!TestDePerforación methodsFor: 'test' stamp: 'ARM 4/27/2024 21:54:59'!
 test10CuandoRemueveLaCapaYHayPiedrasLasRecolectaEnSuContainer
 
 	| excavadora sueloAExcavar |
@@ -214,7 +214,7 @@ test10CuandoRemueveLaCapaYHayPiedrasLasRecolectaEnSuContainer
 	
 	! !
 
-!TestDePerforación methodsFor: 'test' stamp: 'HAW 5/3/2023 22:34:18'!
+!TestDePerforación methodsFor: 'test' stamp: 'HAW 5/3/2024 22:34:18'!
 test11CuandoRemueveLaCapaYNoHayNadaNoRecogeNada
 
 	| excavadora sueloAExcavar |
@@ -232,7 +232,7 @@ test11CuandoRemueveLaCapaYNoHayNadaNoRecogeNada
 	self assert: excavadora elementsInContainer isEmpty
 	! !
 
-!TestDePerforación methodsFor: 'test' stamp: 'ARM 5/5/2023 18:03:09'!
+!TestDePerforación methodsFor: 'test' stamp: 'ARM 5/5/2024 18:03:09'!
 test12NoPuedePerforarSinMecha
 
 	| excavadora sueloAExcavar |
@@ -250,7 +250,7 @@ test12NoPuedePerforarSinMecha
 			self assert: (CapaDeSuelo arenoso) equals: excavadora capaDeSueloInmediata ].	
 	! !
 
-!TestDePerforación methodsFor: 'test' stamp: 'FRT 5/5/2023 16:46:32'!
+!TestDePerforación methodsFor: 'test' stamp: 'FRT 5/5/2024 16:46:32'!
 test13PuedeCalcularProfundidadDelSuelo
 
 	| excavadora sueloAExcavar |
@@ -262,7 +262,7 @@ test13PuedeCalcularProfundidadDelSuelo
 
 	! !
 
-!TestDePerforación methodsFor: 'test' stamp: 'FRT 5/5/2023 17:08:24'!
+!TestDePerforación methodsFor: 'test' stamp: 'FRT 5/5/2024 17:08:24'!
 test14PuedeContarLasCapasDeTipoArenoso
 
 	| excavadora sueloAExcavar |
@@ -274,7 +274,7 @@ test14PuedeContarLasCapasDeTipoArenoso
 
 	! !
 
-!TestDePerforación methodsFor: 'test' stamp: 'FRT 5/5/2023 17:08:37'!
+!TestDePerforación methodsFor: 'test' stamp: 'FRT 5/5/2024 17:08:37'!
 test15PuedeContarLasCapasDeTipoTierra
 
 	| excavadora sueloAExcavar |
@@ -286,7 +286,7 @@ test15PuedeContarLasCapasDeTipoTierra
 
 	! !
 
-!TestDePerforación methodsFor: 'test' stamp: 'FRT 5/5/2023 17:08:48'!
+!TestDePerforación methodsFor: 'test' stamp: 'FRT 5/5/2024 17:08:48'!
 test16PuedeContarLasCapasDeTipoConcreto
 
 	| excavadora sueloAExcavar |
@@ -298,7 +298,7 @@ test16PuedeContarLasCapasDeTipoConcreto
 
 	! !
 
-!TestDePerforación methodsFor: 'test' stamp: 'FRT 5/5/2023 17:10:17'!
+!TestDePerforación methodsFor: 'test' stamp: 'FRT 5/5/2024 17:10:17'!
 test17PuedeCalcularProfundidadHastaPrimerCapaDeTipoArenoso
 
 	| excavadora sueloAExcavar |
@@ -310,7 +310,7 @@ test17PuedeCalcularProfundidadHastaPrimerCapaDeTipoArenoso
 
 	! !
 
-!TestDePerforación methodsFor: 'test' stamp: 'FRT 5/5/2023 17:10:45'!
+!TestDePerforación methodsFor: 'test' stamp: 'FRT 5/5/2024 17:10:45'!
 test18PuedeCalcularProfundidadHastaPrimerCapaDeTipoTierra
 
 	| excavadora sueloAExcavar |
@@ -322,7 +322,7 @@ test18PuedeCalcularProfundidadHastaPrimerCapaDeTipoTierra
 
 	! !
 
-!TestDePerforación methodsFor: 'test' stamp: 'FRT 5/5/2023 17:11:10'!
+!TestDePerforación methodsFor: 'test' stamp: 'FRT 5/5/2024 17:11:10'!
 test19PuedeCalcularProfundidadHastaPrimerCapaDeTipoConcreto
 
 	| excavadora sueloAExcavar |
@@ -335,83 +335,83 @@ test19PuedeCalcularProfundidadHastaPrimerCapaDeTipoConcreto
 	! !
 
 
-!classDefinition: #CapaDeSuelo category: 'ISW1-2023-1C-Parcial-1'!
+!classDefinition: #CapaDeSuelo category: 'ISW1-2024-1C-Parcial-1'!
 Object subclass: #CapaDeSuelo
 	instanceVariableNames: 'tipo resistencia altura'
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'ISW1-2023-1C-Parcial-1'!
+	category: 'ISW1-2024-1C-Parcial-1'!
 
-!CapaDeSuelo methodsFor: 'initialization' stamp: 'FRT 5/5/2023 16:08:54'!
+!CapaDeSuelo methodsFor: 'initialization' stamp: 'FRT 5/5/2024 16:08:54'!
 initializeArenoso
 	
 	tipo := #Arenoso.
 	altura := nil.! !
 
-!CapaDeSuelo methodsFor: 'initialization' stamp: 'ARM 5/8/2023 13:10:22'!
+!CapaDeSuelo methodsFor: 'initialization' stamp: 'ARM 5/8/2024 13:10:22'!
 initializeConcretoConResistencia: resistenciaInicial 
 
 	resistencia := resistenciaInicial.
 	tipo := #Concreto.
 	altura := nil.! !
 
-!CapaDeSuelo methodsFor: 'initialization' stamp: 'FRT 5/5/2023 16:08:42'!
+!CapaDeSuelo methodsFor: 'initialization' stamp: 'FRT 5/5/2024 16:08:42'!
 initializeTierra
 	
 	tipo := #Tierra.
 	altura := nil.! !
 
 
-!CapaDeSuelo methodsFor: 'tipo' stamp: 'ARM 4/27/2023 20:13:01'!
+!CapaDeSuelo methodsFor: 'tipo' stamp: 'ARM 4/27/2024 20:13:01'!
 esArenoso
 	^tipo = #Arenoso! !
 
-!CapaDeSuelo methodsFor: 'tipo' stamp: 'ARM 4/27/2023 20:15:50'!
+!CapaDeSuelo methodsFor: 'tipo' stamp: 'ARM 4/27/2024 20:15:50'!
 esConcreto
 	^tipo = #Concreto! !
 
-!CapaDeSuelo methodsFor: 'tipo' stamp: 'ARM 4/27/2023 20:14:55'!
+!CapaDeSuelo methodsFor: 'tipo' stamp: 'ARM 4/27/2024 20:14:55'!
 esTierra
 	^tipo = #Tierra! !
 
 
-!CapaDeSuelo methodsFor: 'comparing' stamp: 'ARM 5/8/2023 13:10:22'!
+!CapaDeSuelo methodsFor: 'comparing' stamp: 'ARM 5/8/2024 13:10:22'!
 = unaCapaDeSuelo
 
 	^(unaCapaDeSuelo isKindOf: self class) and: [ tipo = unaCapaDeSuelo tipo and: [resistencia = unaCapaDeSuelo resistencia]]! !
 
-!CapaDeSuelo methodsFor: 'comparing' stamp: 'ARM 5/8/2023 13:10:22'!
+!CapaDeSuelo methodsFor: 'comparing' stamp: 'ARM 5/8/2024 13:10:22'!
 hash
 
 	^tipo hash + resistencia hash! !
 
 
-!CapaDeSuelo methodsFor: 'bajar resistencia' stamp: 'ARM 5/8/2023 13:10:22'!
+!CapaDeSuelo methodsFor: 'bajar resistencia' stamp: 'ARM 5/8/2024 13:10:22'!
 bajaUnDecimoDeResistencia
 	resistencia := resistencia - 1! !
 
-!CapaDeSuelo methodsFor: 'bajar resistencia' stamp: 'ARM 5/8/2023 13:10:22'!
+!CapaDeSuelo methodsFor: 'bajar resistencia' stamp: 'ARM 5/8/2024 13:10:22'!
 sinResistencia
 	^resistencia = 0! !
 
 
-!CapaDeSuelo methodsFor: 'accessing' stamp: 'FRT 5/5/2023 16:48:52'!
+!CapaDeSuelo methodsFor: 'accessing' stamp: 'FRT 5/5/2024 16:48:52'!
 altura
 
 	^ altura.! !
 
-!CapaDeSuelo methodsFor: 'accessing' stamp: 'ARM 5/8/2023 13:10:35'!
+!CapaDeSuelo methodsFor: 'accessing' stamp: 'ARM 5/8/2024 13:10:35'!
 resistencia
 
 	^ resistencia.! !
 
-!CapaDeSuelo methodsFor: 'accessing' stamp: 'ARM 4/27/2023 20:18:41'!
+!CapaDeSuelo methodsFor: 'accessing' stamp: 'ARM 4/27/2024 20:18:41'!
 tipo
 
 	^tipo! !
 
 
-!CapaDeSuelo methodsFor: 'scan' stamp: 'FRT 5/5/2023 16:31:36'!
+!CapaDeSuelo methodsFor: 'scan' stamp: 'FRT 5/5/2024 16:31:36'!
 scan
 
 	self esArenoso ifTrue: [ ^ 7 ].
@@ -419,41 +419,41 @@ scan
 	^ 50. ! !
 
 
-!CapaDeSuelo methodsFor: 'setters' stamp: 'FRT 5/5/2023 16:07:55'!
+!CapaDeSuelo methodsFor: 'setters' stamp: 'FRT 5/5/2024 16:07:55'!
 setAltura: unaAltura
 
 	altura := unaAltura! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'CapaDeSuelo class' category: 'ISW1-2023-1C-Parcial-1'!
+!classDefinition: 'CapaDeSuelo class' category: 'ISW1-2024-1C-Parcial-1'!
 CapaDeSuelo class
 	instanceVariableNames: ''!
 
-!CapaDeSuelo class methodsFor: 'instance creation' stamp: 'ARM 4/27/2023 20:02:32'!
+!CapaDeSuelo class methodsFor: 'instance creation' stamp: 'ARM 4/27/2024 20:02:32'!
 arenoso
 
 	^self new initializeArenoso! !
 
-!CapaDeSuelo class methodsFor: 'instance creation' stamp: 'ARM 5/5/2023 18:01:35'!
+!CapaDeSuelo class methodsFor: 'instance creation' stamp: 'ARM 5/5/2024 18:01:35'!
 concretoConResistencia: resistencia 
 
 	^self new initializeConcretoConResistencia: resistencia ! !
 
-!CapaDeSuelo class methodsFor: 'instance creation' stamp: 'ARM 4/27/2023 20:03:15'!
+!CapaDeSuelo class methodsFor: 'instance creation' stamp: 'ARM 4/27/2024 20:03:15'!
 tierra
 
 	^self new initializeTierra! !
 
 
-!classDefinition: #Perforadora category: 'ISW1-2023-1C-Parcial-1'!
+!classDefinition: #Perforadora category: 'ISW1-2024-1C-Parcial-1'!
 Object subclass: #Perforadora
 	instanceVariableNames: 'tipoDeSuelo mechaPuesta vecesQueGolpeoCapaActual capasDeSueloDebajo container'
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'ISW1-2023-1C-Parcial-1'!
+	category: 'ISW1-2024-1C-Parcial-1'!
 
-!Perforadora methodsFor: 'cambiar capa' stamp: 'ARM 5/1/2023 20:07:29'!
+!Perforadora methodsFor: 'cambiar capa' stamp: 'ARM 5/1/2024 20:07:29'!
 pasarAProximaCapa
 	vecesQueGolpeoCapaActual := 0.
 	capasDeSueloDebajo := capasDeSueloDebajo allButFirst.
@@ -462,7 +462,7 @@ pasarAProximaCapa
 			container addAll: capasDeSueloDebajo.
 		]! !
 
-!Perforadora methodsFor: 'cambiar capa' stamp: 'ARM 4/27/2023 20:46:30'!
+!Perforadora methodsFor: 'cambiar capa' stamp: 'ARM 4/27/2024 20:46:30'!
 transformarCapaEnArenoso
 	capasDeSueloDebajo :=
 			capasDeSueloDebajo allButFirst asOrderedCollection
@@ -470,7 +470,7 @@ transformarCapaEnArenoso
 			yourself! !
 
 
-!Perforadora methodsFor: 'excavation' stamp: 'ARM 5/5/2023 18:00:48'!
+!Perforadora methodsFor: 'excavation' stamp: 'ARM 5/5/2024 18:00:48'!
 darGolpeDeTaladro
 		
 	self sinMecha ifTrue: [self error: 'No puede perforar'].
@@ -504,7 +504,7 @@ darGolpeDeTaladro
 	self error: 'error'! !
 
 
-!Perforadora methodsFor: 'initialization' stamp: 'ARM 4/27/2023 21:57:52'!
+!Perforadora methodsFor: 'initialization' stamp: 'ARM 4/27/2024 21:57:52'!
 initializeSobreSuelo: capasDeSueloAExcavarInicialmente
 
 	capasDeSueloDebajo := capasDeSueloAExcavarInicialmente.
@@ -513,52 +513,52 @@ initializeSobreSuelo: capasDeSueloAExcavarInicialmente
 	mechaPuesta := #SinMecha! !
 
 
-!Perforadora methodsFor: 'accessing' stamp: 'ARM 4/27/2023 20:17:21'!
+!Perforadora methodsFor: 'accessing' stamp: 'ARM 4/27/2024 20:17:21'!
 capaDeSueloInmediata
 	^capasDeSueloDebajo first! !
 
-!Perforadora methodsFor: 'accessing' stamp: 'ARM 4/27/2023 21:20:54'!
+!Perforadora methodsFor: 'accessing' stamp: 'ARM 4/27/2024 21:20:54'!
 conMechaRota
 
 	^mechaPuesta = #Rota! !
 
-!Perforadora methodsFor: 'accessing' stamp: 'ARM 4/27/2023 21:12:20'!
+!Perforadora methodsFor: 'accessing' stamp: 'ARM 4/27/2024 21:12:20'!
 elementsInContainer
 	^container asArray! !
 
-!Perforadora methodsFor: 'accessing' stamp: 'ARM 4/27/2023 21:54:43'!
+!Perforadora methodsFor: 'accessing' stamp: 'ARM 4/27/2024 21:54:43'!
 sinMecha
 
 	^mechaPuesta = #SinMecha! !
 
 
-!Perforadora methodsFor: 'sobre qué suelo' stamp: 'ARM 4/27/2023 20:13:17'!
+!Perforadora methodsFor: 'sobre qué suelo' stamp: 'ARM 4/27/2024 20:13:17'!
 sobreSueloArenoso
 	^capasDeSueloDebajo first esArenoso! !
 
-!Perforadora methodsFor: 'sobre qué suelo' stamp: 'ARM 4/27/2023 20:16:14'!
+!Perforadora methodsFor: 'sobre qué suelo' stamp: 'ARM 4/27/2024 20:16:14'!
 sobreSueloConcreto
 	^capasDeSueloDebajo first esConcreto! !
 
-!Perforadora methodsFor: 'sobre qué suelo' stamp: 'ARM 4/27/2023 20:13:58'!
+!Perforadora methodsFor: 'sobre qué suelo' stamp: 'ARM 4/27/2024 20:13:58'!
 sobreSueloTierra
 	^capasDeSueloDebajo first esTierra! !
 
 
-!Perforadora methodsFor: 'colocar mecha' stamp: 'ARM 4/27/2023 20:50:48'!
+!Perforadora methodsFor: 'colocar mecha' stamp: 'ARM 4/27/2024 20:50:48'!
 ponerMechaDiamante
 	mechaPuesta := #Diamante! !
 
-!Perforadora methodsFor: 'colocar mecha' stamp: 'ARM 4/27/2023 20:27:46'!
+!Perforadora methodsFor: 'colocar mecha' stamp: 'ARM 4/27/2024 20:27:46'!
 ponerMechaSoft
 	mechaPuesta := #Soft! !
 
-!Perforadora methodsFor: 'colocar mecha' stamp: 'ARM 4/27/2023 20:38:16'!
+!Perforadora methodsFor: 'colocar mecha' stamp: 'ARM 4/27/2024 20:38:16'!
 ponerMechaWidia
 	mechaPuesta := #Widia! !
 
 
-!Perforadora methodsFor: 'scan' stamp: 'FRT 5/5/2023 16:47:46'!
+!Perforadora methodsFor: 'scan' stamp: 'FRT 5/5/2024 16:47:46'!
 calcularProfundidadDelSuelo
 	
 	| acc ix |
@@ -578,7 +578,7 @@ calcularProfundidadDelSuelo
 	
 	 ! !
 
-!Perforadora methodsFor: 'scan' stamp: 'FRT 5/5/2023 17:16:25'!
+!Perforadora methodsFor: 'scan' stamp: 'FRT 5/5/2024 17:16:25'!
 calcularProfundidadDelSueloHasta: tipoDeCapa
 	
 	| valor acc ix |
@@ -606,7 +606,7 @@ calcularProfundidadDelSueloHasta: tipoDeCapa
 	
 	 ! !
 
-!Perforadora methodsFor: 'scan' stamp: 'FRT 5/5/2023 17:17:32'!
+!Perforadora methodsFor: 'scan' stamp: 'FRT 5/5/2024 17:17:32'!
 contarCapas: tipoDeCapa
 	
 	"Cuenta las capas de tipo tipoDeCapa. Recordar que para identificar cada capa se utiliza el valor de scan que retorna. Por ej. un capa tipo Arenoso retorna 7 al scan"
@@ -631,11 +631,11 @@ contarCapas: tipoDeCapa
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Perforadora class' category: 'ISW1-2023-1C-Parcial-1'!
+!classDefinition: 'Perforadora class' category: 'ISW1-2024-1C-Parcial-1'!
 Perforadora class
 	instanceVariableNames: ''!
 
-!Perforadora class methodsFor: 'instance creation' stamp: 'ARM 4/27/2023 20:07:05'!
+!Perforadora class methodsFor: 'instance creation' stamp: 'ARM 4/27/2024 20:07:05'!
 sobreSuelo: capasDeSueloAExcavar 
 
 	^self new initializeSobreSuelo: capasDeSueloAExcavar ! !
