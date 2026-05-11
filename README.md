@@ -34,7 +34,7 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | [Self: The Power Of Simplicity](isw/papers-resumenes/Self:The-Power-Of-Simplicity.md)                           | Resumen del paper SELF: The Power of Simplicity de David Ungar y Randall B. Smith.                      |     |
 | [Desing Principles Behind Smalltalk](isw/papers-resumenes/Desing-Principles-Behind-Smalltalk.md)                | Resumen del paper Desgin Principles Behind Smalltalk de Daniel H. Ingalls.                              |     |
 | [Polymorphic Hierarchy](isw/papers-resumenes/Polymorphic-Hierarchy.md)                                          | Resumen del paper Polymorphic Hierarchy de Bobby Woolf.                                                 |     |
-
+| [A Simple Technique for Handling Multiple Polymorphism.md](isw/papers-resumenes/A-Simple-Technique-for-Handling-Multiple-Polymorphism.md)| Resumen del paper A Simple Technique for Handling Multiple Polymorphism.md |
 ### Parciales
 
 | Fecha | Nombre |
