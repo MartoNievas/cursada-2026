@@ -2,6 +2,8 @@
 
 Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada 2026.
 
+>**Aclaración:** Se recomienda descargar los Markdown y renderizarlos mediante VsCode utilizando `Ctrl + Shift + v` o mejor si utilizas obsidian.
+
 ---
 
 ## Materias
@@ -23,18 +25,18 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 
 ### Resúmenes
 
-| Nombre                                                                                                          | Descripción                                                                                             |     |
-| --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | --- |
-| [Resumen Teórico — Primer parcial](isw/resumen-teoricas/teorica-primer-parcial.md)                              | Resumen teorico de clase primer parcial.                                                                |     |
-| [Resumen Teórico —  Segundo parcial](isw/resumen-teoricas/teorica-segundo-parcial.md)                           | Resumen teorico del segundo parcial. (No terminado, hasta TDD)                                          |     |
-| [Resumen Method Lookup, Metamodelo y Excepciones](isw/resumen-teoricas/metamodelo-method-lookup-excepciones.md) | Meta-modelo de Smalltalk, algoritmo Method Lookup y Excepciones como mecanismo de error. (No terminado) |     |
-| [Programming as Theory Building](isw/papers-resumenes/Programming-as-Theory-Building.md)                        | Resumen del paper de Peter Naur.                                                                        |     |
-| [The Design of Everyday Things](isw/papers-resumenes/Norman-The-Desing-of-Everyday-Things.md)                   | Resumen del libro de Donald Norman.                                                                     |     |
-| [No Silver Bullet](isw/papers-resumenes/No-Silver-Bullets.md)                                                   | Resumen del paper de Fred Brooks.                                                                       |     |
-| [Self: The Power Of Simplicity](isw/papers-resumenes/Self:The-Power-Of-Simplicity.md)                           | Resumen del paper SELF: The Power of Simplicity de David Ungar y Randall B. Smith.                      |     |
-| [Desing Principles Behind Smalltalk](isw/papers-resumenes/Desing-Principles-Behind-Smalltalk.md)                | Resumen del paper Desgin Principles Behind Smalltalk de Daniel H. Ingalls.                              |     |
-| [Polymorphic Hierarchy](isw/papers-resumenes/Polymorphic-Hierarchy.md)                                          | Resumen del paper Polymorphic Hierarchy de Bobby Woolf.                                                 |     |
-| [A Simple Technique for Handling Multiple Polymorphism.md](isw/papers-resumenes/A-Simple-Technique-for-Handling-Multiple-Polymorphism.md)| Resumen del paper A Simple Technique for Handling Multiple Polymorphism.md |
+| Nombre                                                                                                                                    | Descripción                                                                                             |
+| ----------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| [Resumen Teórico — Primer parcial](isw/resumen-teoricas/teorica-primer-parcial.md)                                                        | Resumen teorico de clase primer parcial.                                                                |
+| [Resumen Teórico —  Segundo parcial](isw/resumen-teoricas/teorica-segundo-parcial.md)                                                     | Resumen teorico del segundo parcial. (No terminado, hasta TDD)                                          |
+| [Resumen Method Lookup, Metamodelo y Excepciones](isw/resumen-teoricas/metamodelo-method-lookup-excepciones.md)                           | Meta-modelo de Smalltalk, algoritmo Method Lookup y Excepciones como mecanismo de error. (No terminado) |
+| [Programming as Theory Building](isw/papers-resumenes/Programming-as-Theory-Building.md)                                                  | Resumen del paper de Peter Naur.                                                                        |
+| [The Design of Everyday Things](isw/papers-resumenes/Norman-The-Desing-of-Everyday-Things.md)                                             | Resumen del libro de Donald Norman.                                                                     |
+| [No Silver Bullet](isw/papers-resumenes/No-Silver-Bullets.md)                                                                             | Resumen del paper de Fred Brooks.                                                                       |
+| [Self: The Power Of Simplicity](isw/papers-resumenes/Self:The-Power-Of-Simplicity.md)                                                     | Resumen del paper SELF: The Power of Simplicity de David Ungar y Randall B. Smith.                      |
+| [Desing Principles Behind Smalltalk](isw/papers-resumenes/Desing-Principles-Behind-Smalltalk.md)                                          | Resumen del paper Desgin Principles Behind Smalltalk de Daniel H. Ingalls.                              |
+| [Polymorphic Hierarchy](isw/papers-resumenes/Polymorphic-Hierarchy.md)                                                                    | Resumen del paper Polymorphic Hierarchy de Bobby Woolf.                                                 |
+| [A Simple Technique for Handling Multiple Polymorphism.md](isw/papers-resumenes/A-Simple-Technique-for-Handling-Multiple-Polymorphism.md) | Resumen del paper A Simple Technique for Handling Multiple Polymorphism.md                              |
 ### Parciales
 
 | Fecha | Nombre |
@@ -50,15 +52,15 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 
 ### Guías Resueltas
 
-| Nombre                                                                                                                         | Descripción                                                   |
-| ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------- |
-| [Práctica 0 — Bash Scripting y Makefile](sistemas-operativos/guias-practicas-so/guia0-bash-makefile/guia0-bash.md)             | Terminal de Linux, Bash scripting y compilación con Makefile. |
-| [Práctica 1 — Procesos y API del SO](sistemas-operativos/guias-practicas-so/guia1-procesos/guia1.md)                           | Procesos, comunicación entre procesos y API del SO.           |
-| [Práctica 2 — Scheduling](sistemas-operativos/guias-practicas-so/guia2-scheduling/guia2-scheduling.md)                         | Politicas, tipos y algortimos de scheduling.                  |
-| [Práctica 3 — Sincronizacion](sistemas-operativos/guias-practicas-so/guia3-sincronizacion/guia3-sincronizacion.md)             | Sincronizacion entre procesos, semaforos.                     |
-| [Práctica 4 — Drivers y Administración de E/S](sistemas-operativos/guias-practicas-so/guia4-drivers/guia4-drivers.md)          | Administración de la Entrada/Salida y creación de drivers.    |
-| [Practica 5 — Sistema de Archivos](sistemas-operativos/guias-practicas-so/guia5-sistema-archivos/guia5-sistema-de-archivos.md) | Análisis de los FS ext2 y FAT.                                |
-
+| Nombre                                                                                                                                           | Descripción                                                                         |
+| ------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------- |
+| [Práctica 0 — Bash Scripting y Makefile](sistemas-operativos/guias-practicas-so/guia0-bash-makefile/guia0-bash.md)                               | Terminal de Linux, Bash scripting y compilación con Makefile.                       |
+| [Práctica 1 — Procesos y API del SO](sistemas-operativos/guias-practicas-so/guia1-procesos/guia1.md)                                             | Procesos, comunicación entre procesos y API del SO.                                 |
+| [Práctica 2 — Scheduling](sistemas-operativos/guias-practicas-so/guia2-scheduling/guia2-scheduling.md)                                           | Politicas, tipos y algortimos de scheduling.                                        |
+| [Práctica 3 — Sincronizacion](sistemas-operativos/guias-practicas-so/guia3-sincronizacion/guia3-sincronizacion.md)                               | Sincronizacion entre procesos, semaforos.                                           |
+| [Práctica 4 — Drivers y Administración de E/S](sistemas-operativos/guias-practicas-so/guia4-drivers/guia4-drivers.md)                            | Administración de la Entrada/Salida y creación de drivers.                          |
+| [Practica 5 — Sistema de Archivos](sistemas-operativos/guias-practicas-so/guia5-sistema-archivos/guia5-sistema-de-archivos.md)                   | Análisis de los FS ext2 y FAT.                                                      |
+| [Practica 6 — Administración de memoria](sistemas-operativos/guias-practicas-so/guia6-administracion-memoria/guia6-administracion-de-memoria.md) | Sistema de paginación, políticas de remplazo y análisis de algoritmos de remplazo . |
 ### Resúmenes
 
 | Nombre | Descripción |
@@ -73,6 +75,7 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 |[Teorica 8 — Sistema de archivos](sistemas-operativos/teoricas/teo8-sistema-de-archivos.md)| Sistema de archivos de un **SO**. |
 
 ### Parciales
+
 _Por el momento no hay material cargado._
 
 ### Talleres
@@ -97,5 +100,3 @@ _Por el momento no hay material cargado._
 |[Clase6 — Resumen](complejidad-computacional/resumenes/clase6-resumen.md)|Jerarquia de tiempos deterministicos y no-determinísticas, Teorema de Ladner. |
 |[Clase7 — Resumen](complejidad-computacional/resumenes/clase7-resumen)|Espacio usado por un cómputo, espacio polinomial y teorema de Savicth. |
 |[Clase8 — Resumen](complejidad-computacional/resumenes/clase8-resumen)| Espacio logarítmicos y Teorema de Immerman-Szelepcsényi. |
-
->**Aclaracion:** Se recomienda descargar los Markdown y renderizarlos mediante VsCode utilizando `Ctrl + Shift + v`
