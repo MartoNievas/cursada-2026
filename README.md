@@ -98,5 +98,6 @@ _Por el momento no hay material cargado._
 |[Clase 4 — Resumen](complejidad-computacional/resumenes/clase4-resumen.md) | Máquinas no-determinísticas, reducibilidad polinomial (Karp), NP-completitud y Lógica Proposicional (SAT/3SAT). |
 |[Clase5 — Resumen](complejidad-computacional/resumenes/clase5-resumen.md) | Teorema Cook-Levin, Problemas **NP-completos**, clase **coNP**, las clases **EXPTIME** y **NEXPTIME** y **P VS NP**. |
 |[Clase6 — Resumen](complejidad-computacional/resumenes/clase6-resumen.md)|Jerarquia de tiempos deterministicos y no-determinísticas, Teorema de Ladner. |
-|[Clase7 — Resumen](complejidad-computacional/resumenes/clase7-resumen)|Espacio usado por un cómputo, espacio polinomial y teorema de Savicth. |
-|[Clase8 — Resumen](complejidad-computacional/resumenes/clase8-resumen)| Espacio logarítmicos y Teorema de Immerman-Szelepcsényi. |
+|[Clase7 — Resumen](complejidad-computacional/resumenes/clase7-resumen.md)|Espacio usado por un cómputo, espacio polinomial y teorema de Savicth. |
+|[Clase8 — Resumen](complejidad-computacional/resumenes/clase8-resumen.md)| Espacio logarítmicos y Teorema de Immerman-Szelepcsényi. |
+|[Clase9 — Resumen](complejidad-computacional/resumenes/clase9-resumen.md)| Jerarquía Polinomial y propiedades de la misma. |
