@@ -1,28 +1,32 @@
 # Complejidad Computacional — Clase 7
 
-## Espacio usado por un computo
+**Complejidad Computacional — FCEyN, Universidad de Buenos Aires**
 
-### Espacio de una maquina deterministica
+---
+
+## 1. Espacio usado por un computo
+
+### 1.1 Espacio de una maquina deterministica
 
 **Definicion:** Dada una maquina deterministica $M$ y $x \in \{0,1\}^*$, el **espacio** que usa $M$ con entrada $x$ es la cantidad de celdas por las que alguna vez paso la cabeza en las cintas de trabajo y de salida a lo largo del computo de $M$ a partir de $x$.
 
-### Espacio en una maquina no-deterministica
+### 1.2 Espacio en una maquina no-deterministica
 
 **Definicion:** Identica a la anterior, con la diferencia de que una maquina no-deterministica tiene multiples computos. El espacio usado es el maximo sobre todos ellos.
 
-### Espacio usado en una maquina
+### 1.3 Espacio usado en una maquina
 
 **Definicion:** Sea $M$ una maquina (deterministica o no-deterministica).
 
 - **Usa espacio** $S(n)$ si para toda entrada $x$, el espacio que usa $M$ con entrada $x$ es a lo sumo $S(|x|)$.
 - **Usa espacio** $O(S(n))$ si existe una constante $c$ tal que para todo $x$, salvo finitos, $M$ con entrada $x$ usa espacio $c \cdot S(|x|)$.
 
-### SPACE($S(n)$) y NSPACE($S(n)$)
+### 1.4 SPACE($S(n)$) y NSPACE($S(n)$)
 
 - **SPACE($S(n)$):** clase de lenguajes $\mathbb{L}$ tal que existe una maquina deterministica $M$ que decide $\mathbb{L}$ usando espacio $O(S(n))$.
 - **NSPACE($S(n)$):** clase de lenguajes $\mathbb{L}$ tal que existe una maquina no-deterministica $N$ que decide $\mathbb{L}$ usando espacio $O(S(n))$.
 
-### Funciones construibles en espacio
+### 1.5 Funciones construibles en espacio
 
 **Definicion:** Una funcion $S : \mathbb{N} \to \mathbb{N}$ es **construible en espacio** si la funcion $1^n \mapsto S(n)$ es computable en espacio $O(S(n))$.
 
@@ -32,7 +36,7 @@ En criollo: existe una maquina deterministica que, a partir de $n$ unos, computa
 
 > A diferencia del tiempo, aqui si nos interesan funciones $S(n) < n$, ya que no medimos el espacio de la cinta de entrada. Sin embargo, muchas veces vamos a requerir $S(n) \geq \log n$ para poder recordar cualquier indice de la cinta de entrada (representable con $\leq \log n$ bits).
 
-### DTIME($S(n)$) $\subseteq$ SPACE($S(n)$) $\subseteq$ NSPACE($S(n)$)
+### 1.6 DTIME($S(n)$) $\subseteq$ SPACE($S(n)$) $\subseteq$ NSPACE($S(n)$)
 
 **Proposicion:** $\textbf{DTIME}(S(n)) \subseteq \textbf{SPACE}(S(n))$
 
@@ -42,7 +46,7 @@ En criollo: existe una maquina deterministica que, a partir de $n$ unos, computa
 
 **Demostracion:** Toda maquina deterministica puede simularse por una no-deterministica que decide el mismo lenguaje con el mismo uso de espacio.
 
-### Grafo de configuraciones
+### 1.7 Grafo de configuraciones
 
 **Definicion:** Sea $M$ una maquina que usa espacio $S(n)$. El **grafo de configuraciones** de $M$ con entrada $x$, notado $G_{M,x}$, es un grafo dirigido donde:
 
@@ -56,7 +60,7 @@ Propiedades segun el tipo de maquina:
 - Si $M$ es **deterministica**: $G_{M,x}$ tiene out-degree 1. Hay un unico estado final $C_{si}$.
 - Si $N$ es **no-deterministica**: $G_{N,x}$ tiene out-degree $\leq 2$. Hay un unico estado final $C_{si}$.
 
-### Codificacion de configuraciones
+### 1.8 Codificacion de configuraciones
 
 **Proposicion:** Sea $M$ una maquina que usa espacio $S(n)$ con $S(n) \geq \log n$. Existe una constante $c$ (dependiente de $M$) tal que para todo $x$, cada vertice de $G_{M,x}$ se puede describir con $c \cdot S(|x|)$ bits. Por lo tanto, $G_{M,x}$ tiene a lo sumo $2^{c \cdot S(|x|)}$ nodos.
 
@@ -72,7 +76,7 @@ donde:
 
 En total: $|C| = d \cdot ((k+1) \cdot S(n) + \log n) = c \cdot S(n)$.
 
-### NSPACE($S(n)$) $\subseteq$ DTIME($2^{O(S(n))}$)
+### 1.9 NSPACE($S(n)$) $\subseteq$ DTIME($2^{O(S(n))}$)
 
 **Proposicion:** Si $S$ es construible en espacio, entonces $\textbf{NSPACE}(S(n)) \subseteq \textbf{DTIME}(2^{O(S(n))})$.
 
@@ -85,16 +89,16 @@ Como el out-degree de $G_{N,x}$ es $\leq 2$, la cantidad de aristas es $O(2^{O(S
 
 ---
 
-## Espacio polinomial: PSPACE y NPSPACE
+## 2. Espacio polinomial: PSPACE y NPSPACE
 
-### Definicion
+### 2.1 Definicion
 
 - **PSPACE** $= \bigcup_{c > 0} \text{SPACE}(n^c)$
 - **NPSPACE** $= \bigcup_{c > 0} \text{NSPACE}(n^c)$
 
 **Observacion:** $\textbf{PSPACE} \subseteq \textbf{NPSPACE} \subseteq \textbf{ExpTime}$.
 
-### NP $\subseteq$ PSPACE
+### 2.2 NP $\subseteq$ PSPACE
 
 **Proposicion:** $\textbf{NP} \subseteq \textbf{PSPACE}$.
 
@@ -106,7 +110,7 @@ Definimos $M'$ que con entrada $x$ simula $M(\langle x, u \rangle)$ para cada $u
 
 $M'$ corre en tiempo exponencial, pero solo usa espacio $p(|x|)$ mas el espacio que usa $M$ con entrada $\langle x, u \rangle$. Por lo tanto $L \in \textbf{PSPACE}$.
 
-### La jerarquia de espacios
+### 2.3 La jerarquia de espacios
 
 **Teorema:** Si $f, g$ son construibles en espacio y $f(n) = o(g(n))$, entonces:
 
@@ -124,9 +128,9 @@ Por construccion $D \in \textbf{SPACE}(g(n))$. Si el lenguaje de $D$ estuviera e
 
 ---
 
-## Formulas booleanas cuantificadas (QBF)
+## 3. Formulas booleanas cuantificadas (QBF)
 
-### Definicion
+### 3.1 Definicion
 
 Una **formula booleana cuantificada (QBF)** es una expresion de la forma:
 
@@ -147,18 +151,18 @@ $$\psi = \forall x_1 \exists x_2 \forall x_3\ (x_1 \vee \neg x_2) \wedge (\neg x
 
 Es falsa: si $x_1 = 1$, entonces $x_3$ debe ser 1, pero $x_3$ esta cuantificada universalmente.
 
-### Eliminacion de cuantificadores
+### 3.2 Eliminacion de cuantificadores
 
 Dada $\psi = Q_1 x_1\ \rho(x_1, \dots, x_n)$, definimos $\psi \upharpoonright_{x_1 = b}$ como el resultado de reemplazar todas las ocurrencias de $x_1$ en $\rho$ por la constante $b \in \{0, 1\}$.
 
 - Si $Q_1 = \forall$: $\models \psi \iff \models \psi \upharpoonright_{x_1=0}$ y $\models \psi \upharpoonright_{x_1=1}$.
 - Si $Q_1 = \exists$: $\models \psi \iff \models \psi \upharpoonright_{x_1=0}$ o $\models \psi \upharpoonright_{x_1=1}$.
 
-### El problema TQBF
+### 3.3 El problema TQBF
 
 $$\textbf{TQBF} = \{ \langle \psi \rangle : \psi \text{ es una QBF tal que } \models \psi \}$$
 
-### TQBF $\in$ PSPACE
+### 3.4 TQBF $\in$ PSPACE
 
 **Teorema:** $\textbf{TQBF} \in \textbf{PSPACE}$.
 
@@ -179,7 +183,7 @@ F(psi):
 
 Cada llamado recursivo reutiliza el mismo espacio. En cada nivel decrementamos el numero de variables. Como cada llamado necesita espacio $O(|\psi|)$ para escribir la formula con la variable reemplazada, y hay a lo sumo $n \leq |\psi|$ niveles de recursion, el espacio total es $O(|\psi|^2)$. Luego $\textbf{TQBF} \in \textbf{PSPACE}$.
 
-### QBFs con variables libres y QBFs generalizadas
+### 3.5 QBFs con variables libres y QBFs generalizadas
 
 Podemos extender las QBFs con **variables libres** $y_1, \dots, y_m$:
 
@@ -197,7 +201,7 @@ $$\neg \forall x\,\psi = \exists x\,\neg\psi \qquad \neg\exists x\,\psi = \foral
 
 (con $Q \in \{\forall, \exists\}$, $* \in \{\wedge, \vee\}$, y $\psi$ sin ocurrencias libres de $x$).
 
-### El problema CHECKQBF
+### 3.6 El problema CHECKQBF
 
 $$\textbf{CHECKQBF} = \{ \langle \psi, v \rangle : \psi \text{ es una QBF generalizada con } m \text{ variables libres},\ v \in \{0,1\}^m,\ v \models \psi \}$$
 
@@ -209,7 +213,7 @@ $$v \models \psi(y_1, \dots, y_m) \iff \models \psi''$$
 
 La transformacion $(\psi, v) \mapsto \langle \psi'' \rangle$ es computable en tiempo polinomial.
 
-### TQBF es PSPACE-completo
+### 3.7 TQBF es PSPACE-completo
 
 **Teorema:** $\textbf{TQBF} \in \textbf{PSPACE-hard}$.
 
@@ -253,7 +257,9 @@ lo que prueba $L \leq_p \textbf{CHECKQBF} \leq_p \textbf{TQBF}$.
 
 **Corolario:** $\textbf{TQBF} \in \textbf{PSPACE-completo}$.
 
-## Teorema de Savitch
+---
+
+## 4. Teorema de Savitch
 
 **Teorema (Savitch):** **NSPACE**$(S(n))$ $\subseteq$ **SPACE**$(S(n)^2)$
 
@@ -262,8 +268,26 @@ lo que prueba $L \leq_p \textbf{CHECKQBF} \leq_p \textbf{TQBF}$.
 [Demostracion en la pagina 39](../teoricas/clase7.pdf)
 
 
-### Diagrama de inclusión de clases de complejidad
+### 4.1 Diagrama de inclusión de clases de complejidad
 
 <p align="center">
   <img src="img/inclusion.png" alt="Diagrama de inclusion">
 </p>
+
+---
+
+## Resumen
+
+| Concepto | Descripción |
+|----------|-------------|
+| Espacio de un cómputo | Cantidad de celdas visitadas en las cintas de trabajo y salida (el máximo sobre todos los cómputos, si la máquina es no-determinística). |
+| SPACE($S$) / NSPACE($S$) | Lenguajes decidibles en espacio $O(S(n))$ por máquinas determinísticas / no-determinísticas. |
+| Función construible en espacio | $1^n \mapsto S(n)$ es computable en espacio $O(S(n))$. |
+| $DTIME(S) \subseteq SPACE(S) \subseteq NSPACE(S)$ | Relación básica entre las clases de tiempo y de espacio. |
+| Grafo de configuraciones $G_{M,x}$ | Vértices = configuraciones alcanzables con $S(n)$ celdas; $M$ acepta $x$ sii hay un camino de la configuración inicial a una final. |
+| $NSPACE(S) \subseteq DTIME(2^{O(S(n))})$ | Se decide construyendo/recorriendo (BFS) el grafo de configuraciones, que tiene $2^{O(S(n))}$ nodos. |
+| PSPACE / NPSPACE | $\bigcup_c SPACE(n^c)$ / $\bigcup_c NSPACE(n^c)$; se cumple $NP \subseteq PSPACE$. |
+| Jerarquía de espacios | Si $f,g$ son construibles en espacio y $f(n)=o(g(n))$, entonces $SPACE(f(n)) \subsetneq SPACE(g(n))$. |
+| QBF / TQBF | Fórmula con cuantificadores $\forall,\exists$ en forma prenexa sobre variables booleanas; TQBF = conjunto de QBFs verdaderas, y $TQBF \in PSPACE$. |
+| TQBF es PSPACE-completo | Se prueba reduciendo cualquier $L \in PSPACE$ vía fórmulas $\psi_i$ que codifican caminos de longitud $\leq 2^i$ en el grafo de configuraciones. |
+| Teorema de Savitch | $NSPACE(S(n)) \subseteq SPACE(S(n)^2)$; como corolario, $PSPACE = NPSPACE$. |

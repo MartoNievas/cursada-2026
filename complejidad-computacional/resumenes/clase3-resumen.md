@@ -1,5 +1,9 @@
 # Complejidad Computacional — Clase 3
 
+**Complejidad Computacional — FCEyN, Universidad de Buenos Aires**
+
+---
+
 ## 1. Halt y máquina universal
 
 **Definición (Problema de la detención).** Definimos la función $halt: \{0,1\}^* \to \{0,1\}$ como:
@@ -66,3 +70,18 @@ $$
 * Certificado $u$: lista de $k$ nodos distintos de $V$ que forman un conjunto independiente.
 * Se codifica en una palabra $u$ de tamaño $O(k \lceil \log |V| \rceil)$. Como $k \le |V|$, $|u| = O(n \log n)$, por lo que $|u| = p(n)$ para un polinomio cuadrático $p$.
 * El verificador $M$ recibe $x$; si es de la forma $\langle \langle G, k \rangle, u \rangle$ y $u$ codifica un conjunto independiente válido, escribe 1; si no, 0. $M$ corre en tiempo polinomial, por ende $INDSET \in NP$.
+
+---
+
+## Resumen
+
+| Concepto | Descripción |
+|----------|-------------|
+| $halt(x)$ | Indica si la máquina $x$ con entrada $x$ termina; Turing (1936) probó que no es computable, por diagonalización. |
+| Máquina Universal $U$ | Computa $u(\langle i,x\rangle) = M_i(x)$, simulando cualquier máquina codificada, con overhead $O(t\log t)$. |
+| Máquina Universal con tiempo acotado $\tilde U$ | Versión total: computa $\tilde u(\langle i,t,x\rangle)$, indicando si $M_i(x)$ termina en $\leq t$ pasos y devolviendo su salida. |
+| $DTIME(T(n))$ | Lenguajes decidibles en tiempo $O(T(n))$ por una máquina determinística. |
+| Clase $P$ | $\bigcup_{c>0} DTIME(n^c)$; los problemas considerados "factibles". |
+| Clase $NP$ | Lenguajes con un verificador determinístico en tiempo polinomial que acepta $\langle x,u\rangle$ para algún certificado $u$ de tamaño polinomial. |
+| $P \subseteq NP$ | Todo problema decidible en tiempo polinomial admite un verificador trivial (con certificado vacío). |
+| INDSET | Ejemplo de problema en NP: existencia de un conjunto independiente de $\geq k$ vértices en un grafo, verificable dando la lista de nodos. |

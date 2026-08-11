@@ -1,6 +1,10 @@
 # Complejidad Computacional — Clase 5
 
-## Mini-configuración
+**Complejidad Computacional — FCEyN, Universidad de Buenos Aires**
+
+---
+
+## 1. Mini-configuración
 
 Consideremos una máquina determinística $M = (\Sigma, Q, \delta)$:
 - Sin cinta de salida.
@@ -20,7 +24,7 @@ tal que:
 - $b_i$ es el símbolo leído por la cabeza de trabajo en $C_i$.
 - $c_i$ es el estado de $C_i$.
 
-### Máquina oblivious
+### 1.1 Máquina oblivious
 
 Suponemos además que $M$ es oblivious: podemos calcular la posición de las cabezas de entrada y trabajo y el número de pasos en tiempo polinomial.
 
@@ -28,7 +32,7 @@ Suponemos además que $M$ es oblivious: podemos calcular la posición de las cab
 - $t(i,n)$: posición de la cabeza de trabajo en el paso $i$ en el cómputo de $M$ con entrada $0^n$.
 - $\mathrm{prev}(i,n) = \max( \{ j < i \mid t(j,n) = t(i,n) \} \cup \{1\} )$: el último paso anterior al paso $i$ en que la cabeza de trabajo visitó la misma celda, en el cómputo de $M$ con entrada $0^n$.
 
-### Mini-configuración: del paso $i-1$ al paso $i$
+### 1.2 Mini-configuración: del paso $i-1$ al paso $i$
 
 <p align="center">
   <img src="img/mini-configuracion.png" alt="Imagen transición">
@@ -43,7 +47,7 @@ Sea $z_i$ la $i$-ésima mini-configuración en el cómputo de $M$ con entrada $x
 - El contenido de la cinta de entrada en la posición $e(i,|x|)$.
 - El contenido de la cinta de trabajo en la posición $t(i,|x|)$, que se encuentra en $z_{\mathrm{prev}(i,|x|)}$.
 
-### La función $F$ representa la evolución en un paso
+### 1.3 La función $F$ representa la evolución en un paso
 
 Definimos para $i > 0$, $F : \{0,1\}^k \times \{0,1\}^k \times \{0,1\}^2 \to \{0,1\}^k$ como
 
@@ -53,7 +57,7 @@ $$
 
 y $F(w) = 0^k$ para los demás casos.
 
-### La función $F$ representada en CNF
+### 1.4 La función $F$ representada en CNF
 
 Tenemos
 
@@ -78,9 +82,9 @@ Podemos computar $\varphi_F$ a partir de $\langle F \rangle$ en tiempo polinomia
 
 ---
 
-## Teorema de Cook-Levin
+## 2. Teorema de Cook-Levin
 
-### SAT es NP-hard
+### 2.1 SAT es NP-hard
 
 **Teorema:** **SAT** $\in$ **NP-hard**.
 
@@ -90,7 +94,7 @@ Podemos computar $\varphi_F$ a partir de $\langle F \rangle$ en tiempo polinomia
 
 ---
 
-### 3SAT es NP-completo
+### 2.2 3SAT es NP-completo
 
 Ya vimos que **3SAT** $\in$ **NP**. Para ver que **3SAT** es **NP-hard** probamos:
 
@@ -98,9 +102,7 @@ $$
 \mathbf{SAT} \leq_p \mathbf{3SAT}.
 $$
 
-#### Demostración
-
-Queremos construir una función $f : \{0,1\}^* \to \{0,1\}^*$ computable en tiempo polinomial tal que
+**Demostración.** Queremos construir una función $f : \{0,1\}^* \to \{0,1\}^*$ computable en tiempo polinomial tal que
 
 $$
 \varphi \in \text{SAT} \iff f(\varphi) \in \text{3SAT}.
@@ -126,19 +128,15 @@ $$C_i' = (\ell_1 \lor y \lor z) \land (\ell_1 \lor y \lor \neg z) \land (\ell_1 
 **Caso $k_i > 3$, $C_i = (\ell_1 \lor \cdots \lor \ell_k)$:** Introducimos nuevas variables $y_1, \dots, y_{k-3}$:
 $$C_i' = (\ell_1 \lor \ell_2 \lor y_1) \land \bigwedge_{j=1}^{k-4}(\neg y_j \lor \ell_{j+2} \lor y_{j+1}) \land (\neg y_{k-3} \lor \ell_{k-1} \lor \ell_k).$$
 
-#### Correctitud
-
-**($\Rightarrow$)** Si $\varphi$ es satisfacible, existe una asignación que satisface todas las cláusulas originales. Podemos extenderla a las variables nuevas de forma consistente para satisfacer cada $C_i'$.
+**Correctitud.** **($\Rightarrow$)** Si $\varphi$ es satisfacible, existe una asignación que satisface todas las cláusulas originales. Podemos extenderla a las variables nuevas de forma consistente para satisfacer cada $C_i'$.
 
 **($\Leftarrow$)** Si $f(\varphi)$ es satisfacible, al restringir la asignación a las variables originales cada cláusula $C_i$ queda satisfecha.
 
-#### Complejidad
-
-Cada cláusula de tamaño $k_i$ se transforma en $O(k_i)$ cláusulas y se agregan a lo sumo $k_i - 3$ variables nuevas. Por lo tanto el tamaño de $f(\varphi)$ es polinomial en el tamaño de $\varphi$ y la transformación se computa en tiempo polinomial. $\blacksquare$
+**Complejidad.** Cada cláusula de tamaño $k_i$ se transforma en $O(k_i)$ cláusulas y se agregan a lo sumo $k_i - 3$ variables nuevas. Por lo tanto el tamaño de $f(\varphi)$ es polinomial en el tamaño de $\varphi$ y la transformación se computa en tiempo polinomial. $\blacksquare$
 
 ---
 
-## Problemas NP-completos
+## 3. Problemas NP-completos
 
 **Proposición:** **INDSET** $\in$ **NP-completo**.
 
@@ -152,15 +150,15 @@ Cada cláusula de tamaño $k_i$ se transforma en $O(k_i)$ cláusulas y se agrega
 
 ---
 
-## La clase coNP
+## 4. La clase coNP
 
-### Generalización: problemas C-completos y C-hard
+### 4.1 Generalización: problemas C-completos y C-hard
 
 Se puede generalizar la noción de **NP-hard** y **NP-completo** para otras clases de complejidad. Dada una clase **C**:
 
 - $L$ es **C-hard** si $L' \leq_p L$ para todo $L' \in \mathbf{C}$.
 
-### La clase coC
+### 4.2 La clase coC
 
 Dada una clase de complejidad **C**, definimos
 
@@ -168,7 +166,7 @@ $$
 \mathbf{coC} = \{L : \bar{L} \in \mathbf{C}\}.
 $$
 
-### La clase coNP
+### 4.3 La clase coNP
 
 $$
 \mathbf{coNP} = \{L : \bar{L} \in \mathbf{NP}\}.
@@ -180,15 +178,11 @@ $$
 x \in L \iff \forall\, u \in \{0,1\}^{p(|x|)},\quad M(\langle x, u \rangle) = 1.
 $$
 
-### Relación de coNP con P y NP
+### 4.4 Relación de coNP con P y NP
 
-#### Ejercicio
+**Ejercicio.** $\mathbf{P} \subseteq \mathbf{NP} \cap \mathbf{coNP}$
 
-$\mathbf{P} \subseteq \mathbf{NP} \cap \mathbf{coNP}$
-
-#### Demostración
-
-Sea $L \in \mathbf{P}$. Entonces existe una máquina determinística $M$ que decide $L$ en tiempo polinomial.
+**Demostración.** Sea $L \in \mathbf{P}$. Entonces existe una máquina determinística $M$ que decide $L$ en tiempo polinomial.
 
 **$\mathbf{P} \subseteq \mathbf{NP}$:** Construimos una máquina no determinística $N$ que ignora el no determinismo y simula a $M$ deterministamente. Entonces $N$ decide $L$ en tiempo polinomial, luego $L \in \mathbf{NP}$.
 
@@ -208,13 +202,9 @@ $$
 
 ---
 
-#### Ejercicio
+**Ejercicio.** Si $\mathbf{P} = \mathbf{NP}$, entonces $\mathbf{NP} = \mathbf{coNP}$.
 
-Si $\mathbf{P} = \mathbf{NP}$, entonces $\mathbf{NP} = \mathbf{coNP}$.
-
-#### Demostración
-
-Queremos probar que $\forall L : L \in \mathbf{NP} \iff \bar{L} \in \mathbf{NP}$.
+**Demostración.** Queremos probar que $\forall L : L \in \mathbf{NP} \iff \bar{L} \in \mathbf{NP}$.
 
 Observamos primero que $\mathbf{P}$ es cerrado bajo complemento:
 
@@ -232,7 +222,7 @@ Por lo tanto $\mathbf{NP} \subseteq \mathbf{coNP}$. El argumento simétrico da $
 
 ---
 
-## Las clases ExpTime y NExpTime
+## 5. Las clases ExpTime y NExpTime
 
 $$
 \mathbf{ExpTime} = \bigcup_{c>0} \mathbf{DTime}(2^{n^c}), \qquad \mathbf{NExpTime} = \bigcup_{c>0} \mathbf{NTime}(2^{n^c}).
@@ -246,13 +236,9 @@ $$
 \mathbf{P} \subseteq \mathbf{NP} \subseteq \mathbf{ExpTime} \subseteq \mathbf{NExpTime}.
 $$
 
-#### Ejercicio
+**Ejercicio.** $\mathbf{NP} \subseteq \mathbf{ExpTime}$
 
-$\mathbf{NP} \subseteq \mathbf{ExpTime}$
-
-#### Demostración
-
-Sea $L \in \mathbf{NP}$. Entonces existe una máquina no determinística $N$ y un polinomio $p(n)$ tal que $N$ acepta en a lo sumo $p(|x|)$ pasos. Sea $c$ una cota del número de transiciones posibles de $N$ en cada paso. El árbol de cómputo de $N$ sobre $x$ tiene a lo sumo $c^{p(|x|)}$ ramas.
+**Demostración.** Sea $L \in \mathbf{NP}$. Entonces existe una máquina no determinística $N$ y un polinomio $p(n)$ tal que $N$ acepta en a lo sumo $p(|x|)$ pasos. Sea $c$ una cota del número de transiciones posibles de $N$ en cada paso. El árbol de cómputo de $N$ sobre $x$ tiene a lo sumo $c^{p(|x|)}$ ramas.
 
 Construimos una máquina determinística $M$ que recorre todas las ramas del árbol y acepta si alguna acepta. Su tiempo de ejecución es $O(c^{p(|x|)})$, que es exponencial en $|x|$. Luego $L \in \mathbf{ExpTime}$. $\blacksquare$
 
@@ -262,7 +248,7 @@ Construimos una máquina determinística $M$ que recorre todas las ramas del ár
 
 ---
 
-## P vs NP
+## 6. P vs NP
 
 La pregunta de si $\mathbf{P} = \mathbf{NP}$ es uno de los problemas abiertos más importantes de las matemáticas y la informática teórica. Fue formalizada por Cook y Karp en la década de 1970 y es uno de los siete **Problemas del Milenio** del Clay Mathematics Institute, con un premio de un millón de dólares por su resolución.
 
@@ -276,3 +262,21 @@ La pregunta de si $\mathbf{P} = \mathbf{NP}$ es uno de los problemas abiertos m�
 - La mayoría de los expertos cree que $\mathbf{P} \neq \mathbf{NP}$, pero no existe demostración.
 
 **Consecuencias de $\mathbf{P} = \mathbf{NP}$:** Si fuera cierto, todos los problemas **NP-completos** (SAT, TSP, KNAPSACK, etc.) serían resolubles en tiempo polinomial, con implicaciones profundas en criptografía, optimización, inteligencia artificial y biología computacional. En particular, la mayor parte de la criptografía moderna, que se basa en la dificultad de ciertos problemas de **NP**, dejaría de ser segura.
+
+---
+
+## Resumen
+
+| Concepto | Descripción |
+|----------|-------------|
+| Mini-configuración $z_i$ | Tupla $(a_i,b_i,c_i)$ con los símbolos leídos y el estado en el paso $i$ de un cómputo oblivious. |
+| Función $F$ y $\varphi_F$ | $F$ describe la evolución de la mini-configuración en un paso; se representa como fórmula CNF de tamaño constante (fijada la máquina $M$). |
+| Teorema de Cook-Levin | SAT es NP-hard (y por lo tanto NP-completo, ya que SAT $\in$ NP). |
+| SAT $\leq_p$ 3SAT | Toda fórmula CNF se transforma en una 3CNF equivalente, agregando variables auxiliares por cada cláusula de tamaño $\neq 3$. |
+| INDSET, CAMHAM, TSP, KNAPSACK | Ejemplos adicionales de problemas NP-completos. |
+| Clase $coC$ / $coNP$ | $coC = \{L : \bar L \in C\}$; en particular $coNP = \{L : \bar L \in NP\}$, caracterizada por un cuantificador $\forall$ sobre un verificador polinomial. |
+| $P \subseteq NP \cap coNP$ | P es cerrado bajo complemento, por lo que está contenido tanto en NP como en coNP. |
+| $P=NP \Rightarrow NP=coNP$ | Consecuencia directa de que P es cerrado bajo complemento. |
+| ExpTime / NExpTime | $\bigcup_c DTime(2^{n^c})$ y $\bigcup_c NTime(2^{n^c})$; análogos exponenciales de P y NP, con $P\subseteq NP\subseteq ExpTime\subseteq NExpTime$. |
+| $P=NP \Rightarrow ExpTime=NExpTime$ | Se prueba simulando deterministamente el árbol de cómputo no-determinístico completo. |
+| Problema P vs NP | Uno de los Problemas del Milenio; se cree que $P\neq NP$ pero no existe demostración. |

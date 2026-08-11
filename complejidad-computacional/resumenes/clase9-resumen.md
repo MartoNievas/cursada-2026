@@ -1,6 +1,10 @@
-# Resumen — Clase 9: La Jerarquía Polinomial
+# Complejidad Computacional — Clase 9: La Jerarquía Polinomial
 
-## Problemas NP
+**Complejidad Computacional — FCEyN, Universidad de Buenos Aires**
+
+---
+
+## 1. Problemas NP
 
 **Problema: SAT** (Satisfacción booleana en CNF)
 
@@ -16,7 +20,7 @@ $$\langle (V,E), k \rangle \in INDSET \quad \text{sii} \quad \exists C \; C \sub
 
 ---
 
-## Problemas coNP
+## 2. Problemas coNP
 
 **Problema: Tautología**
 
@@ -26,7 +30,7 @@ $$\langle \varphi \rangle \in TAUT \quad \text{sii} \quad \forall v \; v \models
 
 ---
 
-## Motivación: problemas con cuantificadores alternados
+## 3. Motivación: problemas con cuantificadores alternados
 
 **Problema: Conjunto independiente máximo**
 
@@ -38,9 +42,9 @@ $$\langle (V,E), k \rangle \in MAXINDSET \quad \text{sii} \quad \exists C \; \fo
 
 ---
 
-## La jerarquía polinomial
+## 4. La jerarquía polinomial
 
-### Definición: $\Sigma_i^p$, $\Pi_i^p$
+### 4.1 Definición: $\Sigma_i^p$, $\Pi_i^p$
 
 Para $i > 0$, $\Sigma_i^p$ es la clase de lenguajes $\mathcal{L}$ tales que existe una máquina determinística $M$ en tiempo polinomial y un polinomio $q$ tal que:
 
@@ -56,7 +60,7 @@ donde $Q_i = \begin{cases} \forall & \text{si } i \text{ es par} \\ \exists & \t
 
 ---
 
-## Propiedades de la jerarquía polinomial
+## 5. Propiedades de la jerarquía polinomial
 
 **Proposición:**
 - $\Sigma_1^p = \mathbf{NP}$, $\quad \Pi_1^p = \mathbf{coNP}$
@@ -64,13 +68,13 @@ donde $Q_i = \begin{cases} \forall & \text{si } i \text{ es par} \\ \exists & \t
 - $\Sigma_i^p \subseteq \Pi_{i+1}^p$, $\quad \Pi_i^p \subseteq \Sigma_{i+1}^p$
 - $\mathbf{PH} = \bigcup_{i \geq 0} \Sigma_i^p$
 
-### Ejemplo: MAXINDSET $\in \Sigma_2^p$
+### 5.1 Ejemplo: MAXINDSET $\in \Sigma_2^p$
 
 > 📄 [Demostración — p. 10 del PDF](../teoricas/clase9.pdf#page=14)
 
 ---
 
-## ¿Es la jerarquía estrictamente creciente?
+## 6. ¿Es la jerarquía estrictamente creciente?
 
 La pregunta $P \stackrel{?}{=} NP$ se generaliza a $\Sigma_i^p \stackrel{?}{=} \Sigma_{i+1}^p$; ninguna se conoce.
 
@@ -82,7 +86,7 @@ La pregunta $P \stackrel{?}{=} NP$ se generaliza a $\Sigma_i^p \stackrel{?}{=} \
 
 ---
 
-## Clausura bajo reducciones polinomiales
+## 7. Clausura bajo reducciones polinomiales
 
 **Proposición:**
 - Si $\mathcal{L} \in \Sigma_i^p$ y $\mathcal{L}' \leq_p \mathcal{L}$, entonces $\mathcal{L}' \in \Sigma_i^p$.
@@ -92,16 +96,16 @@ La pregunta $P \stackrel{?}{=} NP$ se generaliza a $\Sigma_i^p \stackrel{?}{=} \
 
 ---
 
-## Problemas $\Sigma_i^p$-completos
+## 8. Problemas $\Sigma_i^p$-completos
 
-### Definición: $\Sigma_i^p$-hard y $\Sigma_i^p$-completo
+### 8.1 Definición: $\Sigma_i^p$-hard y $\Sigma_i^p$-completo
 
 - $\mathcal{L}$ es $\Sigma_i^p$**-hard** si $\mathcal{L}' \leq_p \mathcal{L}$ para todo $\mathcal{L}' \in \Sigma_i^p$.
 - $\mathcal{L}$ es $\Sigma_i^p$**-completo** si $\mathcal{L} \in \Sigma_i^p$ y $\mathcal{L}$ es $\Sigma_i^p$-hard.
 
 Análogamente se definen $\Pi_i^p$-hard, $\Pi_i^p$-completo, PH-hard, PH-completo.
 
-### Problema canónico: $\Sigma_i\mathsf{SAT}$
+### 8.2 Problema canónico: $\Sigma_i\mathsf{SAT}$
 
 $$\Sigma_i\mathsf{SAT} = \left\{ \langle \varphi \rangle : \varphi \text{ es una QBF de la forma } \exists \bar{y}_1 \forall \bar{y}_2 \cdots Q_i \bar{y}_i \; \psi(\bar{y}_1, \dots, \bar{y}_i) \text{ con cuantificadores alternados y } \models \varphi \right\}$$
 
@@ -112,7 +116,7 @@ $$\Sigma_i\mathsf{SAT} = \left\{ \langle \varphi \rangle : \varphi \text{ es una
 
 ---
 
-## ¿Existen problemas PH-completos?
+## 9. ¿Existen problemas PH-completos?
 
 **Proposición:** Si existe $\mathcal{L} \in \mathbf{PH}$-completo, entonces existe $i$ tal que $PH = \Sigma_i^p$.
 
@@ -122,7 +126,7 @@ Se cree que para todo $i$, $\Sigma_i^p \subsetneq \Sigma_{i+1}^p$ (la jerarquía
 
 ---
 
-## Relación con otras clases
+## 10. Relación con otras clases
 
 **Ejercicio:** $PH \subseteq \mathbf{PSpace}$.
 
@@ -133,3 +137,21 @@ Se cree que para todo $i$, $\Sigma_i^p \subsetneq \Sigma_{i+1}^p$ (la jerarquía
 Mapa de inclusiones conocidas:
 
 $$L \subseteq NL = coNL \subseteq P \subseteq NP, coNP \subseteq \Sigma_2^p, \Pi_2^p \subseteq \cdots \subseteq PH \subseteq PSpace = NPSpace \subseteq ExpTime \subseteq \cdots$$
+
+---
+
+## Resumen
+
+| Concepto | Descripción |
+|----------|-------------|
+| SAT, INDSET | Problemas NP típicos, con verificación existencial ($\exists u$) en tiempo polinomial. |
+| TAUT | Problema coNP típico: tautologías en CNF, con verificación universal ($\forall v$). |
+| MAXINDSET | Motiva los cuantificadores alternados $\exists\forall$: no se puede expresar con un solo $\exists$ o $\forall$. |
+| $\Sigma_i^p$, $\Pi_i^p$ | Clases definidas por $i-1$ alternancias de cuantificadores sobre un predicado verificable en tiempo polinomial; $\Sigma_1^p=NP$, $\Pi_1^p=coNP$, $\Pi_i^p=\{\bar{\mathcal{L}}:\mathcal{L}\in\Sigma_i^p\}$. |
+| Jerarquía polinomial (PH) | $\mathbf{PH} = \bigcup_{i\geq 0}\Sigma_i^p$; se cumple $\Sigma_i^p\subseteq\Sigma_{i+1}^p$, $\Sigma_i^p\subseteq\Pi_{i+1}^p$ (y análogos). |
+| $P=NP \Rightarrow PH=P$ | Si P=NP, la jerarquía polinomial colapsa por completo a P. |
+| Clausura bajo $\leq_p$ | $\Sigma_i^p$ y $\Pi_i^p$ son cerradas bajo reducciones polinomiales. |
+| $\Sigma_i^p$-hard / $\Sigma_i^p$-completo | Generalización de NP-hard / NP-completo a cada nivel de la jerarquía polinomial. |
+| $\Sigma_i\mathsf{SAT}$ | Problema canónico $\Sigma_i^p$-completo: QBF con $i$ bloques de cuantificadores alternados, empezando en $\exists$. |
+| Problemas PH-completos | Si existieran, la jerarquía colapsaría en algún nivel ($PH=\Sigma_i^p$); se cree que no existen. |
+| $PH \subseteq PSpace$ | Cota superior de la jerarquía polinomial dentro del mapa de inclusiones conocidas ($L\subseteq NL\subseteq P\subseteq NP,coNP\subseteq\cdots\subseteq PH\subseteq PSpace$). |

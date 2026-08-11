@@ -1,5 +1,9 @@
 # Complejidad Computacional — Clase 4
 
+**Complejidad Computacional — FCEyN, Universidad de Buenos Aires**
+
+---
+
 ## 1. Máquinas no-determinísticas
 
 **Máquinas determinísticas:** Hasta ahora vimos máquinas donde cada configuración evoluciona de una única forma. Un cómputo es una secuencia lineal $C_0 \Rightarrow C_1 \Rightarrow C_2 \Rightarrow \dots \Rightarrow C_l$ donde $C_l$ es final.
@@ -91,3 +95,18 @@ Cualquier problema $\mathcal{L} \in NP$ se reduce a TMSAT pasando el código del
 
 **Representación de funciones.**
 Cualquier función booleana $F: \{0,1\}^l \to \{0,1\}$ puede representarse con una fórmula $\varphi_F$ en CNF de tamaño $O(l \cdot 2^l)$, construida armando cláusulas para descartar explícitamente los casos donde la función da $0$.
+
+---
+
+## Resumen
+
+| Concepto | Descripción |
+|----------|-------------|
+| Máquina no-determinística | $\delta$ admite hasta dos evoluciones por paso; la máquina acepta $x$ si existe al menos un cómputo aceptador. |
+| $NDTIME(T(n))$ | Lenguajes decididos por una máquina no-determinística en tiempo $O(T(n))$. |
+| $NP = \bigcup_c NDTIME(n^c)$ | Equivalencia entre la definición de NP por verificador determinístico y por máquina no-determinística en tiempo polinomial. |
+| Reducción de Karp $\leq_p$ | $f$ computable en tiempo polinomial tal que $x\in\mathcal{L} \iff f(x)\in\mathcal{L}'$; es transitiva. |
+| NP-hard / NP-completo | $\mathcal{L}$ es NP-hard si todo $\mathcal{L}'\in NP$ se reduce a $\mathcal{L}$; NP-completo si además $\mathcal{L}\in NP$. |
+| TMSAT | Problema NP-completo "universal" que codifica el verificador, la entrada, el tamaño del certificado y el tiempo límite. |
+| SAT / 3SAT | Satisfacibilidad de fórmulas booleanas en CNF / 3CNF; ambos problemas están en NP. |
+| Representación en CNF | Toda función booleana $F:\{0,1\}^l\to\{0,1\}$ se representa con una fórmula CNF de tamaño $O(l\cdot 2^l)$. |

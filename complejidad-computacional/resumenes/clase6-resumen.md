@@ -1,8 +1,12 @@
 # Complejidad Computacional — Clase 6
 
-## La jerarquía de tiempos determinísticos
+**Complejidad Computacional — FCEyN, Universidad de Buenos Aires**
 
-### Notación de 'o chica' ($o$)
+---
+
+## 1. La jerarquía de tiempos determinísticos
+
+### 1.1 Notación de 'o chica' ($o$)
 
 **Definición:** Sean $f,g : \mathbb{N} \to \mathbb{N}$. Decimos que $f(n) \in o(g(n))$ si para todo $\epsilon > 0$:
 
@@ -18,7 +22,7 @@ $$
 
 > **Nota:** Si $f(n) \in o(g(n))$, entonces $f(n) \in O(g(n))$.
 
-### Re-codificación de máquinas determinísticas
+### 1.2 Re-codificación de máquinas determinísticas
 
 Ahora vamos a codificar cada máquina $M$ con *infinitas* cadenas $\langle \langle M \rangle, z \rangle$ para cualquier $z \in \{0,1\}^*$.
 
@@ -32,7 +36,7 @@ $$
 
 [Demostración en página 8](../teoricas/clase6.pdf)
 
-### Diagonalización
+### 1.3 Diagonalización
 
 Es la técnica usada para demostrar que el problema $\text{HALT}$ no es computable.
 
@@ -46,9 +50,9 @@ Para eso definimos una máquina $D$ tal que:
 
 ---
 
-## La jerarquía de tiempos no-determinísticos
+## 2. La jerarquía de tiempos no-determinísticos
 
-### Jerga de cómputos en máquinas no-determinísticas
+### 2.1 Jerga de cómputos en máquinas no-determinísticas
 
 Recordemos que un cómputo en una máquina no-determinística $N$, a partir de $x \in \{0,1\}^*$, es una secuencia $C_0, \dots, C_l$ de configuraciones tal que:
 
@@ -56,13 +60,13 @@ Recordemos que un cómputo en una máquina no-determinística $N$, a partir de $
 * $C_{i+1}$ es la evolución en un paso de $C_i$ dada por alguna de las 2 tuplas de $\delta$.
 * $C_l$ está en estado $q_{\text{si}}$ o $q_{\text{no}}$.
 
-### Codificación de cómputos en máquinas no-determinísticas
+### 2.2 Codificación de cómputos en máquinas no-determinísticas
 
 Para codificar un cómputo de $N$ con una secuencia $y \in \{0,1\}^*$ que representa las alternativas de $\delta$, si $N$ es una máquina no-determinística que corre en tiempo $T(n)$, toda cadena de $y_x \in \{0,1\}^{T(|x|)}$ representa un cómputo de $N$ a partir de $x$.
 
 > **Observación:** Secuencias más cortas que $T(|x|)$ son posiblemente cómputos incompletos.
 
-### Re-codificación de máquinas no-determinísticas
+### 2.3 Re-codificación de máquinas no-determinísticas
 
 Ahora hacemos lo mismo que hicimos para máquinas determinísticas, entonces la nueva codificación es:
 
@@ -84,9 +88,9 @@ entonces $\text{NDTIME}(f(n)) \subseteq \text{NDTIME}(g(n))$.
 
 ---
 
-## Teorema de Ladner
+## 3. Teorema de Ladner
 
-### Problemas **NP**-intermedios
+### 3.1 Problemas **NP**-intermedios
 
 **Teorema (Ladner):** Si $P \neq NP$, entonces existe un lenguaje $L$ tal que $L \in NP$, $L \notin P$, y $L$ no es $NP$-completo.
 
@@ -105,3 +109,16 @@ Vamos con unas cuantas proposiciones a partir de esta demostración:
 * **Proposición 3:** Existe $k$ tal que para todo $\psi$, $|\psi| > k \implies |F_{\psi}| < |\psi|$.
 
 [Demostración a partir de la página 29](../teoricas/clase6.pdf)
+
+---
+
+## Resumen
+
+| Concepto | Descripción |
+|----------|-------------|
+| Notación $o(g(n))$ | $f(n)/g(n) \to 0$; es una cota asintótica más fuerte que $O(g(n))$. |
+| Re-codificación $\langle\langle M\rangle, z\rangle$ | Cada máquina tiene infinitos índices $i$ que la representan, lo cual es necesario para diagonalizar sobre todas las máquinas de una clase de tiempo. |
+| Diagonalización | Técnica para construir una máquina $D$ que se comporta distinto a cualquier máquina de una clase de tiempo dada, usada para probar separaciones de clases (p. ej. HALT no computable). |
+| Jerarquía de tiempos determinísticos | Si $f,g$ son construibles en tiempo y $f(n)\log f(n) = o(g(n))$, entonces $DTIME(f(n)) \subsetneq DTIME(g(n))$. |
+| Jerarquía de tiempos no-determinísticos | Si $f,g$ son construibles en tiempo, no decrecientes, y $f(n+1) = o(g(n))$, entonces $NDTIME(f(n)) \subsetneq NDTIME(g(n))$. |
+| Teorema de Ladner | Si $P \neq NP$, existe un lenguaje $L \in NP$ tal que $L \notin P$ y $L$ no es NP-completo (un problema "NP-intermedio"). |

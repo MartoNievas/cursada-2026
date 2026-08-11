@@ -1,5 +1,9 @@
 # Complejidad Computacional — Clase 2
 
+**Complejidad Computacional — FCEyN, Universidad de Buenos Aires**
+
+---
+
 ## 1. Funciones computables
 
 **Definicion.** Sean $f : \Gamma^* \to \Gamma^*$ y $M = (\Gamma', Q, \delta)$ una maquina. Se dice que $M$ **computa** $f$ si para todo $x \in \Gamma^*$ hay un computo $C_0, \ldots, C_\ell$ de $M$ a partir de $x$ tal que en $C_\ell$ la cinta de salida tiene escrito $f(x)$ seguido de blancos. En este caso se nota $M(x) = f(x)$. Se dice que $f$ es **computable** si existe una maquina que la computa.
@@ -96,3 +100,19 @@ $$\delta : Q \times \Sigma \to \Sigma \times \{L,R,S\} \times Q$$
 **Proposicion (cintas bi-infinitas).** Si $f$ es computable por una maquina con cintas bi-infinitas en tiempo $T(n)$, entonces $f$ es computable por una maquina estandar en tiempo $O(T(n))$.
 
 *Idea de la prueba.* Se "pliega" cada cinta bi-infinita en una cinta semi-infinita codificando cada celda con un par de simbolos (uno para la parte positiva y uno para la parte negativa de la cinta), sobre el alfabeto $\{\triangleright\} \cup \{0,1,\square\}^2$. Luego se traduce al alfabeto estandar.
+
+---
+
+## Resumen
+
+| Concepto | Descripción |
+|----------|-------------|
+| Función computable | Existe una máquina $M$ tal que $M(x) = f(x)$ para toda entrada $x$. |
+| Función parcial computable | $M$ computa $f$: termina con $f(x)$ donde $f$ está definida, y se cuelga donde no lo está. |
+| Notación $O(g(n))$ | Cota asintótica superior salvo una constante multiplicativa. |
+| Tiempo polinomial | Existe una constante $c$ tal que $M$ corre en tiempo $O(n^c)$. |
+| Función construible en tiempo | $T(n)\geq n$ y $1^n \mapsto [T(n)]$ es computable en tiempo $O(T(n))$. |
+| Codificación de máquinas $\langle M \rangle$ | Toda máquina se codifica como una palabra binaria; hay una cantidad numerable de máquinas y de funciones computables (y por lo tanto existen funciones no computables). |
+| Reducción a cinta única | Toda máquina multicinta se simula con una máquina de cinta única en tiempo $O(T(n)^2)$. |
+| Máquina oblivious | La posición de las cabezas en el paso $i$ depende solo de $i$ y $|x|$, no de $x$; toda máquina admite una versión oblivious con penalización cuadrática en tiempo. |
+| Cintas bi-infinitas | Equivalentes a las cintas estándar salvo un factor constante en el tiempo de cómputo. |

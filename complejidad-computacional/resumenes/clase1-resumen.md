@@ -1,5 +1,9 @@
 # Complejidad Computacional — Clase 1
 
+**Complejidad Computacional — FCEyN, Universidad de Buenos Aires**
+
+---
+
 ## 1. Preliminares: Notación sobre palabras
 
 **Definicion.** Dado un alfabeto $\Gamma$, se define:
@@ -99,3 +103,18 @@ La maquina tiene una cinta de entrada (solo lectura), $k-2$ cintas de trabajo (l
 La **longitud** del computo es $\ell$. Se dice que $M$ **termina** con entrada $x$ si existe un computo de $M$ a partir de $x$.
 
 **Notacion.** Se fija un alfabeto finito $\Gamma$ con $\triangleright \notin \Gamma$ y se define $\Gamma' = \Gamma \cup \{\triangleright, \square\}$. Las maquinas trabajan con el alfabeto $\Gamma'$; las entradas y salidas son palabras sobre $\Gamma$.
+
+---
+
+## Resumen
+
+| Concepto | Descripción |
+|----------|-------------|
+| Notación de palabras | $\Gamma^*$, $\varepsilon$, $|\sigma|$, $\Gamma^k$: conjunto de palabras, palabra vacía, longitud y palabras de longitud exacta $k$ sobre un alfabeto. |
+| Representación binaria $[n]$ | Codificación de un número natural en binario; $|n|$ denota el tamaño de esa representación. |
+| Codificación autodelimitante $\langle\sigma\rangle$ | Duplica cada bit de $\sigma$ y agrega el sufijo $10$ para marcar el final de la cadena. |
+| Codificación de listas $\langle L\rangle$ | Concatena las codificaciones autodelimitantes de cada elemento y agrega el sufijo $01$ para marcar el fin de la lista. |
+| Problema de decisión | Función booleana $f:\{0,1\}^*\to\{0,1\}$, equivalente a un lenguaje $L(f)$ o a una función característica $\chi_L$. |
+| Máquina de Turing (multicinta) | Tripla $(\Sigma,Q,\delta)$ con cinta de entrada (solo lectura), cintas de trabajo y cinta de salida (solo escritura). |
+| Configuración | Descripción completa del estado de la máquina: contenido de todas las cintas, posición de cada cabeza y estado actual. |
+| Cómputo | Secuencia de configuraciones $C_0,\dots,C_\ell$ desde la configuración inicial hasta una final, evolucionando según $\delta$. |

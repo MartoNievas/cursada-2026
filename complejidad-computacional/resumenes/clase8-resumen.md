@@ -1,6 +1,10 @@
 # Complejidad Computacional — Clase 8
 
-## Espacio logarítmico: L y NL
+**Complejidad Computacional — FCEyN, Universidad de Buenos Aires**
+
+---
+
+## 1. Espacio logarítmico: L y NL
 
 Las clases de complejidad **L** y **NL** se definen de la siguiente manera:
 
@@ -14,7 +18,7 @@ $$NL = \text{NSPACE}(\log n)$$
 
 ---
 
-### Ejemplo: EVEN ∈ L
+### 1.1 Ejemplo: EVEN ∈ L
 
 Sea el problema:
 
@@ -34,7 +38,7 @@ La complejidad espacial total es $O(\log n)$, luego $\text{EVEN} \in L$. $\squar
 
 ---
 
-### Ejemplo de problema en NL
+### 1.2 Ejemplo de problema en NL
 
 **Problema PATH** (existencia de un camino de $s$ a $t$)
 
@@ -46,7 +50,7 @@ No sabemos si **PATH** $\in L$, pero sí sabemos que:
 
 ---
 
-### Reducibilidad para NL
+### 1.3 Reducibilidad para NL
 
 Recordemos que para la pregunta $P = NP$ usamos la reducibilidad polinomial $\leq_p$. Para la pregunta $L = NL$, esta no nos sirve.
 
@@ -56,15 +60,15 @@ Recordemos que para la pregunta $P = NP$ usamos la reducibilidad polinomial $\le
 
 ---
 
-## Funciones computables en L
+## 2. Funciones computables en L
 
-### Computable implícitamente en L
+### 2.1 Computable implícitamente en L
 
 > **Definición:** Una función $f$ es **computable implícitamente en L** si:
 > - Existe un polinomio $p$ tal que para todo $x \in \{0,1\}^*$, $|f(x)| \leq p(|x|)$.
 > - $\{\langle x, i \rangle : f(x)(i) = 1\}$ y $\{\langle x, i \rangle : i \leq |f(x)|\}$ están en **L**.
 
-### Trabajo-L computable
+### 2.2 Trabajo-L computable
 
 > **Definición:** Una función $f$ es **trabajo-L computable** si existe una máquina determinística que computa $f$ en espacio $O(\log n)$, contando solo el espacio de las cintas de trabajo y no el de la cinta de salida.
 
@@ -76,7 +80,7 @@ Recordemos que para la pregunta $P = NP$ usamos la reducibilidad polinomial $\le
 
 ---
 
-### Composición de funciones computables implícitamente en L
+### 2.3 Composición de funciones computables implícitamente en L
 
 > **Proposición:** Sean $f, g$ computables implícitamente en **L**. Entonces $g \circ f$ es computable implícitamente en **L**.
 
@@ -84,7 +88,7 @@ Recordemos que para la pregunta $P = NP$ usamos la reducibilidad polinomial $\le
 
 ---
 
-## Reducibilidad L
+## 3. Reducibilidad L
 
 > **Definición:** $\mathcal{L}$ es **L-reducible** a $\mathcal{L}'$, notado $\mathcal{L} \leq_l \mathcal{L}'$, si existe una función $f$ computable implícitamente en **L** tal que para todo $x$:
 > $$x \in \mathcal{L} \iff f(x) \in \mathcal{L}'$$
@@ -117,13 +121,13 @@ Por la proposición de composición, $f' \circ f$ también es computable implíc
 
 ---
 
-## Teorema de Immerman-Szelepcsényi
+## 4. Teorema de Immerman-Szelepcsényi
 
 > **Teorema:** PATH es **NL-completo**.
 
 [Demostración a partir de página 17](../teoricas/clase8.pdf)
 
-### Caracterización de NL con certificados
+### 4.1 Caracterización de NL con certificados
 
 Se puede dar un verificador y certificado que use espacio $O(\log n)$.
 
@@ -131,6 +135,21 @@ Se puede dar un verificador y certificado que use espacio $O(\log n)$.
 
 [Demostración a partir de página 20](../teoricas/clase8.pdf)
 
-### Versión general
+### 4.2 Versión general
 
 > **Teorema:** Si $S(n) \geq \log n$ es construible en espacio, entonces $\text{NSPACE}(S(n)) = \text{coNSPACE}(S(n))$.
+
+---
+
+## Resumen
+
+| Concepto | Descripción |
+|----------|-------------|
+| L / NL | $SPACE(\log n)$ / $NSPACE(\log n)$; se cumple $L \subseteq NL \subseteq P$. |
+| EVEN $\in L$ | Ejemplo de lenguaje decidible en espacio logarítmico: un contador de paridad que recorre la entrada bit a bit. |
+| PATH $\in NL$ | Existencia de un camino entre $s$ y $t$ en un grafo dirigido, decidible en espacio logarítmico no-determinístico. |
+| Computable implícitamente en L | $|f(x)|$ es polinomial en $|x|$ y tanto los bits de $f(x)$ como su longitud son decidibles en L. |
+| Trabajo-L computable | Computable en espacio $O(\log n)$ contando solo las cintas de trabajo (no la de salida); equivale a ser computable implícitamente en L. |
+| Reducción $\leq_l$ | $f$ computable implícitamente en L tal que $x \in \mathcal{L} \iff f(x) \in \mathcal{L}'$; es transitiva, y si $\mathcal{L}\leq_l\mathcal{L}'\in L$ entonces $\mathcal{L}\in L$. |
+| PATH es NL-completo | Se establece vía la reducibilidad $\leq_l$, análoga a la reducción de Karp pero para clases dentro de P. |
+| Teorema de Immerman-Szelepcsényi | $\overline{PATH} \in NL$; en general, $NSPACE(S(n)) = coNSPACE(S(n))$ para $S(n)\geq \log n$ construible en espacio. |
