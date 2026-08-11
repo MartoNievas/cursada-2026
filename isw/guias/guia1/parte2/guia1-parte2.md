@@ -1,8 +1,12 @@
-# Guía de Ejercicios - Ingeniería de Software I
-## Parte 1: Introducción al paradigma, el lenguaje y sus herramientas
-### Sección 2: Introducción al lenguaje Smalltalk
+# Guía 1 — Sección 2: Introducción al Lenguaje Smalltalk
 
-> Los enunciados de los ejercicios se encuentran en el PDF aparte [Enunciados](guia1-seccion2.pdf).
+**Ingeniería de Software — FCEyN, Universidad de Buenos Aires**
+
+*Parte 1: Introducción al paradigma, el lenguaje y sus herramientas.*
+
+---
+
+> Enunciado: [PDF](guia1-seccion2.pdf)
 
 ---
 
@@ -26,7 +30,7 @@
 
 ### 0.2
 
-[Ver codigo](code/ejercicio0-2.st)
+[Ver código](code/ejercicio0-2.st)
 
 - **Into (Step Into):**
 Entra dentro del método que se está ejecutando para ver su detalle paso a paso.
