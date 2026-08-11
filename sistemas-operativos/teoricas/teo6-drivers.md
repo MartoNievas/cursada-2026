@@ -1,6 +1,10 @@
 # Entrada/Salida - Drivers
 
-## Drivers y Controllers
+**Sistemas Operativos — FCEyN, Universidad de Buenos Aires**
+
+---
+
+## 1. Drivers y Controllers
 
 Dos definiciones importantes:
 
@@ -15,14 +19,14 @@ A continuación, una representación gráfica de cómo se conectan ambas capas y
 
 ---
 
-## E/S Asíncrona vs. Síncrona
+## 2. E/S Asíncrona vs. Síncrona
 
 La entrada/salida de un **SO** puede funcionar de dos maneras:
 
 - **Síncrona:** La ejecución de la **CPU** que solicita la E/S espera a que esta se complete.
 - **Asíncrona:** Cada E/S procede concurrentemente con la ejecución de la **CPU** que la solicita.
 
-### E/S Síncrona
+### 2.1 E/S Síncrona
 
 El proceso solicita una operación de E/S y se **bloquea**: el control no vuelve al programa del usuario hasta que la E/S se completa totalmente.
 
@@ -30,7 +34,7 @@ El proceso solicita una operación de E/S y se **bloquea**: el control no vuelve
 - **Ventaja:** Muy sencillo de programar, ya que el código sigue un orden lineal y predecible.
 - **Desventaja:** La **CPU** "pierde" tiempo que podría usar en otras tareas, ya que queda bloqueada esperando al hardware.
 
-### E/S Asíncrona
+### 2.2 E/S Asíncrona
 
 El proceso solicita la E/S y **continúa su ejecución inmediatamente**, sin esperar a que los datos estén listos.
 
@@ -40,11 +44,11 @@ El proceso solicita la E/S y **continúa su ejecución inmediatamente**, sin esp
 
 ---
 
-## Polling vs. Interrupciones
+## 3. Polling vs. Interrupciones
 
 Estas dos técnicas son las vías principales para detectar la llegada de cualquier tipo de entrada desde el hardware. Ambas permiten a la **CPU** atender eventos que suceden en cualquier momento, sin estar necesariamente relacionados con los procesos en ejecución.
 
-### 1. Polling (Espera Activa)
+### 3.1 Polling (Espera Activa)
 
 Es el método más simple de implementar; la jerarquía de control recae totalmente en el procesador.
 
@@ -52,7 +56,7 @@ Es el método más simple de implementar; la jerarquía de control recae totalme
 - **Implementación:** Utiliza un registro de estado para determinar si el periférico tiene datos listos o si ha finalizado una tarea.
 - **Carga de CPU:** Al ser una "espera activa", el procesador desperdicia ciclos de reloj preguntando constantemente si el dispositivo está listo, lo que puede ser ineficiente si el hardware es lento.
 
-### 2. Interrupciones (Manejo por Eventos)
+### 3.2 Interrupciones (Manejo por Eventos)
 
 El flujo de trabajo es inverso: el dispositivo es quien notifica a la CPU cuando ocurre un evento relevante.
 
@@ -70,7 +74,7 @@ El flujo de trabajo es inverso: el dispositivo es quien notifica a la CPU cuando
 
 ---
 
-## Software para E/S
+## 4. Software para E/S
 
 El software de E/S se organiza en capas para abstraer la complejidad del hardware al usuario. Algunos ejemplos clave:
 
@@ -80,11 +84,11 @@ El software de E/S se organiza en capas para abstraer la complejidad del hardwar
 
 ---
 
-## Drivers
+## 5. Drivers
 
 Los **drivers** (o manejadores de dispositivos) son piezas críticas de software diseñadas para un hardware específico. Su función principal es actuar como traductor entre el sistema operativo y el controlador del dispositivo.
 
-### Funciones Principales
+### 5.1 Funciones Principales
 
 - **Interacción con los Controllers:** Aceptan solicitudes genéricas de lectura o escritura enviadas por el SO o el usuario, y las traducen en comandos específicos que el controlador del hardware puede entender.
 - **Abstracción de Dispositivos:** Permiten que el SO trate distintos tipos de hardware (como diferentes marcas de discos rígidos) de manera uniforme.
@@ -101,19 +105,19 @@ Los **drivers** (o manejadores de dispositivos) son piezas críticas de software
 
 ---
 
-## Handlers de Interrupciones
+## 6. Handlers de Interrupciones
 
 Este tema fue visto en la materia anterior **AyOC** (de hecho, en el TP hay que configurar la ISR). Los handlers de interrupciones se conocen como rutinas de servicio de interrupciones o **ISR**. Se las denomina *callback functions*, se alojan en el driver y se ordenan numéricamente para ser vectorizadas.
 
 ---
 
-## Software a Nivel de Usuario
+## 7. Software a Nivel de Usuario
 
 El software en este nivel tiene una interfaz simple: consiste en procedimientos/funciones alojadas en bibliotecas que residen en el espacio del usuario.
 
 ---
 
-## Subsistema de E/S del Kernel
+## 8. Subsistema de E/S del Kernel
 
 El kernel cuenta con el siguiente subsistema de E/S:
 
@@ -125,7 +129,7 @@ El kernel cuenta con el siguiente subsistema de E/S:
 
 ---
 
-## La API de un Driver
+## 9. La API de un Driver
 
 Dos preguntas importantes:
 
@@ -154,7 +158,7 @@ Por otro lado, el Kernel debe implementar una serie de procedimientos para los d
 
 ---
 
-### Implementación con Polling
+### 9.1 Implementación con Polling
 
 Una primera implementación de `driver_write` usando polling podría verse así:
 
@@ -209,7 +213,7 @@ int driver_write(void* data) {
 }
 ```
 
-### Implementación con Interrupciones
+### 9.2 Implementación con Interrupciones
 
 También podemos implementar el driver usando interrupciones. La ventaja es que el procesador no queda ocioso y es el dispositivo quien avisa cuando está listo; la desventaja es que requiere más código:
 
@@ -263,9 +267,25 @@ int driver_write(void* data) {
 
 ---
 
-## Cosas a Tener en Cuenta
+## 10. Cosas a Tener en Cuenta
 
 - **Contexto de proceso:** Un driver siempre corre dentro del contexto de un proceso, lo que significa que puede acceder a sus datos. Hay que tener extremo cuidado con los punteros que pasa el usuario.
 - **Concurrencia:** Muchos procesos pueden querer utilizar el driver al mismo tiempo, por lo que se debe serializar su utilización para evitar *race conditions*.
 - **Inicialización:** Las primitivas de sincronización y las estructuras que requiere el driver se inicializan cuando se carga en el kernel con `driver_init()`.
 - **Sin bibliotecas externas:** El driver no se linkea contra bibliotecas, por lo que solo puede usar funciones que sean parte del kernel.
+
+---
+
+## Resumen
+
+| Concepto | Descripción |
+|----------|-------------|
+| **Driver** | Módulo de software del SO que maneja un dispositivo de E/S específico. |
+| **Controller** | Componente HW que hace de interfaz entre el dispositivo y el driver. |
+| **E/S síncrona** | El proceso se bloquea hasta que la E/S se completa. |
+| **E/S asíncrona** | El proceso continúa ejecutando mientras la E/S ocurre en paralelo. |
+| **Polling** | Espera activa: la CPU consulta periódicamente el estado del dispositivo. |
+| **Interrupciones** | El dispositivo notifica a la CPU cuando termina, sin desperdiciar ciclos. |
+| **ISR** | Interrupt Service Routine: handler que atiende una interrupción específica. |
+| **Spooling** | Buffer que serializa solicitudes a un dispositivo que no acepta envíos intercalados (ej. impresoras). |
+| **API del driver** | Conjunto de funciones (`init`, `open`, `close`, `read`, `write`, `remove`) que el driver expone al kernel. |

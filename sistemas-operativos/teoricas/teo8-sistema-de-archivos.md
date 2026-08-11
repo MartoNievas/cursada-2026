@@ -1,6 +1,10 @@
 # Sistema de Archivos
 
-## ¿Qué es el proceso de booteo?
+**Sistemas Operativos — FCEyN, Universidad de Buenos Aires**
+
+---
+
+## 1. Proceso de Booteo
 
 El proceso de booteo o arranque es la secuencia de eventos que inicia un sistema operativo desde que se enciende el hardware hasta que el sistema está listo para su uso. Las etapas son las siguientes:
 
@@ -11,9 +15,9 @@ El proceso de booteo o arranque es la secuencia de eventos que inicia un sistema
 
 ---
 
-## Archivos y Sistema de Archivos
+## 2. Archivos y Sistema de Archivos
 
-### ¿Qué es un archivo?
+### 2.1 ¿Qué es un archivo?
 
 Un archivo es una colección con nombre de información relacionada que se registra en el almacenamiento secundario. Para nosotros —y para los sistemas operativos como Unix— los archivos no tienen estructura interna predefinida; para darles una, se puede incluir una extensión que indique su contenido:
 
@@ -23,26 +27,20 @@ Un archivo es una colección con nombre de información relacionada que se regis
 
 Además de almacenar información, los archivos son de propósito tan general que su uso se ha extendido más allá de sus límites originales. Por ejemplo, Unix, Linux y algunos otros sistemas operativos proporcionan un sistema de archivos **proc** que utiliza interfaces de sistema de archivos para brindar acceso a información del sistema en tiempo real.
 
----
-
-### El sistema de archivos (File System)
+### 2.2 El sistema de archivos (File System)
 
 Para administrar los archivos, el kernel incluye un módulo encargado de organizar la información en disco: el **sistema de archivos** o *file system*.
 
 Algunos sistemas operativos soportan solo uno (por ejemplo, DOS solo soporta FAT), mientras que otros admiten varios (Windows soporta FAT, FAT32, NTFS, entre otros). En los Unix modernos, el soporte suele venir incluido para varios sistemas de archivos y, mediante módulos dinámicos de kernel, puede extenderse a casi cualquiera.
 
-#### Responsabilidades del File System
-
-Una de las responsabilidades más elementales es definir cómo se organizan lógicamente los archivos:
+**Responsabilidades del File System.** Una de las responsabilidades más elementales es definir cómo se organizan lógicamente los archivos:
 
 - **Organización interna:** cómo se estructura la información *dentro* de un archivo. Tanto Windows como Unix usan secuencias de bytes, dejando la responsabilidad de la estructura al usuario o la aplicación.
 - **Organización externa:** cómo se ordenan los archivos entre sí. Hoy en día todos los sistemas de archivos soportan el concepto de **directorios**, lo que da lugar a una organización jerárquica con forma de árbol.
 
 La mayoría también soporta la noción de **link**: un alias o nombre alternativo que apunta al mismo archivo. En Linux, se crean con el comando `ln`.
 
-#### Nomenclatura de archivos
-
-El sistema de archivos también determina las reglas para nombrar archivos, incluyendo:
+**Nomenclatura de archivos.** El sistema de archivos también determina las reglas para nombrar archivos, incluyendo:
 
 - Caracteres de separación de directorio (`/` en Unix, `\` en Windows).
 - Si los archivos tienen o no extensión.
@@ -51,9 +49,7 @@ El sistema de archivos también determina las reglas para nombrar archivos, incl
 - Si el nombre está o no prefijado por el equipo donde se encuentra.
 - Punto de montaje.
 
-#### Aspectos importantes a tener en cuenta
-
-Más allá de las decisiones anteriores, hay preguntas fundamentales que todo FS debe responder:
+**Aspectos importantes a tener en cuenta.** Más allá de las decisiones anteriores, hay preguntas fundamentales que todo FS debe responder:
 
 - ¿Cómo se representan los archivos en disco?
 - ¿Cómo se gestiona el espacio libre?
@@ -63,7 +59,7 @@ Las respuestas a estas preguntas determinan las características del **FS**, esp
 
 ---
 
-### Atributos
+## 3. Atributos
 
 Cuando hablamos de metadata, en general se incluyen los i-nodos (o la estructura de datos que use el **FS**), pero además hay mucha más información, como:
 
@@ -79,11 +75,11 @@ Cuando hablamos de metadata, en general se incluyen los i-nodos (o la estructura
 
 ---
 
-### Representación de archivos
+## 4. Representación de Archivos
 
 Para el **FS**, un archivo es esencialmente una **lista de bloques de datos más sus metadatos**. La pregunta clave es: ¿cómo organizamos esos bloques en el disco? A lo largo del tiempo surgieron distintos esquemas, cada uno intentando mejorar las limitaciones del anterior.
 
-#### Esquema 1: Bloques contiguos
+### 4.1 Esquema 1: Bloques contiguos
 
 La idea más simple es almacenar todos los bloques de un archivo de forma contigua en el disco, uno al lado del otro.
 
@@ -96,7 +92,7 @@ La idea más simple es almacenar todos los bloques de un archivo de forma contig
 
 Por estas razones, este esquema no se usa en sistemas de archivos modernos.
 
-#### Esquema 2: Lista enlazada de bloques
+### 4.2 Esquema 2: Lista enlazada de bloques
 
 Para resolver los problemas anteriores, se pueden organizar los bloques como una **lista enlazada**: cada bloque contiene los datos y un puntero al siguiente bloque del archivo.
 
@@ -107,7 +103,7 @@ Para resolver los problemas anteriores, se pueden organizar los bloques como una
 - Las **lecturas aleatorias son muy lentas**: para acceder al bloque N hay que recorrer todos los anteriores uno por uno, lo que implica una complejidad O(n).
 - Se **desperdicia espacio** en cada bloque, ya que parte de él debe reservarse para almacenar el puntero al siguiente.
 
-#### Esquema 3: Tabla de asignación de archivos (FAT)
+### 4.3 Esquema 3: Tabla de asignación de archivos (FAT)
 
 Una mejora natural al esquema anterior es sacar los punteros de los bloques y concentrarlos en una **tabla separada**: la *File Allocation Table* o FAT. Esta tabla tiene una entrada por cada bloque del disco, y cada entrada indica cuál es el bloque siguiente en la cadena.
 
@@ -132,7 +128,7 @@ Para leer el archivo A, el FS consulta la tabla: empieza en el bloque 1, que apu
 
 **Limitación:** la tabla debe cargarse completa en memoria. En discos grandes, esto puede consumir una cantidad significativa de RAM, lo cual es un problema en sistemas con recursos limitados.
 
-#### Esquema 4: I-Nodes
+### 4.4 Esquema 4: I-Nodes
 
 Este es el método que emplea Unix. La idea central es asociar a cada archivo una estructura llamada **i-node** (*index node*), que cumple dos funciones: almacena los **atributos** del archivo (permisos, propietario, tamaño, fechas, etc.) y guarda las **direcciones de disco** de sus bloques de datos.
 
@@ -145,21 +141,17 @@ La estructura de un i-node es la siguiente:
 
 Cada nivel de indirección amplía el tamaño máximo soportado a costa de un acceso adicional a disco, pero en la práctica la mayoría de los archivos son pequeños y se resuelven con los bloques directos.
 
-##### Ventaja frente a la FAT
-
-La gran ventaja de los i-nodes sobre la tabla FAT es el **uso de memoria**. Recordemos que la FAT debe cargarse completa en RAM para poder funcionar. En cambio, un i-node solo necesita estar en memoria mientras el archivo correspondiente está **abierto**.
+**Ventaja frente a la FAT.** La gran ventaja de los i-nodes sobre la tabla FAT es el **uso de memoria**. Recordemos que la FAT debe cargarse completa en RAM para poder funcionar. En cambio, un i-node solo necesita estar en memoria mientras el archivo correspondiente está **abierto**.
 
 Si cada i-node ocupa `n` bytes y puede haber simultáneamente `k` archivos abiertos, en el peor caso se consumen `k * n` bytes de RAM. Este valor suele ser órdenes de magnitud menor que el espacio que ocupa una FAT completa para un disco grande.
 
-##### El problema del crecimiento y su solución
-
-Dado que cada i-node tiene espacio para un número fijo de entradas, surge una pregunta: ¿qué pasa cuando un archivo crece más allá del límite que cubren esas entradas?
+**El problema del crecimiento y su solución.** Dado que cada i-node tiene espacio para un número fijo de entradas, surge una pregunta: ¿qué pasa cuando un archivo crece más allá del límite que cubren esas entradas?
 
 La solución es precisamente el esquema de indirección descrito arriba: en lugar de guardar en la última entrada la dirección de un bloque de datos, se guarda la dirección de un bloque que contiene **más punteros a bloques**. Esto puede repetirse en múltiples niveles (single, double, triple), permitiendo que los archivos crezcan sin modificar la estructura del i-node en sí.
 
 ---
 
-### Implementación de directorios
+## 5. Implementación de Directorios
 
 Una vez que tenemos archivos, necesitamos una forma de que el usuario pueda organizarlos de manera arbitraria — para eso existen los directorios. Pero ¿cómo se implementan internamente?
 
@@ -190,19 +182,19 @@ La implementación se apoya en el esquema de **i-nodos**. Los conceptos clave so
 
 ---
 
-### ¿Qué es el punto de montaje?
+## 6. Punto de Montaje
 
 Un punto de montaje es un directorio específico dentro del sistema de archivos actual sobre el cual se "conecta" o integra un sistema de archivos externo (como un disco duro, una memoria USB o una partición NVMe). Es el mecanismo que permite que distintos dispositivos de almacenamiento aparezcan como parte de un único árbol de directorios.
 
 ---
 
-### Journaling
+## 7. Journaling
 
 Aunque los sistemas de archivos estructurados por log son una idea interesante, no se utilizan ampliamente, en parte por ser altamente incompatibles con los sistemas existentes. No obstante, su robustez ante fallos puede aplicarse fácilmente a sistemas de archivos convencionales. La idea básica es mantener un **log** de lo que el sistema de archivos va a hacer *antes* de hacerlo. De este modo, si el sistema crashea antes de completar el trabajo planeado, al reiniciar puede consultar el log para completar la tarea pendiente.
 
 Tales sistemas se llaman **sistemas de archivos con journaling** y son muy utilizados en la actualidad. El sistema **NTFS** de Microsoft y los sistemas **ext3** y **ReiserFS** de Linux utilizan este enfoque.
 
-#### La naturaleza del problema: eliminación de un archivo
+### 7.1 La naturaleza del problema: eliminación de un archivo
 
 Consideremos una operación común: eliminar un archivo. En Unix, esto requiere tres pasos:
 
@@ -212,19 +204,19 @@ Consideremos una operación común: eliminar un archivo. En Unix, esto requiere 
 
 Si ocurre un crash en medio de la operación, podría quedar el archivo eliminado del directorio pero sin haberse liberado el i-nodo ni los bloques que ocupaba, dejando el sistema de archivos en un estado inconsistente.
 
-#### Cómo funciona el Journaling
+### 7.2 Cómo funciona el Journaling
 
 Ante estos posibles fallos, el sistema escribe primero una entrada en el log listando las tres acciones a completar. Esta entrada se escribe directamente en el disco. Una vez confirmada la escritura, comienza la operación real. Solo cuando la tarea se completa por entero se elimina la entrada del log.
 
 En caso de que el sistema falle, al recuperarse el sistema de archivos verifica el log para detectar operaciones pendientes y, de haberlas, las ejecuta nuevamente.
 
-#### Idempotencia
+### 7.3 Idempotencia
 
 Para que el journaling funcione correctamente, las operaciones deben ser **idempotentes**: esto significa que pueden repetirse tantas veces como sea necesario sin causar daño ni dejar el sistema en un estado diferente al esperado.
 
 ---
 
-### Manejo del espacio libre
+## 8. Manejo del Espacio Libre
 
 Además de representar los archivos, el FS debe llevar registro de qué bloques están disponibles. Hay dos enfoques principales:
 
@@ -234,7 +226,7 @@ Además de representar los archivos, el FS debe llevar registro de qué bloques 
 
 ---
 
-### Caché
+## 9. Caché
 
 Una manera de mejorar el rendimiento del FS es mediante un **caché**: una copia en memoria de bloques del disco. Se administra de forma muy similar a las páginas de memoria virtual.
 
@@ -244,7 +236,7 @@ Una ventaja adicional del caché es que permite acumular escrituras y ordenarlas
 
 ---
 
-### Consistencia
+## 10. Consistencia
 
 Si se corta la energía antes de que el caché se vuelque a disco, los cambios en vuelo se pierden y el sistema de archivos puede quedar en un estado inconsistente.
 
@@ -254,7 +246,7 @@ Como alternativa más liviana existe **soft updates**: rastrea las dependencias 
 
 ---
 
-### Performance
+## 11. Performance
 
 El rendimiento de un FS depende de múltiples factores: tecnología del disco, política de scheduling de E/S, tamaño de bloque, cachés del SO y de las controladoras, manejo de locking en el kernel, y el propio diseño del FS. En particular, la elección entre journaling y soft updates sigue siendo un tema de debate activo en la comunidad.
 
@@ -262,7 +254,7 @@ Un punto importante: optimizar hasta el último nanosegundo no siempre vale la p
 
 ---
 
-### NFS y el Virtual File System
+## 12. NFS y el Virtual File System
 
 El **NFS** (*Network File System*) es un protocolo que permite acceder a sistemas de archivos remotos como si fueran locales, usando RPC. Un FS remoto se monta en un punto del árbol de directorios local y las aplicaciones acceden a sus archivos sin saber que están en otra máquina.
 
@@ -272,7 +264,7 @@ Vale notar que NFS no es completamente distribuido: todos los datos de un mismo 
 
 ---
 
-### Estructura interna: Ext2
+## 13. Estructura Interna: Ext2
 
 Ext2 organiza el disco en **grupos de bloques**. Cada grupo contiene su propio superbloque, descriptores de grupo, mapas de bits y tabla de i-nodos, seguidos de los bloques de datos.
 
@@ -280,7 +272,7 @@ El **superbloque** contiene los metadatos críticos del FS: tamaño total, canti
 
 ---
 
-### LVM (Logical Volume Management)
+## 14. LVM (Logical Volume Management)
 
 LVM es un sistema de administración de volúmenes lógicos que agrega una capa de abstracción entre el hardware de almacenamiento y el sistema de archivos, ofreciendo mayor flexibilidad que las particiones tradicionales.
 
@@ -313,3 +305,22 @@ pvdisplay
 vgdisplay
 lvdisplay
 ```
+
+---
+
+## Resumen
+
+| Concepto | Descripción |
+|----------|-------------|
+| **Archivo** | Colección con nombre de información relacionada, sin estructura interna predefinida en Unix. |
+| **File System** | Módulo del kernel que organiza archivos y directorios en el almacenamiento. |
+| **I-node** | Estructura que guarda atributos y direcciones de disco de un archivo (esquema usado por Unix). |
+| **FAT** | Tabla con una entrada por bloque que indica el siguiente bloque de la cadena. |
+| **Directorio** | Archivo especial que mapea nombres a números de i-nodo. |
+| **Punto de montaje** | Directorio donde se integra un sistema de archivos externo al árbol local. |
+| **Journaling** | Registrar operaciones en un log antes de ejecutarlas, para poder recuperarse ante un crash. |
+| **fsck** | Verificación exhaustiva de consistencia del FS al arrancar tras un apagado anormal. |
+| **Caché unificado** | Copia en memoria de páginas y bloques de disco, compartida para evitar duplicados. |
+| **NFS / VFS** | Protocolo de FS remoto y capa de abstracción que unifica el acceso a FS locales y remotos. |
+| **Ext2** | Organiza el disco en grupos de bloques, cada uno con su propio superbloque y tabla de i-nodos. |
+| **LVM** | Capa de abstracción (PV, VG, LV) para administrar volúmenes lógicos con flexibilidad. |

@@ -1,6 +1,10 @@
-# Sincronización entre Procesos
+# Sincronización entre Procesos (Parte 1)
 
-## ¿Por qué vemos esto?
+**Sistemas Operativos — FCEyN, Universidad de Buenos Aires**
+
+---
+
+## 1. ¿Por qué vemos esto?
 
 Las principales motivaciones para estudiar la sincronización entre procesos son:
 
@@ -10,7 +14,7 @@ Las principales motivaciones para estudiar la sincronización entre procesos son
 
 ---
 
-## Veamos un ejemplo incorrecto
+## 2. Veamos un ejemplo incorrecto
 
 Contamos con 2 procesos:
 
@@ -38,7 +42,7 @@ store ticket
 return reg
 ```
 
-### Veamos un posible scheduling
+### 2.1 Veamos un posible scheduling
 
 - Dos procesos **P1** y **P2** ejecutan el mismo programa.
 - **P1** y **P2** comparten variables `ticket` y `fondo`.
@@ -49,7 +53,7 @@ Podemos notar que la ejecución terminó con un resultado inválido. En caso de 
 
 ---
 
-## Condición de Carrera
+## 3. Condición de Carrera
 
 **Definición:** Dos o más procesos o hilos acceden y modifican datos compartidos al mismo tiempo, y el resultado final depende del orden o interleaving en que se ejecutan esas operaciones.
 
@@ -62,7 +66,7 @@ Se dice que hay una condición de carrera cuando:
 
 > Las condiciones de carrera no son un problema menor: bugs de este tipo afectaron sistemas reales como MySQL, Apache, Mozilla y OpenOffice, e incluso causaron fallas en sistemas financieros de alto impacto.
 
-### Requerimientos para evitarla
+### 3.1 Requerimientos para evitarla
 
 Para resolver correctamente una condición de carrera, toda solución debe cumplir 3 requerimientos:
 
@@ -85,9 +89,9 @@ while(true) {
 
 ---
 
-## El problema de las secciones críticas
+## 4. El problema de las secciones críticas
 
-### ¿Qué es una sección crítica?
+### 4.1 ¿Qué es una sección crítica?
 
 > **Aclaración:** CRIT refiere a sección crítica.
 
@@ -99,7 +103,7 @@ Una sección crítica es un segmento de código tal que:
 
 A nivel de código se implementa con dos llamados: uno para entrar y otro para salir de la sección crítica. Entrar a la sección crítica es como poner el cartelito de "no molestar" en la puerta. Si logramos implementar exitosamente secciones críticas, contamos con herramientas para que varios procesos puedan compartir datos sin estorbarse.
 
-### ¿Cómo se implementa una sección crítica?
+### 4.2 ¿Cómo se implementa una sección crítica?
 
 El problema de secciones críticas se puede resolver de manera sencilla en un entorno de un solo núcleo si se pudieran evitar las interrupciones mientras se modifica una variable compartida. Desafortunadamente, esta solución no es viable en entornos multiprocesador, ya que deshabilitar las interrupciones puede ser costoso en tiempo.
 
@@ -119,7 +123,7 @@ Sin embargo, este enfoque no garantiza los 3 requerimientos antes vistos, en par
 
 ---
 
-## Solución de Peterson
+## 5. Solución de Peterson
 
 La solución de **Peterson** cumple con los 3 requerimientos y hace una correcta implementación de secciones críticas. Se restringe a 2 procesos $P_0$ y $P_1$, que alternan entre sección crítica y sección restante. Para referirse al otro proceso se usa $P_j$, donde $j = 1 - i$.
 
@@ -152,7 +156,7 @@ while(true) {
 
 ---
 
-## Soluciones basadas en hardware
+## 6. Soluciones basadas en hardware
 
 > **Aclaración:** voy a llamar **HW** al hardware en algunas ocasiones.
 
@@ -190,7 +194,7 @@ do {
 
 ---
 
-## Productor-Consumidor
+## 7. Productor-Consumidor
 
 Ambos comparten un buffer de tamaño limitado más algunos índices para saber dónde se colocó el último elemento, si hay alguno, etc. A este problema a veces se lo conoce como *bounded buffer* (*buffer acotado*).
 
@@ -203,7 +207,7 @@ Ambos comparten un buffer de tamaño limitado más algunos índices para saber d
 - Podríamos hacer **busy waiting**, pero podemos perder mucho tiempo.
 - Podríamos usar `sleep()`-`wakeup()`. ¿Podríamos?
 
-### El lost wakeup problem
+### 7.1 El lost wakeup problem
 
 Pensemos en el consumidor:
 
@@ -234,7 +238,7 @@ Resultado: el `wakeup()` se pierde y el sistema se traba. A este problema se lo 
 
 ---
 
-## Semáforos
+## 8. Semáforos
 
 Para solucionar estos problemas **Dijkstra** inventó los semáforos.
 
@@ -253,7 +257,7 @@ signal(s): s++; if (alguien espera por s) despertar a alguno;
 
 Un tipo especial de semáforos que tienen dominio binario son los **mutex**, de *mutual exclusion*.
 
-### Productor-Consumidor con semáforos
+### 8.1 Productor-Consumidor con semáforos
 
 ```c
 semaforo mutex = 1;
@@ -289,7 +293,7 @@ void consumidor() {
 }
 ```
 
-### Implementación de semáforos
+### 8.2 Implementación de semáforos
 
 La implementación estándar define un struct con un valor y una lista de procesos:
 
@@ -320,15 +324,15 @@ signal(semaphore* S) {
 }
 ```
 
-### Pueden fallar...
+### 8.3 Pueden fallar...
 
 El sistema basado en semáforos puede fallar si me olvido un `signal` o invierto el orden. Lo que pasa es que el proceso A se queda esperando a que suceda algo que solo B puede provocar, pero B a su vez está esperando algo de A. A esta situación se la conoce como **deadlock** y es una de las pestes de la concurrencia.
 
 ---
 
-## Spin Locks y objetos atómicos
+## 9. Spin Locks y objetos atómicos
 
-### TASLock
+### 9.1 TASLock
 
 Los lenguajes de alto nivel modernos proveen objetos atómicos para implementar secciones críticas sin depender del SO. Un objeto atómico básico provee operaciones como `getAndSet()` y `testAndSet()`, implementadas de manera indivisible a nivel de hardware:
 
@@ -376,7 +380,7 @@ int donar(int donacion) {
 
 El problema del TASLock es el **busy waiting**: el ciclo interno consume muchísima CPU y perjudica al resto de los procesos.
 
-### TTASLock (local spinning)
+### 9.2 TTASLock (local spinning)
 
 Una mejora al TASLock es probar antes de ejecutar el `testAndSet()`, técnica llamada *local spinning*:
 
@@ -399,7 +403,7 @@ Mientras el lock está tomado, el proceso lee desde su caché local en lugar de 
 | **TTASLock** | Tiempo crece más suavemente |
 | **IdealLock** | Tiempo constante (sin overhead) |
 
-### Otros objetos atómicos
+### 9.3 Otros objetos atómicos
 
 El hardware también provee registros *Read-Modify-Write* atómicos:
 
@@ -438,7 +442,7 @@ Esta solución es **wait-free**: ningún proceso queda bloqueado esperando a otr
 
 ---
 
-## Mutex reentrante
+## 10. Mutex reentrante
 
 ¿Qué pasa si un proceso usa un TASLock recursivamente?
 
@@ -472,7 +476,7 @@ void unlock() {
 
 ---
 
-## Granularidad de secciones críticas
+## 11. Granularidad de secciones críticas
 
 Una decisión importante de diseño es qué tan grande debe ser la sección crítica. Hay un trade-off directo entre seguridad y concurrencia:
 
@@ -493,9 +497,9 @@ int donar(int donacion) {
 
 ---
 
-## Deadlock
+## 12. Deadlock
 
-### Condiciones de Coffman
+### 12.1 Condiciones de Coffman
 
 Coffman et al. (1971) postularon que para que exista un deadlock deben cumplirse **simultáneamente** estas 4 condiciones:
 
@@ -508,7 +512,7 @@ Coffman et al. (1971) postularon que para que exista un deadlock deben cumplirse
 
 > Si se puede eliminar **cualquiera** de estas condiciones, se previene el deadlock.
 
-### Modelo de grafos bipartitos
+### 12.2 Modelo de grafos bipartitos
 
 Se puede usar un **grafo bipartito** para detectar deadlocks en tiempo de ejecución:
 
@@ -521,7 +525,7 @@ Se puede usar un **grafo bipartito** para detectar deadlocks en tiempo de ejecuc
 
 ---
 
-## Problemas de sincronización: ¿qué hacer?
+## 13. Problemas de sincronización: ¿qué hacer?
 
 Los principales problemas que pueden surgir en sistemas concurrentes son:
 
@@ -540,7 +544,9 @@ Existen dos grandes estrategias para lidiar con ellos:
 - Análisis estático o dinámico de programas.
 - En tiempo de ejecución: de forma preventiva (antes que ocurra) o mediante recuperación (*deadlock recovery*).
 
-## Monitores y Variables de condición
+---
+
+## 14. Monitores y Variables de condición
 
 Aunque los semáforos proporcionan un mecanismo conveniente y efectivo para la sincronización de procesos, su uso incorrecto puede dar lugar a errores de temporización. Aquí nacen los **monitores**, que son un **tipo abstracto de dato (ADT)** el cual incluye un conjunto de operaciones definidas por el programador, las cuales se ejecutan con exclusión mutua dentro del monitor. El tipo monitor también declara las variables cuyos valores definen el estado de un objeto.
 
@@ -569,7 +575,7 @@ La construcción del monitor garantiza que **solo un proceso a la vez esté acti
   <img src="https://github.com/user-attachments/assets/1c0f7ea4-1b73-4981-98d7-5825252a4c4d" alt="Esquema de monitor">
 </p>
 
-### Variables de condición
+### 14.1 Variables de condición
 
 Sin embargo, la construcción de monitor que tenemos hasta ahora no es suficiente para modelar todos los esquemas de sincronización. Para este propósito, necesitamos definir mecanismos adicionales proporcionados por la construcción `condition`. Un programador que necesite escribir un esquema de sincronización a medida puede definir una o más variables de condición:
 
@@ -584,7 +590,7 @@ Las únicas operaciones que se pueden invocar sobre una variable de condición s
 
 > Esta es la diferencia clave con los semáforos: un `signal()` de semáforo **siempre** afecta el estado del semáforo. Un `signal()` de variable de condición se pierde si nadie está esperando.
 
-### ¿Qué pasa cuando se hace `signal()`?
+### 14.2 ¿Qué pasa cuando se hace `signal()`?
 
 Cuando un proceso P invoca `x.signal()` y existe un proceso Q suspendido en la condición `x`, ambos no pueden estar activos simultáneamente dentro del monitor. Existen dos opciones:
 
@@ -595,7 +601,7 @@ Hay argumentos razonables a favor de ambas opciones. Por un lado, como P ya esta
 
 Muchos lenguajes de programación incorporan monitores, incluyendo **Java** y **C#**.
 
-### Implementación de monitores con semáforos
+### 14.3 Implementación de monitores con semáforos
 
 Los monitores pueden implementarse usando semáforos por debajo. Para cada monitor se usa un semáforo binario `mutex` (inicializado en 1) para garantizar la exclusión mutua. Usamos el esquema *signal and wait*, por lo que se introduce un semáforo binario adicional `next` (inicializado en 0) para que los procesos que hacen `signal()` puedan suspenderse, y un entero `next_count` para contar cuántos procesos están suspendidos en `next`.
 
@@ -629,7 +635,7 @@ if (x_count > 0) {
 }
 ```
 
-### Orden de reanudación dentro de un monitor
+### 14.4 Orden de reanudación dentro de un monitor
 
 Si varios procesos están suspendidos en una condición `x` y se ejecuta `x.signal()`, ¿cuál se reanuda primero? Una solución simple es usar **FCFS** (el que lleva más tiempo esperando se reanuda primero). Sin embargo, en muchos casos esto no es suficiente.
 
@@ -674,7 +680,7 @@ R.acquire(t);
 R.release();
 ```
 
-### Limitaciones
+### 14.5 Limitaciones
 
 Aunque los monitores simplifican la sincronización, no pueden garantizar por sí solos que los procesos los usen correctamente. Pueden ocurrir los siguientes problemas:
 

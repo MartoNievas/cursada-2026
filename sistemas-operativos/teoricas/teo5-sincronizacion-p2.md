@@ -1,12 +1,16 @@
-# Sincronización entre Procesos
+# Sincronización entre Procesos (Parte 2)
 
-## Siempre los mismos problemas
+**Sistemas Operativos — FCEyN, Universidad de Buenos Aires**
+
+---
+
+## 1. Siempre los mismos problemas
 
 En muchas áreas de la computación hay problemas clásicos. Eso significa que aparecen un sinfín de veces bajo diferentes formas o apariencias, pero en esencia son los mismos problemas.
 
 En el caso de la sincronización entre procesos también sucede que muchos de estos problemas nos suelen inducir a "soluciones" incorrectas.
 
-## Turnos
+## 2. Turnos
 
 Tenemos una serie de procesos ejecutando en simultáneo:
 
@@ -45,7 +49,7 @@ proc P(int i) {
 
 Ahora la pregunta del millón: ¿es correcto este programa?
 
-## Razonamiento en paralelo
+## 3. Razonamiento en paralelo
 
 En el caso de los programas en paralelo, la noción de "correcto" deja de ser unívoca para transformarse en un conjunto de propiedades que se plantean sobre toda la ejecución.
 
@@ -54,19 +58,19 @@ La manera de lidiar con la corrección de este tipo de sistemas suele ser:
 * Plantear propiedades de **safety** (seguridad): que cosas malas, como los **deadlocks**, no sucedan.
 * Plantear propiedades de **progreso** (o **liveness**): que las cosas buenas eventualmente pasen.
 
-## Tipos de propiedades
+## 4. Tipos de propiedades
 
 Un contraejemplo común para demostrar que no se cumple alguna de las propiedades es dar una sucesión de pasos que muestre una ejecución del sistema que viola cierta propiedad.
 
-### 1. Safety (Seguridad)
+### 4.1 Safety (Seguridad)
 Garantiza que **"nada malo sucederá"** durante la ejecución. Si esta propiedad se viola, el error ocurre en un instante específico de la ejecución y es irremediable.
 * **Ejemplos:** Exclusión mutua (evitar que dos procesos entren a la misma sección crítica al mismo tiempo), evitar deadlocks, seguridad de memoria.
 
-### 2. Liveness (Progreso)
+### 4.2 Liveness (Progreso)
 Hace referencia al conjunto de propiedades que un sistema debe satisfacer para garantizar que los procesos **avancen** en el tiempo (que "algo bueno eventualmente pase"). 
 * **Fallas de liveness:** Ciclos infinitos, espera activa (*busy wait*), inanición (*starvation*). Por lo general, se caracterizan por un bajo rendimiento y pobre capacidad de respuesta.
 
-### 3. Fairness (Equidad)
+### 4.3 Fairness (Equidad)
 La intuición de esta propiedad es que los procesos reciban su turno con infinita frecuencia.
 * **Incondicional:** El proceso es ejecutado "regularmente" si está habilitado siempre.
 * **Fuerte:** El proceso es ejecutado "regularmente" si está continuamente habilitado con infinita frecuencia.
@@ -74,13 +78,13 @@ La intuición de esta propiedad es que los procesos reciban su turno con infinit
 
 ---
 
-## Volvemos a turnos
+## 5. Volvemos a turnos
 
 Ahora, con nuestras nuevas herramientas, podemos argumentar si la solución propuesta es correcta.
 
 Primero formalicemos. Tenemos una serie de procesos ejecutando en simultáneo $P_i, i \in [0 \dots N-1]$ y cada proceso ejecuta una tarea $s_i$. Debemos asegurar la siguiente propiedad: las tareas $s_i$ se ejecutan en estricto orden: $s_0, s_1, \dots, s_{N-1}$.
 
-### Demostración por el absurdo (Safety)
+### 5.1 Demostración por el absurdo (Safety)
 
 Supongamos que **no** se cumple la propiedad de orden. Esto implica que existen por lo menos dos índices $j, k \in [0 \dots N-1]$ tales que $k > j$, pero la tarea $s_k$ se ejecuta antes que la tarea $s_j$.
 
@@ -94,7 +98,7 @@ Supongamos que **no** se cumple la propiedad de orden. Esto implica que existen 
 
 ---
 
-## Rendezvous
+## 6. Rendezvous
 
 Rendezvous (punto de encuentro) o barrera de sincronización es el siguiente problema:
 
@@ -124,7 +128,7 @@ Notemos que esta solución no es correcta, ya que $N-1$ procesos se quedan bloqu
 
 ---
 
-## Modelo de proceso
+## 7. Modelo de proceso
 
 Para demostrar formalmente propiedades, podemos modelar el ciclo de vida de un proceso basándonos en la formalización de Nancy Lynch (*Distributed Algorithms*):
 
@@ -146,7 +150,7 @@ Formalizando matemáticamente:
 * **Ejecución ($\tau$):** Es la secuencia infinita de estados y transiciones que describen el historial del sistema.
   $$\tau = \sigma_0 \xrightarrow{\ell} \sigma_1 \xrightarrow{\ell} \sigma_2 \dots$$
 
-## WAIT-FREEDOM
+## 8. WAIT-FREEDOM
 
 Todo proceso que intenta acceder a la sección crítica, en algún momento lo logra, cada vez que lo intenta. A esta propiedad se la llama **WAIT-FREEDOM**:
 
@@ -156,7 +160,7 @@ $$
 
 En palabras simples, el sistema te garantiza matemáticamente que, en algún momento finito, vas a tener el recurso disponible. Nadie se queda tocando la puerta para siempre.
 
-## Rendezvous: solución
+## 9. Rendezvous: solución
 
 La solución para este problema es sacar el `else` de la solución original:
 
@@ -177,7 +181,7 @@ proc P(i) {
 }
 ```
 
-## Formalizando 
+## 10. Formalizando
 
 El modelo de Lynch puede ayudar a formalizar algunas propiedades:
 
@@ -192,7 +196,7 @@ Predicados auxiliares:
 * **Salir:**
   Def.: $OUT(i) \equiv i \in CRIT \Longrightarrow \Diamond i \in REM$
 
-## Livelock
+## 11. Livelock
 
 El primo olvidado del deadlock. Un conjunto de procesos está en **Livelock** si estos continuamente cambian su estado en respuesta a los cambios de estado de los otros, sin avanzar realmente.
 
@@ -200,7 +204,7 @@ A diferencia del deadlock (donde los procesos se bloquean sin hacer nada), en el
 
 **Ejemplo:** Queda poco espacio en disco. El proceso A detecta la situación y notifica al proceso B (bitácora del sistema). B registra el evento en disco, disminuye el espacio libre, lo que hace que A detecte la situación nuevamente y vuelva a notificar... indefinidamente.
 
-## Sección crítica de a M procesos (SCM)
+## 12. Sección crítica de a M procesos (SCM)
 
 Generalización del problema de exclusión mutua: se permite que hasta $M \leq N$ procesos estén en la sección crítica simultáneamente. La propiedad a garantizar es:
 
@@ -226,7 +230,7 @@ proc P(i) {
 
 Cuando $M = 1$ se recupera el problema clásico de exclusión mutua.
 
-## Lectores/Escritores
+## 13. Lectores/Escritores
 
 Problema clásico en bases de datos. Hay una variable compartida con dos tipos de acceso: los **escritores** necesitan acceso exclusivo (nadie más puede leer ni escribir), pero los **lectores** pueden leer simultáneamente entre sí.
 
@@ -238,7 +242,7 @@ $$
 
 Es decir: si hay un escritor en $CRIT$, nadie más puede estar en $CRIT$. La segunda condición es que si hay un lector en $CRIT$, todos los demás procesos en $CRIT$ también deben ser lectores.
 
-### Solución con 2 semáforos y un contador:
+### 13.1 Solución con 2 semáforos y un contador
 
 ```c
 semaphore wr = 1;
@@ -274,11 +278,11 @@ proc reader(i) {
 
 El semáforo `rd` protege la variable `readers`. El primer lector que llega toma el semáforo `wr` bloqueando a los escritores; el último lector en salir lo libera.
 
-### Problema: inanición de escritores
+### 13.2 Problema: inanición de escritores
 
 Esta solución **cumple SWMR** (safety) pero puede violar **STARVATION-FREEDOM**. Si siempre hay al menos un lector activo, los escritores nunca podrán acceder. Se dice que los lectores tienen prioridad implícita sobre los escritores.
 
-## Filósofos que cenan
+## 14. Filósofos que cenan
 
 Dijkstra, 1965. Hay 5 filósofos en una mesa circular, 5 platos de fideos y un tenedor entre cada par de platos adyacentes. Para comer, cada filósofo necesita los 2 tenedores que tiene a sus lados. El ciclo de vida de cada filósofo es:
 
@@ -300,7 +304,7 @@ Las propiedades a satisfacer son:
 * **STARVATION-FREEDOM:** No hay inanición (liveness).
 * **EAT:** Más de un filósofo puede estar comiendo a la vez, variante de **SCM** (liveness).
 
-### Solución naive con semáforos
+### 14.1 Solución naive con semáforos
 
 ```c
 #define izq(i) i
@@ -327,18 +331,18 @@ Esta solución cumple **EXCL-FORK** pero falla en las demás propiedades. El pro
 | STARVATION-FREEDOM | NO |
 | EAT | NO |
 
-### Resultado fundamental
+### 14.2 Resultado fundamental
 
 Según Lynch (*Distributed Algorithms*, cap. 11), no existe ninguna solución simétrica al problema de los filósofos, es decir, no existe solución en la que todos los filósofos ejecuten exactamente el mismo código sin distinguirse de alguna manera.
 
-## El Barbero
+## 15. El Barbero
 
 En una peluquería hay un único peluquero y dos salas: una de espera con N sillas y otra con la única silla de corte. El comportamiento es: 
 
 * Cuando no hay clientes, el peluquero duerme.
 * Cuando entra un cliente, si no hay lugar en la sala de espera, se va; si el peluquero está dormido, lo despierta.
 
-### Solución
+### 15.1 Solución
 
 Se usan 2 semáforos y un objeto atómico:
 
@@ -372,10 +376,21 @@ void proc Cliente() {
 
 El semáforo `un_cliente` sincroniza la llegada de un cliente con el peluquero dormido. El semáforo `siguiente` sincroniza el momento en el que el peluquero está listo para atender con el momento en el que el cliente pasa a la silla. El contador atómico `clientes` controla la capacidad de la sala de espera.
 
-## Donde estamos
+---
 
-Hasta ahora vimos lo siguiente:
+## Resumen
 
-  - Problemas clasicos de sincronización.
-  - Propiedades a garantizar.
-  - Como razonar sobre programas paralelos.
+Hasta ahora vimos problemas clásicos de sincronización, las propiedades que deben garantizar (safety, liveness, fairness) y cómo razonar formalmente sobre programas paralelos.
+
+| Concepto | Descripción |
+|----------|-------------|
+| **Safety** | Garantiza que "nada malo sucederá" (ej. exclusión mutua). |
+| **Liveness** | Garantiza que "algo bueno eventualmente pasará" (ej. progreso). |
+| **Fairness** | Los procesos reciben su turno con infinita frecuencia. |
+| **WAIT-FREEDOM** | Todo proceso que intenta entrar a la sección crítica, en algún momento lo logra. |
+| **Rendezvous** | Barrera de sincronización: ningún $b(i)$ ocurre antes de que todos los $a(i)$ hayan ocurrido. |
+| **Livelock** | Los procesos cambian de estado continuamente pero no progresan realmente. |
+| **SCM** | Generalización de exclusión mutua: hasta $M$ procesos pueden estar en la sección crítica a la vez. |
+| **Lectores/Escritores (SWMR)** | Un escritor requiere exclusión total; varios lectores pueden coexistir. |
+| **Filósofos que cenan** | Problema clásico de deadlock por espera circular de recursos (tenedores). |
+| **El Barbero** | Problema clásico de sincronización productor-consumidor con capacidad limitada. |

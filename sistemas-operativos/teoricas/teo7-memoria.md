@@ -1,5 +1,9 @@
 # Administración de Memoria
 
+**Sistemas Operativos — FCEyN, Universidad de Buenos Aires**
+
+---
+
 La administración de memoria presenta una serie de problemas, los cuales son los siguientes:
 
 - Cómo nos aseguramos de que un proceso no lea los datos de otro.
@@ -15,7 +19,7 @@ Vamos de cabeza con esta última.
 
 ---
 
-## Fragmentación de Memoria
+## 1. Fragmentación de Memoria
 
 La fragmentación es un problema ya que podría generar situaciones donde tenemos suficiente memoria para atender una solicitud, pero no es continua. Esto con el tiempo puede volverse muy grave, ya que básicamente se nos licuan los recursos del **SO**.
 
@@ -32,7 +36,7 @@ Uno de los primeros enfoques realistas, el cual es muy usado, consiste en organi
 
 ---
 
-## Organización de Memoria
+## 2. Organización de Memoria
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/84d9997d-19f2-41fd-a106-c0c210b3fa83" alt="Organización de memoria">
@@ -46,11 +50,11 @@ Esta organización se relaciona estrechamente con la fragmentación debido a que
 
 ---
 
-## Cómo Organizar la Memoria
+## 3. Cómo Organizar la Memoria
 
 A continuación vamos a ver distintos métodos de organización de memoria. Para esta explicación me voy a basar en el libro **Modern Operating Systems, Andrew S. Tanenbaum**.
 
-### Gestión de Memoria con Bitmaps
+### 3.1 Gestión de Memoria con Bitmaps
 
 Con un bitmap, la memoria se divide en unidades de asignación tan pequeñas como unas pocas palabras o tan grandes como varios **KB**. A cada unidad le corresponde un bit en el bitmap: `0` si está libre, `1` si está ocupada.
 
@@ -68,7 +72,7 @@ El tamaño de la unidad de asignación es una cuestión de diseño importante. C
 
 ---
 
-### Gestión de Memoria con Listas Enlazadas
+### 3.2 Gestión de Memoria con Listas Enlazadas
 
 Otra forma de llevar registro de la memoria es mantener una lista enlazada de segmentos asignados y libres, donde cada segmento contiene un proceso o un hueco vacío entre dos procesos.
 
@@ -85,7 +89,7 @@ La lista se mantiene ordenada por dirección, lo que facilita la actualización 
 
 ---
 
-### Algoritmos de Asignación
+### 3.3 Algoritmos de Asignación
 
 Cuando los procesos y huecos se mantienen en una lista ordenada por dirección, se pueden usar varios algoritmos para asignar memoria:
 
@@ -110,7 +114,7 @@ Usa splitting de bloques en potencias de 2. Cuando se necesita un bloque de tama
 
 ---
 
-## Memoria Virtual
+## 4. Memoria Virtual
 
 Anteriormente mencionamos el problema de la **reubicación**, el cual va de la mano con otro: si tengo $N$ bytes de memoria y un programa de tamaño $M > N$ pero que no necesita más de $K < N$ bytes a la vez, debería poder correrlo. La solución es la **memoria virtual**.
 
@@ -126,7 +130,7 @@ Con memoria virtual disponemos de "más" direcciones, ya que tenemos el tamaño 
 
 ---
 
-### Detalles del Esquema de Memoria Virtual
+### 4.1 Detalles del Esquema de Memoria Virtual
 
 - La memoria virtual está dividida en **páginas** de tamaño fijo. La **MMU** traduce páginas a *frames* interpretando las direcciones como `página + offset`, donde los $n$ bits más significativos identifican la página y el resto es el offset.
 - Siempre se swappean páginas completas.
@@ -141,7 +145,7 @@ A continuación un esquema de cómo se asignan las páginas:
 
 ---
 
-## Manejando la MMU
+## 5. Manejando la MMU
 
 En esencia la **MMU** es la tabla de páginas que se usa para el mapeo. Lo ideal es que la búsqueda sea rápida y que la tabla no ocupe mucho espacio.
 
@@ -160,7 +164,7 @@ La distribución de bits de la dirección física funciona así:
 
 ---
 
-### Entradas de la Tabla de Páginas
+### 5.1 Entradas de la Tabla de Páginas
 
 Cada entrada de una *page table* contiene:
 
@@ -174,7 +178,7 @@ Cada entrada de una *page table* contiene:
 
 ---
 
-## Memoria Asociativa (TLB)
+## 6. Memoria Asociativa (TLB)
 
 **Problema:** Las tablas de páginas están en memoria RAM, por lo que acceder a ellas con demasiada frecuencia puede ser lento.
 
@@ -191,19 +195,19 @@ La **TLB** funciona porque cumple con el principio de **localidad de referencia*
 
 ---
 
-# Algoritmos de Reemplazo de Páginas
+## 7. Algoritmos de Reemplazo de Páginas
 
 Una cuestión de diseño esencial es saber qué página desalojar para dar espacio a la siguiente. Esta decisión determina enormemente el rendimiento del **SO**.
 
 ---
 
-## Óptimo (OPT)
+### 7.1 Óptimo (OPT)
 
 Aunque no se puede implementar en la práctica, sirve como referencia teórica. La idea es reemplazar la página que **no se usará por el mayor tiempo en el futuro**. Para implementarlo habría que tener conocimiento del futuro, lo que es imposible en un sistema real. Sin embargo, es útil para comparar el rendimiento de otros algoritmos.
 
 ---
 
-## FIFO (First In, First Out)
+### 7.2 FIFO (First In, First Out)
 
 El de toda la vida: las páginas salen en el orden en que entraron. Se mantiene una cola donde la página más antigua es la primera en ser desalojada.
 
@@ -213,7 +217,7 @@ El de toda la vida: las páginas salen en el orden en que entraron. Se mantiene 
 
 ---
 
-## FIFO Mejorado (Second Chance / Reloj)
+### 7.3 FIFO Mejorado (Second Chance / Reloj)
 
 El mismo enfoque que **FIFO**, pero antes de desalojar la página más antigua se revisa su **bit de referencia**. Si está encendido (fue referenciada recientemente), se le da una "segunda oportunidad": se apaga el bit, se la trata como si acabara de llegar y se pasa a la siguiente.
 
@@ -221,7 +225,7 @@ Esto respeta el **principio de localidad de referencia** y mejora notablemente e
 
 ---
 
-## NRU (Not Recently Used)
+### 7.4 NRU (Not Recently Used)
 
 La idea es establecer una prioridad para desalojar según dos bits por página:
 
@@ -241,7 +245,7 @@ El algoritmo desaloja una página de la clase más baja disponible. Los bits R s
 
 ---
 
-## LRU (Least Recently Used)
+### 7.5 LRU (Least Recently Used)
 
 Es el que mejor funciona en la práctica, aunque es costoso de implementar. La idea es que la página que se usó **menos recientemente** tiene menor probabilidad de volver a usarse pronto, por lo que es la mejor candidata para desalojar.
 
@@ -254,7 +258,7 @@ Es el que mejor funciona en la práctica, aunque es costoso de implementar. La i
 
 ---
 
-## Comparación General
+### 7.6 Comparación General
 
 | Algoritmo | Costo de implementación | Rendimiento | Observaciones |
 |-----------|:-----------------------:|:-----------:|---------------|
@@ -266,34 +270,59 @@ Es el que mejor funciona en la práctica, aunque es costoso de implementar. La i
 
 > **Nota:** En la práctica, los **SO** modernos suelen usar variantes del algoritmo del reloj (FIFO mejorado) por su buen balance entre costo de implementación y rendimiento. LRU puro rara vez se implementa directamente en hardware.
 
-## Thrashing 
+---
 
-El thrashing es cuando el **SO** se la paso intercambiando páginas de memoria a disco ida y vuelta...
+## 8. Thrashing
 
-Es una situación no deseable ya que se la pasa haciendo mantenimiento en lugar de trabajo productivo.
+El **thrashing** ocurre cuando el **SO** se la pasa intercambiando páginas de memoria hacia y desde el disco de manera constante, sin dar abasto.
 
-## Protección y reubicación
+Es una situación no deseable, ya que el sistema se la pasa haciendo mantenimiento (swapping) en lugar de trabajo productivo. El síntoma es una caída abrupta del rendimiento a medida que aumenta el grado de multiprogramación.
 
-Todavia no resolvimos el problema de la protección y reubicación. Para el primer problema hay una solucion facíl, la cual es asignar a cada proceso su propia tabla de páginas. Y no hay manera de acceder a la tabla de páginas de otro proceso, para eso podemos hacer que cada proceso tenga su propio espacio de memoria. Cada uno de estos espacios se llama segmentos
+---
 
-## Copy-on-write
+## 9. Protección y Reubicación
 
+Quedan por resolver los problemas de **protección** y **reubicación** planteados al principio.
 
-El Copy-on-Write es una técnica de optimización que se utiliza principalmente durante la llamada al sistema fork().
+Para la protección, la solución es sencilla: se le asigna a cada proceso su propia tabla de páginas. Como no hay manera de que un proceso acceda a la tabla de páginas de otro, cada uno queda efectivamente aislado con su propio espacio de memoria. Cada uno de estos espacios se denomina **segmento**.
+
+---
+
+## 10. Copy-on-Write
+
+El **Copy-on-Write** (CoW) es una técnica de optimización que se utiliza principalmente durante la llamada al sistema `fork()`.
 
 Cuando un proceso padre crea un proceso hijo, en lugar de duplicar toda la memoria física (que sería lentísimo y llenaría la RAM), el SO hace que ambos procesos compartan las mismas páginas físicas.
-¿Cómo funciona?
 
-1. Mapeo Compartido: Inicialmente, las tablas de páginas del padre y del hijo apuntan a los mismos frames en memoria física.
+**¿Cómo funciona?**
 
-2. Solo Lectura: El SO marca todas esas páginas compartidas como de solo lectura (read-only) en la MMU.
+1. **Mapeo compartido:** Inicialmente, las tablas de páginas del padre y del hijo apuntan a los mismos frames en memoria física.
+2. **Solo lectura:** El SO marca todas esas páginas compartidas como de solo lectura (*read-only*) en la MMU.
+3. **La excepción:** Si cualquiera de los dos procesos intenta escribir en una de esas páginas, el hardware detecta la violación de escritura y dispara un **page fault**.
+4. **La copia real:** El SO intercepta ese fallo, se da cuenta de que es una página CoW y recién ahí:
+   - Crea una copia física del frame.
+   - Actualiza la tabla de páginas del proceso que intentó escribir para que apunte a la nueva copia.
+   - Marca la página como lectura/escritura.
 
-3. La Excepción (El "Grito"): Si cualquiera de los dos procesos intenta escribir en una de esas páginas, el hardware detecta la violación de escritura y dispara un Page Fault.
+---
 
-4. La Copia Real: El SO intercepta ese fallo, se da cuenta de que es una página CoW, y recién ahí:
+## Resumen
 
-    - Crea una copia física del frame.
-
-    - Actualiza la tabla de páginas del proceso que intentó escribir para que apunte a la nueva copia.
-
-    - Marca la página como lectura/escritura.
+| Concepto | Descripción |
+|----------|-------------|
+| **Fragmentación externa** | Hay suficiente memoria libre total, pero no contigua. |
+| **Fragmentación interna** | Se asigna un bloque más grande de lo necesario, desperdiciando parte. |
+| **Bitmap** | Un bit por unidad de asignación indica si está libre u ocupada. |
+| **Lista enlazada de segmentos** | Segmentos de procesos y huecos encadenados, ordenados por dirección. |
+| **First/Best/Next/Quick Fit** | Algoritmos de asignación sobre la lista de huecos libres. |
+| **Memoria virtual** | Abstracción que da a cada proceso la ilusión de memoria continua propia, mapeada por la MMU. |
+| **Page fault** | Interrupción que ocurre cuando se accede a una página que no está en memoria física. |
+| **Tabla de páginas multinivel** | Evita tener toda la tabla de páginas en memoria simultáneamente. |
+| **TLB** | Caché asociativa de traducciones página→frame recientes, dentro de la CPU. |
+| **OPT** | Reemplaza la página que no se usará por más tiempo. Óptimo pero irrealizable. |
+| **FIFO** | Desaloja la página más antigua. Sufre la anomalía de Bélády. |
+| **Second Chance / Reloj** | FIFO mejorado usando el bit de referencia. |
+| **NRU** | Clasifica páginas en 4 clases según bits R y M. |
+| **LRU** | Desaloja la página menos usada recientemente. El mejor en la práctica, costoso en HW. |
+| **Thrashing** | El SO pasa más tiempo swappeando páginas que haciendo trabajo útil. |
+| **Copy-on-Write** | Padre e hijo comparten páginas de solo lectura tras `fork()`; se copian recién al escribir. |
