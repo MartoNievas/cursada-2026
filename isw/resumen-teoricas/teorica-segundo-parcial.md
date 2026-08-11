@@ -1,48 +1,57 @@
 # Test Driven Development (TDD)
 
-## ¿Qué es TDD?
+**Ingeniería de Software — FCEyN, Universidad de Buenos Aires**
 
-Empezamos por responder una pregunta elemental, el **TDD** es una técnica tanto de aprendizaje como de desarrollo de software, que tiene las siguientes características:
+---
+
+## 1. ¿Qué es TDD?
+
+Empezamos por responder una pregunta elemental: el **TDD** es una técnica tanto de aprendizaje como de desarrollo de software, que tiene las siguientes características:
 
 - Es iterativa e incremental, es decir la solución se va armando de manera gradual.
+- Está basada en el feedback inmediato.
 
-- Basada en el feedback inmediato.
+Como efectos secundarios, esta técnica permite:
 
-Como efectos secundarios esta técnica tiene:
-
-- Se recuerda mejor todo lo aprendido
-
-- Y permite asegurarnos no haber desaprendido.
+- Recordar mejor todo lo aprendido.
+- Asegurarnos de no haber desaprendido.
 
 La misma incluye análisis, diseño, programación y testing.
 
-## ¿Cómo se hace TDD?
+---
 
-A continuación se detalla un algoritmo para poder aplicar está técnica al desarrollo:
+## 2. ¿Cómo se hace TDD?
 
-1. Escribir un test sobre el modelo a desarrollar.
+A continuación se detalla un algoritmo para poder aplicar esta técnica al desarrollo:
 
-  - Debe ser el más sencillo que nos ocurra.
-  - Debe fallar al correrlo.
+1. **Escribir un test** sobre el modelo a desarrollar.
+   - Debe ser el más sencillo que se nos ocurra.
+   - Debe fallar al correrlo.
+2. **Correr todos los tests** del modelo.
+   - Implementar la solución más simple que haga pasar los tests.
+   - Volver al paso 2 hasta que todos los tests pasen.
+3. **Reflexionar:** ¿se puede mejorar el código?
+   - Sí → refactorizar y volver al paso 2.
+   - No → volver al paso 1.
 
-2. Correr todos los tests del modelo.
-  
-  - Implementar la solución más simple que haga pasar los tests.
+---
 
-  - GOTO 2 hasta que "todos los tests" pasen.
+## 3. Estructura de los Tests
 
-3. Reflixiono - ¿Se puede mejorar el código?
+Vamos a dividir los tests en 3 secciones, siguiendo el siguiente orden:
 
-  - Si -> Refactorizar. GOTO 2
-  
-  - No -> GOTO 1
+- **Setup:** establece el contexto inicial para la ejecución del test. Es la pre-condición del test (puede estar refactorizada en un mensaje `setUp`).
+- **Exercise:** ejecuta la funcionalidad específica que se está testeando. Determina QUÉ se está testeando.
+- **Assert:** verifica que los resultados sean los esperados. Es la post-condición del test.
 
-## Estructura de los tests
+---
 
-Vamos a dividir los tests en 3 secciones siguiendo el siguiente orden:
+## Resumen
 
-- **Setup:** Aquí establecemos el contexto inicial para la ejecución del test Pre'condición del test (puede ser reufucado en mensaje setUp).
-
-- **Exercise:** Ejecita la funcionalidad específica que se está testeando. Determina QUÉ se está testeando.
-
-- **Assert:** Verifica que los resultado sean los esperado. Post-condición del test.
+| Concepto | Descripción |
+|----------|-------------|
+| **TDD** | Técnica de aprendizaje y desarrollo iterativa, incremental y basada en feedback inmediato. |
+| **Ciclo TDD** | Escribir un test que falle → hacerlo pasar con la solución más simple → reflexionar y refactorizar. |
+| **Setup** | Sección del test que arma el contexto inicial (pre-condición). |
+| **Exercise** | Sección del test que ejecuta la funcionalidad testeada. |
+| **Assert** | Sección del test que verifica el resultado esperado (post-condición). |

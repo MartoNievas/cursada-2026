@@ -1,5 +1,7 @@
 # Resumen Primer Parcial — TEO
 
+**Ingeniería de Software — FCEyN, Universidad de Buenos Aires**
+
 ---
 
 ## 1. Software
@@ -25,7 +27,7 @@
 
 ## 3. Conceptos Fundamentales de OOP
 
-### Objetos y mensajes
+### 3.1 Objetos y mensajes
 
 | Concepto | Definición |
 |----------|-----------|
@@ -37,20 +39,20 @@
 
 **Programas** = conjunto de objetos que colaboran entre sí enviándose mensajes.
 
-### Propiedades de la colaboración
+### 3.2 Propiedades de la colaboración
 
 1. Sincrónica
 2. Dirigida
 3. Siempre se espera un resultado
 4. El receptor desconoce al emisor
 
-### Prioridad de mensajes
+### 3.3 Prioridad de mensajes
 
 1. **Unario** (mayor prioridad) — ej: `factorial`
 2. **Binario** — ej: `+ - * /`
 3. **Keyword** (menor prioridad) — ej: `at:put:`
 
-### Variables especiales
+### 3.4 Variables especiales
 
 | Variable | Descripción |
 |----------|------------|
@@ -63,7 +65,7 @@
 
 ## 4. Relaciones entre Objetos
 
-### Relación de conocimiento
+### 4.1 Relación de conocimiento
 
 ```
 [ObjetoA] ----nombre----> [ObjetoB]
@@ -78,19 +80,19 @@
 
 > Son reglas a seguir según el contexto, no reglas absolutas.
 
-### H1 — Minimizar el acoplamiento
+### 5.1 H1 — Minimizar el acoplamiento
 - Medida de relación entre objetos
 - A menor acoplamiento, mejor
 
-### H2 — Maximizar la cohesión funcional
+### 5.2 H2 — Maximizar la cohesión funcional
 - Cuanto menos cosas hace un objeto, más cohesivo es
 - Hace más, hace bien
 
-### H3 — No romper el encapsulamiento
+### 5.3 H3 — No romper el encapsulamiento
 - Evitar getters innecesarios
 - Evitar setters innecesarios
 
-### H4 — Reglas de creación de objetos
+### 5.4 H4 — Reglas de creación de objetos
 
 - Siempre crear objetos **completos** (ej: una fecha no puede definirse parcialmente)
 - Un único método de creación de instancia que use `new`, el resto se implementa en base a él
@@ -104,14 +106,14 @@
 
 **Definición:** Relación entre un conjunto de objetos y un conjunto de mensajes. Los objetos son polimórficos entre sí respecto de un conjunto de mensajes si saben responder dichos mensajes con semántica equivalente.
 
-### Clase vs Prototipo
+### 6.1 Clase vs Prototipo
 
 | | Clase (Aristóteles) | Prototipo (Wittgenstein) |
 |-|---------------------|--------------------------|
 | **Idea** | Esencia / idea de algo | El molde de los objetos |
 | **En Smalltalk** | Toda clase es un objeto | Solo objetos, no hay clases en el sentido clásico |
 
-### Protocolo
+### 6.2 Protocolo
 - Conjunto ordenado de mensajes de un objeto
 - `subclassResponsibility` — indica que el mensaje debe ser implementado por la subclase
 
@@ -129,4 +131,20 @@
 4. Reemplazar el código repetido original por el uso de la nueva abstracción
 
 > ⚠️ No se pueden usar ciclos en nodos de más arriba del árbol de ejecución.
+
+---
+
+## Resumen
+
+| Concepto | Descripción |
+|----------|-------------|
+| **Software** | Modelo computable de un dominio de problema; implementa el "cómo" de un "qué". |
+| **Objeto** | Representación esencial de un ente del dominio del problema. |
+| **Mensaje** | Qué declarativo enviado a un objeto; el receptor decide el "cómo" (método). |
+| **self / thisContext** | Variables especiales: el receptor actual y el contexto de ejecución actual. |
+| **Relación de conocimiento** | Se implementa mediante variables de instancia con nombre según el rol. |
+| **H1–H4** | Heurísticas de diseño: minimizar acoplamiento, maximizar cohesión, no romper encapsulamiento, crear objetos completos y válidos. |
+| **Polimorfismo** | Un conjunto de objetos responde con semántica equivalente a un mismo conjunto de mensajes. |
+| **Protocolo** | Conjunto ordenado de mensajes que entiende un objeto. |
+| **Abstracción** | Se extrae de código repetido concreto; el paso clave es nombrarla bien. |
 
