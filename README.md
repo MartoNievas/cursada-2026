@@ -5,6 +5,8 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 >**Aclaración:** Se recomienda descargar los Markdown y renderizarlos mediante VsCode utilizando `Ctrl + Shift + v` o mejor si utilizas obsidian.
 
 > **Formato de las teóricas:** todos los apuntes de teóricas/resúmenes de clase siguen un mismo estándar de escritura, documentado en [`TEORICAS.md`](TEORICAS.md).
+>
+> **Formato de las guías:** las guías de ejercicios resueltas siguen su propio estándar, documentado en [`GUIAS.md`](GUIAS.md).
 
 ---
 
