@@ -219,7 +219,7 @@ initalizeWith: aValue
 	value := aValue! !
 
 
-!Entero methodsFor: 'value' stamp: 'HernanWilkinson 5/7/2016 21:02'!
+!Entero methodsFor: 'accessing' stamp: 'HernanWilkinson 5/7/2016 21:02'!
 integerValue
 
 	"Usamos integerValue en vez de value para que no haya problemas con el mensaje value implementado en Object - Hernan"
@@ -412,7 +412,7 @@ printOn: aStream
 Fraccion class
 	instanceVariableNames: ''!
 
-!Fraccion class methodsFor: 'intance creation' stamp: 'NR 9/23/2018 23:45:19'!
+!Fraccion class methodsFor: 'instance creation' stamp: 'NR 9/23/2018 23:45:19'!
 with: aDividend over: aDivisor
 
 	| greatestCommonDivisor numerator denominator |

@@ -11,7 +11,7 @@ initializeFor: aStack
 	stack := aStack .! !
 
 
-!OOSStackStatus methodsFor: 'stack operations' stamp: 'Martin 4/17/2026 20:13:44'!
+!OOSStackStatus methodsFor: 'accessing' stamp: 'Martin 4/17/2026 20:13:44'!
 top 
 
 	self subclassResponsibility .! !
@@ -47,7 +47,7 @@ OOSStackStatus subclass: #EmptyOOStack
 	category: 'Stack-Exercise'!
 
 
-!EmptyOOStack methodsFor: 'stack operations' stamp: 'Martin 4/17/2026 20:33:08'!
+!EmptyOOStack methodsFor: 'accessing' stamp: 'Martin 4/17/2026 20:33:08'!
 top
 	
 	^stack topWhenIsEmpty.! !
@@ -71,7 +71,7 @@ OOSStackStatus subclass: #NotEmptyOOStack
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!NotEmptyOOStack methodsFor: 'stack operations' stamp: 'Martin 4/17/2026 20:38:30'!
+!NotEmptyOOStack methodsFor: 'accessing' stamp: 'Martin 4/17/2026 20:38:30'!
 top
 
 	^ stack topWhenNotEmpty ! !
@@ -157,7 +157,7 @@ notEmpty
 OOStack class
 	instanceVariableNames: ''!
 
-!OOStack class methodsFor: 'error descriptions' stamp: 'NR 9/14/2023 08:12:21'!
+!OOStack class methodsFor: 'error messages' stamp: 'NR 9/14/2023 08:12:21'!
 stackEmptyErrorDescription
 	
 	^ 'stack is empty!!!!!!'! !

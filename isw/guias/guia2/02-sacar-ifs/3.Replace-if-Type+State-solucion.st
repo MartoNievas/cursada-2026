@@ -5,7 +5,7 @@ Object subclass: #PowerState
 	poolDictionaries: ''
 	category: '3.Replace-if-Type+State'!
 
-!PowerState methodsFor: 'initialize' stamp: 'Martin 4/10/2026 14:56:25'!
+!PowerState methodsFor: 'initialization' stamp: 'Martin 4/10/2026 14:56:25'!
 initializePowerStateof: aVehicle
 
 	vehicleToPower := aVehicle .! !
@@ -22,7 +22,7 @@ accelerate
 PowerState class
 	instanceVariableNames: ''!
 
-!PowerState class methodsFor: 'new' stamp: 'Martin 4/10/2026 14:56:55'!
+!PowerState class methodsFor: 'instance creation' stamp: 'Martin 4/10/2026 14:56:55'!
 on: aVehicle
 
 	^self new initializePowerStateof: aVehicle .! !

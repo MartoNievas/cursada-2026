@@ -212,12 +212,12 @@ accelerate
 	where = #openRoad ifTrue: [ speed > (130 * kilometer / hour) ifTrue: [ speed := 130 * kilometer / hour ] ].
 	where = #skies ifTrue: [ speed > (500 * kilometer / hour) ifTrue: [ speed := 500 * kilometer / hour ] ]! !
 
-!Vehicle methodsFor: 'move' stamp: 'NR 9/7/2024 18:24:00'!
+!Vehicle methodsFor: 'testing' stamp: 'NR 9/7/2024 18:24:00'!
 altitudeAt: anAltitude
 
 	^ altitude = anAltitude! !
 
-!Vehicle methodsFor: 'move' stamp: 'NR 9/7/2024 18:23:27'!
+!Vehicle methodsFor: 'testing' stamp: 'NR 9/7/2024 18:23:27'!
 speedAt: aSpeed
 
 	^ speed = aSpeed! !

@@ -79,7 +79,7 @@ Object subclass: #Product
 	poolDictionaries: ''
 	category: 'IRobot-Enunciado'!
 
-!Product methodsFor: 'instance creation' stamp: 'FRT 5/4/2020 10:39:55'!
+!Product methodsFor: 'initialization' stamp: 'FRT 5/4/2020 10:39:55'!
 initializeWith: aWeight and: aHeight
 	
 	weight := aWeight.
@@ -589,7 +589,7 @@ TestCase subclass: #CashierTest
 	poolDictionaries: ''
 	category: 'IRobot-Enunciado'!
 
-!CashierTest methodsFor: 'receiving from empty trailer' stamp: 'Martin 4/14/2026 15:14:35'!
+!CashierTest methodsFor: 'private' stamp: 'Martin 4/14/2026 15:14:35'!
 shouldRaise: errorMessage when: aBlock
 
 

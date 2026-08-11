@@ -75,7 +75,7 @@ initializePowerStatusOf: aVehicle
 PowerStatus class
 	instanceVariableNames: ''!
 
-!PowerStatus class methodsFor: 'as yet unclassified' stamp: 'Martin 4/10/2026 19:35:39'!
+!PowerStatus class methodsFor: 'instance creation' stamp: 'Martin 4/10/2026 19:35:39'!
 on: aVehicle
 
 	^self new initializePowerStatusOf: aVehicle .! !
@@ -191,12 +191,12 @@ accelerationSpeed
 
 	^ speed + (engine acceleration: speed ).! !
 
-!Vehicle methodsFor: 'move' stamp: 'Martin 4/10/2026 19:43:57'!
+!Vehicle methodsFor: 'testing' stamp: 'Martin 4/10/2026 19:43:57'!
 altitudeAt: anAltitude
 
 	self subclassResponsibility .! !
 
-!Vehicle methodsFor: 'move' stamp: 'NR 9/7/2024 18:23:27'!
+!Vehicle methodsFor: 'testing' stamp: 'NR 9/7/2024 18:23:27'!
 speedAt: aSpeed
 
 	^ speed = aSpeed! !
@@ -273,7 +273,7 @@ accelerateWhenTurnedOn
 	super accelerateWhenTurnedOn .
 	altitude := altitude  + (5 * meter).! !
 
-!Helicopter methodsFor: 'move' stamp: 'Martin 4/10/2026 20:47:17'!
+!Helicopter methodsFor: 'testing' stamp: 'Martin 4/10/2026 20:47:17'!
 altitudeAt: anAltitude
 
 	^altitude = anAltitude .! !

@@ -740,12 +740,12 @@ Object subclass: #Penales
 Penales class
 	instanceVariableNames: ''!
 
-!Penales class methodsFor: 'message errors' stamp: 'NR 9/19/2023 06:12:49'!
+!Penales class methodsFor: 'error messages' stamp: 'NR 9/19/2023 06:12:49'!
 direccionArqueroFueraDeRango
 	
 	^'El arquero debe lanzarse a coordenadas válidas'! !
 
-!Penales class methodsFor: 'message errors' stamp: 'NR 9/19/2023 06:12:32'!
+!Penales class methodsFor: 'error messages' stamp: 'NR 9/19/2023 06:12:32'!
 direccionTiroFueraDeRango
 	
 	^'La pelota debe dirigirse a coordenadas válidas'! !

@@ -11,6 +11,6 @@ DenotativeObject subclass: #Pepe
 Pepe class
 	instanceVariableNames: ''!
 
-!Pepe class methodsFor: 'new' stamp: 'Martin 4/5/2026 18:22:46'!
+!Pepe class methodsFor: 'accessing' stamp: 'Martin 4/5/2026 18:22:46'!
 hola
 	^'Hola Pepe'! !

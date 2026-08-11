@@ -77,7 +77,7 @@ notFull
 OOStack class
 	instanceVariableNames: ''!
 
-!OOStack class methodsFor: 'error descriptions' stamp: 'NR 9/14/2023 08:12:21'!
+!OOStack class methodsFor: 'error messages' stamp: 'NR 9/14/2023 08:12:21'!
 stackEmptyErrorDescription
 	
 	^ 'stack is empty!!!!!!'! !
@@ -123,7 +123,7 @@ topWhenFull
 	^self topWhenNotEmpty .! !
 
 
-!LimitedOOStack methodsFor: 'stack operations' stamp: 'Martin 4/20/2026 18:16:15'!
+!LimitedOOStack methodsFor: 'adding' stamp: 'Martin 4/20/2026 18:16:15'!
 push: anElement
 
 	^self state push: anElement .! !
@@ -134,17 +134,17 @@ push: anElement
 LimitedOOStack class
 	instanceVariableNames: ''!
 
-!LimitedOOStack class methodsFor: 'error descriptions' stamp: 'Martin 4/20/2026 18:19:16'!
+!LimitedOOStack class methodsFor: 'error messages' stamp: 'Martin 4/20/2026 18:19:16'!
 limitMustBeIntegerErrorMessage
 
 	^'El limite debe ser un integer'! !
 
-!LimitedOOStack class methodsFor: 'error descriptions' stamp: 'Martin 4/20/2026 18:18:53'!
+!LimitedOOStack class methodsFor: 'error messages' stamp: 'Martin 4/20/2026 18:18:53'!
 limitMustBeStrictlyPositiveErrorMessage
 
 	^'El limite debe ser estrictamente positivo'! !
 
-!LimitedOOStack class methodsFor: 'error descriptions' stamp: 'Martin 4/20/2026 18:11:08'!
+!LimitedOOStack class methodsFor: 'error messages' stamp: 'Martin 4/20/2026 18:11:08'!
 stackFullErrorDescription
 
 	^'El stack esta lleno'.! !

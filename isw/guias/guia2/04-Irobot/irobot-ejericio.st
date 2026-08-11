@@ -504,7 +504,7 @@ Object subclass: #Product
 	poolDictionaries: ''
 	category: 'IRobot-Enunciado'!
 
-!Product methodsFor: 'instance creation' stamp: 'FRT 5/4/2020 10:39:55'!
+!Product methodsFor: 'initialization' stamp: 'FRT 5/4/2020 10:39:55'!
 initializeWith: aWeight and: aHeight
 	
 	weight := aWeight.

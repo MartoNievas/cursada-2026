@@ -58,7 +58,7 @@ accelerate
 	self subclassResponsibility .! !
 
 
-!PowerState methodsFor: 'initialize' stamp: 'Martin 4/10/2026 14:34:57'!
+!PowerState methodsFor: 'initialization' stamp: 'Martin 4/10/2026 14:34:57'!
 initializePowerStatusOf: aVehicle
 
 	vehicle  := aVehicle .! !
@@ -69,7 +69,7 @@ initializePowerStatusOf: aVehicle
 PowerState class
 	instanceVariableNames: ''!
 
-!PowerState class methodsFor: 'as yet unclassified' stamp: 'Martin 4/10/2026 14:36:46'!
+!PowerState class methodsFor: 'instance creation' stamp: 'Martin 4/10/2026 14:36:46'!
 on: aVehicle
 
 	^self new initializePowerStatusOf: aVehicle .! !

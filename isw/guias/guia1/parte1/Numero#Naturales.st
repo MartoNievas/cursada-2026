@@ -49,7 +49,7 @@ subtractFrom: aNaturalNumber
 + anAdder
 	^anAdder next.! !
 
-!I class methodsFor: '-- all --' stamp: 'Martin 4/5/2026 20:09:32'!
+!I class methodsFor: 'arithmetic operations' stamp: 'Martin 4/5/2026 20:09:32'!
 - aNaturalNumber
 	^ Error signal: 'No soporta cero ni numeros negativos'.! !
 
@@ -57,7 +57,7 @@ subtractFrom: aNaturalNumber
 / aDivisor
     ^ aDivisor timesDivideTo: self.! !
 
-!I class methodsFor: '-- all --' stamp: 'Martin 4/5/2026 21:40:33'!
+!I class methodsFor: 'arithmetic operations' stamp: 'Martin 4/5/2026 21:40:33'!
 divideWithDividendGreaterEqualThanDivisor: aDividend and: aDivisor
     ^ self.! !
 
@@ -70,7 +70,7 @@ next
 	^II.
 	! !
 
-!I class methodsFor: '-- all --' stamp: 'Martin 4/5/2026 20:13:43'!
+!I class methodsFor: 'accessing' stamp: 'Martin 4/5/2026 20:13:43'!
 previous
 	Error signal: 'I no tiene previo'.! !
 
@@ -82,7 +82,7 @@ previus
 subtractFrom: aNaturalNumber
 	^ aNaturalNumber previous.! !
 
-!I class methodsFor: '-- all --' stamp: 'Martin 4/5/2026 21:39:13'!
+!I class methodsFor: 'arithmetic operations' stamp: 'Martin 4/5/2026 21:39:13'!
 timesDivideTo: aDividend
     ^ aDividend.! !
 
@@ -127,29 +127,29 @@ subtractFrom: aNaturalNumber
 
 	^ (self previous * aNaturalNumber ) + aNaturalNumber .! !
 
-!II class methodsFor: 'operators' stamp: 'Martin 4/5/2026 20:07:19'!
+!II class methodsFor: 'arithmetic operations' stamp: 'Martin 4/5/2026 20:07:19'!
 + anAdder
 	^ self previous + anAdder next.! !
 
-!II class methodsFor: 'operators' stamp: 'Martin 4/5/2026 20:11:48'!
+!II class methodsFor: 'arithmetic operations' stamp: 'Martin 4/5/2026 20:11:48'!
 - aNaturalNumber
 	^ aNaturalNumber subtractFrom: self! !
 
-!II class methodsFor: '-- all --' stamp: 'Martin 4/5/2026 21:40:01'!
+!II class methodsFor: 'arithmetic operations' stamp: 'Martin 4/5/2026 21:40:01'!
 / aDivisor
     ^ aDivisor timesDivideTo: self.! !
 
-!II class methodsFor: '-- all --' stamp: 'Martin 4/5/2026 21:40:41'!
+!II class methodsFor: 'arithmetic operations' stamp: 'Martin 4/5/2026 21:40:41'!
 divideWithDividendGreaterEqualThanDivisor: aDividend and: aDivisor
     ^ [(aDividend - aDivisor) / aDivisor + I
         ] on: Error do: [I].! !
 
-!II class methodsFor: '-- all --' stamp: 'Martin 4/5/2026 19:40:29'!
+!II class methodsFor: 'initialization' stamp: 'Martin 4/5/2026 19:40:29'!
 initialize
 	next := nil.
 	previous := I.! !
 
-!II class methodsFor: 'operators' stamp: 'Martin 4/5/2026 22:05:20'!
+!II class methodsFor: 'private' stamp: 'Martin 4/5/2026 22:05:20'!
 nameOfNext
     (self name endsWith: 'DCCCC') ifTrue: [^ (self name withoutSuffix: 'DCCCC'), 'CM'].
     (self name endsWith: 'CCCC') ifTrue: [^ (self name withoutSuffix: 'CCCC'), 'CD'].
@@ -174,7 +174,7 @@ next
     ].
     ^ next.! !
 
-!II class methodsFor: '-- all --' stamp: 'Martin 4/5/2026 19:40:45'!
+!II class methodsFor: 'accessing' stamp: 'Martin 4/5/2026 19:40:45'!
 previous
 	^previous ! !
 
@@ -186,22 +186,22 @@ previous: aNaturalNumber
 subtractFrom: aNaturalNumber
 	^ aNaturalNumber previous - self previous .! !
 
-!II class methodsFor: '-- all --' stamp: 'Martin 4/5/2026 21:38:08'!
+!II class methodsFor: 'arithmetic operations' stamp: 'Martin 4/5/2026 21:38:08'!
 timesDivideTo: aDividend
     ^ [(aDividend + I - self) divideWithDividendGreaterEqualThanDivisor: aDividend and: self] 
         on: Error 
         do: [self error: 'No se puede dividir'].! !
 
 
-!II class methodsFor: 'operators' stamp: 'Martin 4/5/2026 20:07:19'!
+!II class methodsFor: 'arithmetic operations' stamp: 'Martin 4/5/2026 20:07:19'!
 + anAdder
 	^ self previous + anAdder next.! !
 
-!II class methodsFor: 'operators' stamp: 'Martin 4/5/2026 20:11:48'!
+!II class methodsFor: 'arithmetic operations' stamp: 'Martin 4/5/2026 20:11:48'!
 - aNaturalNumber
 	^ aNaturalNumber subtractFrom: self! !
 
-!II class methodsFor: 'operators' stamp: 'Martin 4/5/2026 22:05:20'!
+!II class methodsFor: 'private' stamp: 'Martin 4/5/2026 22:05:20'!
 nameOfNext
     (self name endsWith: 'DCCCC') ifTrue: [^ (self name withoutSuffix: 'DCCCC'), 'CM'].
     (self name endsWith: 'CCCC') ifTrue: [^ (self name withoutSuffix: 'CCCC'), 'CD'].

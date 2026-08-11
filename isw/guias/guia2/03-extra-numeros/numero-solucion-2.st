@@ -621,7 +621,7 @@ asDenominatorOf: aNumerator
 	self subclassResponsibility ! !
 
 
-!Entero methodsFor: 'value' stamp: 'HAW 5/2/2017 17:21:12'!
+!Entero methodsFor: 'accessing' stamp: 'HAW 5/2/2017 17:21:12'!
 integerValue
 
 	"Usamos integerValue en vez de value para que no haya problemas con el mensaje value implementado en Object - Hernan"
@@ -807,7 +807,7 @@ substractFromUno: aMinuend
 	! !
 
 
-!Cero methodsFor: 'value' stamp: 'HAW 5/2/2017 17:11:32'!
+!Cero methodsFor: 'accessing' stamp: 'HAW 5/2/2017 17:11:32'!
 integerValue
 
 	^0! !
@@ -881,7 +881,7 @@ isZero
 	^false! !
 
 
-!EnteroMenosCeroYUno methodsFor: 'value' stamp: 'NR 10/1/2018 00:29:16'!
+!EnteroMenosCeroYUno methodsFor: 'accessing' stamp: 'NR 10/1/2018 00:29:16'!
 integerValue
 	
 	^value! !
@@ -1307,7 +1307,7 @@ substractFromUno: anAdder
 	^Entero with: 0! !
 
 
-!Uno methodsFor: 'value' stamp: 'HAW 5/2/2017 17:11:39'!
+!Uno methodsFor: 'accessing' stamp: 'HAW 5/2/2017 17:11:39'!
 integerValue
 
 	^1! !

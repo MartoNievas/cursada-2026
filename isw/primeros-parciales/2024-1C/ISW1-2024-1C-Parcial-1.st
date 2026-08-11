@@ -390,7 +390,7 @@ hash
 bajaUnDecimoDeResistencia
 	resistencia := resistencia - 1! !
 
-!CapaDeSuelo methodsFor: 'bajar resistencia' stamp: 'ARM 5/8/2024 13:10:22'!
+!CapaDeSuelo methodsFor: 'testing' stamp: 'ARM 5/8/2024 13:10:22'!
 sinResistencia
 	^resistencia = 0! !
 
@@ -419,7 +419,7 @@ scan
 	^ 50. ! !
 
 
-!CapaDeSuelo methodsFor: 'setters' stamp: 'FRT 5/5/2024 16:07:55'!
+!CapaDeSuelo methodsFor: 'accessing' stamp: 'FRT 5/5/2024 16:07:55'!
 setAltura: unaAltura
 
 	altura := unaAltura! !

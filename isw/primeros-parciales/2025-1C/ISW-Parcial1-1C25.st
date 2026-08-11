@@ -563,22 +563,22 @@ Object subclass: #EscapeDeFlota
 EscapeDeFlota class
 	instanceVariableNames: ''!
 
-!EscapeDeFlota class methodsFor: 'message error' stamp: 'NR 9/28/2025 00:38:12'!
+!EscapeDeFlota class methodsFor: 'error messages' stamp: 'NR 9/28/2025 00:38:12'!
 flotaSinNavesDescripcionDeError
 
 	^ 'La flota no puede estar vacia'! !
 
-!EscapeDeFlota class methodsFor: 'message error' stamp: 'NR 9/28/2025 00:38:25'!
+!EscapeDeFlota class methodsFor: 'error messages' stamp: 'NR 9/28/2025 00:38:25'!
 rutaVaciaDescripcionDeError
 
 	^ 'La ruta no puede ser vacia'! !
 
-!EscapeDeFlota class methodsFor: 'message error' stamp: 'NR 9/28/2025 00:40:29'!
+!EscapeDeFlota class methodsFor: 'error messages' stamp: 'NR 9/28/2025 00:40:29'!
 sectoresRepetidosDescripcionDeError
 
 	^ 'La ruta no puede tener sectores repetidos'! !
 
-!EscapeDeFlota class methodsFor: 'message error' stamp: 'NR 9/28/2025 00:38:52'!
+!EscapeDeFlota class methodsFor: 'error messages' stamp: 'NR 9/28/2025 00:38:52'!
 todasLasNavesDebenSerDiferentesDescripcionDeError
 
 	^ 'Todas las naves de la flota deben ser unicas'! !

@@ -5,7 +5,7 @@ Object subclass: #OOStack
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!OOStack methodsFor: 'initilization' stamp: 'Martin 4/20/2026 10:01:04'!
+!OOStack methodsFor: 'initialization' stamp: 'Martin 4/20/2026 10:01:04'!
 initialize
 
 	head := EmptyStackNode new.! !
@@ -47,7 +47,7 @@ top
 OOStack class
 	instanceVariableNames: ''!
 
-!OOStack class methodsFor: 'error descriptions' stamp: 'NR 9/14/2023 08:12:21'!
+!OOStack class methodsFor: 'error messages' stamp: 'NR 9/14/2023 08:12:21'!
 stackEmptyErrorDescription
 	
 	^ 'stack is empty!!!!!!'! !
@@ -73,7 +73,7 @@ isEmpty
 
 	^false.! !
 
-!StackNode methodsFor: 'testing' stamp: 'Martin 4/20/2026 10:02:33'!
+!StackNode methodsFor: 'accessing' stamp: 'Martin 4/20/2026 10:02:33'!
 size
 	
 	^ 1 + next size.! !
@@ -130,7 +130,7 @@ isEmpty
 
 	^ true! !
 
-!EmptyStackNode methodsFor: 'testing' stamp: 'Martin 4/20/2026 10:02:16'!
+!EmptyStackNode methodsFor: 'accessing' stamp: 'Martin 4/20/2026 10:02:16'!
 size
 
 	^0.! !

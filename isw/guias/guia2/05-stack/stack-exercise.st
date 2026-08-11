@@ -158,7 +158,7 @@ Object subclass: #OOStack
 OOStack class
 	instanceVariableNames: ''!
 
-!OOStack class methodsFor: 'error descriptions' stamp: 'NR 9/14/2023 08:12:21'!
+!OOStack class methodsFor: 'error messages' stamp: 'NR 9/14/2023 08:12:21'!
 stackEmptyErrorDescription
 	
 	^ 'stack is empty!!!!!!'! !
