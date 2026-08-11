@@ -1,6 +1,12 @@
-# Práctica2: Sincronización entre procesos
+# Práctica 3: Sincronización entre procesos
 
-> Los enunciados de los ejercicios se encuentran en el PDF aparte [Enunciados](p3.pdf).
+**Sistemas Operativos — FCEyN, Universidad de Buenos Aires**
+
+---
+
+> Enunciado: [PDF](p3.pdf)
+
+---
 
 ## Ejercicio 1
 
@@ -29,6 +35,8 @@ Por cada proceso tenemos 2 salidas posibles dependiendo del orden de ejecución 
 - $B \rightarrow A$: B evalúa el ciclo y entra, luego el if pero no entra ya que `y = 0` y se queda loopeando hasta que A haga algo. A ejecuta su primera iteración, printea 0 y pone y = 1, si justo entra B printea a.
 
 Una posible salida: `1a2a3a...`
+
+---
 
 ## Ejercicio 2
 
@@ -63,11 +71,15 @@ Pongamos un ejemplo para que se vea mejor:
 
 Falló, ya que el segundo proceso debería haber leído un 6 y restado 1.
 
+---
+
 ## Ejercicio 3
 
 Si utilizamos una cola, los pedidos se ejecutan en orden, por lo tanto los más viejos son los que se procesan primero.
 
 Si en cambio utilizamos una pila (LIFO, Last In, First Out), los pedidos más nuevos tienen prioridad sobre los viejos. En un sistema en el cual se hacen muchos pedidos, los más viejos no llegarán a ejecutarse antes de que los más nuevos se terminen, por lo tanto esto genera **inanición**.
+
+---
 
 ## Ejercicio 4
 
@@ -85,6 +97,8 @@ Por otro lado, `signal` utiliza también esa variable compartida, primero la inc
 **Q.V.Q:** En caso de que las operaciones `wait` y `signal` no se ejecuten de manera atómica, entonces se viola la propiedad de exclusión mutua.
 
 Supongamos que las operaciones no se ejecutan de manera atómica. Lo que podría pasar es que durante el FETCH del valor de s en memoria, más de un proceso capture el valor de la misma siendo s > 0 en ese instante, por lo que podría ingresar en la sección crítica. Por lo tanto rompe con la exclusión mutua.
+
+---
 
 ## Ejercicio 5
 
@@ -136,6 +150,8 @@ critica();
 ```
 
 Con esto resolvemos la inanición debido a que se van liberando de forma secuencial.
+
+---
 
 ## Ejercicio 6
 
@@ -190,6 +206,8 @@ Por parte del **SO** necesitamos que implemente un gestor de bloqueos como lo so
 
 **Solución ejercicio 6:** Esta solución requiere soporte de instrucciones atómicas, protocolos de coherencia de caché y **memory barriers** para que las escrituras de memoria se hagan en orden. Por parte del **SO** no requiere gran soporte, con tener la memoria mapeada y un scheduler es suficiente.
 
+---
+
 ## Ejercicio 7
 
 Este ejercicio tiene que cumplir la siguiente secuencia de ejecución: tenemos los procesos $P_0, P_1, \dots, P_{N-1}$ y tenemos que sincronizarlos de tal manera que se ejecuten así: $P_i, P_{i+1}, \dots, P_0, \dots, P_{i-1}$.
@@ -218,6 +236,8 @@ void proc(int N, int i) {
 }
 ```
 
+---
+
 ## Ejercicio 8
 
 En este ejercicio decidí hacer ejemplos reales en C para aprender sobre los semáforos reales.
@@ -237,6 +257,8 @@ En este ejercicio decidí hacer ejemplos reales en C para aprender sobre los sem
 ### 4)
 
 [Ver código](code/ej8/ej8-4.c)
+
+---
 
 ## Ejercicio 9
 
@@ -261,6 +283,8 @@ proc P(i) {
   b(i);
 }
 ```
+
+---
 
 ## Ejercicio 10
 
@@ -287,17 +311,23 @@ A pesar de que se genera un **deadlock**, también puede haber inanición. Vamos
 - `foo` vuelve a entrar al do-while, toma S y R de nuevo.
 - Si este ciclo se repite indefinidamente, puede generar inanición al proceso `bar`.
 
+---
+
 ## Ejercicio 11
 
 Queremos simular la comunicación entre pipes usando memoria compartida sin usar file descriptors. Contamos con un buffer con dos métodos `pop()` y `push()`.
 
 [Ver código](code/ej11.c)
 
+---
+
 ## Ejercicio 12
 
 Acá tenemos un clásico problema de barreras, ya que primero queremos terminar una sentencia y posteriormente ejecutar otra. En este caso primero queremos `implementarTp()` y posteriormente `experimentar()`.
 
 [Ver código](code/ej12.c)
+
+---
 
 ## Ejercicio 13
 

@@ -1,7 +1,12 @@
 # Práctica 2: Scheduling
 
-> Los enunciados de los ejercicios se encuentran en el PDF aparte [Enunciados](p2.pdf).
+**Sistemas Operativos — FCEyN, Universidad de Buenos Aires**
 
+---
+
+> Enunciado: [PDF](p2.pdf)
+
+---
 
 > Aclaración: **turnaround** lo abrevio con **TT**.
 
@@ -56,6 +61,8 @@ Contamos con la siguiente tabla que describe la forma en la que se utiliza el pr
 
 </div>
 
+---
+
 ## Ejercicio 2
 
 Datos del ejercicio:
@@ -71,6 +78,8 @@ Datos del ejercicio:
 Teniendo en cuenta este esquema y que no nos dicen el orden en el que se van a dar los procesos, un algoritmo por prioridad no convendría debido a que podría ser que el P2 se dé primero lo que nos daría un tiempo de espera promedio muy elevado. Por otro lado podría ser conveniente porque las ráfagas de E/S son cortas, pero con prioridad estática P2 podría sufrir starvation si P0 y P1 siempre tienen mayor prioridad, lo que sería otro motivo para descartarlo.
 También menciona que P1 se suele bloquear frecuentemente, esto sería un motivo para no usar prioridad debido a que no podría seguir ejecutando mientras el proceso está bloqueado. A mi parecer lo que convendría sabiendo todo esto es un algoritmo Round Robin, ya que no sabemos el orden de los procesos en el que se van a dar, el frecuente bloqueo de P1 y la corta duración de las ráfagas E/S de P0 las cuales no se verían perjudicadas por la conmutación de procesos. La única desventaja sería que tardaría más en terminar P2 debido a que dura mucho, pero en beneficio no se atrasan el resto de procesos.
 
+---
+
 ## Ejercicio 3
 
 Tenemos el siguiente diagrama de estados:
@@ -78,6 +87,8 @@ Tenemos el siguiente diagrama de estados:
 ![Diagrama de estados](img/states.png)
 
 Este diagrama por lo que podemos observar, un proceso que está en estado **running** no puede pasar directamente a **ready** sino que antes debe pasar por **blocked**, esto nos está diciendo que un proceso siempre que se ejecute termina a menos que sea bloqueado por una interrupción o esperando algún archivo. Por lo tanto parece que se trata de un scheduler **Cooperativo**. 
+
+---
 
 ## Ejercicio 4
 
@@ -94,6 +105,8 @@ Este diagrama por lo que podemos observar, un proceso que está en estado **runn
 - f) **Colas multinivel** si se utiliza un esquema de prioridades es decir cada cola representa una prioridad distinta podrían sufrir de starvation los procesos de la cola de menor prioridad, pero si se combina con **Round Robin** podría mitigarse o aumentar la prioridad de manera dinámica mediante **aging**.
 
 - g) **Colas multinivel con feedback** no sufre de starvation justamente porque los procesos pueden moverse entre colas dinámicamente, si un proceso lleva mucho tiempo esperando sube de cola y eventualmente se ejecuta.
+
+---
 
 ## Ejercicio 5
 
@@ -119,6 +132,8 @@ El impacto de la modificación sería que cambiaría el invariante de **Round Ro
 ### c)
 
 Una modificación posible para no modificar la cantidad de entradas de un mismo proceso sería poder asignar más de un quantum de tiempo a un proceso, entonces a los procesos que demanden más tiempo de **CPU** se les asigna más del mismo. Además no tenemos el overhead del context switch cada vez que cambiamos.
+
+---
 
 ## Ejercicio 6
 
@@ -189,6 +204,8 @@ Ahora vamos con el waiting time y turnaround promedio de cada algoritmo:
 
 El algoritmo con menor waiting time promedio es **SJF** y el que obtiene el menor turnaround promedio también es **SJF**. 
 
+---
+
 ## Ejercicio 7
 
 Considerar el siguiente conjunto de procesos y el diagrama de Gantt de ejecución. 
@@ -229,6 +246,8 @@ Vamos con el cálculo del **waiting time** y **turnaround** promedio:
 
 El algoritmo presentado a partir de la tabla y diagrama de Gantt es un **SJF** pero con desalojo, ya que en el momento que llega un proceso con menor duración el scheduler conmuta automáticamente al mismo. También conocido como **SRTF** (Shortest Remaining Time First).
 
+---
+
 ## Ejercicio 8
 
 Contamos con el siguiente conjunto de procesos:
@@ -256,6 +275,8 @@ Si ahora para el cálculo del **turnaround** promedio tomamos el algoritmo **SJF
 
 Ahora tenemos que calcular el **TT** del algoritmo **SJF** dejando el procesador en **idle** una unidad de tiempo, luego ya todos los procesos entraron a la cola de **ready**, se ejecuta **P3** que finaliza en el instante 2, continuamos con **P2** que finaliza en el instante 6, por último se ejecuta **P1** que finaliza en el instante 14. El **TT** se calcula restando el instante de llegada, por lo que nos queda un **TT** promedio = ((2-1) + (6-0.4) + (14-0)) / 3 = (1 + 5.6 + 14) / 3 = 6.87 unidades de tiempo.
 
+---
+
 ## Ejercicio 9
 
 Consideramos el siguiente conjunto de procesos, con sus ráfagas de **CPU** e instantes de llegada:
@@ -281,6 +302,8 @@ Ahora vamos a calcular el **TT** promedio y **WT** promedio, para los siguientes
 - **RR (quantum = 10)**: Procedemos de la misma manera que el anterior, **TT_P1** = 6 - 5 = 1, ahora vamos con el **TT_P2** = 16 - 6 = 10, seguimos con el **TT_P3** = 17 - 7 = 10, por último **TT_P4** = 27 - 8 = 19. Por lo tanto el **TT** promedio es (1 + 10 + 10 + 19) / 4 = 10 unidades de tiempo. 
 
 - **SJF (sin desalojo)**: Notemos que el **TT** promedio acá también va a ser de 10, debido a que los procesos ingresan de manera secuencial por lo que el algoritmo termina comportándose como **FCFS**.
+
+---
 
 ## Ejercicio 10
 
@@ -323,6 +346,8 @@ Ahora vamos con **TT** promedio de ambos algoritmos:
 ### d) 
 
 Aunque SRTF minimiza el turnaround promedio, Round Robin puede ser preferible en sistemas interactivos porque garantiza equidad y tiempos de respuesta acotados para todos los procesos. SRTF puede provocar starvation y es menos predecible, mientras que RR asegura que cada proceso reciba CPU periódicamente, lo cual es clave en entornos donde la experiencia del usuario es importante.
+
+---
 
 ## Ejercicio 11
 
@@ -379,6 +404,8 @@ A continuación calcularemos el **TT** y **WT** promedio:
 **WT promedio**
 (3 + 3 + 7 + 5) / 4 = **4.5**
 
+---
+
 ## Ejercicio 12
 
 El algoritmo favorece a los procesos que han utilizado menos CPU en el pasado reciente.
@@ -402,6 +429,8 @@ Sin embargo, no entran en starvation porque:
 Conclusión:
 El algoritmo prioriza naturalmente a los procesos I/O-bound por su bajo uso reciente de CPU,
 pero evita starvation en los CPU-bound porque su prioridad mejora cuando dejan de ejecutarse.
+
+---
 
 ## Ejercicio 12 (Práctica nueva 2026)
 
@@ -435,6 +464,8 @@ Por último vamos con el cálculo del **TT** y **WT** promedio:
 
 - Para el **WT** promedio tenemos que es = (0 + 6 + 9 + 12 + 14) / 5 = 8.2 unidades de tiempo.
 
+---
+
 ## Ejercicio 13
 
 Tenemos que explicar qué algoritmos favorecen (o desfavorecen) a los trabajos más cortos:
@@ -451,6 +482,8 @@ Tenemos que explicar qué algoritmos favorecen (o desfavorecen) a los trabajos m
 
 - **c) Multilevel feedback queue:** Este algoritmo favorece tanto a los procesos cortos como interactivos, pero sin dejar en inanición al resto, ya que los procesos comienzan por lo general en la más alta prioridad utilizando **Round Robin** pero si consumen todo el quantum se los baja de prioridad.
 
+---
+
 ## Ejercicio 14
 
 Empecemos con datos del problema: 
@@ -464,6 +497,8 @@ Empecemos con datos del problema:
 Con esto en mente, los procesos que leen archivos muy grandes tienden a tener **ráfagas largas de CPU**, por lo que si uno de estos procesos se ejecuta antes que uno interactivo, puede generar una mala percepción de respuesta. Por otro lado, los procesos interactivos suelen tener **ráfagas cortas de CPU**, ya que frecuentemente se bloquean esperando operaciones de **E/S**.
 
 Por lo tanto, lo más conveniente en este caso sería utilizar **Round Robin**, ya que asigna un tiempo equitativo a todos los procesos, permitiendo que los procesos interactivos accedan rápidamente a la CPU y mejoren su tiempo de respuesta. Si bien introduce cierto overhead por cambios de contexto (lo que puede afectar levemente el throughput), mantiene un buen equilibrio general, ya que los procesos largos continúan ejecutándose en múltiples quantums. Además de asignar un quantum razonable para minimizar el impacto en el throughput del sistema.
+
+---
 
 ## Ejercicio 15
 
@@ -483,6 +518,8 @@ La justificación es la siguiente, vamos a tener 2 colas:
 - **Cola 2:** En esta se van a poner ambos procesos **E/S**, que se van a ejecutar cuando la **Cola 1** esté vacía, en las ventanas de tiempo en las que el hardware de rayos X no emita valores al sistema. Por otro lado, como estos procesos son de corta duración, también se van a ejecutar en el posible tiempo ocioso que tenga la **CPU**. Esta cola se gestionaría con un algoritmo **Round Robin** para asegurar una buena respuesta a los procesos interactivos.
 
 Por último, la razón del desalojo es que queremos priorizar la fluidez de la imagen antes que la interacción. Imaginemos el escenario en el que la **Cola 1** está vacía, comienza la ejecución de un proceso de aumento de zoom y en el mismo instante o una unidad de tiempo después ingresa un proceso **RT**. Sin desalojo, la imagen se vería descontinuada o lageada, por lo tanto es necesario desalojar el proceso actual para correr el de mayor prioridad.
+
+---
 
 ## Ejercicio 16
 

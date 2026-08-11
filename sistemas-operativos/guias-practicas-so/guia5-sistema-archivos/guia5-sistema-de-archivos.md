@@ -1,12 +1,21 @@
-# Practica 5: Sistema de archivos
+# Práctica 5: Sistema de archivos
 
-> Los enunciados de los ejercicios se encuentran en el PDF aparte [Enunciados](p5.pdf).
+**Sistemas Operativos — FCEyN, Universidad de Buenos Aires**
+
+---
+
+> Enunciado: [PDF](p5.pdf)
+
+---
+
 ## Ejercicio 1
 
 Recordemos que el esquema FAT consta de la File Allocation Table la cual guarda el par (bloque, siguiente), y tiene tantas entradas como bloques tenga el sistema, en esta caso tendría $N$ entradas.
 Queremos llegar al último bloque de un archivo, recordemos que la tabla no se encuentra en memoria y ademas no hay memoria cache, por lo que todos van a ser accesos al disco.
 Asumiendo que solo quiero llegar al último sin leer ninguno, tendría que hacer un acceso al disco de la entrada actual sea $i$, para ver el campo de siguiente, lo mismo para $i+1$ y así hasta $N$, por lo que tendría que hacer $N-1$ accesos totales.
 En cambio si leyera todos los archivos, serian un acceso a la FAT para saber cual es el siguiente y lectura del bloque actual, eso con $N$ bloque se resume a $2N$ accesos.
+
+---
 
 ## Ejercicio 2
 
@@ -55,6 +64,8 @@ Tenemos que un archivo comienza en el bloque 20, y nos dan la siguiente **FAT**,
 | Siguiente | EOF | 2   | 23  | 4   | 5   | 0   | 7   | ... | 21  | 22  | 3   | ... |
 
 Para hacer eso tenemos que llegar a que el siguiente en la tabla sea EOF o -1, sabiendo que cada bloque ocupa 8 KB, podemos contar de bloques que componen el archivo, mirando la tabla sabemos que la cadena es $20 \rightarrow 21 \rightarrow 22 \rightarrow 3 \rightarrow 4 \rightarrow 5 \rightarrow 0 \rightarrow EOF$ vemos que la longitud de la cadena sin contar EOF es de 7 bloques, por lo tanto el archivo ocupa 8 KB $\times$ 7 bloques = 56 KB.
+
+---
 
 ## Ejercicio 3
 
@@ -169,6 +180,8 @@ $$
 
 bloques.
 
+---
+
 ## Ejercicio 4
 
 Supongamos que tenemos un sistema de archivos basado en inodos como  **ext2** y con bloques de 4 KB.
@@ -182,6 +195,8 @@ Entonces con las 5 entradas directas tenemos 20 KB por lo que nos faltarían otr
 ### b)
 
 Usando el mismo esquema, si para 40 KB usamos 11, podemos seguir a partir de eso, seguimos en la entrada indirecta simple, leemos 10 punteros mas de la entrada que eso equivale a 10 bloques mas para cubrir los 40 KB que nos faltaban con un total de 21 bloques para procesar el archivo de 80 KB completamente.
+
+---
 
 ## Ejercicio 5
 
@@ -197,14 +212,14 @@ Se puede considerar que si un bloque se lee dos veces, se queda cargado en memor
 
 Vamos a hacer los análisis por separado.
 
-#### FAT
+### FAT
 
 1. Considerando que la **FAT** esta en memoria, tendríamos que leer  bloques ya que corresponde a la longitud de la cadena de bloques que componen el archivo.
 2. Análogo al anterior serian 7 bloques los que tenemos que leer
 3. Ídem anterior 3 bloques.
 4. Y por último y para sorpresa de nadie serian 37 ya que los extremos se leen.
 
-#### EXT2
+### EXT2
 
 Acá la cosa se pone más internaste, también podemos asumir que el inodo esta en memoria osea no requerimos accesos extra al disco.
 
@@ -213,6 +228,8 @@ Acá la cosa se pone más internaste, también podemos asumir que el inodo esta 
 1.  Aquí puedo leer los bloques del 1 hasta el 11 de manera directa osea que tendría que acceder a 6 bloques,  
 
 > Faltan datos para este ejercicio como por ejemplo tamaño de la dirección de las LBA's, tamaño del bloque.
+
+---
 
 ## Ejercicio 6
 
@@ -230,6 +247,8 @@ Como primer paso se lee el directorio root `/` tenemos que acceder al bloque dis
 
 > **Aclaración:** como el ejercicio no dice que se cuanta con caché para los bloques debemos leer 2 veces el root en caso de que si hubiera serian 4 accesos a bloques ya que `/` estaría en memoria.
 
+---
+
 ## Ejercicio 7
 
 Vamos a mencionar cual es el enfoque de sistema de archivos más conveniente para los siguiente requerimientos:
@@ -238,6 +257,8 @@ Vamos a mencionar cual es el enfoque de sistema de archivos más conveniente par
 2. Como requerimos que el espacio de estructuras auxiliares sea acotada nos conviene un enfoque con inodos, ya que en su conjunto los inodos resultan muchísimo más baratos en cuanto a espacio requerido, la tabla crece, ya que depende de la cantidad de bloques.
 3. Como queremos que el tamaño del archivo sólo esté limitado por el tamaño del disco, es mejor un esquema **FAT** ya que un archivo puede usar tanto bloques como quiera, siempre y cuando estén disponibles, en cambio un sistema de archivos basado en inodos depende de las entradas directas, indirectas, etc.
 4. Si usamos un enfoque **FAT** lo que pasa es que tenemos la información de todos los archivos del sistema de archivos. En cambio con un enfoque basado en inodos basta con tener en memoria solo los que están abierto es ese instante por lo tanto seria $O(kn)$ espacial donde $k$ es la cantidad de archivos y $n$ lo que ocupan en el peor caso. 
+
+---
 
 ## Ejercicio 8
 
@@ -277,6 +298,8 @@ Primero aquí nos va a convenir tener bloques más grandes, 8 sectores en este c
 En segundo lugar lugar tenemos que elegir un tamaño de hash apropiado, como tenemos 16 GB ($2^{14}$ MB) de espacio de disco, y cada archivo en promedio mide 16 MB, por lo que no necesitamos un hash extremadamente, con 16 bits seria mas que suficiente, ya que si todos midieran 16 MB podría haber $2^{10}$ archivos, con 16 bits tendríamos $2^{16}$ entradas en la tabla de hash.
 Por último tenemos que elegir una tamaño de identificador de bloque, teniendo en cuenta los 16 GB ($2^{34}$ Bytes) de disco, con bloques de 8 KB ($2^{13}$ Bytes), lo que nos da $2^{21}$ bloques en el sistema asi que con un hash de 24 bits seria más que suficiente.
 
+---
+
 ## Ejercicio 9
 
 Tenemos que escribir un pseudocódigo que nos permita obtener el nombre del directorio (home) a partir del descriptor de archivo recibido.
@@ -304,6 +327,8 @@ char* obtenerNombre(fd_recibido) {
 	return NULL;
 }
 ```
+
+---
 
 ## Ejercicio 10
 

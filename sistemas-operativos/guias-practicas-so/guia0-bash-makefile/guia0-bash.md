@@ -1,5 +1,10 @@
-# Guía de Bash Scripting y Makefile
+# Práctica 0: Bash Scripting y Makefile
 
+**Sistemas Operativos — FCEyN, Universidad de Buenos Aires**
+
+---
+
+> Enunciado: [PDF](p0.pdf)
 
 ---
 

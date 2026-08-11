@@ -1,8 +1,18 @@
-# Procesos y API del SO
+# Práctica 1: Procesos y API del SO
+
+**Sistemas Operativos — FCEyN, Universidad de Buenos Aires**
+
+---
+
+> Enunciado: [PDF](P1.pdf)
+
+---
 
 ## Parte 1: Estado y Operaciones sobre procesos
 
-### Ejercicio 1
+---
+
+## Ejercicio 1
 
 Para un cambio de contexto los pasos son los siguientes:
 
@@ -12,9 +22,12 @@ Para un cambio de contexto los pasos son los siguientes:
 4. Cargar el contexto del nuevo proceso a partir de su **PCB**.
 5. Por último, comenzar con la ejecución del nuevo proceso.
 
-### Ejercicio 2
+---
 
-#### a) Implementación de la rutina Ke_context_switch
+## Ejercicio 2
+
+### a) Implementación de la rutina Ke_context_switch
+
 ```MyLenguage
 struct PCB {
   int STAT;
@@ -46,7 +59,9 @@ void Ke_context_switch(PCB* pcb_0, PCB* pcb_1) {
 }
 ```
 
-### Ejercicio 3
+---
+
+## Ejercicio 3
 
 La principal diferencia entre una **syscall** y una llamada a **función de biblioteca** es:
 
@@ -59,15 +74,22 @@ La principal diferencia entre una **syscall** y una llamada a **función de bibl
 | Costo | Alto (cambio de modo y salto a **Kernel**) | Bajo (simple llamada a función) |
 | Relación entre ellas | Muchas veces una library call utiliza syscalls para su implementación | Puede no utilizar syscalls para su implementación |
 
-### Ejercicio 4
+---
+
+## Ejercicio 4
 
 El diagrama de estados queda de la siguiente manera:
 
 ![Diagrama de Estados](img/grafo_state.png)
 
-### Ejercicio 5
+---
 
-a) [Ver código](code/ej5a.c)
+## Ejercicio 5
+
+### a)
+
+[Ver código](code/ej5a.c)
+
 ```c
 int main(void) {
   pid_t pid = fork();
@@ -99,7 +121,12 @@ int main(void) {
 }
 ```
 
-b) [Ver código](code/ej5b.c)
+---
+
+### b)
+
+[Ver código](code/ej5b.c)
+
 ```c
 // Función principal Abraham
 int main(void) {
@@ -139,9 +166,12 @@ int main(void) {
 }
 ```
 
-### Ejercicio 6
+---
+
+## Ejercicio 6
 
 [Ver código](code/ej6.c)
+
 ```c
 int system(const char* command) {
     pid_t pid = fork();
@@ -158,19 +188,27 @@ int system(const char* command) {
 }
 ```
 
-### Ejercicio 7
+---
+
+## Ejercicio 7
 
 [Ver código](code/ej7.c)
 
-### Ejercicio 8
+---
+
+## Ejercicio 8
 
 Si los datos del proceso padre e hijo son distintos, cuando se ejecuta el proceso hijo el contador `dato` se incrementa en 1 por cada iteración, en cambio en el padre el contador no se incrementa, por lo tanto siempre es 0. Como son procesos distintos tienen memoria separada, por lo tanto el **dato** es distinto en cada uno. Esto se debe al **copy-on-write**: el proceso hijo recibe una copia de la memoria del padre independiente.
 
-### Ejercicio 9
+---
+
+## Ejercicio 9
 
 [Ver código](code/ej9.c)
 
-### Ejercicio 10
+---
+
+## Ejercicio 10
 
 [Ver código](code/ej10.c)
 
@@ -180,7 +218,9 @@ El comando para ver el **strace** es `strace -f -o <binario>`
 
 ## Parte 2: IPC y Pasaje de Mensajes
 
-### Ejercicio 11
+---
+
+## Ejercicio 11
 
 Tenemos las siguientes llamadas:
 
@@ -189,7 +229,10 @@ Tenemos las siguientes llamadas:
 | **Envío** | `void bsend(pid dst, int msg)` | Envía el valor **msg** al proceso **dst**. |
 | **Recepción** | `int breceive(pid src)` | Recibe un mensaje del proceso **src**. |
 
-a) Tenemos que escribir un código el cual realice la secuencia descripta un número n de veces.
+### a)
+
+Tenemos que escribir un código el cual realice la secuencia descripta un número n de veces.
+
 ```c
 #include <stdio.h>
 #include <unistd.h>
@@ -231,7 +274,12 @@ int main(void) {
 }
 ```
 
-b) Ahora con la otra secuencia descripta:
+---
+
+### b)
+
+Ahora con la otra secuencia descripta:
+
 ```c
 #include <stdio.h>
 #include <unistd.h>
@@ -285,9 +333,13 @@ int main(void) {
 }
 ```
 
-### Ejercicio 12
+---
 
-a) Esta es la secuencia descripta en el ejercicio:
+## Ejercicio 12
+
+### a)
+
+Esta es la secuencia descripta en el ejercicio:
 
 ![Secuencia](img/secuencia.png)
 
@@ -306,26 +358,41 @@ Una secuencia posible de ejecución sería la siguiente:
 | 6      | cómputo_muy_difícil_1    | printf / siguiente paso  |
 | ...    | ...                      | ...                      |
 
-b) Los cambios que se podrían hacer al sistema operativo serían los siguientes:
+---
+
+### b)
+
+Los cambios que se podrían hacer al sistema operativo serían los siguientes:
 
 1. Se podría implementar un buffer temporal para poder escribir los resultados del cómputo y así mantener una cola de mensajes en lugar de una cola de capacidad 0.
 2. Utilizar alguna syscall no bloqueante en lugar de **bsend** y **breceive**.
 
-### Ejercicio 13
+---
 
-a) Como ambos procesos **cortarBordes** y **eliminarOjosRojos** se ejecutan de manera concurrente, lo mejor sería mantener el archivo `.jpg` en memoria compartida, incluyendo un mecanismo de sincronización para evitar condiciones de carrera y asegurar la consistencia del archivo.
+## Ejercicio 13
 
-b) Lo más conveniente sería utilizar pasaje de mensajes, ya que se ejecutan de manera secuencial: una vez finalizado **cortarBordes**, envía un mensaje al proceso **eliminarOjosRojos** para que inicie la ejecución. Adicionalmente sería conveniente mantener la copia en memoria compartida, dado que ambos procesos utilizan el mismo recurso.
+### a)
 
-c) Como aquí los procesos **cortarBordes** y **eliminarOjosRojos** se ejecutan en máquinas diferentes, la única forma sería mediante pasaje de mensajes, y dependerá del orden en el que se requiera ejecutarlos.
+Como ambos procesos **cortarBordes** y **eliminarOjosRojos** se ejecutan de manera concurrente, lo mejor sería mantener el archivo `.jpg` en memoria compartida, incluyendo un mecanismo de sincronización para evitar condiciones de carrera y asegurar la consistencia del archivo.
 
-### Ejercicio 14
+### b)
+
+Lo más conveniente sería utilizar pasaje de mensajes, ya que se ejecutan de manera secuencial: una vez finalizado **cortarBordes**, envía un mensaje al proceso **eliminarOjosRojos** para que inicie la ejecución. Adicionalmente sería conveniente mantener la copia en memoria compartida, dado que ambos procesos utilizan el mismo recurso.
+
+### c)
+
+Como aquí los procesos **cortarBordes** y **eliminarOjosRojos** se ejecutan en máquinas diferentes, la única forma sería mediante pasaje de mensajes, y dependerá del orden en el que se requiera ejecutarlos.
+
+---
+
+## Ejercicio 14
 
 Tenemos 2 nuevas syscalls:
 
 ![syscalls](img/ej14.png)
 
-a) Modificación:
+### a) Modificación
+
 ```c
 int result;
 
@@ -351,25 +418,37 @@ void proceso_derecha() {
 }
 ```
 
-b) La capacidad que debería tener la cola de mensajes debería ser suficiente para evitar la sincronización estricta entre ambos procesos. Un tamaño de al menos 1 permite desacoplar el envío y la recepción, evitando bloqueos y permitiendo un mayor paralelismo. Mientras más grande sea la cola, mejor.
+---
 
-### Ejercicio 15
+### b)
+
+La capacidad que debería tener la cola de mensajes debería ser suficiente para evitar la sincronización estricta entre ambos procesos. Un tamaño de al menos 1 permite desacoplar el envío y la recepción, evitando bloqueos y permitiendo un mayor paralelismo. Mientras más grande sea la cola, mejor.
+
+---
+
+## Ejercicio 15
 
 1. **BLOQUEANTE**: Supongamos que tenemos una aplicación que tiene un archivo de configuración. El **proceso 1** se encarga de leer ese archivo y pasarle los datos al **proceso 2**, el cual se encarga de seguir esa configuración. En este caso hay una dependencia de datos y se requiere que la comunicación sea bloqueante.
 
 2. **NO BLOQUEANTE**: Supongamos que tenemos un programa de explorador de archivos con interfaz gráfica (GUI). La interfaz tiene que atender eventos del usuario y no puede ser bloqueante, ya que debe seguir actualizando la interfaz.
 
-### Ejercicio 16
+---
+
+## Ejercicio 16
 
 [Ver código](code/ej16.c)
 
-### Ejercicio 17
+---
+
+## Ejercicio 17
 
 [Ver código](code/ej17.c)
 
-### Ejercicio 18
+---
 
-Aqui vamos a hacer el codigo en formato `Markdown` debido a que hay funciones que son de caja negra:
+## Ejercicio 18
+
+Aquí vamos a hacer el código en formato `Markdown` debido a que hay funciones que son de caja negra:
 
 ```C
 enum {READ,WRITE};
@@ -420,34 +499,51 @@ void ejecutarHijo(int i, int pipes[][2]) {
 }
 ```
 
-### Ejercicio 19
+---
 
-a) Las `funciones` de la `libc` que generan cada `syscall` son:
+## Ejercicio 19
+
+### a)
+
+Las `funciones` de la `libc` que generan cada `syscall` son:
 
 1. `printf` genera la syscall `write`
-2. `sigaction` genera la syscalls `rt_sigaction`  
+2. `sigaction` genera la syscalls `rt_sigaction`
 3. `malloc` genera la syscall `mmap`
 4. `fork` genera la syscall `clone`
 5. `sigprocmask` genera la syscall `rt_sigprocmask`
 6. `sleep` genera la syscall `nanosleep`
 
-b) [Ver código](code/ej19b.c)
+---
 
+### b)
+
+[Ver código](code/ej19b.c)
 
 ---
 
 ## Parte 3: Sockets
 
-### Ejercicio 20
+---
 
-a) [Ver código](code/ej20a/)
+## Ejercicio 20
 
-b) [Ver código](code/ej20b/)
+### a)
 
-### Ejercicio 21
+[Ver código](code/ej20a/)
+
+### b)
+
+[Ver código](code/ej20b/)
+
+---
+
+## Ejercicio 21
 
 [Ver código](code/ej21/)
 
-### Ejercicio 22
+---
+
+## Ejercicio 22
 
 [Ver código](code/ej22/)

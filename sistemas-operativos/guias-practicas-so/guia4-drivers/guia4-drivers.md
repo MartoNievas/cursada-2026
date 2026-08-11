@@ -1,9 +1,18 @@
 # Práctica 4: Drivers y Administración de E/S
 
->[Lee los enunciados de los ejercicios aqui](p4.pdf)
-## Parte 1 – Interfaz de E/S
+**Sistemas Operativos — FCEyN, Universidad de Buenos Aires**
 
-### Ejercicio 1
+---
+
+> Enunciado: [PDF](p4.pdf)
+
+---
+
+## Parte 1 — Interfaz de E/S
+
+---
+
+## Ejercicio 1
 
 Vamos a seleccionar las opciones correctas que describen el concepto de driver:
 
@@ -12,7 +21,7 @@ Vamos a seleccionar las opciones correctas que describen el concepto de driver:
 
 ---
 
-### Ejercicio 2
+## Ejercicio 2
 
 Vamos con el código del driver donde vamos a escribir las funciones `driver_init()`, `driver_read(void* data)` y `driver_write(void* data)`:
 
@@ -74,7 +83,7 @@ int main(int argc, char** argv) {
 
 ---
 
-### Ejercicio 3
+## Ejercicio 3
 
 Tenemos los siguientes registros:
 
@@ -113,7 +122,7 @@ Con eso dejamos listo el driver. Para dar una pequeña explicación: con `init` 
 
 ---
 
-### Ejercicio 4
+## Ejercicio 4
 
 Ahora debemos reescribir el driver del ejercicio anterior usando interrupciones. La tecla se conecta a la interrupción número 7 y se debe guardar la constante `BTN_INIT` en el registro de la tecla cuando se detecta una nueva pulsación.
 
@@ -164,7 +173,7 @@ int driver_read(void* udata) {
 
 ---
 
-### Ejercicio 5
+## Ejercicio 5
 
 Tenemos que indicar las acciones que debe tomar el administrador de E/S:
 
@@ -174,13 +183,13 @@ Tenemos que indicar las acciones que debe tomar el administrador de E/S:
 
 ---
 
-### Ejercicio 6
+## Ejercicio 6
 
 Las operaciones `IN` y `OUT` son instrucciones privilegiadas que deben ejecutarse en modo kernel (nivel 0), ya que permiten acceder directamente a los registros de E/S. Por razones de seguridad y aislamiento, no deben estar disponibles en modo usuario, sino que su uso queda restringido a drivers dentro del sistema operativo, los cuales corren a nivel de kernel.
 
 ---
 
-### Ejercicio 7
+## Ejercicio 7
 
 Tenemos 3 registros de escritura:
 
@@ -202,7 +211,7 @@ Además tenemos las siguientes funciones auxiliares:
 
 Otros datos importantes: el motor demora en encenderse completamente 50 ms y además, después de completar una operación, se debe apagar el motor. Este tarda como máximo 200 ms y en ese tiempo no pueden realizarse operaciones.
 
-#### a)
+### a)
 
 Vamos con el driver. Notemos que vamos a tener que utilizar polling, ya que no tenemos ningún registro de interrupciones, pero sí de status.
 
@@ -264,7 +273,9 @@ int driver_disco_write(int sector, void* data) {
 }
 ```
 
-#### b)
+---
+
+### b)
 
 Ahora debemos modificar el driver anterior para hacerlo con interrupciones. Se debe manejar la interrupción en la **IRQ 6** cada vez que `ARM_STATUS` o `DATA_READY` tomen el valor 1. Además, el sistema ofrece un **timer** que genera una interrupción en la **IRQ 7** una vez cada 50 ms; no podemos utilizar `sleep`.
 
@@ -362,7 +373,9 @@ int driver_disco_write(int sector, void* data) {
 }
 ```
 
-### Ejercicio 8
+---
+
+## Ejercicio 8
 
 Queremos escribir un driver para una impresora. Para comenzar una impresión se debe hacer lo siguiente:
 

@@ -1,6 +1,13 @@
-# Practica 6: Administración de memoria
+# Práctica 6: Administración de memoria
+
+**Sistemas Operativos — FCEyN, Universidad de Buenos Aires**
 
 ---
+
+> Enunciado: [PDF](p6.pdf)
+
+---
+
 ## Ejercicio 1
 
 **Fragmentación interna:** Es cuando se asigna un bloque más grande de lo necesario, con lo cual se desperdicia parte del mismo.
