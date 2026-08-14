@@ -121,6 +121,156 @@ Indica a `top` cuántas **iteraciones de refresco** debe realizar antes de final
 
 ---
 
+## Ejercicio 3 — Creando Archivos y Directorios
+
+### a) Creando un directorio
+
+Creo un directorio scripts con:
+
+```bash
+$ mkdir scripts
+```
+
+---
+
+### b) Cambiando de directorio
+
+Para cambiar al directorio scripts utilizo:
+
+```bash
+$ cd scripts
+```
+
+Y con `pwd` verifico que me encuentro en el directorio deseado.
+
+---
+
+### c) Creando un archivo
+
+Con el siguiente comando creo un txt con:
+
+```bash
+$ touch miarchivo.txt
+```
+
+---
+
+## Ejercicio 4 — Manejo de Archivos y Directorios
+
+### a) Buscando un archivo con el comando find
+
+Lo que hace el comando es buscar en el árbol de directorios a partir del directorio dado, por ejemplo:
+
+```bash
+$ find /etc -name "*.txt"
+```
+
+Lo que hace exactamente este comando es buscar a partir de `/etc` todos los .txt del árbol.
+
+---
+
+### b) Borrando un archivo
+
+Vamos a borrar el archivo creado con:
+
+```bash
+$ rm -i miarchivo.txt
+```
+
+Y con `ls` confirmo que se borró.
+
+---
+
+### c) Borrando un directorio
+
+Un directorio se borra utilizando la flag `-r` de recursive:
+
+```bash
+$ rm -r scripts
+```
+
+También existe el comando `rmdir` el cual solo elimina directorios vacíos sin necesidad de utilizar una flag especial.
+
+---
+
+### d) Renombrando archivos y directorios
+
+Se puede renombrar un archivo de la siguiente manera:
+
+```bash
+$ mv usuarios.txt info-user.txt
+```
+
+O mover un archivo así:
+
+```bash
+$ mv info-user.txt /tmp
+```
+
+También vale con directorios el `mv` sin requerir una flag especial.
+
+---
+
+### e) Copiando un archivo
+
+Utilizando `cp` podemos copiar archivos:
+
+```bash
+$ cp /tmp/info-user.txt info-user-cp.txt
+```
+
+Con la flag `-r` puedes copiar todo el contenido del directorio:
+
+```bash
+$ cp -r scripts cp-scripts
+```
+
+---
+
+## Ejercicio 5 — Ver y Modificar Permisos de Acceso
+
+No hay como tal un ejercicio, es seguir una serie de pasos; lo que sí, para ver permisos se puede usar el siguiente comando:
+
+```bash
+$ ls -l miarchivo.txt
+```
+
+La flag `-l` significa long y da una descripción detallada del archivo del directorio.
+
+---
+
+## Ejercicio 6 — Archivos de Texto: Ver Contenido
+
+Lo mismo que con el ejercicio anterior, con el comando `cat` puedes visualizar el contenido de un archivo de texto, ya sea un documento txt, código, etc.
+
+Hay otros comandos como `less`, `more` o `tail`, este último solo imprime las 10 primeras líneas.
+
+---
+
+## Ejercicio 7 — Archivos de Texto: Extraer Líneas y Campos
+
+Para buscar texto podemos utilizar el comando grep:
+
+```bash
+$ grep universidad archivo_misterioso.txt
+```
+
+E imprime la/s palabra que matcheó en color rojo. El comando grep tiene varias flags, estas son las más importantes.
+
+<div align="center">
+
+| Opción | Descripción |
+| :---: | :---: |
+| -n | Además de imprimir la línea donde matcheó con el patrón, también indica el número de línea donde se encontró el match. |
+| -c | Con esta flag devuelve el número de líneas que matchearon con el patrón dado. |
+| -i | Ignora casos distintivos, por ejemplo ignora mayúsculas y minúsculas. |
+| -v | Invierte el sentido del matcheo y solo muestra por pantalla aquellas líneas que no matchearon y sin resaltar. |
+| -w | Selecciona solo aquellas líneas cuya palabra matchea por completo con la que se pasa por parámetro. |
+
+</div>
+
+---
+
 ## Ejercicio 8 — Creación y Ejecución de un Bash Script
 
 > Código fuente: [`code/saludar.sh`](code/saludar.sh)
@@ -141,6 +291,57 @@ Luego se otorgan permisos de ejecución y se corre:
 ```bash
 $ chmod +x saludar.sh
 $ ./saludar.sh
+```
+
+---
+
+## Ejercicio 9 — Más sobre Shell Scripting
+
+### a) Sintaxis de condicionales
+
+> Código fuente: [`code/ejercicio9a.sh`](code/ejercicio9a.sh)
+
+Script que pregunta si el usuario es mayor de edad y, según la respuesta (`si`/`no`), imprime si puede pasar o no.
+
+```bash
+$ ./ejercicio9a.sh
+Es usted mayor de edad? [si/no]
+Ingrese respuesta: si
+Puede pasar es mayor de edad
+```
+
+---
+
+### b) Operadores lógicos de bash
+
+> Código fuente: [`code/ejercicio9b.sh`](code/ejercicio9b.sh)
+
+Script que pide dos números, valida con una expresión regular que ambos sean valores numéricos, calcula su suma y producto, y compara ambos resultados.
+
+```bash
+$ ./ejercicio9b.sh
+Ingrese un numero: 3
+Ingrese otro numero: 4
+La suma es: 7
+El producto es: 12
+La suma en menor que el producto
+```
+
+---
+
+### c) Arrays en bash
+
+> Código fuente: [`code/ejercicio9c.sh`](code/ejercicio9c.sh)
+
+Script que lee un archivo CSV (`code/tabla.csv`) columna por columna guardando cada una en un array, calcula la diferencia entre la columna de ingreso y la de gasto, y genera un nuevo CSV (`tabla_nueva.csv`) con esa columna de diferencia agregada.
+
+```bash
+$ ./ejercicio9c.sh
+Array columna 1: Producto Laptop Teclado Monitor Mouse Auriculares
+Array columna 2: Ingreso 1200 150 300 80 200
+Array columna 3: Gasto 800 50 210 30 120
+Array Difrencia: Diferencia 400 100 90 50 80
+Nueva tabla creada con la columna diferencia en tabla_nueva.csv
 ```
 
 ---
