@@ -142,14 +142,11 @@ nameOfNext
     (self name endsWith: 'CM') ifTrue: [^ (self name withoutSuffix: 'CM'), 'M'].
     ^ self name, 'I'.! !
 
-!II class methodsFor: 'as yet unclassified' stamp: 'HAW 14/Aug/2026, 7:58:03 pm (UTC)'!
+!II class methodsFor: 'as yet unclassified' stamp: 'HAW 15/Aug/2026, 12:34:01 am (UTC)'!
 !methodProperties: {}!
 next
-    (next notNil and: [next isObsolete]) ifTrue: [
-        next := nil
-    ].
     next ifNil: [
-        next := self cloneNamed: self nameOfNext.
+	next := II createChildNamed: self nameOfNext.
         next previous: self.
     ].
     ^ next.! !
@@ -238,14 +235,11 @@ nameOfNext
     (self name endsWith: 'CM') ifTrue: [^ (self name withoutSuffix: 'CM'), 'M'].
     ^ self name, 'I'.! !
 
-!II class methodsFor: 'as yet unclassified' stamp: 'HAW 14/Aug/2026, 7:58:03 pm (UTC)'!
+!II class methodsFor: 'as yet unclassified' stamp: 'HAW 15/Aug/2026, 12:34:01 am (UTC)'!
 !methodProperties: {}!
 next
-    (next notNil and: [next isObsolete]) ifTrue: [
-        next := nil
-    ].
     next ifNil: [
-        next := self cloneNamed: self nameOfNext.
+	next := II createChildNamed: self nameOfNext.
         next previous: self.
     ].
     ^ next.! !

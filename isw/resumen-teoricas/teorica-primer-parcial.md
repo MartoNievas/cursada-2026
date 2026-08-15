@@ -25,9 +25,23 @@
 
 ---
 
-## 3. Conceptos Fundamentales de OOP
+## 3. Proceso de Desarrollo de Software
 
-### 3.1 Objetos y mensajes
+### 3.1 Caracteristicas
+
+El proceso de desarrollo implica hacer explicito y externo el conocimiento implícito e internalizado de los expertos de dominio.
+
+El cambio es una característica esencial del software, no accidental porque:
+
+- Cambia el dominio del problema.
+- Cambia nuestro entendimiento del dominio.
+- Cambia la manera de modelar lo que entendemos del dominio del problema.
+
+---
+
+## 4. Conceptos Fundamentales de OOP
+
+### 4.1 Objetos y mensajes
 
 | Concepto | Definición |
 |----------|-----------|
@@ -39,20 +53,20 @@
 
 **Programas** = conjunto de objetos que colaboran entre sí enviándose mensajes.
 
-### 3.2 Propiedades de la colaboración
+### 4.2 Propiedades de la colaboración
 
 1. Sincrónica
 2. Dirigida
 3. Siempre se espera un resultado
 4. El receptor desconoce al emisor
 
-### 3.3 Prioridad de mensajes
+### 4.3 Prioridad de mensajes
 
 1. **Unario** (mayor prioridad) — ej: `factorial`
 2. **Binario** — ej: `+ - * /`
 3. **Keyword** (menor prioridad) — ej: `at:put:`
 
-### 3.4 Variables especiales
+### 4.4 Variables especiales
 
 | Variable | Descripción |
 |----------|------------|
@@ -63,9 +77,9 @@
 
 ---
 
-## 4. Relaciones entre Objetos
+## 5. Relaciones entre Objetos
 
-### 4.1 Relación de conocimiento
+### 5.1 Relación de conocimiento
 
 ```
 [ObjetoA] ----nombre----> [ObjetoB]
@@ -76,23 +90,23 @@
 
 ---
 
-## 5. Heurísticas de Diseño
+## 6. Heurísticas de Diseño
 
 > Son reglas a seguir según el contexto, no reglas absolutas.
 
-### 5.1 H1 — Minimizar el acoplamiento
+### 6.1 H1 — Minimizar el acoplamiento
 - Medida de relación entre objetos
 - A menor acoplamiento, mejor
 
-### 5.2 H2 — Maximizar la cohesión funcional
+### 6.2 H2 — Maximizar la cohesión funcional
 - Cuanto menos cosas hace un objeto, más cohesivo es
 - Hace más, hace bien
 
-### 5.3 H3 — No romper el encapsulamiento
+### 6.3 H3 — No romper el encapsulamiento
 - Evitar getters innecesarios
 - Evitar setters innecesarios
 
-### 5.4 H4 — Reglas de creación de objetos
+### 6.4 H4 — Reglas de creación de objetos
 
 - Siempre crear objetos **completos** (ej: una fecha no puede definirse parcialmente)
 - Un único método de creación de instancia que use `new`, el resto se implementa en base a él
@@ -102,24 +116,24 @@
 
 ---
 
-## 6. Polimorfismo
+## 7. Polimorfismo
 
 **Definición:** Relación entre un conjunto de objetos y un conjunto de mensajes. Los objetos son polimórficos entre sí respecto de un conjunto de mensajes si saben responder dichos mensajes con semántica equivalente.
 
-### 6.1 Clase vs Prototipo
+### 7.1 Clase vs Prototipo
 
 | | Clase (Aristóteles) | Prototipo (Wittgenstein) |
 |-|---------------------|--------------------------|
 | **Idea** | Esencia / idea de algo | El molde de los objetos |
 | **En Smalltalk** | Toda clase es un objeto | Solo objetos, no hay clases en el sentido clásico |
 
-### 6.2 Protocolo
+### 7.2 Protocolo
 - Conjunto ordenado de mensajes de un objeto
 - `subclassResponsibility` — indica que el mensaje debe ser implementado por la subclase
 
 ---
 
-## 7. Abstracción — Eliminar Código Repetido
+## 8. Abstracción — Eliminar Código Repetido
 
 > Las abstracciones surgen de ver código repetido concreto.
 
