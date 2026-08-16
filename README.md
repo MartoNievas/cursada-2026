@@ -70,6 +70,7 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 
 | Nombre | Descripción |
 | -------------- | --------------- |
+| [Teorica 0 — Bash, Makefile, POSIX y C ](sistemas-operativos/teoricas/teo0-intro.md) | Bash scripting, Uso del makefile y Programacion básica en C. |
 | [Teorica 1 — Procesos y API del SO](sistemas-operativos/teoricas/teo1-procesos.md) | Syscalls, procesos. |
 | [Teorica 2 — IPC](sistemas-operativos/teoricas/teo2-ipc.md) | InterProcess Comunication, Sockets, Pipes, etc.  |
 | [Teorica 3 — Scheduling](sistemas-operativos/teoricas/teo3-scheduling.md) | Politicas, algortimos y tipos de schedulers. |
@@ -106,3 +107,10 @@ _Por el momento no hay material cargado._
 |[Clase7 — Resumen](complejidad-computacional/resumenes/clase7-resumen.md)|Espacio usado por un cómputo, espacio polinomial y teorema de Savicth. |
 |[Clase8 — Resumen](complejidad-computacional/resumenes/clase8-resumen.md)| Espacio logarítmicos y Teorema de Immerman-Szelepcsényi. |
 |[Clase9 — Resumen](complejidad-computacional/resumenes/clase9-resumen.md)| Jerarquía Polinomial y propiedades de la misma. |
+
+### Guías Resueltas
+
+| Nombre | Descripción |
+| -------------- | --------------- |
+| [Guia 1 — Introducción a maquinas de Turing](complejidad-computacional/guias/guia1.md)| Por completar. |
+| [Guia 2 — P, NP y Reducciones](complejidad-computacional/guias/guia2.md) | Por completar. |
