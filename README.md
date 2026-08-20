@@ -35,13 +35,15 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | [Resumen Teórico —  Segundo parcial](isw/resumen-teoricas/teorica-segundo-parcial.md)                                                     | Resumen teorico del segundo parcial. (No terminado, hasta TDD)                                          |
 | [Resumen Method Lookup, Metamodelo y Excepciones](isw/resumen-teoricas/metamodelo-method-lookup-excepciones.md)                           | Meta-modelo de Smalltalk, algoritmo Method Lookup y Excepciones como mecanismo de error. (No terminado) |
 | [Programming as Theory Building](isw/papers-resumenes/Programming-as-Theory-Building.md)                                                  | Resumen del paper de Peter Naur.                                                                        |
+|[Cultures of Programming: The Development of Programming Concepts and Methodologies](isw/papers-resumenes/Cultures-of-Programming-The-Development-of-Programming-Concepts-and-Methodologies.md)| Resumen del prefacio y capitulo 1 del libro Cultures of Programming: The Development of Programming Concepts and Methodologies. |Cultures of Programming: The Development of Programming Concepts and Methodologies. |
+|[Blue Book: Capitulos 6, 7 y 8.](isw/papers-resumenes/Blue-Book.md)| Resumen de los capitulos 6, 7 y 8 del libro Blue Book|
 | [The Design of Everyday Things](isw/papers-resumenes/Norman-The-Desing-of-Everyday-Things.md)                                             | Resumen del libro de Donald Norman.                                                                     |
 | [No Silver Bullet](isw/papers-resumenes/No-Silver-Bullets.md)                                                                             | Resumen del paper de Fred Brooks.                                                                       |
 | [Self: The Power Of Simplicity](isw/papers-resumenes/Self:The-Power-Of-Simplicity.md)                                                     | Resumen del paper SELF: The Power of Simplicity de David Ungar y Randall B. Smith.                      |
 | [Desing Principles Behind Smalltalk](isw/papers-resumenes/Desing-Principles-Behind-Smalltalk.md)                                          | Resumen del paper Desgin Principles Behind Smalltalk de Daniel H. Ingalls.                              |
 | [Polymorphic Hierarchy](isw/papers-resumenes/Polymorphic-Hierarchy.md)                                                                    | Resumen del paper Polymorphic Hierarchy de Bobby Woolf.                                                 |
 | [A Simple Technique for Handling Multiple Polymorphism.](isw/papers-resumenes/A-Simple-Technique-for-Handling-Multiple-Polymorphism.md) | Resumen del paper A Simple Technique for Handling Multiple Polymorphism                              |
-|[Cultures of Programming: The Development of Programming Concepts and Methodologies](isw/papers-resumenes/Cultures-of-Programming-The-Development-of-Programming-Concepts-and-Methodologies.md)| Resumen del prefacio y capitulo 1 del libro Cultures of Programming: The Development of Programming Concepts and Methodologies. |Cultures of Programming: The Development of Programming Concepts and Methodologies. |
+
 ### Parciales
 
 | Fecha | Nombre |
@@ -59,13 +61,13 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 
 | Nombre                                                                                                                                           | Descripción                                                                         |
 | ------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------- |
-| [Práctica 0 — Bash Scripting y Makefile](sistemas-operativos/guias-practicas-so/guia0-bash-makefile/guia0-bash.md)                               | Terminal de Linux, Bash scripting y compilación con Makefile.                       |
-| [Práctica 1 — Procesos y API del SO](sistemas-operativos/guias-practicas-so/guia1-procesos/guia1.md)                                             | Procesos, comunicación entre procesos y API del SO.                                 |
-| [Práctica 2 — Scheduling](sistemas-operativos/guias-practicas-so/guia2-scheduling/guia2-scheduling.md)                                           | Politicas, tipos y algortimos de scheduling.                                        |
-| [Práctica 3 — Sincronizacion](sistemas-operativos/guias-practicas-so/guia3-sincronizacion/guia3-sincronizacion.md)                               | Sincronizacion entre procesos, semaforos.                                           |
-| [Práctica 4 — Drivers y Administración de E/S](sistemas-operativos/guias-practicas-so/guia4-drivers/guia4-drivers.md)                            | Administración de la Entrada/Salida y creación de drivers.                          |
-| [Practica 5 — Sistema de Archivos](sistemas-operativos/guias-practicas-so/guia5-sistema-archivos/guia5-sistema-de-archivos.md)                   | Análisis de los FS ext2 y FAT.                                                      |
-| [Practica 6 — Administración de memoria](sistemas-operativos/guias-practicas-so/guia6-administracion-memoria/guia6-administracion-de-memoria.md) | Sistema de paginación, políticas de remplazo y análisis de algoritmos de remplazo . |
+| [Práctica 0 — Bash Scripting y Makefile](sistemas-operativos/guias/guia0-bash-makefile/guia0-bash.md)                               | Terminal de Linux, Bash scripting y compilación con Makefile.                       |
+| [Práctica 1 — Procesos y API del SO](sistemas-operativos/guias/guia1-procesos/guia1.md)                                             | Procesos, comunicación entre procesos y API del SO.                                 |
+| [Práctica 2 — Scheduling](sistemas-operativos/guias/guia2-scheduling/guia2-scheduling.md)                                           | Politicas, tipos y algortimos de scheduling.                                        |
+| [Práctica 3 — Sincronizacion](sistemas-operativos/guias/guia3-sincronizacion/guia3-sincronizacion.md)                               | Sincronizacion entre procesos, semaforos.                                           |
+| [Práctica 4 — Drivers y Administración de E/S](sistemas-operativos/guias/guia4-drivers/guia4-drivers.md)                            | Administración de la Entrada/Salida y creación de drivers.                          |
+| [Practica 5 — Sistema de Archivos](sistemas-operativos/guias/guia5-sistema-archivos/guia5-sistema-de-archivos.md)                   | Análisis de los FS ext2 y FAT.                                                      |
+| [Practica 6 — Administración de memoria](sistemas-operativos/guias/guia6-administracion-memoria/guia6-administracion-de-memoria.md) | Sistema de paginación, políticas de remplazo y análisis de algoritmos de remplazo . |
 ### Resúmenes
 
 | Nombre | Descripción |
@@ -88,8 +90,8 @@ _Por el momento no hay material cargado._
 
 | Nombre | Descripción|
 | -------------- | --------------- |
-| [Taller 1](sistemas-operativos/talleres/taller1-syscall-y-señales) | Syscall y señales |
-| [Taller 2](sistemas-operativos/talleres/taller2-ipc) | InterProcess Comunication (IPC). |
+|[Taller 1](sistemas-operativos/talleres/taller1-syscall-y-señales) | Syscall y señales |
+|[Taller 2](sistemas-operativos/talleres/taller2-ipc) | InterProcess Comunication (IPC). |
 |[Taller 3](sistemas-operativos/talleres/taller3-drivers)| Creación de drivers. |
 
 ## Complejidad Computacional
