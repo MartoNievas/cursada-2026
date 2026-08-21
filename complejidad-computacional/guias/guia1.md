@@ -186,7 +186,7 @@ Sean $f, g > 0$ tales que $L = \lim_{n \to \infty} \frac{f(n)}{g(n)}$ existe. Lo
 
 ### Ejercicio 3
 
-a) $f(n) = 50n$, $g(n) = n \log{n}$
+**a)** $f(n) = 50n$, $g(n) = n \log{n}$
 
 Utilizemos los criterios del punto anterior, vamos primero con $g = o(f)$
 
@@ -204,5 +204,35 @@ Pero notar que si $f = o(g)$ por el limite de la fraccion inversa si es 0.
 
 
 Por ultimo ver si $f = \Theta(g)$ por el resultado anterior L = 0 del limie de $\frac{f(n)}{g(n)}$ por lo tanto $f \neq \Theta(g)$.
+
+**b)** $f(n) = n^2$, $g(n) = 2n^2 + 100\sqrt{n}$
+
+La misma idea que en el inciso anterior emepezemos por $g = o(f)$
+
+$$
+\lim_{n \to \infty}{\frac{2n^2 + 100\sqrt{n}}{n^2}} = 2
+$$
+
+El limite $L=2$ debido a reglas de analisis 1 que no quiero explicar por lo tanto $g \neq o(f)$.
+
+Luego por la misma idea que no explique $f \neq o(g)$ ya que el limite seria $L = \frac{1}{2} \neq 0$.
+
+Nos queda ver si $f = \Theta(g)$ para eso utilizamos el criterio del limite y nos queda:
+
+$$
+\lim_{n \to \infty}{\frac{n^2}{2n^2 + 100\sqrt{n}}} = \frac{1}{2}
+$$
+
+Y por el criterio para $\Theta$ vale que $f = \Theta(g)$.
+
+**c)** $f(n) = n^{100}$, $g(n) = 2^{\frac{n}{100}}$
+
+Veamos primero $g = o(f)$ para eso veamos el limite:
+
+$$
+\lim_{n \to \infty}{\frac{2^{\frac{n}{100}}}{n^{100}}} = 
+$$
+
+
 
 ## Módelos de cómputo
