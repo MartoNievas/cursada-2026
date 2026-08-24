@@ -139,6 +139,7 @@ El cambio es una característica esencial del software, no accidental porque:
 
 **Algoritmo:**
 
+0. Detectar el código.
 1. Mover el código a una nueva abstracción (objeto / mensaje / ...)
 2. Parametrizar lo que cambia
 3. **Nombrar** la nueva abstracción ← *lo más importante*
