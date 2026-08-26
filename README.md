@@ -23,8 +23,8 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 
 | Nombre                                                         | Descripción |
 | -------------------------------------------------------------- | ----------- |
-| [Guía 1 — Seccion 1](isw/guias/guia1/parte1/guia1.seccion1.md) | Terminada.  |
-| [Guía 1 — Seccion 2](isw/guias/guia1/parte2/guia1-parte2.md)`  | Terminada.  |
+| [Guía 1 — Seccion 1](isw/guias/guia1/parte1/) | Terminada.  |
+| [Guía 1 — Seccion 2](isw/guias/guia1/parte2/guia1-parte2.md)  | Terminada.  |
 | [Guía 2 — Sacar ifs y codigo repetido](isw/guias/guia2/)       | Terminada.  |
 
 ### Resúmenes
@@ -76,11 +76,11 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | [Teorica 1 — Procesos y API del SO](sistemas-operativos/teoricas/teo1-procesos.md) | Syscalls, procesos. |
 | [Teorica 2 — IPC](sistemas-operativos/teoricas/teo2-ipc.md) | InterProcess Comunication, Sockets, Pipes, etc.  |
 | [Teorica 3 — Scheduling](sistemas-operativos/teoricas/teo3-scheduling.md) | Politicas, algortimos y tipos de schedulers. |
-|[Teorica 4 — Sincronizacion entre procesos p1](sistemas-operativos/teoricas/teo4-sincronizacion-p1.md)|Semaforos, Condiciones de carrera, Deadlocks y Sincronizacion en tre procesos. |
-|[Teorica 5 — Sincronizacion entre procesos p2](sistemas-operativos/teoricas/teo5-sincronizacion-p2.md)|Ejemplos practicos.|
-|[Teorica 6 — Entrada/Salida — Drivers](sistemas-operativos/teoricas/teo6-drivers.md)|Organización de la memoria, segmentación, paginación, algoritmos de paginación, etc. |
-|[Teorica 7 — Administración de memoria](sistemas-operativos/teoricas/teo7-memoria.md)|Organización de la memoria, segmentación, paginación, algoritmos de paginación, etc. |
-|[Teorica 8 — Sistema de archivos](sistemas-operativos/teoricas/teo8-sistema-de-archivos.md)| Sistema de archivos de un **SO**. |
+| [Teorica 4 — Sincronizacion entre procesos p1](sistemas-operativos/teoricas/teo4-sincronizacion-p1.md)|Semaforos, Condiciones de carrera, Deadlocks y Sincronizacion en tre procesos. |
+| [Teorica 5 — Sincronizacion entre procesos p2](sistemas-operativos/teoricas/teo5-sincronizacion-p2.md)|Ejemplos practicos.|
+| [Teorica 6 — Entrada/Salida — Drivers](sistemas-operativos/teoricas/teo6-drivers.md)|Organización de la memoria, segmentación, paginación, algoritmos de paginación, etc. |
+| [Teorica 7 — Administración de memoria](sistemas-operativos/teoricas/teo7-memoria.md)|Organización de la memoria, segmentación, paginación, algoritmos de paginación, etc. |
+| [Teorica 8 — Sistema de archivos](sistemas-operativos/teoricas/teo8-sistema-de-archivos.md)| Sistema de archivos de un **SO**. |
 
 ### Parciales
 
@@ -90,7 +90,7 @@ _Por el momento no hay material cargado._
 
 | Nombre | Descripción|
 | -------------- | --------------- |
-|[Taller 1](sistemas-operativos/talleres/taller1-syscall-y-señales) | Syscall y señales |
+|[Taller 1](sistemas-operativos/talleres/taller1-syscalls) | Syscall y señales |
 |[Taller 2](sistemas-operativos/talleres/taller2-ipc) | InterProcess Comunication (IPC). |
 |[Taller 3](sistemas-operativos/talleres/taller3-drivers)| Creación de drivers. |
 
@@ -114,5 +114,5 @@ _Por el momento no hay material cargado._
 
 | Nombre | Descripción |
 | -------------- | --------------- |
-| [Guia 1 — Introducción a maquinas de Turing](complejidad-computacional/guias/guia1.md)| Por completar. |
+| [Guia 1 — Introducción a maquinas de Turing](complejidad-computacional/guias/guia1.md)| Completar. |
 | [Guia 2 — P, NP y Reducciones](complejidad-computacional/guias/guia2.md) | Por completar. |
