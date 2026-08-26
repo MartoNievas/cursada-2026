@@ -8,6 +8,7 @@
 
 #define SOCK_PATH "/tmp/primo_server.sock"
 #define NUM_HIJOS 3
+pid_t pids[NUM_HIJOS] = {0};
 
 int es_primo(long long n) {
   if (n < 2)
@@ -38,7 +39,7 @@ void worker_loop(int server_fd) {
     if (read(client_fd, &numero, sizeof(numero)) > 0) {
       int resultado = es_primo(numero);
       write(client_fd, &resultado, sizeof(resultado));
-      printf("Hijo %d: %lld es %sprimo\n", getpid(), numero,
+      printf("Hijo %d: %lld %ses primo\n", getpid(), numero,
              resultado ? "" : "no ");
     }
     close(client_fd); // El hijo cierra la conexión con ese cliente específico
@@ -53,7 +54,7 @@ int main() {
   server_fd = socket(AF_UNIX, SOCK_STREAM, 0);
   if (server_fd < 0) {
     perror("socket");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
 
   memset(&addr, 0, sizeof(addr));
@@ -63,36 +64,39 @@ int main() {
 
   if (bind(server_fd, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
     perror("bind");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
   if (listen(server_fd, 10) < 0) {
     perror("listen");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
 
   printf("Servidor esperando conexiones...\n");
 
   // 2. Crear los hijos (Pre-fork)
   for (int i = 0; i < NUM_HIJOS; i++) {
-    pid_t pid = fork();
-    if (pid < 0) {
+    pid_t hijos = fork();
+    if (hijos < 0) {
       perror("fork");
-      exit(1);
+      exit(EXIT_FAILURE);
     }
-    if (pid == 0) {
+    if (hijos == 0) {
       // El hijo entra al bucle de trabajo y nunca sale de esta función
       worker_loop(server_fd);
-      exit(0);
+      exit(EXIT_SUCCESS);
     }
+    // Guardamos los pids
+    pids[i] = hijos;
+
   }
 
   // 3. El padre simplemente espera a que los hijos terminen (infinitamente en
   // este caso)
   for (int i = 0; i < NUM_HIJOS; i++) {
-    wait(NULL);
+    waitpid(pids[i],NULL,0);
   }
 
   close(server_fd);
   unlink(SOCK_PATH);
-  return 0;
+  return EXIT_SUCCESS;
 }

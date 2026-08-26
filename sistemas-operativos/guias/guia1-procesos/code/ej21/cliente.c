@@ -17,7 +17,7 @@ enum { READ, WRITE };
 int main(int argc, char *argv[]) {
   if (argc != 2) {
     fprintf(stderr, "Uso: %s <numero>\n", argv[0]);
-    exit(1);
+    exit(EXIT_FAILURE);
   }
 
   long long number = atoll(argv[1]);
@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
   sock_fd = socket(AF_UNIX, SOCK_STREAM, 0);
   if (sock_fd < 0) {
     perror("Cliente: Error al crear el socket\n");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
   memset(&addr, 0, sizeof(addr));
   addr.sun_family = AF_UNIX;
@@ -38,15 +38,14 @@ int main(int argc, char *argv[]) {
   // Ahora realizamos la conexion
   if (connect(sock_fd, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
     perror("Cliente: error al conetar el cliente\n");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
 
   // Por ultimo debemos escribir el numero en el socket
-
   write(sock_fd, &number, sizeof(number));
 
   int res;
   read(sock_fd, &res, sizeof(res));
-  printf("%lld %s primo\n", number, res ? "ES" : "NO ES");
+  printf("%lld %s primo\n", number, res ? "es" : "no es");
   return EXIT_SUCCESS;
 }

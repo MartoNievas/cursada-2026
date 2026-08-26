@@ -20,7 +20,7 @@ int main() {
 
   if (server_fd == -1) {
     perror("Error al crear el socket\n");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
 
   // Ahora debemos configurar el socket
@@ -33,34 +33,34 @@ int main() {
 
   if (bind(server_fd, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
     perror("Error en el bind\n");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
 
   if (listen(server_fd, 1) < 0) {
     perror("Error en listen\n");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
 
   printf("Proceso1: Esperando conexion...\n");
   client_fd = accept(server_fd, NULL, NULL);
   if (client_fd < 0) {
     perror("Error al aceptar el cliente\n");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
 
   for (int i = 0; i < N; i += 2) {
     // Enviamos valores pares y recibimos impares
     printf("Proceso1 envia a Proceso2 el valor %d\n", i);
     write(client_fd, &i, sizeof(i));
+    sleep(1);
 
     // Ahora recibimos el valor impar
 
     read(client_fd, &value, sizeof(value));
-    printf("El proceso1 recibe el valor %d\n", value);
   }
 
   close(client_fd);
   close(server_fd);
   unlink(SOCKET_PATH);
-  return 0;
+  return EXIT_SUCCESS;
 }

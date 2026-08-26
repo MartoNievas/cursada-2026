@@ -71,5 +71,5 @@ int main() {
   }
 
   close(sock_fd);
-  return 0;
+  return EXIT_SUCCESS;
 }

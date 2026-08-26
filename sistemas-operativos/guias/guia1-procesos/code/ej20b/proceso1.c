@@ -18,7 +18,7 @@ int main() {
   server_fd = socket(AF_UNIX, SOCK_STREAM, 0);
   if (server_fd < 0) {
     perror("Error en la creacion del servidor de Proceso1\n");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
   memset(&addr, 0, sizeof(addr));
   addr.sun_family = AF_UNIX;
@@ -26,11 +26,11 @@ int main() {
   unlink(SOCK_P1);
   if (bind(server_fd, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
     perror("Error en bind proceso1\n");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
   if (listen(server_fd, 1) < 0) {
     perror("Error en listen proceso1\n");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
 
   // Ahora conectamos a P2 (se pisa addr, no importa porque bind ya termino)
@@ -51,9 +51,9 @@ int main() {
     printf("Proceso1 envia a Proceso2 el valor %d\n", value);
     write(send_fd, &value, sizeof(value));
     value++;
+    sleep(1);
 
     read(client_fd, &value, sizeof(value));
-    printf("Proceso1 recibe de Proceso3 el valor %d\n", value);
     value++;
   }
 
@@ -61,5 +61,5 @@ int main() {
   close(server_fd);
   close(send_fd);
   unlink(SOCK_P1);
-  return 0;
+  return EXIT_SUCCESS;
 }

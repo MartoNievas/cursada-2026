@@ -27,15 +27,15 @@ int main(void) {
       exit(EXIT_SUCCESS);
     }
     // Maggie
-    pid_t pid_lisa = fork();
-    if (pid_lisa == 0) {
+    pid_t pid_maggie = fork();
+    if (pid_maggie == 0) {
       printf("Soy Maggie\n");
       exit(EXIT_SUCCESS);
     }
 
     waitpid(pid_bart, NULL, 0);
     waitpid(pid_lisa, NULL, 0);
-    waitpid(pid_lisa, NULL, 0);
+    waitpid(pid_maggie, NULL, 0);
     exit(EXIT_SUCCESS);
   } else {
     printf("Soy Abraham\n");

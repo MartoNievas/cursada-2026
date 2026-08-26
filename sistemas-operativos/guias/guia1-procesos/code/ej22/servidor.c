@@ -127,5 +127,5 @@ int main() {
 
   close(server_fd);
   unlink(SOCK_PATH);
-  return 0;
+  return EXIT_SUCCESS;
 }

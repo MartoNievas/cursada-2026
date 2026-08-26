@@ -98,7 +98,7 @@ int main(void) {
     fflush(stdout);
 
     close(pipe_fd[READ]);
-    exit(0);
+    exit(EXIT_SUCCESS);
   
   }
 }

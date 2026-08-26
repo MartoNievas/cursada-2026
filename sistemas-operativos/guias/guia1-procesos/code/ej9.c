@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/wait.h>
 #include <unistd.h>
 
@@ -14,8 +15,7 @@ void handler_pong(int sig) {
   recibio_senial = 1;
 }
 
-int main() {
-
+int main(void) {
   signal(SIGUSR1, handler_pong);
 
   pid_t ping_pid = fork();
@@ -26,40 +26,42 @@ int main() {
   }
 
   if (ping_pid == 0) {
-
     pid_t padre_pid = getppid();
 
-    // El hijo escribe ping y el padre pong
     while (1) {
       for (int i = 0; i < MAX_VUELTAS; i++) {
         printf("ping PID: %d\n", getpid());
-        sleep(1);
         fflush(stdout);
+        sleep(1);
+        
         kill(padre_pid, SIGUSR1);
 
         while (!recibio_senial) {
           pause();
         }
-
         recibio_senial = 0;
       }
+
+      // Espera el "OK" del padre tras la respuesta al scanf
+      while (!recibio_senial) {
+        pause();
+      }
+      recibio_senial = 0;
     }
     return EXIT_SUCCESS;
   } else {
     char opcion;
 
-    // Respuesta del padre
     while (1) {
       for (int i = 0; i < MAX_VUELTAS; i++) {
         while (!recibio_senial) {
           pause();
         }
-
         recibio_senial = 0;
 
         printf("pong PID: %d\n", getpid());
-        sleep(1);
         fflush(stdout);
+        sleep(1);
 
         kill(ping_pid, SIGUSR1);
       }
@@ -71,12 +73,15 @@ int main() {
         break;
       }
       printf("\n");
+
+      // Avisa al hijo que puede empezar otra tanda
+      kill(ping_pid, SIGUSR1);
     }
 
-    // Mato al hijo
     kill(ping_pid, SIGTERM);
     wait(NULL);
     printf("Hijo finalizado fin del programa\n");
   }
+
   return EXIT_SUCCESS;
 }

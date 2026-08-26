@@ -23,11 +23,11 @@ int main() {
   unlink(SOCK_P3);
   if (bind(server_fd, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
     perror("Error bind en proceso3\n");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
   if (listen(server_fd, 1) < 0) {
     perror("Error en listen proceso3\n");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
 
   // Conectamos a P1 para enviar el valor
@@ -46,15 +46,16 @@ int main() {
 
   while (value < N) {
     read(client_fd, &value, sizeof(value));
-    printf("Proceso3 recibe de Proceso2 el valor %d\n", value);
     value++;
+    printf("Proceso3 envia a Proceso1 el valor %d\n", value);
     write(send_fd, &value, sizeof(value));
     value++;
+    sleep(1);
   }
 
   close(send_fd);
   close(server_fd);
   close(client_fd);
   unlink(SOCK_P3);
-  return 0;
+  return EXIT_SUCCESS;
 }

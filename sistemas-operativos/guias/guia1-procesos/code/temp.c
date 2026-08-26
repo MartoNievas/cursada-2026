@@ -4,7 +4,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-int main(int argc, char const *argv[]) {
+int main(void) {
   int dato = 0;
   pid_t pid = fork();
 
