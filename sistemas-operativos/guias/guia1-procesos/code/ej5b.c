@@ -4,36 +4,42 @@
 #include <unistd.h>
 
 int main(void) {
-  pid_t pid = fork();
-  if (pid == 0) {
+  pid_t pid_homero = fork();
+  if (pid_homero == 0) {
     printf("Soy Homero\n");
 
     // Bart
-    pid_t pid_b = fork();
-    if (pid_b == 0) {
+    pid_t pid_bart = fork();
+    if (pid_bart == 0) {
       printf("Soy Bart\n");
-      exit(0);
+      exit(EXIT_SUCCESS);
     }
     // Lisa
-    pid_t pid_l = fork();
-    if (pid_l == 0) {
-      printf("Soy Lisa\n");
-      exit(0);
-    }
-    // Maggie
-    pid_t pid_m = fork();
-    if (pid_m == 0) {
-      printf("Soy Maggie\n");
-      exit(0);
+    pid_t pid_lisa = fork();
+    
+    if (pid_lisa < 0) {
+      perror("Error al crear a Lisa\n");
+      exit(EXIT_FAILURE);
     }
 
-    waitpid(pid_b, NULL, 0);
-    waitpid(pid_l, NULL, 0);
-    waitpid(pid_m, NULL, 0);
-    exit(0);
+    if (pid_lisa == 0) {
+      printf("Soy Lisa\n");
+      exit(EXIT_SUCCESS);
+    }
+    // Maggie
+    pid_t pid_lisa = fork();
+    if (pid_lisa == 0) {
+      printf("Soy Maggie\n");
+      exit(EXIT_SUCCESS);
+    }
+
+    waitpid(pid_bart, NULL, 0);
+    waitpid(pid_lisa, NULL, 0);
+    waitpid(pid_lisa, NULL, 0);
+    exit(EXIT_SUCCESS);
   } else {
     printf("Soy Abraham\n");
-    waitpid(pid, NULL, 0);
-    exit(0);
+    waitpid(pid_homero, NULL, 0);
+    exit(EXIT_SUCCESS);
   }
 }

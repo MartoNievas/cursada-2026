@@ -72,7 +72,7 @@ int main() {
       continue;
     }
 
-    // 1. ¿Hay una nueva conexión entrante en el socket del servidor?
+    // 1. Hay una nueva conexión entrante en el socket del servidor?
     if (FD_ISSET(server_fd, &readfds)) {
       nuevo_socket = accept(server_fd, NULL, NULL);
       if (nuevo_socket >= 0) {
@@ -96,7 +96,7 @@ int main() {
       }
     }
 
-    // 2. ¿Algún cliente envió un mensaje o se desconectó?
+    // 2. Algún cliente envió un mensaje o se desconectó?
     for (int i = 0; i < MAX_CLIENTES; i++) {
       int sd = clientes[i];
 

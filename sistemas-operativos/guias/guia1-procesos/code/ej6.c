@@ -33,7 +33,7 @@ int my_system(const char *command) {
 int main(int argc, char *argv[]) {
     if (argc < 2) {
         fprintf(stderr, "Usage: %s <Command>\n", argv[0]);
-        return 1;
+        return EXIT_FAILURE;
     }
 
     const char *command = argv[1];
@@ -52,5 +52,5 @@ int main(int argc, char *argv[]) {
         printf("El comando fue terminado por la señal: %d\n", WTERMSIG(status));
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }

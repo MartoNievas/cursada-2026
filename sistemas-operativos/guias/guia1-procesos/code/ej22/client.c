@@ -49,7 +49,7 @@ int main() {
       break;
     }
 
-    // 1. ¿El usuario escribió algo en el teclado?
+    // 1. El usuario escribió algo en el teclado?
     if (FD_ISSET(STDIN_FILENO, &readfds)) {
       memset(buffer, 0, BUFFER_SIZE);
       if (fgets(buffer, BUFFER_SIZE, stdin) != NULL) {
@@ -57,7 +57,7 @@ int main() {
       }
     }
 
-    // 2. ¿El servidor nos envió un mensaje de otro usuario?
+    // 2. El servidor nos envió un mensaje de otro usuario?
     if (FD_ISSET(sock_fd, &readfds)) {
       memset(buffer, 0, BUFFER_SIZE);
       int bytes = read(sock_fd, buffer, BUFFER_SIZE - 1);

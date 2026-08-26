@@ -341,22 +341,30 @@ int main(void) {
 
 Esta es la secuencia descripta en el ejercicio:
 
-![Secuencia](img/secuencia.png)
+| Tiempo | Procesador 1 | Procesador 2 |
+|--------|--------------|--------------|
+| 1      | `cómputo_muy_difícil_1` | `cómputo_muy_difícil_2` |
+| 2      | `cómputo_muy_difícil_1` | `cómputo_muy_difícil_2` |
+| 3      | `cómputo_muy_difícil_1` | `cómputo_muy_difícil_2` |
+| ...    | ... | ... |
 
 Teniendo en cuenta que **bsend** y **breceive** son las mismas que el ejercicio anterior, en el mismo se menciona que ambas son bloqueantes y que la cola de mensajes es de capacidad 0, lo que significa que no se tiene un buffer temporal para guardar mensajes.
 Por lo tanto, esto imposibilita el procesamiento paralelo continuo en cada paso de ejecución, ya que cuando el proceso izquierdo hace un **bsend**, para poder continuar debe haber un **breceive** del otro lado.
 
 Una secuencia posible de ejecución sería la siguiente:
 
-| Tiempo | Proceso Izquierdo        | Proceso Derecho          |
-|--------|--------------------------|--------------------------|
-| 1      | bsend (bloqueado)        | cómputo_muy_difícil_2    |
-| 2      | bsend ↔ breceive         | breceive                 |
-| 3      | cómputo_muy_difícil_1    | printf / siguiente paso  |
-| 4      | bsend (bloqueado)        | cómputo_muy_difícil_2    |
-| 5      | bsend ↔ breceive         | breceive                 |
-| 6      | cómputo_muy_difícil_1    | printf / siguiente paso  |
-| ...    | ...                      | ...                      |
+| Tiempo | Proceso Izquierdo | Proceso Derecho |
+|--------|-------------------|-----------------|
+| 1      | `bsend()` (bloqueado) | `cómputo_muy_difícil_2()` |
+| 2      | `bsend()` ↔ `breceive()` | `breceive()` |
+| 3      | `cómputo_muy_difícil_1()` | `printf()` |
+| 4      | `bsend()` (bloqueado) | `cómputo_muy_difícil_2()` |
+| 5      | `bsend()` ↔ `breceive()` | `breceive()` |
+| 6      | `cómputo_muy_difícil_1()` | `printf()` |
+| 7      | `bsend()` (bloqueado) | `cómputo_muy_difícil_2()` |
+| 8      | `bsend()` ↔ `breceive()` | `breceive()` |
+| 9      | `cómputo_muy_difícil_1()` | `printf()` |
+| ...    | ... | ... |
 
 ---
 
@@ -389,7 +397,9 @@ Como aquí los procesos **cortarBordes** y **eliminarOjosRojos** se ejecutan en 
 
 Tenemos 2 nuevas syscalls:
 
-![syscalls](img/ej14.png)
+| `bool send(pid dst, int *msg)` | Envía al proceso `dst` el valor del puntero. Retorna `false` si la cola de mensajes estaba llena. |
+| :--- | :--- |
+| `bool receive(pid src, int *msg)` | Recibe del proceso `src` el valor del puntero. Retorna `false` si la cola de mensajes estaba vacía. |
 
 ### a) Modificación
 
@@ -400,7 +410,7 @@ void proceso_izquierda() {
   result = 0;
   while (true) {
     while (!send(pid_derecha, &result)) {
-      sleep(2);
+      // Espera activa hasta que la cola tenga espacio.
     }
     result = computo_muy_dificil_1();
   }
@@ -411,7 +421,7 @@ void proceso_derecha() {
   while (true) {
     int result = computo_muy_dificil_2();
     while (!receive(pid_izquierda, &left_result)) {
-      sleep(2);
+      // Espera activa hasta que la cola tenga algo.
     }
     printf("%s %s", left_result, result);
   }

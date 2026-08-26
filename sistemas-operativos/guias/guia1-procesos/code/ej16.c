@@ -34,17 +34,33 @@ int main(void) {
   int pipe_fd[2];
   pipe(pipe_fd);
 
-  if (fork() == 0) {
+  pid_t pid_ls = fork();
+
+  if (pid_ls < 0) {
+    perror("Error al crear el proceso de ls\n");
+    exit(EXIT_FAILURE);
+
+  }
+
+  if (pid_ls == 0) {
     ejecutar_hijo_1(pipe_fd);
   }
 
-  if (fork() == 0) {
+
+  pid_t pid_wc = fork();
+
+  if (pid_wc < 0) {
+    perror("Error al crear el proceso wc\n");
+    exit(EXIT_FAILURE);
+  }
+
+  if (pid_wc == 0) {
     ejecutar_hijo_2(pipe_fd);
   }
 
   close(pipe_fd[WRITE]);
-  wait(NULL);
-  wait(NULL);
+  waitpid(pid_ls,NULL,0);
+  waitpid(pid_wc,NULL,0);
 
-  return 0;
+  return EXIT_SUCCESS;
 }
