@@ -90,5 +90,111 @@ concluimos formalmente que $COPRIME \in P$.
 
 **Codificación y tamaño de la entrada**
 
+La entrada nos llega con su representación en binario, por lo tanto el tamaño de la entrada es $O(\log{a} + \log{b} + \log{e})$
 
+entonces llamemos $n$ a la cantidad de bits de la entrada.
 
+**Algoritmo de decisión**
+
+Ahora vamos a dar un algoritmo y analizarlo para demostrar que corre en tiempo polinomial.
+
+```python
+
+def potencia_rapida(a, e, b):
+   if e == 0:
+      return 1
+   if a > b:
+      return -1
+
+   # Caso par
+   if e % 2 == 0:
+      sub = potencia_rapida(a, e / 2, b)
+      if sub == -1 or sub * sub > b:
+         return -1
+      return sub * sub
+   
+   # Caso impar
+   if e % 2 == 1:
+      sub = potencia_rapida(a, e - 1, b)
+      if e == -1 or sub * sub > b:
+         return -1
+      return a * sub
+
+def power(a, e, b):
+   res = potencia_rapida(a,e,b)
+   if res == b:
+      return 1
+   else:
+      return 0
+
+```
+
+**Análisis de complejidad**
+
+En cada paso dividimos a $e$ entre 2 o restamos 1 pero en el siguiente paso lo dividimos. El numero total de llamadas recursivas es $O(\log{e})$.
+
+En cada nivel de la recursion se realiza a lo sumo una multiplicación y una comparacion, teniendo en cuentra que la comparacion es lineal y la multiplicacion cuadratica. Como abortamos ni bien todos los operandos superan b, todos ellos tiene a los sumo $O(\log{b})$ bits, luego el tiempo total seria algo como:
+
+$$
+T(n) = O(\log{e} \cdot (\log{b})^2)
+$$
+
+Dado que la entrada tiene tamaño $n$ entonces el tiempo esta acotado superiormete por $O(n^3)$, el cual es polinomial por lo tanto $POWER \in P$.
+
+### c)  $TREE = \{\langle G \rangle : G \space es \space un \space grafo \space conexo \space sin \space ciclos \}$
+
+**Codificación y tamaño de la entrada**
+
+La codificación es la misma en binario osea que seria $\langle G \rangle $, ahora para saber el el tamaño de la entrada seria $ n = |\langle G \rangle| = 2|V|^2  + |V| + 2 \space bits$. Entonces el comportamiento asintotico es $\Theta(|V|^2)$.
+
+**Algoritmo de desición**
+
+El algoritmo es simple basicamente BFS o DFS y si visito un nodo que ya visite recazho y si visito todos sin repetir acepto.
+
+**Analisis de complejidad** 
+
+Recordemos que la complejidad de DFS o BFS es $O(n + m)$ como vimos antes la entrada depende unicamente de la cantidad de vertices, por lo tanto la complejidad del algritmo seria $O(|V|^2)$ y por la comparcion se le suma el numero de nodo, pero como esta acotado por $|V|$ no lo ponemos.
+
+Por lo tanto es polinomial con respecto al tamaño de la entrada por lo tanto $TREE \in P$.
+
+**(Preguntar)**
+### d) $L$ donde $|L| \lt \infty$ (es decir, probar que todo lenguaje finito está en $P$)
+
+## Ejercicio 2
+
+Tenemos que probar que la clase de complejidad $P$ está cerrada por unión, intersección y complemento.
+
+### Unión
+
+Sean $L_1, L_2 \in P$, como ambos pertenecen a $P$ entonces existen $M_1, M_2$ maquinas de Turing deterministicas que deciden $L_2 \space y \space L_2$ en tiempo polinomial con respecto al tamaño de la entrada.
+
+Entonces podemos construir $M$ que simule $M_1$ o $M_2$, si tomamos $x \in \{0,1\}^*$ y hacemos $M(x)$ simulamos de la siguiente manera:
+
+1. Pasamos la entrada $x$ a $M$.
+2. Primero probamos $M_1(x)$ si acepta termina la simulación de $M_1$.
+3. Si rechazo probamos $M_2(x)$ si acepta termina la simulacion y la palabra x es aceptada.
+4. Caso contrario $x \notin L_1 \cup L_2$.
+
+De esta manera la complejidad total es la suma de las complejidades de ambas maquinas mas un overhead de poner la entrada de nuevo en la cinta para ambas simulaciones.
+
+Por lo tanto $L_1 \cup L_2 \in P$.
+
+### Complemento
+
+Este es mucho mas facíl, supongamos que tenemso $L \in P$, entonces existe $M$ que decide $L$ en tiempo polinomial, luego para obtener el complemento es decidir todo lo que no esta en $L$, podemos definir $M^c$ como:
+
+$$
+M^c(x) = 1 - M(x).
+$$
+
+Entonces simular $M$ nos lleva tiempo polinomial mas la resta que como siempre es un bit podriamos considerarlo como $O(1)$ por lo tanto $M^c$ corre en tiempo polinomial por lo tanto $L^c \in P$.
+
+### Intersección
+
+Aqui sale por reglas de algebra de boole, podemos escribir la insterseccion como:
+
+$$
+L_1 \cap L_2 = L_{1}^c \cup L_{2}^c
+$$
+
+Y como sabemos que esta cerrado por complemento y por union entonces vale que esta cerrado por interseccion. Por lo tanto $L_2 \cap L_2 \in P$.
