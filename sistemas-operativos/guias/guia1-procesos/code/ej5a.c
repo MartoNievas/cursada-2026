@@ -15,16 +15,16 @@ int main(void) {
 
   if (pid_homero == 0) {
 
-    printf("Soy Homero");
+    printf("Soy Homero\n");
     pid_t pid_bart = fork();
-    
+
     if (pid_bart < 0) {
       perror("Error al crear a Bart\n");
       exit(EXIT_FAILURE);
     }
 
     if (pid_bart == 0) {
-      printf("Soy Bart");
+      printf("Soy Bart\n");
       exit(EXIT_SUCCESS);
     }
 
@@ -36,23 +36,23 @@ int main(void) {
     }
 
     if (pid_lisa == 0) {
-      printf("Soy Lisa");
+      printf("Soy Lisa\n");
       exit(EXIT_SUCCESS);
     }
 
     pid_t pid_maggie = fork();
 
-    if (pid_maggie < 0 ) {
+    if (pid_maggie < 0) {
       perror("Error al crear a Maggie\n");
       exit(EXIT_FAILURE);
     }
 
     if (pid_maggie == 0) {
-      printf("Soy Maggie");
+      printf("Soy Maggie\n");
       exit(EXIT_SUCCESS);
     }
   } else {
-    printf("Soy Abraham");
+    printf("Soy Abraham\n");
     exit(EXIT_SUCCESS);
   }
 }

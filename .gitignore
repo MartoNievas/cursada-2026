@@ -2,3 +2,4 @@ sistemas-operativos/teoricas/img
 *.log
 .obsidian
 .atl/
+*.out
