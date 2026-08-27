@@ -28,11 +28,21 @@ A diferencia de las determinísticas, aquí el árbol de cómputo se ramifica y 
 
 **Tiempo de cómputo.**
 * $N$ corre en tiempo $T(n)$ si **todo** cómputo posible a partir de $x$ tiene longitud $\le T(|x|)$.
-* La clase **NDTIME$(T(n))$** agrupa a los lenguajes decidibles por una máquina no-determinística en tiempo $O(T(n))$.
+* La clase **NDTIME(T(n))** agrupa a los lenguajes decidibles por una máquina no-determinística en tiempo $O(T(n))$.
 
 **Codificación de cómputos.** Al tener dos opciones ($\delta_0$ y $\delta_1$) en cada paso, un cómputo de longitud $T(n)$ se puede representar unívocamente con una cadena binaria $u \in \{0,1\}^{T(n)}$ (el certificado), donde cada bit indica qué rama de $\delta$ tomar en ese paso.
 
 **Simulación determinística.** Si $N$ corre en tiempo $T(n)$, genera $O(2^{T(n)})$ ramas. Una máquina determinística puede simular $N$ explorando todas las ramas una por una en tiempo exponencial $O(2^{T(n)} \cdot T(n))$, lo que está acotado por $O(2^{T(n)^2})$.
+
+**Codificación de una máquina no-determinística.**
+
+Se puede dar la codificación binaria de la misma manera que con maquinas de Turing determinística, es decir toda palabras $x \in \{0,1\}^*$2 representa una máquina no-determinística.
+
+Por lo tanto hay una cantidad numerable de maquinas no determinísticas.
+
+**La máquina no-determinística universal.**
+
+Asi tambien se puede definir la máquina no-determinística universal, es decir la que simula todas las máquinas no-determinísticas.
 
 ---
 
