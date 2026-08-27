@@ -2,8 +2,6 @@
 
 ## Autor: Frederick P. Brooks, Jr.
 
----
-
 ## Resumen
 
 El paper introduce la problemática de encarar un proyecto de software: al principio suele parecer sencillo e inocente, pero es capaz de convertirse en un monstruo de plazos incumplidos, objetivos fallados y productos defectuosos. Por eso se busca una **bala de plata** (*silver bullet*) que solucione todos estos problemas de una vez. Sin embargo, no existe una solución única que prometa mejorar radicalmente la productividad del software.
