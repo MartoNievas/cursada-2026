@@ -5,97 +5,85 @@ Object subclass: #Automobile
 	poolDictionaries: ''
 	category: '2.Replace-if-State'!
 
-!Automobile methodsFor: 'initialization' stamp: 'Martin 4/10/2026 14:28:45'!
+!Automobile methodsFor: 'initialization' stamp: 'Martin 10/Apr/2026, 5:28:45 pm (UTC)'!
+!methodProperties: {}!
 initialize
 
 	self turnOff .
 	speed := 0 * kilometer / hour! !
 
 
-!Automobile methodsFor: 'move' stamp: 'Martin 4/10/2026 14:29:51'!
+!Automobile methodsFor: 'move' stamp: 'MA 27/Aug/2026, 8:08:41 pm (UTC)'!
+!methodProperties: {}!
 accelerate
 	
-	powerState accelerate.
-	"
-	state = #Off ifTrue:[self error: 'Can not accelerate when turned off'].
-	state = #On ifTrue:[speed := speed + (10 * kilometer / hour)].
-	"! !
+	powerState accelerateWith: self.! !
 
-!Automobile methodsFor: 'move' stamp: 'Martin 4/10/2026 14:31:04'!
-accelerateWhenTurnedOff
+!Automobile methodsFor: 'move' stamp: 'MA 27/Aug/2026, 8:10:38 pm (UTC)'!
+!methodProperties: {}!
+accelerateWhenVehicleIsTurnedOff
 
-	self error: 'Can`t not accelerate when turned off'.! !
+	self error: 'Can not accelerate when turned off'.! !
 
-!Automobile methodsFor: 'move' stamp: 'Martin 4/10/2026 14:31:42'!
-accelerateWhenTurnedOn
+!Automobile methodsFor: 'move' stamp: 'MA 27/Aug/2026, 8:07:25 pm (UTC)'!
+!methodProperties: {}!
+accelerateWhenVehicleIsTurnedOn
 
 
 	speed := speed + (10 * kilometer / hour).
 	! !
 
 
-!Automobile methodsFor: 'on/off' stamp: 'Martin 4/10/2026 14:26:11'!
+!Automobile methodsFor: 'on/off' stamp: 'MA 27/Aug/2026, 8:07:53 pm (UTC)'!
+!methodProperties: {}!
 turnOff
 
-	powerState := PowerOn on: self.! !
+	powerState := TurnedOff new.! !
 
-!Automobile methodsFor: 'on/off' stamp: 'Martin 4/10/2026 14:26:33'!
+!Automobile methodsFor: 'on/off' stamp: 'MA 27/Aug/2026, 8:08:02 pm (UTC)'!
+!methodProperties: {}!
 turnOn
 
-	powerState  := PowerOn on: self .! !
+	powerState  := TurnedOn new .! !
 
 
-!classDefinition: #PowerState category: #'2.Replace-if-State'!
-Object subclass: #PowerState
-	instanceVariableNames: 'vehicle'
+!classDefinition: #AutomobileState category: #'2.Replace-if-State'!
+Object subclass: #AutomobileState
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: '2.Replace-if-State'!
 
-!PowerState methodsFor: 'accelerate' stamp: 'Martin 4/10/2026 14:32:55'!
-accelerate
+!AutomobileState methodsFor: 'accelerate with' stamp: 'MA 27/Aug/2026, 8:08:41 pm (UTC)'!
+!methodProperties: {}!
+accelerateWith: aVehicleToAccelerate
 
 	self subclassResponsibility .! !
 
-
-!PowerState methodsFor: 'initialization' stamp: 'Martin 4/10/2026 14:34:57'!
-initializePowerStatusOf: aVehicle
-
-	vehicle  := aVehicle .! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'PowerState class' category: #'2.Replace-if-State'!
-PowerState class
-	instanceVariableNames: ''!
-
-!PowerState class methodsFor: 'instance creation' stamp: 'Martin 4/10/2026 14:36:46'!
-on: aVehicle
-
-	^self new initializePowerStatusOf: aVehicle .! !
-
 
-!classDefinition: #PowerOff category: #'2.Replace-if-State'!
-PowerState subclass: #PowerOff
+!classDefinition: #TurnedOff category: #'2.Replace-if-State'!
+AutomobileState subclass: #TurnedOff
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: '2.Replace-if-State'!
 
-!PowerOff methodsFor: 'accelerate' stamp: 'Martin 4/10/2026 14:38:32'!
-accelerate
+!TurnedOff methodsFor: 'accelerate with' stamp: 'MA 27/Aug/2026, 8:10:56 pm (UTC)'!
+!methodProperties: {}!
+accelerateWith: aVehicleToAccelerate
 
-	vehicle accelerateWhenTurnedOff .! !
+	aVehicleToAccelerate accelerateWhenVehicleIsTurnedOff .! !
 
 
-!classDefinition: #PowerOn category: #'2.Replace-if-State'!
-PowerState subclass: #PowerOn
+!classDefinition: #TurnedOn category: #'2.Replace-if-State'!
+AutomobileState subclass: #TurnedOn
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: '2.Replace-if-State'!
 
-!PowerOn methodsFor: 'accelerate' stamp: 'Martin 4/10/2026 14:38:50'!
-accelerate
+!TurnedOn methodsFor: 'accelerate with' stamp: 'MA 27/Aug/2026, 8:08:41 pm (UTC)'!
+!methodProperties: {}!
+accelerateWith: aVehicleToAccelerate
 
-	vehicle accelerateWhenTurnedOn .! !
+	aVehicleToAccelerate accelerateWhenVehicleIsTurnedOn.! !
