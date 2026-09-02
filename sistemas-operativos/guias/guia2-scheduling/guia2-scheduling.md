@@ -113,7 +113,9 @@ En este ejercicio se modifica **Round Robin** de tal manera que un mismo proceso
 
 ### a)
 
-El impacto de la modificación sería que cambiaría el invariante de **Round Robin** el cual es que se le asigna el mismo segmento de tiempo a cada proceso, algunos procesos recibirán en proporción **más tiempo de CPU** rompiendo así la equidad de **Round Robin**. 
+El impacto de la modificación sería que cambiaría el invariante de **Round Robin** el cual es que se le asigna el mismo segmento de tiempo a cada proceso, algunos procesos recibirán en proporción **más tiempo de CPU** rompiendo así la equidad de **Round Robin**.
+
+En un mal caso que nos lleguen entradas consecutivas del mismo proceso es decir por ejemplo $P_1, P_1 \dots , P_3, P_3, \dots$ y asi con todos los procesos podria convertise en un **FCFS**.
 
 ### b) 
 
@@ -130,7 +132,7 @@ El impacto de la modificación sería que cambiaría el invariante de **Round Ro
 
 ### c)
 
-Una modificación posible para no modificar la cantidad de entradas de un mismo proceso sería poder asignar más de un quantum de tiempo a un proceso, entonces a los procesos que demanden más tiempo de **CPU** se les asigna más del mismo. Además no tenemos el overhead del context switch cada vez que cambiamos.
+Una modificación posible para no modificar la cantidad de entradas de un mismo proceso sería poder asignar más de un quantum de tiempo a un proceso, entonces a los procesos que demanden más tiempo de **CPU** se les asigna más del mismo. Además no tenemos el overhead del context switch cada vez que cambiamos. Hay que tener cuidado con esta opción ya que si le asignamos mucho tiempo podria convertirse en un **FCFS**.
 
 ---
 
@@ -201,7 +203,7 @@ Ahora vamos con el waiting time y turnaround promedio de cada algoritmo:
 
 ### c) 
 
-El algoritmo con menor waiting time promedio es **SJF** y el que obtiene el menor turnaround promedio también es **SJF**. 
+El algoritmo que obtiene las mejores metricas en ambos casos es **SFJ**, esto se debe a que al priorizar las rafagas de CPU cortas se evita el **efecto convoy** por el proceso **P1**, minimizando el waiting time promedio y turnarround promedio. Ademas se logra completar mas procesos por unidad de tiempo lo que incrementa el throughtput del sistema y es una de las caracterisitcas que en un sistema se quiere maximizar.
 
 ---
 
@@ -243,36 +245,119 @@ Vamos con el cálculo del **waiting time** y **turnaround** promedio:
 
 ### b) 
 
-El algoritmo presentado a partir de la tabla y diagrama de Gantt es un **SJF** pero con desalojo, ya que en el momento que llega un proceso con menor duración el scheduler conmuta automáticamente al mismo. También conocido como **SRTF** (Shortest Remaining Time First).
+El algoritmo presentado a partir de la tabla y diagrama de Gantt es la version preemptive de **SJF**, ya que en el momento que llega un proceso con menor duración el scheduler conmuta automáticamente al mismo. También conocido como **SRTF** (Shortest Remaining Time First).
 
 ---
 
-## Ejercicio 8
+## Ejercicio 8: Impacto del Efecto Convoy y Procesador Ocioso
 
-Contamos con el siguiente conjunto de procesos:
-
-<div align="center">
+Contamos con el siguiente conjunto de procesos para analizar:
 
 | Proceso | Ráfaga de CPU | Instante de llegada |
 |:-------:|:-------------:|:-------------------:|
-| P1 | 8 | 0.0 |
-| P2 | 4 | 0.4 |
-| P3 | 1 | 1.0 |
+| **P1**  |       8       |         0.0         |
+| **P2**  |       4       |         0.4         |
+| **P3**  |       1       |         1.0         |
 
-</div>
+---
 
+### a) Algoritmo FCFS (First-Come, First-Served)
 
-### a) 
+#### Diagrama de Gantt:
 
-El **turnaround** promedio para estos procesos utilizando el algoritmo **FCFS** es el siguiente, tenemos que el proceso **P1** finaliza en el instante 8, luego el proceso **P2** finaliza en el instante 12 y por último **P3** finaliza en el instante 13. Luego esto nos da un **TT** = (8 + 12 + 13) / 3 = 11 unidades de tiempo.
+| 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
+|---|---|---|---|---|---|---|---|---|---|----|----|----|
+| P1  | P1  | P1  | P1  | P1  | P1  | P1  | P1   |  P2 | P2  | P2   | P2   | P3    |
 
-### b) 
+#### Explicación detallada:
+En el algoritmo FCFS, los procesos se ejecutan estrictamente según su orden de llegada a la cola de listos:
+* **P1** inicia en $t = 0.0$ y finaliza en $t = 8.0$.
+* **P2** inicia en $t = 8.0$ y finaliza en $t = 12.0$.
+* **P3** inicia en $t = 12.0$ y finaliza en $t = 13.0$.
 
-Si ahora para el cálculo del **turnaround** promedio tomamos el algoritmo **SJF** asumiendo que es sin desalojo sería el siguiente, para el **P1** termina en el instante 8, luego para ese momento ya entraron **P2** y **P3**, por lo tanto se ejecuta **P3** que dura una unidad de tiempo, por lo tanto finaliza en el instante 9, por último **P2** finaliza en el instante 13. Eso nos da un **TT** = (8 + 9 + 13) / 3 = 10 unidades de tiempo.
+Calculamos las métricas individuales restando el instante de llegada de cada proceso:
 
-### c) 
+* **Turnaround Time (TT = Fin - Llegada):**
+  * **P1:** $8.0 - 0.0 = \mathbf{8.0}$ unidades de tiempo.
+  * **P2:** $12.0 - 0.4 = \mathbf{11.6}$ unidades de tiempo.
+  * **P3:** $13.0 - 1.0 = \mathbf{12.0}$ unidades de tiempo.
+  * **TT Promedio:** 
+    $$\text{TT Promedio} = \frac{8.0 + 11.6 + 12.0}{3} = \frac{31.6}{3} \approx \mathbf{10.53\text{ unidades de tiempo}}$$
 
-Ahora tenemos que calcular el **TT** del algoritmo **SJF** dejando el procesador en **idle** una unidad de tiempo, luego ya todos los procesos entraron a la cola de **ready**, se ejecuta **P3** que finaliza en el instante 2, continuamos con **P2** que finaliza en el instante 6, por último se ejecuta **P1** que finaliza en el instante 14. El **TT** se calcula restando el instante de llegada, por lo que nos queda un **TT** promedio = ((2-1) + (6-0.4) + (14-0)) / 3 = (1 + 5.6 + 14) / 3 = 6.87 unidades de tiempo.
+* **Waiting Time (W = TT - Ráfaga):**
+  * **P1:** $8.0 - 8 = \mathbf{0.0}$ unidades de tiempo (no esperó).
+  * **P2:** $11.6 - 4 = \mathbf{7.6}$ unidades de tiempo.
+  * **P3:** $12.0 - 1 = \mathbf{11.0}$ unidades de tiempo.
+  * **W Promedio:** 
+    $$\text{WT Promedio} = \frac{0.0 + 7.6 + 11.0}{3} = \frac{18.6}{3} = \mathbf{6.20\text{ unidades de tiempo}}$$
+
+---
+
+### b) Algoritmo SJF (Shortest Job First) sin desalojo
+
+#### Diagrama de Gantt:
+
+| 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
+|---|---|---|---|---|---|---|---|---|---|----|----|----|
+|  P1 | P1   | P1  |P1   |P1   |P1   |P1   |P1   |P3   |P2   |P2    |P2    |P2    |
+
+#### Explicación detallada:
+Dado que el algoritmo es **sin desalojo** (*non-preemptive*), una vez que un proceso toma el control de la CPU, ejecuta hasta terminar:
+* En $t = 0.0$, el único proceso presente es **P1**, por lo que se le asigna la CPU y se ejecuta completo hasta $t = 8.0$.
+* Durante la ejecución de P1, arriban **P2** (en $t = 0.4$) y **P3** (en $t = 1.0$).
+* En $t = 8.0$, con P1 finalizado, el planificador evalúa la cola de listos y selecciona al proceso con la ráfaga de CPU más corta: **P3** (ráfaga de 1) por sobre **P2** (ráfaga de 4).
+* **P3** ejecuta desde $t = 8.0$ hasta $t = 9.0$.
+* **P2** ejecuta desde $t = 9.0$ hasta $t = 13.0$.
+
+Calculamos las métricas correspondientes:
+
+* **Turnaround Time (TT = Fin - Llegada):**
+  * **P1:** $8.0 - 0.0 = \mathbf{8.0}$ unidades de tiempo.
+  * **P3:** $9.0 - 1.0 = \mathbf{8.0}$ unidades de tiempo.
+  * **P2:** $13.0 - 0.4 = \mathbf{12.6}$ unidades de tiempo.
+  * **TT Promedio:** 
+    $$\text{TT Promedio} = \frac{8.0 + 8.0 + 12.6}{3} = \frac{28.6}{3} \approx \mathbf{9.53\text{ unidades de tiempo}}$$
+
+* **Waiting Time (W = TT - Ráfaga):**
+  * **P1:** $8.0 - 8 = \mathbf{0.0}$ unidades de tiempo.
+  * **P3:** $8.0 - 1 = \mathbf{7.0}$ unidades de tiempo.
+  * **P2:** $12.6 - 4 = \mathbf{8.6}$ unidades de tiempo.
+  * **W Promedio:** 
+    $$\text{WT Promedio} = \frac{0.0 + 7.0 + 8.6}{3} = \frac{15.6}{3} = \mathbf{5.20\text{ unidades de tiempo}}$$
+
+---
+
+### c) Algoritmo SJF sin desalojo con IDLE inicial de 1 unidad
+
+#### Diagrama de Gantt:
+
+| 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 |
+|---|---|---|---|---|---|---|---|---|---|----|----|----|----|
+| IDLE |  P3 |P2   |P2   |P2   |P2   |P1   |P1   |P1   |P1   |P1    |P1    |P1    |P1 |
+
+#### Explicación detallada:
+Forzamos artificialmente al procesador a permanecer ocioso (**idle**) durante la primera unidad de tiempo (intervalo de $t = 0.0$ a $t = 1.0$):
+* Al llegar a $t = 1.0$, todos los procesos (**P1**, **P2** y **P3**) ya se encuentran en la cola de listos.
+* Como el planificador ahora tiene un panorama completo de todos los trabajos que van a ingresar, los ordena de menor a mayor ráfaga: **P3** (ráfaga 1), **P2** (ráfaga 4) y finalmente **P1** (ráfaga 8).
+* **P3** ejecuta de $t = 1.0$ a $t = 2.0$.
+* **P2** ejecuta de $t = 2.0$ a $t = 6.0$.
+* **P1** ejecuta de $t = 6.0$ a $t = 14.0$.
+
+Calculamos las métricas individuales restando el instante de llegada original de cada proceso:
+
+* **Turnaround Time (TT = Fin - Llegada):**
+  * **P3:** $2.0 - 1.0 = \mathbf{1.0}$ unidad de tiempo.
+  * **P2:** $6.0 - 0.4 = \mathbf{5.6}$ unidades de tiempo.
+  * **P1:** $14.0 - 0.0 = \mathbf{14.0}$ unidades de tiempo.
+  * **TT Promedio:** 
+    $$\text{TT Promedio} = \frac{14.0 + 5.6 + 1.0}{3} = \frac{20.6}{3} \approx \mathbf{6.87\text{ unidades de tiempo}}$$
+
+* **Waiting Time (W = TT - Ráfaga):**
+  * **P3:** $1.0 - 1 = \mathbf{0.0}$ unidades de tiempo.
+  * **P2:** $5.6 - 4 = \mathbf{1.6}$ unidades de tiempo.
+  * **P1:** $14.0 - 8 = \mathbf{6.0}$ unidades de tiempo.
+  * **W Promedio:** 
+    $$\text{WT Promedio} = \frac{0.0 + 1.6 + 6.0}{3} = \frac{7.6}{3} \approx \mathbf{2.53\text{ unidades de tiempo}}$$
 
 ---
 
@@ -294,13 +379,86 @@ Consideramos el siguiente conjunto de procesos, con sus ráfagas de **CPU** e in
 
 > **Nota:** Notemos que el **CPU** está en **idle** por 5 unidades de tiempo.
 
-Ahora vamos a calcular el **TT** promedio y **WT** promedio, para los siguientes algoritmos:
+---
 
-- **FCFS**: Lo más ilustrativo sería una tabla, pero vamos con los cálculos en crudo, el **P1** llega en t = 5, y finaliza en t = 6, por lo que su **TT_P1** = 1, luego el **TT_P2** = 16 - 6 = 10, luego **TT_P3** = 17 - 7 = 10, por último el **TT_P4** = 27 - 8 = 19. Para finalizar el **TT** promedio = (1 + 10 + 10 + 19) / 4 = 10 unidades de tiempo. 
+### a) Algoritmo FCFS (First-Come, First-Served)
 
-- **RR (quantum = 10)**: Procedemos de la misma manera que el anterior, **TT_P1** = 6 - 5 = 1, ahora vamos con el **TT_P2** = 16 - 6 = 10, seguimos con el **TT_P3** = 17 - 7 = 10, por último **TT_P4** = 27 - 8 = 19. Por lo tanto el **TT** promedio es (1 + 10 + 10 + 19) / 4 = 10 unidades de tiempo. 
+#### Diagrama de Gantt:
 
-- **SJF (sin desalojo)**: Notemos que el **TT** promedio acá también va a ser de 10, debido a que los procesos ingresan de manera secuencial por lo que el algoritmo termina comportándose como **FCFS**.
+| 0 - 5 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **IDLE** | P1 | P2 | P2 | P2 | P2 | P2 | P2 | P2 | P2 | P2 | P2 | P3 | P4 | P4 | P4 | P4 | P4 | P4 | P4 | P4 | P4 | P4 |
+
+*Nota: P1 ejecuta en el intervalo [5,6]; P2 en [6,16]; P3 en [16,17]; P4 en [17,27].*
+
+#### Explicación detallada:
+Los procesos se atienden estrictamente en orden de llegada:
+* **P1** inicia en $t = 5$ y finaliza en $t = 6$.
+* **P2** inicia en $t = 6$ y finaliza en $t = 16$.
+* **P3** (llegado en $t = 7$) inicia en $t = 16$ y finaliza en $t = 17$.
+* **P4** (llegado en $t = 8$) inicia en $t = 17$ y finaliza en $t = 27$.
+
+#### Cálculos de Rendimiento:
+* **Turnaround Time (TT = Fin - Llegada):**
+  * **P1:** $6 - 5 = \mathbf{1}$ unidad de tiempo.
+  * **P2:** $16 - 6 = \mathbf{10}$ unidades de tiempo.
+  * **P3:** $17 - 7 = \mathbf{10}$ unidades de tiempo.
+  * **P4:** $27 - 8 = \mathbf{19}$ unidades de tiempo.
+  * **TT Promedio:** 
+    $$\text{TT Promedio} = \frac{1 + 10 + 10 + 19}{4} = \frac{40}{4} = \mathbf{10.0\text{ unidades de tiempo}}$$
+
+* **Waiting Time (W = TT - Ráfaga):**
+  * **P1:** $1 - 1 = \mathbf{0}$ unidades de tiempo.
+  * **P2:** $10 - 10 = \mathbf{0}$ unidades de tiempo.
+  * **P3:** $10 - 1 = \mathbf{9}$ unidades de tiempo.
+  * **P4:** $19 - 10 = \mathbf{9}$ unidades de tiempo.
+  * **W Promedio:** 
+    $$\text{W Promedio} = \frac{0 + 0 + 9 + 9}{4} = \frac{18}{4} = \mathbf{4.5\text{ unidades de tiempo}}$$
+
+---
+
+### b) Algoritmo Round Robin (Quantum = 10)
+
+#### Diagrama de Gantt:
+*(Idéntico al diagrama de FCFS)*
+
+#### Explicación detallada:
+En este caso, la duración del *quantum* ($q = 10$) es mayor o igual a las ráfagas de todos los procesos. Ningún proceso es desalojado por límite de tiempo:
+* **P1** ejecuta $1$ unidad y libera la CPU voluntariamente al finalizar.
+* **P2** ejecuta sus $10$ unidades completas justo en el límite del *quantum* y finaliza de forma natural.
+* **P3** ejecuta $1$ unidad y finaliza.
+* **P4** ejecuta sus $10$ unidades completas y finaliza.
+
+Debido a que el orden de llegada coincide con el de ejecución y ningún proceso es interrumpido antes de terminar, **Round Robin ($q=10$) se comporta exactamente igual que FCFS**.
+
+#### Cálculos de Rendimiento:
+* **TT Promedio:** $\mathbf{10.0\text{ unidades de tiempo}}$
+* **W Promedio:** $\mathbf{4.5\text{ unidades de tiempo}}$
+
+---
+
+### c) Algoritmo SJF (Shortest Job First) sin desalojo
+
+#### Diagrama de Gantt:
+
+  *(Idéntico al diagrama de FCFS)*
+
+#### Explicación detallada:
+
+A pesar de ser un algoritmo diseñado para priorizar ráfagas cortas, se comporta de manera idéntica a FCFS debido a la secuencialidad obligada de los arribos:
+1. En $t = 5$, el único proceso listo es **P1** (ejecuta de 5 a 6).
+
+2. En $t = 6$, con P1 terminado, el único proceso listo en el sistema es **P2** (P3 llega recién en $t = 7$). Por lo tanto, el planificador se ve forzado a asignarle la CPU a **P2** (ejecuta sin desalojo de 6 a 16).
+
+3. En $t = 16$, con P2 terminado, ya llegaron tanto **P3** (en $t = 7$) como **P4** (en $t = 8$). El planificador compara sus ráfagas: P3 (ráfaga 1) y P4 (ráfaga 10). Selecciona el más corto, que es **P3** (ejecuta de 16 a 17).
+
+4. Finalmente, ejecuta el restante **P4** (de 17 a 27).
+
+Al coincidir las decisiones de planificación forzadas por la disponibilidad con las duraciones de las ráfagas, el orden de ejecución final es $P_1 \rightarrow P_2 \rightarrow P_3 \rightarrow P_4$, idéntico a FCFS.
+
+#### Cálculos de Rendimiento:
+* **TT Promedio:** $\mathbf{10.0\text{ unidades de tiempo}}$
+* **W Promedio:** $\mathbf{4.5\text{ unidades de tiempo}}$
 
 ---
 
@@ -338,13 +496,54 @@ Ahora vamos con el algoritmo de **Shortest Remaining Time First (SRTF)** el cual
 ### c) 
 Ahora vamos con **TT** promedio de ambos algoritmos:
 
-- **Round Robin**: empezamos con este, vamos a calcular el **TT** de cada proceso para luego calcular el promedio. Empezamos por el **TT_P1** = 13 - 0 = 13, seguimos con el **TT_P2** = 16 - 5 = 11, a continuación vamos con el **TT_P3** = 27 - 14 = 13, por último el **TT_P4** = 26 - 15 = 11. Por lo tanto el **TT** promedio = (13 + 11 + 13 + 11) / 4 = 12.
+- **Round Robin**: empezamos con este, vamos a calcular el **TT** de cada proceso para luego calcular el promedio. 
 
-- **SRTF**: Seguimos el mismo método que en el inciso anterior. Empezamos con el **TT_P1** = 8 - 0 = 8, seguimos con el **TT_P2** = 16 - 8 = 8, a continuación con el **TT_P3** = 27 - 14 = 13 y por último con el **TT_P4** = 21 - 15 = 6. Por lo tanto el **TT** promedio = (8 + 8 + 13 + 6) / 4 = 8.75 unidades de tiempo.
+  - $TT_{P1} = 13 - 0 = 13 $.
+  - $TT_{P2} = 16 - 5 = 11$.
+  - $TT_{P3} = 27 - 14 = 13$.
+  - $TT_{P4} = 26 - 15 = 11$
+
+  Teniendo todos estos numeros calculemos el promdio de la siguiente manera
+
+  $$
+  TT_{Promedio} = \frac{TT_{P1} + TT_{P2} + TT_{P3}  + TT_{P4}}{4} = \frac{13 + 11 + 13 + 11}{4} = \mathbf{12}
+  $$
+
+
+- **SRTF**: Seguimos el mismo método que en el inciso anterior. 
+
+  - $TT_P1 = 8 - 0 = 8$.
+  - $TT_P2 = 16 - 8 = 8$
+  - $TT_P3 = 27 - 14 = 13$
+  - $TT_P4 = 21 - 15 = 6$
+
+  Teniendo todos estos numeros calculemos el promdio de la siguiente manera
+
+  $$
+  TT_{Promedio} = \frac{TT_{P1} + TT_{P2} + TT_{P3}  + TT_{P4}}{4} = \frac{8 + 8 + 13 + 6}{4} = \mathbf{8.75}
+  $$
+
 
 ### d) 
 
-Aunque SRTF minimiza el turnaround promedio, Round Robin puede ser preferible en sistemas interactivos porque garantiza equidad y tiempos de respuesta acotados para todos los procesos. SRTF puede provocar starvation y es menos predecible, mientras que RR asegura que cada proceso reciba CPU periódicamente, lo cual es clave en entornos donde la experiencia del usuario es importante.
+A pesar de que **SRTF** es un algoritmo óptimo para minimizar el tiempo de espera promedio y de retorno (*turnaround*), su implementación práctica no siempre es viable ni deseable. La elección entre **SRTF** y **Round Robin (RR)** depende estrictamente del tipo de procesos y de los objetivos del sistema operativo:
+
+#### 1. Sistemas Interactivos (Orientados al usuario)
+En estos entornos (como un sistema de escritorio o una apliacion con interaccion del usuario), la métrica crítica a optimizar no es el *turnaround*, sino el **Response Time (tiempo de respuesta)**, definido como el tiempo transcurrido desde que un proceso se lanza hasta que ejecuta en la CPU por primera vez.
+
+  * **Por qué se prefiere Round-Robin:** Al conceder a cada proceso un *quantum* acotado de tiempo de manera cíclica, RR asegura de forma equitativa que todos los procesos progresen y respondan periódicamente. Esto baja drásticamente el tiempo de respuesta percibido por el usuario. Además, RR no requiere predecir el futuro de las ráfagas para planificar.
+
+  * **Desventajas de SRTF aquí:** SRTF es impracticable en sistemas de propósito general porque requiere conocer con precisión la duración de la próxima ráfaga de CPU de antemano, lo cual es teóricamente imposible en un entorno real. Asimismo, castiga de forma sistemática a los procesos de ráfaga larga, sometiéndolos a un riesgo crítico de **inanición (*starvation*)** si continúan arribando procesos cortos.
+
+#### 2. Sistemas de Procesamiento por Lotes (Batch)
+En entornos de procesamiento pesado en segundo plano (como cálculos científicos, renderizado o backups nocturnos), no existe un usuario interactuando activamente con el sistema.
+  
+  * **Por qué se prefiere SRTF (o SJF):** El objetivo principal en sistemas batch es maximizar el **throughput** (cantidad de trabajos finalizados por unidad de tiempo) y minimizar el **turnaround promedio**. Priorizar los trabajos más cortos permite vaciar la cola de listos rápidamente, minimizando la acumulación de tiempos de espera. El uso de Round Robin en este escenario penalizaría el rendimiento general debido al constante desperdicio de ciclos de CPU en **cambios de contexto** (*context switches*).
+
+#### 3. Sistemas de Tiempo Real (Real-Time)
+En estos sistemas (como el software de control industrial o dispositivos médicos), la prioridad absoluta es cumplir con **fechas límite (*deadlines*)** estrictas, donde ejecutar tarde una tarea equivale a no haberla ejecutado.
+
+  * **Por qué no sirven ni RR ni SRTF:** Ninguno de estos algoritmos considera los requerimientos de tiempo del sistema externo. Round Robin es demasiado lento y carece de prioridades, mientras que SRTF prioriza ráfagas cortas pero podría dejar vencer el *deadline* de un proceso de ráfaga larga. En estos contextos se requiere una planificación especializada con desalojo basada en plazos, como el algoritmo **EDF (Earliest Deadline First)** o políticas de prioridades estáticas en las que los procesos críticos tienen prioridad absoluta sobre los interactivos y los batch.
 
 ---
 
@@ -378,30 +577,34 @@ Vamos con el diagrama de Gantt usando el sistema de colas multinivel feedback (A
 A continuación calcularemos el **TT** y **WT** promedio:
 
 **Tiempos de finalización**
-- P1: 7
-- P2: 6
-- P3: 15
-- P4: 20
+- $TF_{P1} = 7$
+- $TF_{P2} = 6$
+- $TF_{P3} = 15$
+- $TF_{P4} = 20$
 
 **Turnaround Time (TT)**
-- P1: 7 - 0 = 7
-- P2: 6 - 0 = 6
-- P3: 15 - 0 = 15
-- P4: 20 - 10 = 10
+- $TT_{P1} = 7 - 0 = 7 $
+- $TT_{P2} = 6 - 0 = 6$
+- $TT_{P3} = 15 - 0 = 15$
+- $TT_{P4} = 20 - 10 = 10$
 
-**TT promedio**
-(7 + 6 + 15 + 10) / 4 = **9.5**
+  $$
+    TT_{Promedio} = \frac{7 + 6 + 15 + 10}{4} = \mathbf{9.5} 
+  $$
+
 
 ---
 
 **Waiting Time (WT)**
-- P1: 7 - 4 = 3
-- P2: 6 - 3 = 3
-- P3: 15 - 8 = 7
-- P4: 10 - 5 = 5
+- $WT_{P1} = 7 - 4 = 3$
+- $WT_{P2} = 6 - 3 = 3$
+- $WT_{P3} =  15 - 8 = 7$
+- $WT_{P4} = 10 - 5 = 5$
 
-**WT promedio**
-(3 + 3 + 7 + 5) / 4 = **4.5**
+$$
+WT_{Promedio} = \frac{3 + 3 + 7 + 5}{4} = \mathbf{4.5}
+$$
+
 
 ---
 
@@ -536,14 +739,40 @@ La política de scheduling que vamos a plantear es la siguiente: vamos a utiliza
 
 > **Nota:** A menor número, mayor es la prioridad.
 
-- **Cola de prioridad 0:** Acá vamos a tener el proceso que dispara la alarma, ya que es un proceso **REAL TIME** y es crítico. Se usará un algoritmo **Earliest Deadline First**, aunque también podría ser **FIFO** ya que es un único proceso que se va a disparar una sola vez.
+- **Cola de prioridad 0 (Tiempo Real / Crítica):** En esta cola unificada ubicamos tanto el proceso que detecta los riesgos y alerta a los operadores como el que dispara la alarma física. Al tratarse de un entorno de tiempo real estricto (Hard Real-Time) donde se deben cumplir plazos de ejecución rigurosos, se utilizará el algoritmo Earliest Deadline First (EDF). De esta manera, el planificador garantiza que, ante la presencia de múltiples eventos, siempre se ejecute primero el proceso con la fecha límite (deadline) más urgente (como el disparo inmediato de la alarma), evitando retrasos catastróficos que un algoritmo no planificado por plazos (como FIFO) podría ocasionar.
 
-- **Cola de prioridad 1:** Esta cola está reservada para el proceso de detección de riesgos y alerta a los operadores, con un algoritmo **FIFO**.
+- **Cola de prioridad 1:** En esta cola van los procesos relacionados al procesamiento de video y detección de objetos, con un algoritmo **Round Robin** para que sea lo más justo posible con el tiempo de **CPU** de cada proceso, y un quantum de duración razonable, ya que uno muy corto podría generar un overhead debido al context switch, ya que el procesamiento de video es muy demandante en cuanto a **CPU**. La eleccion es debido a que tenemos procesos intensivos en **I/O** y en **CPU** por lo tanto **Round Robin** es la mejor opccion.
 
-- **Cola de prioridad 2:** En esta cola van los procesos relacionados al procesamiento de video y detección de objetos, con un algoritmo **Round Robin** para que sea lo más justo posible con el tiempo de **CPU** de cada proceso, y un quantum de duración razonable, ya que uno muy corto podría generar un overhead debido al context switch, ya que el procesamiento de video es muy demandante en cuanto a **CPU**.
-
-- **Cola de prioridad 3:** Por último, en esta cola vamos a tener los procesos que corren de noche para la compresión de video. Como de noche las grabaciones son pocas, las colas 1 y 2 van a estar casi vacías debido al modo de detección de movimiento, por lo tanto estos procesos van a poder ejecutarse sin inconvenientes. En caso de **aging** (envejecimiento de los procesos), van a poder escalar su prioridad, esto es necesario debido a que podría ocasionar **starvation**. Se utiliza una política **FCFS** ya que la compresión de video es demandante en cuanto a **CPU**.
+- **Cola de prioridad 2:** Por último, en esta cola vamos a tener los procesos que corren de noche para la compresión de video. Como de noche las grabaciones son pocas, las colas 1 y 2 van a estar casi vacías debido al modo de detección de movimiento, por lo tanto estos procesos van a poder ejecutarse sin inconvenientes. En caso de **aging** (envejecimiento de los procesos), van a poder escalar su prioridad, esto es necesario debido a que podría ocasionar **starvation**. Se utiliza una política **FCFS** ya que la compresión de video es demandante en cuanto a **CPU**.
 
 Como mencioné anteriormente, se cuenta con desalojo porque ante la llegada de un proceso de mayor prioridad se pasa directamente a ejecutarlo. Vamos con un escenario que muestre la importancia del tipo de scheduler elegido:
 
-Imaginemos que son las 3 de la mañana, la cola de prioridad 3 está ejecutando un proceso de compresión de video. En ese momento una cámara detecta movimiento y dispara el proceso de alarma (Cola 0). Sin desalojo, el proceso de compresión seguiría ejecutándose hasta terminar su ráfaga de CPU, retrasando la alarma y potencialmente comprometiendo la seguridad. Con desalojo, el scheduler interrumpe inmediatamente la compresión y ejecuta el proceso de alarma, garantizando que se active dentro de su deadline.
+Imaginemos que son las 3 de la mañana, **la cola de prioridad 2** está ejecutando un proceso de compresión de video. En ese momento una cámara detecta movimiento y dispara el proceso de alarma (Cola 0). Sin desalojo, el proceso de compresión seguiría ejecutándose hasta terminar su ráfaga de CPU, retrasando la alarma y potencialmente comprometiendo la seguridad. Con desalojo, el scheduler interrumpe inmediatamente la compresión y ejecuta el proceso de alarma, garantizando que se active dentro de su deadline.
+
+---
+
+## Ejercicio 17 (Guia Vieja es el ejercicio 14)
+
+Vamos con los datos que tenemos sobre el problema:
+
+- El sistema atiende tareas interactivas de varias sucursales bancarias, eso quiere decir que es intensivo en **E/S**.
+- Por otro lado tenemos que frente a un caso de robo se genera un proceso que activa una alarma en la central.
+
+Con eso en mente, nos  da una pista de que hay 2 o inclusive 3 prioridades.
+
+### Algoritmo de Scheduling
+
+Para este caso vamos a utilizar colas de prioridad multinivel preemptive, debido a que tenemos grandes distinciones y urgencias en los procesos que se ejecutan en el sistema.
+
+Para el algritmo vamos a utilizar 2 niveles de prioriad a continuación describimos cada cola correspondiente:
+
+- **Cola de prioridad 0 proceso de alarma:** En está primera cola solo van a estar todos los procesos correspondientes a las alarmas de las distintas sucursales, aqui vamos a utilizar el algiritmo **FCFS/FIFO** debido a que los pedido de alarma llegan en orden y se tienen que responder en el mismo, ya que el orden marca la urgencia de las mismas.
+
+- **Cola de prioridad 1 procesos interactivos:** Aquí vamos a tener todos los procesos interactivos de todas las sucursales, en esta cola vamos a utilizar el algoritmo **Round Robin** ya que al tratarse de procesos interativos es decir intensos en rafagas de **E/S** necesitamos ser lo más justos posibles para tener un buen **tiempo de respuesta**.
+
+Por otro lado, si nos paramos a mirar podemos sufrir de **starvation**, debido a que podria suceder que todos las sucursales disparan sus alarmas en el mismo momento entonces van a acaparar toda la **CPU**, pero verdaderamente es un comportamiento deseado asi que no nos preocupa.
+
+Tambien podriamos añadir una cola más si tenemos procesos batch o intensivos en **CPU**, pero aqui si tendriamos que considerar el tema de la **statvation**, podriamos aplicar **agin** aqui mismo pero limitar la prioriadad hasta la cola 1 y que no suban a la cola de prioridad 0 que esta reservado solo para alarmas.
+
+El algoritmo debe ser si o si preemptive debido a que si estamos ejecutando una tarea interactiva, puede pasar que llegue una alarma de otra sucursal y en ese caso nos gustaria poder dejar de ejecutar este proceso con menor prioridad debido a que es menos urgente.
+
