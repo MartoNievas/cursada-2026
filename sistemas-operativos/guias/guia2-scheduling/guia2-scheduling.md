@@ -75,8 +75,7 @@ Datos del ejercicio:
 
 ### a)
 
-Teniendo en cuenta este esquema y que no nos dicen el orden en el que se van a dar los procesos, un algoritmo por prioridad no convendría debido a que podría ser que el P2 se dé primero lo que nos daría un tiempo de espera promedio muy elevado. Por otro lado podría ser conveniente porque las ráfagas de E/S son cortas, pero con prioridad estática P2 podría sufrir starvation si P0 y P1 siempre tienen mayor prioridad, lo que sería otro motivo para descartarlo.
-También menciona que P1 se suele bloquear frecuentemente, esto sería un motivo para no usar prioridad debido a que no podría seguir ejecutando mientras el proceso está bloqueado. A mi parecer lo que convendría sabiendo todo esto es un algoritmo Round Robin, ya que no sabemos el orden de los procesos en el que se van a dar, el frecuente bloqueo de P1 y la corta duración de las ráfagas E/S de P0 las cuales no se verían perjudicadas por la conmutación de procesos. La única desventaja sería que tardaría más en terminar P2 debido a que dura mucho, pero en beneficio no se atrasan el resto de procesos.
+Teniendo en cuenta este esquema y que no nos dicen el orden en el que se van a dar los procesos, un algoritmo por prioridad estática sin desalojo (non-preemptive) no convendría debido a que podría ser que P2 (con ráfagas de CPU prolongadas) se dé primero, lo que nos daría un tiempo de espera promedio muy elevado por el efecto convoy. Sin embargo, en un esquema con desalojo (preemptive), el orden de llegada ya no es un inconveniente, puesto que P0 o P1 desalojarían inmediatamente a P2 al estar listos. Por otro lado, un esquema por prioridad sí podría ser conveniente para favorecer a P0 y P1 dándoles mayor prioridad por tener ráfagas cortas de CPU. Además, es muy improbable que con prioridad estática P2 sufra inanición (starvation), dado que P0 y P1 son altamente intensivos en E/S y pasan la mayor parte de su tiempo bloqueados, dejando la CPU libre para P2. Si fuera necesario, este riesgo de inanición se anularía usando prioridades dinámicas con envejecimiento (aging). El hecho de que P1 se bloquee frecuentemente por red no es un motivo para no usar prioridades, sino todo lo contrario: al bloquearse, pasa al estado waiting (bloqueado), liberando la CPU de inmediato para el resto de los procesos listos, lo que lo vuelve el candidato perfecto para recibir una alta prioridad debido a que consume muy poco procesador antes de volver a bloquearse. A mi parecer, lo que convendría sabiendo todo esto es un algoritmo Round Robin (RR), ya que no sabemos el orden de llegada, y ante el frecuente bloqueo de P1 y la corta duración de las ráfagas de CPU de P0, ambos procesos simplemente liberarían la CPU de manera voluntaria antes de agotar su quantum de tiempo, sin verse perjudicados por la conmutación de procesos. La única desventaja sería que tardaría más en terminar P2 debido a que dura mucho y sufriría constantes desalojos y cambios de contexto, pero en beneficio no se atrasan el resto de procesos.
 
 ---
 
@@ -86,7 +85,7 @@ Tenemos el siguiente diagrama de estados:
 
 ![Diagrama de estados](img/states.png)
 
-Este diagrama por lo que podemos observar, un proceso que está en estado **running** no puede pasar directamente a **ready** sino que antes debe pasar por **blocked**, esto nos está diciendo que un proceso siempre que se ejecute termina a menos que sea bloqueado por una interrupción o esperando algún archivo. Por lo tanto parece que se trata de un scheduler **Cooperativo**. 
+Este diagrama por lo que podemos observar, un proceso que está en estado **running** no puede pasar directamente a **ready** sino que antes debe pasar por **blocked**, esto nos está diciendo que un proceso siempre que se ejecute termina a menos que sea bloqueado por una interrupción o esperando algún archivo. Por lo tanto parece que se trata de un scheduler **non-preemptive**.
 
 ---
 
@@ -96,7 +95,7 @@ Este diagrama por lo que podemos observar, un proceso que está en estado **runn
 
 - b) **Por prioridad** en este caso sí pueden sufrir de inanición si los procesos con menos prioridad no aumentan la misma de alguna manera, por ejemplo a medida que un proceso envejece se le puede dar más prioridad, técnica conocida como **aging**.
 
-- c) **SJF** es una variante de por prioridad así que lo mismo, aunque en su versión no preemptiva el starvation es menos probable, en la preemptiva (**SRTF**) es más pronunciado.
+- c) **SJF** es una variante de por prioridad así que lo mismo, aunque en su versión non-preemptive el starvation es menos probable, en la preemptive (**SRTF**) es más pronunciado.
 
 - d) **SRTF** sí puede sufrir starvation, si siempre llegan procesos con ráfagas más cortas, los procesos largos nunca llegan a ejecutarse.
 
@@ -436,7 +435,7 @@ pero evita starvation en los CPU-bound porque su prioridad mejora cuando dejan d
 
 Contamos con la siguiente tabla de procesos:
 
-> **Nota:** Se asume que el algoritmo es apropiativo o con desalojo.
+> **Nota:** Se asume que el algoritmo es apropiativo o con desalojo o preemptive.
 
 > **Nota:** También se toma el **deadline absoluto** = deadline dado + tiempo de llegada.
 
