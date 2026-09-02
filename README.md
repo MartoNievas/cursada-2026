@@ -109,10 +109,3 @@ _Por el momento no hay material cargado._
 |[Clase7 — Resumen](complejidad-computacional/resumenes/clase7-resumen.md)|Espacio usado por un cómputo, espacio polinomial y teorema de Savicth. |
 |[Clase8 — Resumen](complejidad-computacional/resumenes/clase8-resumen.md)| Espacio logarítmicos y Teorema de Immerman-Szelepcsényi. |
 |[Clase9 — Resumen](complejidad-computacional/resumenes/clase9-resumen.md)| Jerarquía Polinomial y propiedades de la misma. |
-
-### Guías Resueltas
-
-| Nombre | Descripción |
-| -------------- | --------------- |
-| [Guia 1 — Introducción a maquinas de Turing](complejidad-computacional/guias/guia1.md)| Completar. |
-| [Guia 2 — P, NP y Reducciones](complejidad-computacional/guias/guia2.md) | Por completar. |
