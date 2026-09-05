@@ -12,7 +12,7 @@
 
 ### a)
 
-No, hay distintas salidas dependiendo del orden de ejecución ya que no se especifica el mismo para ambas funciones en los 2 procesos.
+No, hay distintas salidas dependiendo del orden de ejecución y el la menera en que el scheduler conmute procesos, ya que no se especifica el mismo para ambas funciones en los 2 procesos.
 
 ### b)
 
@@ -60,7 +60,7 @@ while(1) {
 
 El programa como tal cumple con lo planteado ya que antes de leer la variable se hace un wait hasta que se libere el mutex, se lee y por último se libera con un signal. Pero este programa puede ser víctima de una **race condition** debido a que el if que se ejecuta posteriormente depende de una variable compartida que puede ser modificada apenas se soltó el mutex.
 
-Además `x++` y `x--` no son escrituras atómicas y pueden sufrir de interrupciones.
+Además tanto `x++`, como `x--` e `if`  no son operaciones atómicas y pueden sufrir de interrupciones.
 
 Pongamos un ejemplo para que se vea mejor:
 
@@ -128,11 +128,13 @@ Notemos que `signal` de barrera se ejecuta una sola vez, es decir que cuando lle
 
 Para corregir el código podemos hacer lo siguiente: cada vez que se llama `barrera.signal()` se mete la ficha en la caja, podemos asumir que podemos meter tantas fichas como sea.
 
+Existe además una condición de carrera (*race condition*) al evaluar la guarda del `if`, ya que dicha lectura ocurre fuera de la sección crítica protegida por el mutex. Por ejemplo, si el proceso $n-1$ modifica `count` y sufre un desalojo (*preemption*) antes de evaluar la condición, el proceso $n$ puede ingresar a la sección crítica, actualizar `count`, evaluar el `if` como verdadero y emitir el `signal()`. Si el scheduler restituye luego la CPU a $n-1$, este evaluará la guarda con el valor modificado por el proceso posterior, ejecutando un segundo `signal()` redundante. Esto rompe la atomicidad de la operación, introduce no determinismo y altera el comportamiento esperado del sincronizador.
+
 > **Aclaración:** Asumo que `critica()` se puede ejecutar en paralelo.
 
 ```C
-semaphore mutex = 1;
-semaphore barrera = 0;
+semaphore mutex = sem(1);
+semaphore barrera = sem(0);
 int count = 0;
 
 preparado();
@@ -149,7 +151,7 @@ barrera.signal(); // Aquí el proceso despierta y libera al siguiente.
 critica();
 ```
 
-Con esto resolvemos la inanición debido a que se van liberando de forma secuencial.
+Con esto resolvemos la inanición debido a que se van liberando de forma secuencial. Tambien se podria utilizar una macro que se dio en clase para que cuando lleguemos al proceso n ejecuta n signals exactos, esto genera que haya un proceso con mayor carga de trabajo.
 
 ---
 
@@ -176,8 +178,8 @@ critica();
 Para resolver este problema utilizaremos **TTASLock (local spinning)**, el cual es una mejora del **TASLock**. La solución quedaría así:
 
 ```C
-TASLock mtx = 0;
-volatile int count = 0;
+TTASLock mtx = 0;
+atomic<int> count = 0;
 
 preparado();
 
@@ -196,7 +198,8 @@ La primera solución a mi parecer tiene un código más legible debido a que la 
 
 ### b)
 
-La solución mediante herramientas de **HW** es mucho más rápida, aunque puede llegar a consumir mucha **CPU** en el ciclo `while()` y en el lock ya que no se duerme. Lo que se podría hacer es usar **TTASLock** que consume menos.
+La solucion por **HW** suele ser mucho menos eficiente porque estamos haciendo **busy wating** y **polling** ya que todo el tiempo estamos preguntado si `count` supero a n. En cambio en la solucion con semaforos el proceso que espera a la barrera simplemente se duerme por tiempo indeterminado sin consumir **CPU**.
+En contraste todas las operaciones de la solución por **HW** son atomicas por lo que suelen se mas eficientes, pero el **busy wating** dispara el consumo.
 
 ### c)
 
@@ -217,10 +220,10 @@ semaphore pasos[N]; // pasos[i] = 1, el resto en 0
 
 void initialization(int N, int init_i) {
   for (int j = 0; j < N; j++) {
-    pasos[j] = 0;
+    pasos[j] = sem(0);
   }
   for (int j = 0; j < N; j++) {
-    spawn proc(j);
+    proc(N,j);
   }
   pasos[i].signal();
 }
@@ -246,17 +249,205 @@ En este ejercicio decidí hacer ejemplos reales en C para aprender sobre los sem
 
 [Ver código](code/ej8/ej8-1.c)
 
+**En psudocódigo:**
+
+```C
+// Primero empecemos definiendo variables globales
+  semaphore mutex_a = sem(1);
+  semaphore mutex_b = sem(0);
+  semaphore mutex_c = sem(0);
+
+
+  void proceso_A() {
+    while(1) {
+      // Esperamos a poder ejecutar A
+      mutex_a.wait();
+      printf("[Proceso A] Ejecutando\n");
+      A();
+      // Cuando terminamos decimos que podemos ejecutar B
+      mutex_b.signal();
+    }
+  }
+
+  void proceso_B() {
+    while(1) {
+      // Esperamos a que podamos ejecutar B
+      mutex_b.wait();
+      B();
+      // Cuando terminamos podemos ejecutar C
+      mutex_c.signal();
+    }
+  }
+
+  void proceso_C() {
+    while(1) {
+      // Esperamos a que podamos ejecutar C
+      mutex_c.wait();
+      C();
+      // Cuando terminamos podemos ejecutar A de nuevo
+      mutex_a.signal();
+    }
+  }
+```
+
 ### 2)
 
 [Ver código](code/ej8/ej8-2.c)
+
+**En psudocódigo:**
+
+```C
+  // Variables globales
+  // Barrera para ejecutar 2 veces B
+  semaphore mutex_b = sem(1);
+  semaphore mutex_c = sem(0);
+  semaphore mutex_a = sem(0);
+
+
+  // Con los procesos
+
+  void proceso_B() {
+    while(1) {
+      mutex_b.wait();
+      B();
+      B();
+      mutex_c.signal();
+    }
+  }
+
+  void proceso_C() {
+    while(1) {
+      mutex_c.wait();
+      C();
+      mutex_a.signal();
+    }
+  }
+
+  void proceso_A() {
+    while(1) {
+      mutex_a.wait();
+      A();
+      mutex_b.signal();
+    }
+  }
+```
 
 ### 3)
 
 [Ver código](code/ej8/ej8-3.c)
 
+**En psudocódigo:**
+
+```C
+// Variables globales
+int cantidad_consumida = 0;
+semaphore productor = sem(1);
+semaphore consumidores = sem(0);
+// Para la exclusion mutua de verificar la cantidad de consumiciones.
+semaphore mutex = sem(1);
+void proceso_A() {
+  while(1) {
+    // Hacemos que produzca
+    productor.wait();
+    printf("[Proceso A] Produciendo...\n");
+    A()
+
+    // Habilitamos exactamente 2 consumiciones
+    consumidores.signal(2); // Usamos la macro de la practica
+  }
+}
+
+
+void proceso_B() {
+  while(1) {
+
+    //Esperamos que haya una consumicion disponible
+    consumidores.wait();
+    printf("[Proceso B] consumiendo...\n");
+    B();
+
+    // Seccion critica: Modificamos el contado de consumiciones
+    mutex.wait()
+    cantidad_consumida++;
+    if (cantidad_consumida == 2) {
+      // Despertamos al productor ya consumimos 2 veces
+      productor.signal();
+    }
+    mutex.signal();
+  }
+}
+
+void proceso_C() {
+  while(1) {
+
+    //Esperamos que haya una consumicion disponible
+    consumidores.wait();
+    printf("[Proceso C] consumiendo...\n");
+    C();
+
+    // Seccion critica: Modificamos el contado de consumiciones
+    mutex.wait()
+    cantidad_consumida++;
+    if (cantidad_consumida == 2) {
+      // Despertamos al productor ya consumimos 2 veces
+      productor.signal();
+    }
+    mutex.signal();
+  }
+}
+
+```
+
+
 ### 4)
 
 [Ver código](code/ej8/ej8-4.c)
+
+**En psudocódigo:**
+
+```C
+// Variables globales e inicializaciones de semáforos
+  semaphore sem_A = sem(1); // Controla la producción de A (inicia habilitado)
+  semaphore sem_B = sem(0); // Bloquea al consumidor B
+  semaphore sem_C = sem(0); // Bloquea al consumidor C
+
+
+  void proceso_A() {
+    while(1) {
+      // --- Primera mitad del ciclo: Turno de B ---
+      sem_A.wait();
+      printf("[Proceso A] Produciendo...\n");
+      A();
+      sem_B.signal(); // Habilita a B
+
+      // --- Segunda mitad del ciclo: Turno de C ---
+      sem_A.wait();
+      printf("[Proceso A] Produciendo...\n");
+      A();
+      sem_C.signal(); // Habilita a C
+    }
+  }
+
+  void proceso_B() {
+    while(1) {
+      sem_B.wait(); // Espera a que A produzca en su turno
+      printf("[Proceso B] Consumiendo primera vez...\n");
+      B();
+      printf("[Proceso B] Consumiendo segunda vez...\n");
+      B();            // Consume por segunda vez consecutiva
+      sem_A.signal(); // Devuelve el control a A para que continúe la ronda
+    }
+  }
+
+  void proceso_C() {
+    while(1) {
+      sem_C.wait(); // Espera a que A produzca en su turno
+      printf("[Proceso C] Consumiendo...\n");
+      C();
+      sem_A.signal(); // Devuelve el control a A para empezar una nueva ronda
+    }
+  }
+```
 
 ---
 
@@ -267,22 +458,30 @@ Si contamos con $N$ procesos $P_i$ y un conjunto de sentencias $a_i$ y $b_i$, y 
 La idea del pseudocódigo sería la siguiente:
 
 ```C
-atomic<int> cant = 0;
-semaphore barrera = 0;
+atomic<int> cant = 0; // Contado atomico, realmente no es necesario
+semaphore barrera = sem(0); // Barrera para poder frenar hasta terminar los a_i
+semaphore mutex = sem(1); // Mutex para la seccion critica de aumentar cant y comparar con N.
 
 proc P(i) {
   a(i);
 
-  if (cant.getAndInc() == N - 1) {
+  mutex.wait();
+  cant++;
+  if (cant == N) {
     barrera.signal();
   }
+  mutex.signal();
 
   barrera.wait();
   barrera.signal();
 
   b(i);
+
+  // barrera.wait();
 }
 ```
+
+Tener en cuenta que al terminar tenemos un signal de más en la barrera, por como plantemaos la condicion del if, en caso de que esto estuviera en un while al final de la secuencia ejecutamos un wait en la barrera.
 
 ---
 
@@ -319,6 +518,53 @@ Queremos simular la comunicación entre pipes usando memoria compartida sin usar
 
 [Ver código](code/ej11.c)
 
+**pseudocódigo:**
+
+```C
+// Variables globales y compartidad
+#define N //.... tamaño del buffer
+
+// Buffer compartido
+Buffer buffer;
+
+// Semaforos de sincronizacion
+semaphore llenos = sem(0);
+semaphore vacios = sem(N);
+semaphore mutex = sem(1);
+
+void write(const char* msg) {
+  // Esperamos a que haya un lugar
+  vacios.wait();
+
+  // Seccion critica: el buffer no puede ser tocado si se esta leyendo o si se quiere escribir
+  mutex.wait();
+  buffer.push(msg);
+  mutex.singal();
+
+  // Indicamos que llenamos uno de los N espacios
+  llenos.signal();
+
+}
+
+const char* read() {
+  const char* msj;
+  // Esperamos a que haya por lo menos un mensaje
+  llenos.wait();
+
+  // Seccion critica: bloqueamos el buffer
+  mutex.wait();
+  msg = buffer.pop();
+  mutex.signal();
+
+  // Avisamos que sacamos un elemento del buffer
+  vacios.signal();
+
+  return msg;
+
+}
+
+```
+
 ---
 
 ## Ejercicio 12
@@ -326,6 +572,55 @@ Queremos simular la comunicación entre pipes usando memoria compartida sin usar
 Acá tenemos un clásico problema de barreras, ya que primero queremos terminar una sentencia y posteriormente ejecutar otra. En este caso primero queremos `implementarTp()` y posteriormente `experimentar()`.
 
 [Ver código](code/ej12.c)
+
+**pseudocódigo:**
+
+
+```C
+// Variables globales
+semaphore barrera_impl = sem(0);
+semaphore barrera_inv = sem(1);
+semaphore mutex = sem(1);
+atomic<int> count = 0;
+
+void proceso_estudiantes() {
+
+  while(1) {
+
+    implementar();
+    
+    //Seccion critica: Aumentamos la cantidad de count
+    mutex.wait();
+    count++;
+    if (count == N) {
+      // Consumimos el singal sobrante en la barrera de investigacion
+      barrera_inv.wait();
+      barrera_impl.signal();
+    }
+    mutex.signal();
+
+    barerra_impl.wait();
+    barrera_impl.signal();
+
+    experimentar();
+
+    // Seccion critica: decrementar y comparar count
+    mutex.wait();
+    count--;
+    if (count == 0) {
+      // El singal extra que se mete al terminal de implementar
+      barrera_impl.wait();
+      barrera_inv.signal();
+    }
+    mutex.signal();
+
+    barrera_inv.wait();
+    barrera_inv.signal();
+  }
+}
+
+
+```
 
 ---
 
