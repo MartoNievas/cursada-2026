@@ -44,9 +44,6 @@ return reg
 
 ### 2.1 Veamos un posible scheduling
 
-- Dos procesos **P1** y **P2** ejecutan el mismo programa.
-- **P1** y **P2** comparten variables `ticket` y `fondo`.
-
 ![scheduling](img/scheduling.png)
 
 Podemos notar que la ejecución terminó con un resultado inválido. En caso de ejecutarse secuencialmente, los resultados posibles eran 130 para el fondo y cada usuario recibiría los tickets 6 y 7 en algún orden. Aquí lo que sucedió fue una **Condición de Carrera**.
