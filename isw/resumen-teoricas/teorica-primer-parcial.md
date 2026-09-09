@@ -147,6 +147,27 @@ El cambio es una característica esencial del software, no accidental porque:
 
 > ⚠️ No se pueden usar ciclos en nodos de más arriba del árbol de ejecución.
 
+## 9. Psuedo-variables 
+
+En smalltalk tenemos distintas psudo-variables:
+
+- **self:** Referencia al objeto receptor del mensaje enviado.
+- **thisContext:** Hace referencia al contexto de ejecucion actual, contiene a los siguientes objetos:
+    1. **El emisor** (sender): del mensaje, esto permite recorrer la pila hacia atras.
+    2. **El receptor:** El objeto que recibio el mensaje.
+    3. **El metodo compilado** es el bytecode o defincion del metodo que se está ejecutando.
+    4. **Variables locales y argumentos** el estado interno de las temporales en ese punto de computo.
+- **super:** Es el mismo objeto que self, pero tiene la implicacion sintactica de que al enviarle un mensaje, el algoritmo de **method lookup** empiza la busqueda de la implementacion del mensaje en la superclase.
+
+## 10. Igualdad vs Identidad
+
+En Smalltalk como en otros lenguajes tenemos estos dos conceptos que se difinen de la siguiente manera:
+
+- **Identidad:** Aquí se evalua si es la misma entidad, un objeto mantiene su identidad durante todo su ciclo de vida, mas bajo nivel si ocupan el mismo espacio de memoria.
+- **Igualdad:** Por otro lado con la igualdad estamos verificando si un objeto tiene la misma información o significado que otro.
+
+
+
 ---
 
 ## Resumen
