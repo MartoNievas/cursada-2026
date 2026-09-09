@@ -28,6 +28,8 @@ Ahora vamos a codificar cada máquina $M$ con *infinitas* cadenas $\langle \lang
 
 Lo importante es que dada una máquina $M$ existen infinitos $i$ tal que $M = M_i$.
 
+Seguimos teniendo que existe $U$ que computa la funcion $u (\langle i, x \rangle) = M_i(x)$, con la misma complejidad que vimos anteriormente si $M_i$ termina en $t$ pasos con entrada $x$, $U$ tarda $c \cdot t \cdot \log{t}$.
+
 **Teorema:** Si $f,g$ son construibles en tiempo y cumplen que:
 
 $$
