@@ -145,9 +145,10 @@ El cambio es una característica esencial del software, no accidental porque:
 3. **Nombrar** la nueva abstracción ← *lo más importante*
 4. Reemplazar el código repetido original por el uso de la nueva abstracción
 
+<<<<<<< Updated upstream
 > ⚠️ No se pueden usar ciclos en nodos de más arriba del árbol de ejecución.
 
-## 9. Psuedo-variables 
+## 9. Psuedo-variables
 
 En smalltalk tenemos distintas psudo-variables:
 
@@ -165,10 +166,6 @@ En Smalltalk como en otros lenguajes tenemos estos dos conceptos que se difinen 
 
 - **Identidad:** Aquí se evalua si es la misma entidad, un objeto mantiene su identidad durante todo su ciclo de vida, mas bajo nivel si ocupan el mismo espacio de memoria.
 - **Igualdad:** Por otro lado con la igualdad estamos verificando si un objeto tiene la misma información o significado que otro.
-
-
-
----
 
 ## Resumen
 

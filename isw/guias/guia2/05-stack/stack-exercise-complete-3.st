@@ -15,7 +15,7 @@ initialize
 !OOStack methodsFor: 'consulting' stamp: 'HAW 4/Sep/2026, 8:59:41 pm (UTC)'!
 !methodProperties: {}!
 isEmpty
-	
+
 	^ topNode isBase .
 	! !
 
@@ -35,7 +35,7 @@ top
 !OOStack methodsFor: 'removing' stamp: 'HAW 4/Sep/2026, 9:04:32 pm (UTC)'!
 !methodProperties: {}!
 pop
-	
+
 	| poppedValue |
 	poppedValue := self top.
 	topNode := topNode previousNode.
@@ -58,7 +58,7 @@ OOStack class
 !OOStack class methodsFor: 'error descriptions' stamp: 'NR 14/Sep/2023, 11:12:21 am (UTC)'!
 !methodProperties: {}!
 stackEmptyErrorDescription
-	
+
 	^ 'stack is empty!!!!!!'! !
 
 
@@ -190,57 +190,48 @@ Object subclass: #SentenceFinderByPrefix
 !methodProperties: {}!
 find
 	sentencesFound := OrderedCollection new.
-	self findAllSentencesThatMatchWithPrefix. 
+	self findAllSentencesThatMatchWithPrefix.
 	self rebuildOriginalStack.
 	^ sentencesFound .! !
 
 
-!SentenceFinderByPrefix methodsFor: 'private' stamp: 'MA 4/Sep/2026, 5:21:48 pm (UTC)'!
+!SentenceFinderByPrefix methodsFor: 'finding - private' stamp: 'MA 4/Sep/2026, 5:21:48 pm (UTC)'!
 !methodProperties: {}!
 addSentenceIfMatchWithPrefix: aSentence
 
 	(aSentence beginsWith: prefix) ifTrue: [sentencesFound add: aSentence ].! !
 
-!SentenceFinderByPrefix methodsFor: 'private' stamp: 'HAW 4/Sep/2026, 7:51:31 pm (UTC)'!
+!SentenceFinderByPrefix methodsFor: 'finding - private' stamp: 'MA 6/Sep/2026, 6:25:16 pm (UTC)'!
 !methodProperties: {}!
 findAllSentencesThatMatchWithPrefix
 
-	^ self popAllFrom: sentencesStack doing: [ :aSentence |
+	self popAllFrom: sentencesStack doing: [ :aSentence |
 		reverseOriginalStack push: aSentence .
 		self addSentenceIfMatchWithPrefix: aSentence.
 	].! !
 
-!SentenceFinderByPrefix methodsFor: 'private' stamp: 'MA 5/Sep/2026, 8:46:39 pm (UTC)'!
+!SentenceFinderByPrefix methodsFor: 'finding - private' stamp: 'MA 6/Sep/2026, 6:25:08 pm (UTC)'!
 !methodProperties: {}!
 popAllFrom: aStack doing: aBlock
-	
-	^ [aStack isEmpty ] whileFalse: [
+
+	[aStack isEmpty ] whileFalse: [
 		|currentValue|
 		currentValue := aStack pop.
 		aBlock value: currentValue ] .! !
 
-!SentenceFinderByPrefix methodsFor: 'private' stamp: 'HAW 4/Sep/2026, 7:51:31 pm (UTC)'!
+!SentenceFinderByPrefix methodsFor: 'finding - private' stamp: 'MA 6/Sep/2026, 6:26:08 pm (UTC)'!
 !methodProperties: {}!
 rebuildOriginalStack
 
-	^ self popAllFrom: reverseOriginalStack doing: [:poppedValue | 
+	self popAllFrom: reverseOriginalStack doing: [:poppedValue |
 		sentencesStack push: poppedValue .
 	].! !
 
 
-!SentenceFinderByPrefix methodsFor: 'asserting' stamp: 'HAW 4/Sep/2026, 10:34:27 pm (UTC)'!
-!methodProperties: {}!
-assertIsValidPrefix: aPrefix
-
-	^ (aPrefix isEmpty or: [aPrefix includes: $  ] )ifTrue: [self error: SentenceFinderByPrefix emptyOrWithSpacesPrefixErrorMessage]! !
-
-
-!SentenceFinderByPrefix methodsFor: 'initialization' stamp: 'MA 5/Sep/2026, 3:37:24 pm (UTC)'!
+!SentenceFinderByPrefix methodsFor: 'initialization' stamp: 'MA 6/Sep/2026, 6:48:40 pm (UTC)'!
 !methodProperties: {}!
 initializeWith: aPrefix and: aStack
-	
-	self assertIsValidPrefix: aPrefix .
-	
+
 	prefix := aPrefix .
 	sentencesStack := aStack .
 	reverseOriginalStack := OOStack new.! !
@@ -251,15 +242,22 @@ initializeWith: aPrefix and: aStack
 SentenceFinderByPrefix class
 	instanceVariableNames: ''!
 
-!SentenceFinderByPrefix class methodsFor: 'instance creation' stamp: 'MA 5/Sep/2026, 3:07:09 pm (UTC)'!
+!SentenceFinderByPrefix class methodsFor: 'instance creation' stamp: 'MA 6/Sep/2026, 6:48:26 pm (UTC)'!
+!methodProperties: {}!
+validatePrefix: aPrefix
+
+		^ (aPrefix isEmpty or: [aPrefix includes: $  ]) ifTrue: [self error: SentenceFinderByPrefix emptyOrWithSpacesPrefixErrorMessage].! !
+
+!SentenceFinderByPrefix class methodsFor: 'instance creation' stamp: 'MA 6/Sep/2026, 6:47:49 pm (UTC)'!
 !methodProperties: {}!
 withPrefix: aPrefix andStack: aStack
 
+	self validatePrefix: aPrefix .
 
 	^ self new initializeWith: aPrefix and: aStack .! !
 
 
-!SentenceFinderByPrefix class methodsFor: 'error description' stamp: 'MA 5/Sep/2026, 7:13:55 pm (UTC)'!
+!SentenceFinderByPrefix class methodsFor: 'error descriptions' stamp: 'MA 5/Sep/2026, 7:13:55 pm (UTC)'!
 !methodProperties: {}!
 emptyOrWithSpacesPrefixErrorMessage
 
@@ -278,9 +276,9 @@ TestCase subclass: #OOStackTest
 test01StackShouldBeEmptyWhenCreated
 
 	| stack |
-	
+
 	stack := OOStack new.
-	
+
 	self assert: stack isEmpty! !
 
 !OOStackTest methodsFor: 'test' stamp: 'NR 13/May/2020, 4:29:55 pm (UTC)'!
@@ -288,10 +286,10 @@ test01StackShouldBeEmptyWhenCreated
 test02PushAddElementsToTheStack
 
 	| stack |
-	
+
 	stack := OOStack new.
 	stack push: 'something'.
-	
+
 	self deny: stack isEmpty! !
 
 !OOStackTest methodsFor: 'test' stamp: 'NR 13/May/2020, 4:30:01 pm (UTC)'!
@@ -299,11 +297,11 @@ test02PushAddElementsToTheStack
 test03PopRemovesElementsFromTheStack
 
 	| stack |
-	
+
 	stack := OOStack new.
 	stack push: 'something'.
 	stack pop.
-	
+
 	self assert: stack isEmpty! !
 
 !OOStackTest methodsFor: 'test' stamp: 'NR 13/May/2020, 4:30:09 pm (UTC)'!
@@ -311,11 +309,11 @@ test03PopRemovesElementsFromTheStack
 test04PopReturnsLastPushedObject
 
 	| stack pushedObject |
-	
+
 	stack := OOStack new.
 	pushedObject := 'something'.
 	stack push: pushedObject.
-	
+
 	self assert: stack pop = pushedObject! !
 
 !OOStackTest methodsFor: 'test' stamp: 'NR 16/Sep/2021, 8:40:17 pm (UTC)'!
@@ -323,17 +321,17 @@ test04PopReturnsLastPushedObject
 test05StackBehavesLIFO
 
 	| stack firstPushedObject secondPushedObject |
-	
+
 	stack := OOStack new.
 	firstPushedObject := 'firstSomething'.
 	secondPushedObject := 'secondSomething'.
-	
+
 	stack push: firstPushedObject.
 	stack push: secondPushedObject.
-	
+
 	self assert: stack pop = secondPushedObject.
 	self assert: stack pop = firstPushedObject.
-	self assert: stack isEmpty 
+	self assert: stack isEmpty
 	! !
 
 !OOStackTest methodsFor: 'test' stamp: 'NR 13/May/2020, 4:30:20 pm (UTC)'!
@@ -341,12 +339,12 @@ test05StackBehavesLIFO
 test06TopReturnsLastPushedObject
 
 	| stack pushedObject |
-	
+
 	stack := OOStack new.
 	pushedObject := 'something'.
-	
+
 	stack push: pushedObject.
-	
+
 	self assert: stack top = pushedObject.
 	! !
 
@@ -355,12 +353,12 @@ test06TopReturnsLastPushedObject
 test07TopDoesNotRemoveObjectFromStack
 
 	| stack pushedObject |
-	
+
 	stack := OOStack new.
 	pushedObject := 'something'.
-	
+
 	stack push: pushedObject.
-	
+
 	self assert: stack size = 1.
 	stack top.
 	self assert: stack size = 1.
@@ -371,14 +369,14 @@ test07TopDoesNotRemoveObjectFromStack
 test08CanNotPopWhenThereAreNoObjectsInTheStack
 
 	| stack  |
-	
+
 	stack := OOStack new.
 	self
 		should: [ stack pop ]
-		raise: Error - MessageNotUnderstood 
+		raise: Error - MessageNotUnderstood
 		withExceptionDo: [ :anError |
 			self assert: anError messageText = OOStack stackEmptyErrorDescription ]
-		
+
 ! !
 
 !OOStackTest methodsFor: 'test' stamp: 'NR 13/May/2020, 4:30:31 pm (UTC)'!
@@ -386,17 +384,17 @@ test08CanNotPopWhenThereAreNoObjectsInTheStack
 test09CanNotPopWhenThereAreNoObjectsInTheStackAndTheStackHadObjects
 
 	| stack  |
-	
+
 	stack := OOStack new.
 	stack push: 'something'.
 	stack pop.
-	
+
 	self
 		should: [ stack pop ]
-		raise: Error - MessageNotUnderstood 
+		raise: Error - MessageNotUnderstood
 		withExceptionDo: [ :anError |
 			self assert: anError messageText = OOStack stackEmptyErrorDescription ]
-		
+
 ! !
 
 !OOStackTest methodsFor: 'test' stamp: 'HAW 15/Apr/2017, 1:48:44 am (UTC)'!
@@ -404,14 +402,14 @@ test09CanNotPopWhenThereAreNoObjectsInTheStackAndTheStackHadObjects
 test10CanNotTopWhenThereAreNoObjectsInTheStack
 
 	| stack  |
-	
+
 	stack := OOStack new.
 	self
 		should: [ stack top ]
-		raise: Error - MessageNotUnderstood 
+		raise: Error - MessageNotUnderstood
 		withExceptionDo: [ :anError |
 			self assert: anError messageText = OOStack stackEmptyErrorDescription ]
-		
+
 ! !
 
 
@@ -428,17 +426,17 @@ test01PrefixCannotBeEmpty
 
     self assertInvalidPrefixRaisesError: ''.! !
 
-!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'MA 5/Sep/2026, 3:01:15 pm (UTC)'!
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'MA 6/Sep/2026, 6:29:24 pm (UTC)'!
 !methodProperties: {}!
 test02PrefixCannotBeASingleSpace
 
-    self assertInvalidPrefixRaisesError: ' '.! !
+    self assertInvalidPrefixRaisesError: 'Hola '.! !
 
-!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'MA 5/Sep/2026, 3:01:15 pm (UTC)'!
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'MA 6/Sep/2026, 6:29:31 pm (UTC)'!
 !methodProperties: {}!
 test03PrefixCannotBeMultipleSpaces
 
-    self assertInvalidPrefixRaisesError: '      '.! !
+    self assertInvalidPrefixRaisesError: 'Hola      '.! !
 
 !SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'MA 5/Sep/2026, 3:29:04 pm (UTC)'!
 !methodProperties: {}!
@@ -496,9 +494,9 @@ test06FindOnEmptyStackReturnsEmptyCollection
 
 	| finder foundSetences |
 	finder := SentenceFinderByPrefix withPrefix: 'Wint' andStack: OOStack new.
-	
+
 	foundSetences := finder find.
-	
+
 	self assert: foundSetences isEmpty .! !
 
 !SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'MA 5/Sep/2026, 3:12:00 pm (UTC)'!
@@ -511,13 +509,13 @@ test07FindReturnsEmptyCollectionWhenNoSentenceMatchesPrefix
 	stack push: 'Andy'.
 	stack push: 'Nico'.
 	stack push: 'Hernan'.
-	
+
 	sentenceFinder := SentenceFinderByPrefix withPrefix: 'Juan' andStack: stack.
-	
+
 	foundSentences := sentenceFinder find.
-	
+
 	self assert: foundSentences isEmpty .
-	
+
 	! !
 
 !SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'MA 5/Sep/2026, 3:31:31 pm (UTC)'!
@@ -531,14 +529,14 @@ test08FindWithAllSentencesMatchingReturnsAllSentences
 	stack push: 'Wish You Were Here'.
 
 	sentenceFinder := SentenceFinderByPrefix withPrefix: 'W' andStack: stack.
-	
+
 	foundSentences := sentenceFinder find.
-	
+
 	expectedSentences := OrderedCollection
 	with: 'Wish You Were Here'
 	with: 'Watermelon'
 	with: 'Wadu Wadu'.
-	
+
 	self assert: foundSentences size equals: 3.
 	self assert: foundSentences equals: expectedSentences .
 
@@ -554,14 +552,14 @@ test09FindIsCaseSensitive
 	| stack sentenceFinder foundSentences |
 	stack := OOStack new.
 	stack push: 'winter'.
-	
+
 	sentenceFinder := SentenceFinderByPrefix withPrefix: 'Wint' andStack: stack .
-	
+
 	foundSentences := sentenceFinder find.
-	
+
 	self assert: foundSentences isEmpty .
 	self assertStack: stack popsInOrder: (OrderedCollection with: 'winter')
-	
+
 	! !
 
 !SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'MA 5/Sep/2026, 3:36:00 pm (UTC)'!
@@ -630,5 +628,5 @@ assertStack: aStack popsInOrder: anOrderedCollection
 	].
 	self assert: aStack isEmpty .
 
-	 
+
 	! !
