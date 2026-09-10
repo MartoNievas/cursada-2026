@@ -1,10 +1,10 @@
-# Práctica 4: Drivers y Administración de E/S
+# Práctica 5: Drivers y Administración de E/S
 
 **Sistemas Operativos — FCEyN, Universidad de Buenos Aires**
 
 ---
 
-> Enunciado: [PDF](p4.pdf)
+> Enunciado: [PDF](p5.pdf)
 
 ---
 

@@ -65,9 +65,10 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | [Práctica 1 — Procesos y API del SO](sistemas-operativos/guias/guia1-procesos/guia1.md)                                             | Procesos, comunicación entre procesos y API del SO.                                 |
 | [Práctica 2 — Scheduling](sistemas-operativos/guias/guia2-scheduling/guia2-scheduling.md)                                           | Politicas, tipos y algortimos de scheduling.                                        |
 | [Práctica 3 — Sincronizacion](sistemas-operativos/guias/guia3-sincronizacion/guia3-sincronizacion.md)                               | Sincronizacion entre procesos, semaforos.                                           |
-| [Práctica 4 — Drivers y Administración de E/S](sistemas-operativos/guias/guia4-drivers/guia4-drivers.md)                            | Administración de la Entrada/Salida y creación de drivers.                          |
-| [Practica 5 — Sistema de Archivos](sistemas-operativos/guias/guia5-sistema-archivos/guia5-sistema-de-archivos.md)                   | Análisis de los FS ext2 y FAT.                                                      |
-| [Practica 6 — Administración de memoria](sistemas-operativos/guias/guia6-administracion-memoria/guia6-administracion-de-memoria.md) | Sistema de paginación, políticas de remplazo y análisis de algoritmos de remplazo . |
+| [Practica 4 — Administración de memoria](sistemas-operativos/guias/guia4-administracion-memoria/guia4-administracion-de-memoria.md) | Sistema de paginación, políticas de remplazo y análisis de algoritmos de remplazo . |
+| [Práctica 5 — Drivers y Administración de E/S](sistemas-operativos/guias/guia5-drivers/guia5-drivers.md)                            | Administración de la Entrada/Salida y creación de drivers.                          |
+| [Practica 6 — Sistema de Archivos](sistemas-operativos/guias/guia6-sistema-archivos/guia6-sistema-de-archivos.md)                   | Análisis de los FS ext2 y FAT.                                                      |
+
 ### Resúmenes
 
 | Nombre | Descripción |

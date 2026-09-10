@@ -1,10 +1,10 @@
-# Práctica 6: Administración de memoria
+# Práctica 4: Administración de memoria
 
 **Sistemas Operativos — FCEyN, Universidad de Buenos Aires**
 
 ---
 
-> Enunciado: [PDF](p6.pdf)
+> Enunciado: [PDF](p4.pdf)
 
 ---
 

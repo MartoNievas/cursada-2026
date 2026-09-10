@@ -1,10 +1,10 @@
-# Práctica 5: Sistema de archivos
+# Práctica 6: Sistema de archivos
 
 **Sistemas Operativos — FCEyN, Universidad de Buenos Aires**
 
 ---
 
-> Enunciado: [PDF](p5.pdf)
+> Enunciado: [PDF](p6.pdf)
 
 ---
 
