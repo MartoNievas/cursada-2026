@@ -270,6 +270,18 @@ Es el que mejor funciona en la práctica, aunque es costoso de implementar. La i
 
 > **Nota:** En la práctica, los **SO** modernos suelen usar variantes del algoritmo del reloj (FIFO mejorado) por su buen balance entre costo de implementación y rendimiento. LRU puro rara vez se implementa directamente en hardware.
 
+### 7.7 Aspectos Complementarios de Reemplazo
+
+Además del algoritmo seleccionado (como LRU o Reloj), el sistema operativo debe considerar diversas políticas y tipos de páginas al gestionar el reemplazo de memoria:
+
+* **Ámbito de Reemplazo (Local vs. Global):** Al necesitar liberar un marco de memoria, el sistema debe decidir si desaloja únicamente páginas pertenecientes al mismo proceso que generó el *page fault* (reemplazo local) o si puede tomar páginas de cualquier otro proceso en ejecución (reemplazo global).
+
+* **Carga por Adelantado (*Prepaging*):** En lugar de esperar a que cada acceso provoque un *page fault* individual, el sistema operativo carga páginas contiguas por adelantado. Esta estrategia aprovecha la **localidad de referencia**, aprovechando que los programas suelen acceder a direcciones de memoria cercanas entre sí.
+
+* **Páginas Especiales y No *Swappeables*:**
+  * **Páginas de solo lectura:** Son más simples y rápidas de desalojar porque no requieren escribirse de nuevo en el disco al estar sin modificaciones.
+  * **Páginas no *swappeables* (*Pinning*):** Existen páginas bloqueadas en RAM por motivos de seguridad o porque son utilizadas directamente por operaciones de entrada/salida de hardware, impidiendo que sean enviadas a disco.
+
 ---
 
 ## 8. Thrashing
@@ -280,11 +292,37 @@ Es una situación no deseable, ya que el sistema se la pasa haciendo mantenimien
 
 ---
 
-## 9. Protección y Reubicación
+## 9. Protecció y Reubicación
 
-Quedan por resolver los problemas de **protección** y **reubicación** planteados al principio.
+Para resolver los problemas de **protección** (aislamiento entre procesos) y **reubicación** (capacidad de mover y ejecutar un programa en cualquier dirección de memoria física), el sistema operativo y la arquitectura de hardware emplean distintos mecanismos.
 
-Para la protección, la solución es sencilla: se le asigna a cada proceso su propia tabla de páginas. Como no hay manera de que un proceso acceda a la tabla de páginas de otro, cada uno queda efectivamente aislado con su propio espacio de memoria. Cada uno de estos espacios se denomina **segmento**.
+### 9.1 Protección mediante Tabla de Páginas
+El mecanismo básico para asegurar la protección consiste en asignar a cada proceso su propia tabla de páginas. Al no existir traducciones hacia marcos físicos pertenecientes a otros procesos, cada programa queda aislado en su propia memoria privada.
+
+### 9.2 Concepto y Propiedades de la Segmentación
+A diferencia de las páginas (que son bloques invisibles para el programador), los **segmentos son bloques de tamaño variable y visibles en lenguaje ensamblador**.
+* **Espacios de direccionamiento independientes:** Permite dividir un programa en múltiples segmentos lógicos (como código `CS`, datos `DS` y *stack*).
+* **Crecimiento dinámico:** Cada segmento puede crecer de forma independiente sin necesidad de reubicar el resto del programa.
+* **Bibliotecas compartidas (*shared libraries*):** Facilita que distintas bibliotecas compartidas residan en su propio segmento con sus propios permisos.
+
+### 9.3 Mecanismo de Hardware y Protección (Arquitectura Intel/Pentium)
+En arquitecturas como Intel x86/Pentium, el esquema de segmentación utiliza estructuras y registros dedicados:
+* **Tablas de Descriptores:** Se utiliza una tabla local por proceso (**LDT**, *Local Descriptor Table*) para sus segmentos privados y una tabla global (**GDT**, *Global Descriptor Table*) compartida por el sistema.
+* **Registros de Segmento:** Los registros `CS` (código) y `DS` (datos) almacenan un índice de 16 bits, un bit de ámbito (local/global) y 2 bits de protección que definen los permisos de acceso.
+* **Excepciones de Hardware:** Si un proceso intenta modificar indebidamente estos registros o acceder fuera de sus permisos, la CPU genera una interrupción por trampa (*trap*) para que el sistema operativo penalice o detenga la ejecución.
+
+### 9.4 Segmentación Paginada
+Dado que la segmentación pura vuelve a sufrir de **fragmentación externa** y dificulta el *swapping* por la variabilidad en los tamaños de los bloques, la alternativa habitual consiste en **combinar segmentación con paginación**.
+
+### 9.5 Comparación: Segmentación vs. Paginación
+| Criterio | Paginación | Segmentación |
+| :--- | :--- | :--- |
+| **Visibilidad** | Invisible para el programador/assembler | Visible para el programador/assembler |
+| **Tamaño de bloque** | Tamaño fijo (ej. 4 KB) | Tamaño variable |
+| **Espacio de direcciones** | Un único espacio lineal continuo | Múltiples espacios de direccionamiento lógicos |
+| **Impacto en fragmentación** | Genera fragmentación interna | La segmentación pura genera fragmentación externa |
+| **Objetivo principal** | Virtualización transparente de memoria física | Organización lógica del programa y aislamiento/compartición |
+
 
 ---
 
@@ -297,12 +335,54 @@ Cuando un proceso padre crea un proceso hijo, en lugar de duplicar toda la memor
 **¿Cómo funciona?**
 
 1. **Mapeo compartido:** Inicialmente, las tablas de páginas del padre y del hijo apuntan a los mismos frames en memoria física.
+
 2. **Solo lectura:** El SO marca todas esas páginas compartidas como de solo lectura (*read-only*) en la MMU.
+
 3. **La excepción:** Si cualquiera de los dos procesos intenta escribir en una de esas páginas, el hardware detecta la violación de escritura y dispara un **page fault**.
+
 4. **La copia real:** El SO intercepta ese fallo, se da cuenta de que es una página CoW y recién ahí:
    - Crea una copia física del frame.
    - Actualiza la tabla de páginas del proceso que intentó escribir para que apunte a la nueva copia.
    - Marca la página como lectura/escritura.
+
+---
+
+## 11. API de administración de memoria en POSIX / C
+
+En está sección vamos a analizar como se administra la memoria en sistemas **POSIX**, vamos a empezar por el **heap**:
+
+En está estructura tenemos maneras de administrar memoria de manera portable y no portable:
+
+- **No portable:**
+  Aqui tenemos dos funciones que vienen incluidas en `unistd.h` las cuales son:
+
+  - `int brk(void* ptr)`
+
+  - `void *sbrk(intptr_t increment)`
+
+- **Portable:**
+
+  Por otro lado aca tenemos las funciones que son parte de la `libc` que son las siguientes:
+  
+  - `void* malloc(size_t size);`
+
+  - `void free(void* ptr);`
+
+  - `void* calloc(size_t nmeb, size_t size);`
+
+  - `void* realloc(void* ptr, size_t size)`
+
+Por otro lado tenemos formas de administrar el stack, son usadas tipicamente por el compilador como por ejemplo **gcc** (GNU C COMPILER) la funcion viene incluida en **alloca.h** y se administra mediante la función `void* alloca(size_t size);`
+
+Por ultimo tenemos lo que se conoce como **File Mapping** que consiste basicmanete en mapear un archivo directamente a memoria.
+
+Su uso tipico es para segmentos de programa, bibliotecas compartidas, etc.
+
+Para poder operar de esta maneara tenemos las funciones:
+
+- `void* mmap(void* addr, size_t length, int prot, int flags, int fd, off_t offset)`.
+
+- `int munmap(void* addr, size_t length)`
 
 ---
 
