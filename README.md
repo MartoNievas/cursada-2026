@@ -44,8 +44,8 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | [Polymorphic Hierarchy](isw/papers-resumenes/Polymorphic-Hierarchy.md)                                                                    | Resumen del paper Polymorphic Hierarchy de Bobby Woolf.                                                 |
 | [A Simple Technique for Handling Multiple Polymorphism](isw/papers-resumenes/A-Simple-Technique-for-Handling-Multiple-Polymorphism.md) | Resumen del paper A Simple Technique for Handling Multiple Polymorphism.                              |
 | [Null Pattern Object](isw/papers-resumenes/Null-Pattern-Object.md) | Resumen del paper Null Pattern Object de Bobby Woolf.                              |
-| [Method Object](isw/papers-resumenes/Method-Object.md) | Resumen del capitulo 3 del libro Smalltalk Best Practic Patterns de Kent Beck.                              |
-| [Object Recursion](isw/papers-resumenes/Object-Recurison.md) | Resumen del paper Object Recursion de Bobby Woolf.                              |
+| [Method Object](isw/papers-resumenes/Object-Recursion.md) | Resumen del capitulo 3 del libro Smalltalk Best Practic Patterns de Kent Beck.                              |
+| [Object Recursion](isw/papers-resumenes/Object-Recursion.md) | Resumen del paper Object Recursion de Bobby Woolf.                              |
 
 
 
@@ -83,10 +83,10 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | [Teorica 2 — IPC](sistemas-operativos/teoricas/teo2-ipc.md) | InterProcess Comunication, Sockets, Pipes, etc.  |
 | [Teorica 3 — Scheduling](sistemas-operativos/teoricas/teo3-scheduling.md) | Politicas, algortimos y tipos de schedulers. |
 | [Teorica 4 — Sincronizacion entre procesos p1](sistemas-operativos/teoricas/teo4-sincronizacion-p1.md)|Semaforos, Condiciones de carrera, Deadlocks y Sincronizacion en tre procesos. |
-| [Teorica 5 — Sincronizacion entre procesos p2](sistemas-operativos/teoricas/teo5-sincronizacion-p2.md)|Ejemplos practicos.|
+| [Teorica 4 — Sincronizacion entre procesos p2](sistemas-operativos/teoricas/teo4-sincronizacion-p2.md)|Ejemplos practicos.|
+| [Teorica 5 — Administración de memoria](sistemas-operativos/teoricas/teo5-memoria.md)|Organización de la memoria, segmentación, paginación, algoritmos de paginación, etc. |
 | [Teorica 6 — Entrada/Salida — Drivers](sistemas-operativos/teoricas/teo6-drivers.md)|Organización de la memoria, segmentación, paginación, algoritmos de paginación, etc. |
-| [Teorica 7 — Administración de memoria](sistemas-operativos/teoricas/teo7-memoria.md)|Organización de la memoria, segmentación, paginación, algoritmos de paginación, etc. |
-| [Teorica 8 — Sistema de archivos](sistemas-operativos/teoricas/teo8-sistema-de-archivos.md)| Sistema de archivos de un **SO**. |
+| [Teorica 7 — Sistema de archivos](sistemas-operativos/teoricas/teo7-sistema-de-archivos.md)| Sistema de archivos de un **SO**. |
 
 ### Parciales
 
