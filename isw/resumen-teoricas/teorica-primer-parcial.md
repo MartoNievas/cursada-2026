@@ -100,7 +100,7 @@ El cambio es una característica esencial del software, no accidental porque:
 
 ### 6.2 H2 — Maximizar la cohesión funcional
 - Cuanto menos cosas hace un objeto, más cohesivo es
-- Hace más, hace bien
+- Hace más, hace bien.
 
 ### 6.3 H3 — No romper el encapsulamiento
 - Evitar getters innecesarios
@@ -109,10 +109,16 @@ El cambio es una característica esencial del software, no accidental porque:
 ### 6.4 H4 — Reglas de creación de objetos
 
 - Siempre crear objetos **completos** (ej: una fecha no puede definirse parcialmente)
-- Un único método de creación de instancia que use `new`, el resto se implementa en base a él
-- Solo crear objetos **válidos** (verificar en el momento de creación)
+- Un único mensaje de creación de instancia que use `new`, el resto se implementa en base a él
+- Un único mensaje de inicialización de la memoria de la instancia, es decir un único `initialize`
+- Solo crear objetos **válidos** (verificar en el momento de creación, antes de hacer new es decir antes de asignar memoria)
 - Favorecer objetos **inmutables**
 - Evitar `nil` / `null`
+
+### 6.5 H5 — Modelos que enseñan
+
+Los mismos modelos que creamos deberian enseñarnos como se utilizan.
+
 
 ---
 
@@ -145,8 +151,7 @@ El cambio es una característica esencial del software, no accidental porque:
 3. **Nombrar** la nueva abstracción ← *lo más importante*
 4. Reemplazar el código repetido original por el uso de la nueva abstracción
 
-<<<<<<< Updated upstream
-> ⚠️ No se pueden usar ciclos en nodos de más arriba del árbol de ejecución.
+---
 
 ## 9. Psuedo-variables
 
@@ -160,12 +165,31 @@ En smalltalk tenemos distintas psudo-variables:
     4. **Variables locales y argumentos** el estado interno de las temporales en ese punto de computo.
 - **super:** Es el mismo objeto que self, pero tiene la implicacion sintactica de que al enviarle un mensaje, el algoritmo de **method lookup** empiza la busqueda de la implementacion del mensaje en la superclase.
 
+---
+
 ## 10. Igualdad vs Identidad
 
 En Smalltalk como en otros lenguajes tenemos estos dos conceptos que se difinen de la siguiente manera:
 
 - **Identidad:** Aquí se evalua si es la misma entidad, un objeto mantiene su identidad durante todo su ciclo de vida, mas bajo nivel si ocupan el mismo espacio de memoria.
 - **Igualdad:** Por otro lado con la igualdad estamos verificando si un objeto tiene la misma información o significado que otro.
+
+---
+
+## 11. Abstracción — Eliminar ifs Utilizando Polimorficos
+
+Al igual que con código repetido tenemos un algoritmo que podemos seguir para remplazar los ifs por envio de mensajes polimorficos el cual es el siguente:
+
+1. Crear un jerarquia polimórfica con una abstracción para cada condición del if (opcional)
+2. Mover el cuerpo del if a cada abstracción correspondiente utilizando el mismo mensaje (este mensaje es polimorifco con respecto a la nueva abstraccion)
+3. Nombrar las abstracciones del **paso 1**
+4. Nombrar el mensaje del **paso 2**
+5. Reemplazar ifs por envío de mensaje polimórfico
+6. Buscar objeto polimórfico (opcional)
+
+Aclaración sobre la "abstracción" que se menciona, no sabemos donde va realmente hay que detenerse a reflexionar sobre lo que representa la misma, podria ser una subclase de donde se está trabajando o podria ser una jerarquia polimórfica completamente nueva.
+
+---
 
 ## Resumen
 
