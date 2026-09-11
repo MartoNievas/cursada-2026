@@ -117,6 +117,7 @@ El enfoque ha demostrado su eficacia en varias situaciones más allá del ejempl
 
 ---
 
-## Referencias
+## Analogia
 
-[1] *CommonLoops: Merging Lisp and Object-Oriented Programming*, Daniel Bobrow et al., Proceedings of OOPSLA '86, September 1986, Portland Oregon.
+La analogia que se me ocurrio fue representar a la resolución del multiple polimorismo, como resolver un sistema de ecuaciones/despejas incognitas, donde en cada mensaje enviado, se va despejando el tipo polimorifco del receptor del mensaje inicial y asi con los sucesores.
+Para eso se debe crear una familia de mensajes polimorficos que esten presente en todas las posibles variables polimorficas que se tengas.
