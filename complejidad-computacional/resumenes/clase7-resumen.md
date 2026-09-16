@@ -12,7 +12,7 @@
 
 ### 1.2 Espacio en una maquina no-deterministica
 
-**Definicion:** Identica a la anterior, con la diferencia de que una maquina no-deterministica tiene multiples computos. El espacio usado es el maximo sobre todos ellos.
+**Definicion:** Identica a la anterior, con la diferencia de que una maquina no-deterministica tiene multiples computos. El espacio usado es el la suma de todos los puntos por donde paso el cabezal en la cinta de trabajo y salida.
 
 ### 1.3 Espacio usado en una maquina
 
@@ -20,6 +20,8 @@
 
 - **Usa espacio** $S(n)$ si para toda entrada $x$, el espacio que usa $M$ con entrada $x$ es a lo sumo $S(|x|)$.
 - **Usa espacio** $O(S(n))$ si existe una constante $c$ tal que para todo $x$, salvo finitos, $M$ con entrada $x$ usa espacio $c \cdot S(|x|)$.
+
+**Definición:** Una función es **computable es espacio** $S(n)$, $O(S(n))$ si existe una máquina determinística que computa $f$ y usa espacio $S(n)$, $O(S(n))$.
 
 ### 1.4 SPACE($S(n)$) y NSPACE($S(n)$)
 
