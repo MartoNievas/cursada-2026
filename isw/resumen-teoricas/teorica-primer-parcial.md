@@ -119,6 +119,12 @@ El cambio es una característica esencial del software, no accidental porque:
 
 Los mismos modelos que creamos deberian enseñarnos como se utilizan.
 
+### 6.6 H6 — Utilizar Metaforas
+
+Hay que intentar **usar una buena metafora** para poder entender el dominio del problema en base a otro que capaz comprendemos mejor.
+La metafora debe cumplir:
+* No hay computadoras
+* Tener en cuenta el **rol** que cumple cada persona.
 
 ---
 
@@ -189,6 +195,10 @@ Al igual que con código repetido tenemos un algoritmo que podemos seguir para r
 
 Aclaración sobre la "abstracción" que se menciona, no sabemos donde va realmente hay que detenerse a reflexionar sobre lo que representa la misma, podria ser una subclase de donde se está trabajando o podria ser una jerarquia polimórfica completamente nueva.
 
+Cuando es cuestionable remplazar ifs por polimofirmo:
+
+* Cuando estoy en las fronteras del sistema.
+* Cuando el receiver y el sender de la condición del if no pertenecen al mismo dominio de problema
 ---
 
 ## Resumen
