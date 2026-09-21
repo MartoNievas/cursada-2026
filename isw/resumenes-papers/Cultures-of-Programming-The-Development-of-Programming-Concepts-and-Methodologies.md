@@ -44,11 +44,11 @@ La Introducción profundiza en las interacciones concretas de estas culturas a t
   * Para **Diógenes (*Hacker*)**, es hacer que la máquina real ejecute lo que uno quiere mediante la manipulación práctica de *bits*.
 * **Logros Paradigmáticos en Disputa:**
   * **Arquímedes (Ingeniería)** celebra que los grandes sistemas a nuestro alrededor funcionen de forma confiable, destacando el movimiento *Agile* como un gran avance que acerca a desarrolladores y gente de negocios.
-  * **Sócrates** critica a *Agile* por subordinar la programación a intereses comerciales y funcionar como un mecanismo de control administrativo. Señala la falta de diversidad al notar que los 17 creadores del Manifiesto Agile son hombres.
-  * **Jenofonte** destaca el software de guía del **Apollo** (liderado por Margaret Hamilton) como un éxito de especificación de requerimientos rigurosos y pruebas exhaustivas.
-  * **Pitágoras** argumenta que incluso el Apollo tenía *bugs* (los cuales la tripulación tuvo que evadir manualmente). Él propone la **verificación formal** (*formal verification*), citando el microkernel **sel4** como un software provisto de pruebas matemáticas de corrección. Su logro paradigmático es el lenguaje **Algol**, por introducir la idea del programa como entidad matemática analizable.
-  * **Diógenes** prefiere **UNIX** y el lenguaje **C** debido a su principio de dar acceso total al *hardware* y la libre comunicación con el sistema.
-  * **Sócrates** prefiere usos más artísticos y educativos de la programación, como el sistema gráfico **Sketchpad**, el lenguaje **Logo**, o el *live coding* musical en eventos **Algorave** usando herramientas como **Sonic Pi**.
+  * **Sócrates (Humanística)** critica a *Agile* por subordinar la programación a intereses comerciales y funcionar como un mecanismo de control administrativo. Señala la falta de diversidad al notar que los 17 creadores del Manifiesto Agile son hombres.
+  * **Jenofonte (*Managerial*)** destaca el software de guía del **Apollo** (liderado por Margaret Hamilton) como un éxito de especificación de requerimientos rigurosos y pruebas exhaustivas.
+  * **Pitágoras (Matemática)** argumenta que incluso el Apollo tenía *bugs* (los cuales la tripulación tuvo que evadir manualmente). Él propone la **verificación formal** (*formal verification*), citando el microkernel **sel4** como un software provisto de pruebas matemáticas de corrección. Su logro paradigmático es el lenguaje **Algol**, por introducir la idea del programa como entidad matemática analizable.
+  * **Diógenes (*Hacker*)** prefiere **UNIX** y el lenguaje **C** debido a su principio de dar acceso total al *hardware* y la libre comunicación con el sistema.
+  * **Sócrates (Humanística)** prefiere usos más artísticos y educativos de la programación, como el sistema gráfico **Sketchpad**, el lenguaje **Logo**, o el *live coding* musical en eventos **Algorave** usando herramientas como **Sonic Pi**.
 
 * **El Debate sobre el Sesgo Algorítmico (Amazon AI Recruitment Tool):**
   * Ante la revelación de que el software secreto de reclutamiento de Amazon discriminaba sistemáticamente los currículums de mujeres, las culturas difieren en su diagnóstico:
