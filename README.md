@@ -49,7 +49,7 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 
 
 
-### Parciales
+### Primeros parciales
 
 | Fecha | Nombre |
 | -------------- | --------------- |
@@ -58,7 +58,10 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | [2024-2C](isw/primeros-parciales/2024-2C) | Aventura. |
 | [2024-1C](isw/primeros-parciales/2024-1C) | Perforadora. |
 
----
+### Segundos parciales
+
+| Fecha | Nombre |
+| -------------- | --------------- |
 
 ## Sistemas Operativos
 
@@ -87,10 +90,6 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | [Teorica 5 — Administración de memoria](sistemas-operativos/teoricas/teo5-memoria.md)|Organización de la memoria, segmentación, paginación, algoritmos de paginación, etc. |
 | [Teorica 6 — Entrada/Salida — Drivers](sistemas-operativos/teoricas/teo6-drivers.md)|Organización de la memoria, segmentación, paginación, algoritmos de paginación, etc. |
 | [Teorica 7 — Sistema de archivos](sistemas-operativos/teoricas/teo7-sistema-de-archivos.md)| Sistema de archivos de un **SO**. |
-
-### Parciales
-
-_Por el momento no hay material cargado._
 
 ### Talleres
 
