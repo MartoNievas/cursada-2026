@@ -1,112 +1,74 @@
-# Polymorphic Hierarchy
-
-## Introducción
-
-**Bobby Woolf** nos comenta en este paper que al menos la mitad de los métodos que escribe son código repetido, como *getters*, *setters*, métodos de inicialización, o métodos que ya fueron implementados en la superclase del objeto.
-
-Además comenta que la reimplementación de estos métodos es la clave del polimorfismo y que, usada de manera correcta, los métodos polimórficos conducen a clases polimórficas y, en última instancia, a **jerarquías polimórficas**.
+# Resumen: Principles of the Polymorphic Hierarchy
+**Autor:** Bobby Woolf (1996)
+**Traducción y Referencias:** Leveroni - Algoritmos y Programación III (FIUBA)
 
 ---
 
-## Reutilizando descripciones de métodos
+## 1. Introducción y Motivación
+En el desarrollo orientado a objetos, una fracción considerable del código escrito (a menudo cerca de la mitad) no corresponde a lógica de dominio completamente inédita, sino a métodos repetitivos como *getters*, *setters*, inicializadores o reimplementaciones de métodos ya definidos en superclases.
 
-Woolf usa el método `printOn:` como ejemplo para ilustrar cómo subimplementa métodos de superclases.
-
-En lugar de reescribir comentarios extensos, simplemente documenta su implementación con algo como *"Lee la implementación de la superclase"*, porque su método básicamente hacía lo mismo que el de la superclase.
-
-Además señala que su implementación está en el mismo protocolo de métodos (`printing`) que el original, lo que refuerza la idea de que ambos métodos tienen el mismo propósito.
+El autor plantea que la **reimplementación consciente y consistente de estos métodos es la clave fundamental del polimorfismo**. Cuando los métodos polimórficos se organizan adecuadamente, conducen a clases polimórficas y, en última instancia, a **jerarquías polimórficas** sólidas, flexibles y reusables.
 
 ---
 
-## Una implementación definitoria
-
-Cuando el autor implementa un método, solo existe una descripción: la del método que **define** la jerarquía. Este suele tener una implementación muy simple (como retornar `self` o lanzar `subclassResponsibility`), pero es quien documenta el propósito del método para toda la jerarquía. Por lo tanto, cualquier implementación en las subclases debe esencialmente hacer lo mismo, aunque sus implementaciones concretas sean distintas.
-
-En Smalltalk se aplica este principio con la costumbre de hacer que un método simplemente llame a otro con casi el mismo nombre, salvo por parámetros extra. Por ejemplo:
-
-- `Object>>changed` envía a `changed:`
-- `Object>>changed:` envía a `changed:with:`
-
-No es necesario describir el propósito de los tres métodos; con documentarlo en `changed` es suficiente.
+## 2. Documentación y Reutilización de Descripciones
+Para mantener la coherencia en una jerarquía sin duplicar documentación ni esfuerzo:
+* **Uso del comentario *"Ver implementación en superclase"*:** En lugar de reescribir descripciones extensas en las subclases, los métodos que reimplementan un mensaje con el mismo propósito deben remitir a la definición en la superclase.
+* **Mismo protocolo de métodos:** Los métodos que reimplementan un mensaje de la superclase deben ubicarse en el mismo protocolo (por ejemplo, el protocolo `printing` para el mensaje `printOn:`), lo que refuerza visualmente que comparten la misma intención.
+* **Implementación definitoria:** En toda la jerarquía existe una única descripción primaria: la del método en la superclase que **define** la interfaz. Aunque la implementación en la superclase sea abstracta o elemental (como devolver `self` o lanzar `subclassResponsibility`), es la encargada de documentar el propósito del mensaje para todas las subclases.
+* **Mensajes delegados o auxiliares:** En Smalltalk es habitual que mensajes con menos argumentos deleguen en versiones más completas (ej. `changed` envía a `changed:`, y este a `changed:with:`). Basta con documentar el propósito en el método principal con más parámetros (`changed:with:`) y remitir los demás a él.
 
 ---
 
-## Anatomía de la descripción
-
-¿Qué ponemos en la descripción de un método? El autor da tres lineamientos:
-
-1. **Evitar reformular el nombre del método.** Por ejemplo, un método llamado `codigoDeProducto` cuya descripción sea *"Devuelve el código del producto"* es redundante. Un nombre adecuado para esa descripción podría ser simplemente `getter`.
-
-2. **Describir el método en su totalidad**, no comentar línea por línea. En su lugar, se extrae el código complejo a un nuevo método con un nombre descriptivo, y los comentarios entre líneas se convierten en la descripción de ese nuevo método.
-
-3. **Dividir la descripción en dos partes** (ver sección siguiente).
+## 3. Anatomía de la Descripción de un Método
+Woolf establece tres lineamientos principales para la redacción de descripciones:
+1. **Evitar la redundancia con el nombre:** Un método llamado `codigoDeProducto` cuya descripción sea *"Devuelve el código del producto"* resulta innecesario. En su lugar, se utilizan etiquetas directas como `Getter` o `Setter`.
+2. **Describir el método en su totalidad:** Debe evitarse comentar línea por línea. Cuando un bloque de código resulta complejo o confuso, se debe refactorizar extrayéndolo a un nuevo método con un nombre descriptivo; la explicación pasa a ser la descripción del nuevo método.
+3. **División estricta entre Propósito e Implementación:**
+   * **Propósito (el *qué*):** Explica qué efecto o resultado produce el mensaje. **Es reusable** y debe ser compartido por todas las implementaciones del mensaje en la jerarquía.
+   * **Detalles de Implementación (el *cómo*):** Es opcional y explica justificativos técnicos o complejidades internas del código. **No es reusable**; si dos subclases comparten detalles de implementación, existe código duplicado que debería abstraerse.
 
 ---
 
-## Propósito e implementación
+## 4. Definición Estricta de Polimorfismo
+El paper enfatiza que **compartir el mismo nombre de método no implica polimorfismo**.
 
-El autor diferencia claramente dos partes en la descripción de un método:
-
-- **Propósito:** Explica qué hace el método. Se expresa como: *"Si enviás este mensaje a este objeto, esto es lo que ocurrirá"*. El propósito **sí es reutilizable**; de hecho, lo ideal es que todas las implementaciones de un método dentro de la misma jerarquía compartan el mismo propósito.
-
-- **Implementación:** Es opcional. Solo se documenta ante código complejo o poco claro; de lo contrario, es preferible mejorar el código en su lugar. La implementación **no debería ser reutilizable**: si lo fuera, estaríamos ante código repetido que podría abstraerse en un nuevo método.
-
----
-
-## Reutilización de descripción para el polimorfismo
-
-Al principio, Woolf veía las clases como unidades aisladas y elegía superclases solo para heredar funcionalidad. Con el tiempo entendió que las clases deben pensarse en términos de jerarquías.
-
-Como ejemplo, considera la jerarquía `Collection`. Una colección puede aceptar peticiones para añadir y eliminar elementos, iterar, etc. Pero `Collection` no sabe *cómo* resolver estas peticiones; eso depende de la implementación concreta (árbol, array, set, etc.).
-
-Además menciona que cuando se crea una subclase, la superclase debería hacer casi exactamente lo mismo que esa nueva subclase. La subclase puede agregar comportamientos extra, pero el **propósito debe ser el mismo**.
+* **Contraste explícito (`value` y `value:`):**
+  En la clase `ValueModel`, los mensajes `value` y `value:` funcionan como *getter* y *setter* del valor contenido. En cambio, en `BlockClosure` (bloques), los mismos mensajes se utilizan para ejecutar/evaluar el bloque. Aunque tienen nombres idénticos, sus propósitos son completamente distintos, por lo que **no son polimórficos**.
+* **Requisitos para el Polimorfismo Real:** Dos métodos son polimórficos solo si comparten:
+  1. El mismo **propósito** o comportamiento abstracto.
+  2. Los mismos **tipos de parámetros**.
+  3. Los mismos **efectos secundarios** sobre el estado del objeto.
+  4. El mismo **tipo de retorno**.
+* **Interfaz Base:** Para que dos o más clases sean polimórficas entre sí, deben compartir una **interfaz base polimórfica** (un conjunto común de mensajes con el mismo propósito), permitiendo que los objetos colaboradores las utilicen de manera intercambiable.
 
 ---
 
-## El propósito es el polimorfismo
+## 5. Resolución de Problemas de Diseño
+Al estructurar jerarquías polimórficas pueden surgir dos obstáculos comunes:
 
-Woolf menciona que cuando todas las implementaciones en una jerarquía comparten el mismo propósito, son **polimórficas**. Y cuando todos los métodos que hereda la subclase se reimplementan de manera polimórfica, la jerarquía en su conjunto también resulta polimórfica, porque todas sus instancias se comportan de la misma forma, es decir, cumplen el mismo propósito.
-
-Como ejemplo propone el objeto `Empleado`, que mantiene una lista `cosasQueHacer`. No sabemos cómo se ordenará la lista, pero sí sabemos que usará una `Collection` (puede ser `OrderedCollection` o `SortedCollection`). Sin saber cuál exactamente, ya sabemos que responderá a mensajes como `add:`, `remove:`, etc.
-
----
-
-## Definiendo polimorfismo
-
-Para que dos métodos sean polimórficos no solo deben tener el mismo nombre: también deben comportarse de la misma forma, es decir, tener el mismo **propósito**. Esto implica que:
-
-- Los parámetros deben ser del mismo tipo (no necesariamente los mismos parámetros).
-- Deben producir los mismos efectos secundarios.
-- Deben retornar el mismo tipo de resultado.
-
-Si dos clases comparten la misma interfaz, como `OrderedCollection` y `SortedCollection`, se consideran polimórficas porque implementan el mismo conjunto de mensajes con el mismo propósito. En la práctica, las clases no siempre comparten exactamente la misma interfaz, pero sí una **interfaz base** polimórfica, es decir, un conjunto mínimo de mensajes compartidos que permite usarlas de forma intercambiable.
+* **Problema 1: Falta de implementación en la superclase.**
+  Si dos clases implementan un método polimórficamente pero no tienen un método común en la superclase que lo defina, el código indica que falta una abstracción. La solución es subir la definición a la superclase, documentar allí el propósito general y proveer una implementación por defecto o abstracta.
+* **Problema 2: Ausencia de una superclase común específica.**
+  Si dos clases comparten comportamientos polimórficos pero su única superclase común es una clase genérica (como `Object` o `ApplicationModel`), no se debe contaminar la clase general con mensajes específicos de un dominio particular. La solución es crear una **nueva clase abstracta** intermedia que defina la interfaz compartida y hacer que las clases concretas hereden de ella.
 
 ---
 
-## Haciendo una jerarquía polimórfica
+## 6. Patrón Template Class y Ejemplos Concretos
+El patrón **Template Class** describe la clase abstracta que se ubica en la cúspide de una jerarquía polimórfica para definir la interfaz base y delegar los detalles concretos a sus subclases.
 
-Cuando un método se reimplementa en una subclase con el mismo propósito que en la superclase, se documenta con **"Ver implementación en superclase"**. Esto fomenta pensar los métodos de forma polimórfica, haciendo las jerarquías más flexibles, reusables y extensibles.
+* **Relación con *Template Method* (GoF):**
+  Mientras que el patrón *Template Method* (Gamma et al., 1995) define la estructura de un algoritmo dentro de un método particular dejando pasos específicos a las subclases, una ***Template Class*** define la interfaz completa para un tipo de objeto (una clase) y suele estar constituida por múltiples *Template Methods*.
 
-### Problema 1: No existe implementación en la superclase
-
-Si dos clases implementan el mismo mensaje polimórficamente pero sin una superclase común que lo defina, el código está indicando que **falta esa implementación**. La solución es introducirla en la superclase: documentar el propósito allí, darle una implementación por defecto, y luego las subclases pueden usar el comentario estándar.
-
-### Problema 2: No existe una superclase adecuada
-
-Si las dos clases no tienen una superclase común específica (solo una genérica como `Object`), no conviene agregar un mensaje de dominio en una clase tan general.
-
-La solución es crear una **nueva clase abstracta** que describa el comportamiento polimórfico compartido, y subclasificar ambas clases concretas a partir de ella. Así la jerarquía pasa a existir y se puede agregar la implementación en la superclase normalmente.
+* **Ejemplos destacados en el paper:**
+  1. **Jerarquía `Collection`:** La clase abstracta `Collection` define lo que puede hacer una colección (`add:`, `remove:`, `do:`, `size`), mientras que subclases concretas como `Set` o `OrderedCollection` definen *cómo* se realiza mediante estructuras de datos específicas (tablas hash, listas, etc.).
+  2. **Caso `Empleado` y `cosasQueHacer`:** Un objeto `Empleado` que posee la lista `cosasQueHacer` puede trabajar de forma transparente tanto con una `OrderedCollection` como con una `SortedCollection`. El colaborador sólo necesita conocer la interfaz base de `Collection` (`add:`, `remove:`, `first`, etc.).
+  3. **Jerarquía `ValueModel` en VisualWorks:** `ValueModel` establece que todas sus subclases (`ValueHolder`, `AspectAdaptor`, `TypeConverter`) responderán a `value`, `value:` y `onChangeSend:to:`, garantizando la intercambiabilidad total de sus instancias.
 
 ---
 
-## Patrón Template Class
+## 7. Conclusión y Lecturas Recomendadas
+Las jerarquías polimórficas encapsulan código altamente reusable, extensible y mantenible, convirtiendo a las clases en estructuras intercambiables en lugar de bloques aislados.
 
-La clase abstracta que se introduce para crear una jerarquía polimórfica se denomina **Template Class**. Este patrón crea jerarquías polimórficas definiendo la interfaz de una clase y dejando los detalles de implementación para las subclases.
-
----
-
-## La jerarquía de ValueModel
-
-La jerarquía `ValueModel` en VisualWorks es un buen ejemplo de jerarquía polimórfica. La clase `ValueModel` define la jerarquía indicando que todas sus instancias entenderán mensajes como `value`, `value:` y `onChangeSend:to:`. Todas las subclases implementan estos mensajes según su propio funcionamiento, pero respetando la interfaz, es decir, el propósito.
-
-Esto permite que el código colaborador use cualquier instancia de la jerarquía sin importar la subclase concreta, aprovechando el polimorfismo a nivel de clase.
+* **Lectura complementaria recomendada por el autor:**
+  Woolf concluye sugiriendo la lectura de ***"Reusability Through Self-Encapsulation"*** de Ken Auer (1995), un lenguaje de patrones que detalla cómo construir jerarquías de clases altamente reusables mediante herencia mientras se preserva rigurosamente el encapsulamiento de cada clase.

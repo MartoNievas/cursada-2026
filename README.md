@@ -44,7 +44,7 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | [Polymorphic Hierarchy](isw/resumenes-papers/Polymorphic-Hierarchy.md)                                                                    | Resumen del paper Polymorphic Hierarchy de Bobby Woolf.                                                 |
 | [A Simple Technique for Handling Multiple Polymorphism](isw/resumenes-papers/A-Simple-Technique-for-Handling-Multiple-Polymorphism.md) | Resumen del paper A Simple Technique for Handling Multiple Polymorphism.                              |
 | [Null Pattern Object](isw/resumenes-papers/Null-Pattern-Object.md) | Resumen del paper Null Pattern Object de Bobby Woolf.                              |
-| [Method Object](isw/resumenes-papers/Object-Recursion.md) | Resumen del capitulo 3 del libro Smalltalk Best Practic Patterns de Kent Beck.                              |
+| [Method Object](/isw/resumenes-papers/Method-Objetc.md) | Resumen del capitulo 3 del libro Smalltalk Best Practic Patterns de Kent Beck.                              |
 | [Object Recursion](isw/resumenes-papers/Object-Recursion.md) | Resumen del paper Object Recursion de Bobby Woolf.                              |
 
 

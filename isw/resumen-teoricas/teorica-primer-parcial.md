@@ -157,6 +157,7 @@ La metafora debe cumplir:
 3. **Nombrar** la nueva abstracción ← *lo más importante*
 4. Reemplazar el código repetido original por el uso de la nueva abstracción
 
+<<<<<<< Updated upstream
 ---
 
 ## 9. Psuedo-variables
@@ -199,7 +200,6 @@ Cuando es cuestionable remplazar ifs por polimofirmo:
 
 * Cuando estoy en las fronteras del sistema.
 * Cuando el receiver y el sender de la condición del if no pertenecen al mismo dominio de problema
----
 
 ## Resumen
 

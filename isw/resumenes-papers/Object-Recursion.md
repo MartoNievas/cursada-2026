@@ -1,70 +1,130 @@
-# El Patrón Object Recursion
-**Autor: Bobby Woolf (1998)**
+# Resumen del Paper: El Patrón Object Recursion
+**Autor:** Bobby Woolf (1998)
 
-## Intención
-Distribuir el procesamiento de una solicitud sobre una estructura delegando polimórficamente. Object Recursion permite, de forma transparente, que una solicitud se divida varias veces en partes más pequeñas que son más fáciles de manejar.
+---
 
-## También conocido como
-Recursive Delegation (Delegación Recursiva).
+### 1. Intención y Otros Nombres
+* **Intención:** Distribuir el procesamiento de una solicitud sobre una estructura delegando polimórficamente. *Object Recursion* permite, de forma transparente, que una solicitud se divida sucesivamente en partes más pequeñas que son más fáciles de manejar.
+* **También conocido como:** *Recursive Delegation* (Delegación Recursiva).
 
-## Motivación
+---
+
+### 2. Motivación y Diagnóstico
 Surge de la necesidad de determinar si dos objetos son equivalentes. Mientras que para objetos simples y primitivas basta con operaciones nativas, comparar objetos complejos arbitrarios resulta difícil.
 
-Un primer enfoque es usar un objeto externo **Comparador** que acepte dos objetos complejos, los divida en partes y compare cada parte. Sin embargo, este enfoque presenta desventajas importantes:
-* El comparador debe reconocer qué tipo de objeto son los sujetos y saber cómo descomponerlos.
-* Cuanto más complejo es un sujeto, más complejo se vuelve el código para compararlo.
+#### Comparación con el enfoque "Comparador Externo":
+Un primer enfoque ingenuo es usar un objeto externo **Comparador** que reciba dos objetos complejos, los descomponga en partes y los compare. Este enfoque presenta serias desventajas:
+* El comparador debe conocer la estructura interna y el tipo de los objetos, rompiendo el **encapsulamiento**.
+* Cuanto más complejo es el objeto, más complejo y frágil es el código del comparador.
 * Cada nueva clase exige modificar o extender el comparador.
-* La descomposición depende fuertemente de la implementación, por lo que si esta cambia, el comparador también debe modificarse.
-* Los objetos comparados deben exponer protocolos adicionales para la descomposición, lo que rompe su encapsulamiento.
+* Si la implementación del objeto cambia, el comparador se rompe.
 
-**Object Recursion** resuelve esto mediante un algoritmo donde un objeto se compara a sí mismo con otro, diciéndole a sus partes que se comparen entre sí sucesivamente, delegando la responsabilidad a lo largo de la estructura enlazada.
+#### La Solución con Object Recursion:
+Un enfoque orientado a objetos es pedirle al objeto que se compare a sí mismo con otro. El objeto compara sus partes delegando sucesivamente en cada una de ellas, haciendo que el mensaje navegue por la estructura enlazada hasta llegar a objetos primitivos simples.
 
-## Características
-Un sistema que incorpora el patrón **Object Recursion** tiene las siguientes características:
-* Dos clases polimórficas: una maneja la consulta recursivamente (**Recurser**) y otra simplemente maneja el caso base sin recursión (**Terminator**).
-* Un mensaje separado, usualmente en una tercera clase no polimórfica (**Initiator**), para iniciar la consulta.
+---
 
-## Aplicabilidad
-Este patrón se puede usar cuando:
-* Estamos pasando un mensaje por una estructura enlazada donde el destino final es desconocido.
-* Estamos enviando mensajes a nodos de una estructura enlazada.
-* Queremos distribuir la responsabilidad de un comportamiento a lo largo de una estructura enlazada.
+### 3. Claves y Aplicabilidad
 
-## Participantes y Estructura
-* **Initiator**: Inicia la solicitud pidiendo a su Handler que la maneje (makeRequest()). Su mensaje no es polimórfico con la jerarquía de recursión.
-* **Handler**: Interfaz o clase abstracta común que declara el protocolo para manejar la solicitud (handleRequest()).
-* **Recurser**: Implementación de Handler que realiza una parte del trabajo y delega recursivamente el resto a uno o más sucesores. Puede ejecutar comportamiento adicional antes (preHandleRequest()) y/o después (postHandleRequest()) de delegar.
-* **Terminator**: Implementación de Handler que resuelve la solicitud de forma directa sin delegar a ningún sucesor, marcando el fin de la recursión.
+#### Claves del Patrón:
+1. **Dos clases polimórficas:** Una maneja la consulta de forma recursiva (`Recurser`) y otra maneja el caso base de forma directa sin recursión (`Terminator`).
+2. **Mensaje de inicio separado:** Un mensaje separado, situado usualmente en una tercera clase no polimórfica (`Initiator`), para iniciar la consulta.
 
-## Colaboración
-1. El **Initiator** solicita el procesamiento enviando el mensaje inicial a su Handler (makeRequest()).
-2. Cuando el **Handler** es un **Recurser**, ejecuta su procesamiento local, le pide a su sucesor (otro Handler) que maneje la solicitud y devuelve un resultado derivado de la respuesta del sucesor. Si tiene múltiples sucesores, delega a cada uno por turnos o de forma asincrónica.
-3. Cuando el **Handler** es un **Terminator**, maneja la solicitud por completo sin delegarla a ningún sucesor y devuelve el resultado directo (si lo hubiera).
+#### Aplicabilidad:
+* Cuando se pasa un mensaje por una estructura enlazada con destino final desconocido.
+* Cuando se envían mensajes a todos los nodos de una estructura enlazada.
+* Cuando se distribuye la responsabilidad de un comportamiento a lo largo de una estructura enlazada.
 
-## Consecuencias
+---
 
-**Ventajas**
-* **Procesamiento distribuido**: La solicitud se distribuye a lo largo de una estructura de handlers tan compleja como sea necesaria para completar la tarea.
-* **Flexibilidad en las responsabilidades**: El Initiator no necesita conocer cuántos handlers existen, cómo están organizados ni cómo está distribuido el procesamiento. La estructura puede reconfigurarse dinámicamente en tiempo de ejecución.
-* **Flexibilidad de roles**: Un objeto puede actuar como Recurser para una solicitud específica y como Terminator para otra.
-* **Aumento del encapsulamiento**: Encapsula las decisiones sobre cómo manejar la solicitud dentro del objeto que la procesa.
+### 4. Estructura y Participantes
 
-**Desventajas**
-* **Complejidad de programación**: La recursividad, ya sea procedural u orientada a objetos, es un concepto difícil de entender; su sobreuso puede volver al sistema más complejo de entender y mantener.
+```
+  Initiator (Cliente) ----> <<Handler>> (Comparable)
+       makeRequest()            handleRequest()
+                                /            \
+                               /              \
+                    Recurser (Motor)       Terminator (Integer)
+                    successor.handleRequest()   [handle directly]
+```
 
-## Detalles de Implementación
-* **Tipos separados del Initiator**: El mensaje Initiator.makeRequest() no debe ser polimórfico con el mensaje Recurser.handleRequest(). Esto evita que los métodos recursivos se eliminen por asumir erróneamente que solo se invocan entre sí, garantizando un punto de entrada explícito.
-* **Definir el sucesor**: Solo el Recurser necesita referencias activas a sus sucesores. En el Terminator, si la referencia al sucesor se hereda de Handler, no se utiliza y su valor permanece nulo.
+* **`Initiator` (Cliente):** Inicia la solicitud mediante `makeRequest()`. Su mensaje **no es polimórfico** con la jerarquía de recursión.
+* **`Handler` (`Comparable`):** Interfaz o clase abstracta común que declara el protocolo para manejar la solicitud (`handleRequest()`).
+* **`Recurser` (`Engine` / Motor):** Implementación de `Handler` que ejecuta procesamiento local (`preHandleRequest()` / `postHandleRequest()`) y delega recursivamente el resto a sus sucesores.
+* **`Terminator` (`Integer`):** Implementación de `Handler` que resuelve la solicitud de forma directa sin delegar a ningún sucesor, marcando el fin de la recursión.
 
-## Ejemplos y Usos Conocidos
-* **Igualdad de objetos**: Comparación recursiva donde objetos complejos (como EntradaDeGuia o NombreDePersona) delegan la verificación en sus partes hasta llegar a objetos primitivos o simples (String, Integer, Float, etc.) que actúan como terminadores.
-* **Serialización de objetos**: El algoritmo serializa la base del objeto y luego invoca recursivamente la serialización de todas sus partes persistentes hasta llegar a primitivas.
-* **Representación como cadena (toString() / printString)**: Muestra la base como una cadena y le pide recursivamente a sus partes relevantes que se muestren a sí mismas.
-* **Estructuras de árbol e interfaces gráficas**: Pasaje de mensajes desde las hojas hasta la raíz o de la raíz a las hojas (por ejemplo, en árboles gráficos para registrar pedidos de invalidación o transmitir redibujados).
+---
 
-## Patrones Relacionados
-* **Composite y Decorator**: Aunque Composite y Decorator delegan a sus componentes/hijos, son patrones estructurales donde la recursión es explícita en solo un nivel, mientras que en **Object Recursion** (patrón de comportamiento) la profundidad es ilimitada.
-* **Chain of Responsibility**: Contiene **Object Recursion** para navegar por una lista enlazada o árbol hasta encontrar un manejador adecuado.
-* **Adapter**: Una cadena de Adapters delega comportamiento pero carece de polimorfismo, lo cual va en contra del espíritu de **Object Recursion**.
-* **Interpreter**: El mensaje interpret() recorre el árbol de sintaxis abstracta usando **Object Recursion** (Client = Initiator, AbstractExpression = Handler, NonterminalExpression = Recurser, TerminalExpression = Terminator).
-* **Iterator**: Algunas implementaciones de iteradores internos en estructuras compuestas utilizan **Object Recursion**.
+### 5. Colaboración
+1. El `Initiator` solicita el procesamiento enviando el mensaje inicial a su `Handler` (`makeRequest()`).
+2. Si el `Handler` es un `Recurser`, ejecuta su trabajo local, invoca a su sucesor (`successor.handleRequest()`) y retorna un resultado combinado. Si tiene múltiples sucesores, delega en cada uno secuencial o asincrónicamente.
+3. Si el `Handler` es un `Terminator`, resuelve la solicitud directamente y devuelve el resultado sin realizar delegaciones.
+
+---
+
+### 6. Consecuencias
+
+#### Ventajas:
+* **Procesamiento distribuido:** La solicitud se divide a lo largo de una red de manejadores tan compleja como sea necesario.
+* **Flexibilidad en las responsabilidades:** El `Initiator` ignora la cantidad, organización y distribución de los manejadores. La estructura se puede reconfigurar dinámicamente en tiempo de ejecución.
+* **Flexibilidad de roles:** Un objeto puede actuar como `Recurser` para un mensaje y como `Terminator` para otro.
+* **Aumento del encapsulamiento:** Encapsula las decisiones de procesamiento dentro de cada objeto participante.
+
+#### Desventajas:
+* **Complejidad de programación:** La recursividad orientada a objetos puede volver al sistema más difícil de entender, rastrear y mantener si se sobreutiliza.
+
+---
+
+### 7. Detalles de Implementación
+
+1. **Tipos separados del Initiator:** El mensaje `Initiator.makeRequest()` no debe ser polimórfico con `Recurser.handleRequest()`. Esto evita que el método sea eliminado por refactorizaciones automáticas al asumir erróneamente que solo se invoca a sí mismo.
+2. **Definición del sucesor:** Solo el `Recurser` necesita referencias activas a sus sucesores. Si el `Terminator` hereda la variable de sucesor de `Handler`, esta permanece en `null`.
+
+---
+
+### 8. Código de Ejemplo (Igualdad Recursiva)
+
+```java
+// Caso Base / Terminator: String
+public class String {
+    public boolean equals(String anotherString) {
+        // Comparación de caracteres primitivos
+    }
+}
+
+// Recurser Nivel 1: NombreDePersona
+public class NombreDePersona {
+    private String nombre, apellido;
+
+    public boolean equals(NombreDePersona otro) {
+        return nombre.equals(otro.nombre) && apellido.equals(otro.apellido);
+    }
+}
+
+// Recurser Nivel 2: EntradaDeGuia
+public class EntradaDeGuia {
+    private NombreDePersona nombre;
+
+    public boolean equals(EntradaDeGuia otraEntrada) {
+        return nombre.equals(otraEntrada.nombre);
+    }
+}
+```
+
+---
+
+### 9. Usos Conocidos
+* **Igualdad y Hashing:** Comparación recursiva de objetos complejos delegando en sus partes hasta llegar a primitivas.
+* **Clonación y Copia:** Uso de `copy()` con dos mensajes (`simpleCopy()` y `postCopy()`) para propagar la copia en profundidad.
+* **Serialización de Objetos:** Conversión recursiva de un objeto y sus partes persistentes a formato binario o texto.
+* **Representación como Cadena (`toString()` / `printString`):** Formateo del estado base y delegación a sus componentes.
+* **Estructuras de Árbol e Interfaces Gráficas:** Transmisión de eventos, invalidación de regiones y redibujado desde las hojas hasta la raíz o viceversa.
+
+---
+
+### 10. Patrones Relacionados
+* **Composite y Decorator:** Son patrones **estructurales** donde la recursión suele ser explícita en solo un nivel. *Object Recursion* es un patrón **comportamental/algorítmico** de profundidad ilimitada.
+* **Chain of Responsibility:** Contiene *Object Recursion* para navegar por la cadena o árbol buscando un manejador adecuado.
+* **Interpreter:** El mensaje `interpret()` recorre el árbol de sintaxis abstracta utilizando *Object Recursion* (`Client` = `Initiator`, `AbstractExpression` = `Handler`, `NonterminalExpression` = `Recurser`, `TerminalExpression` = `Terminator`).
+* **Iterator:** Los iteradores internos en estructuras enlazadas o ramificadas emplean *Object Recursion*.
+* **Adapter / Proxy:** Cadenas de Adapters o Proxies representan formas de delegación a un nivel de profundidad.

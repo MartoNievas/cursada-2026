@@ -1,71 +1,65 @@
-# Una Técnica Simple para Manejar el Polimorfismo Múltiple
-
-## Introducción
-
-El paper trata sobre el problema del **polimorfismo múltiple** en la programación orientada a objetos: situaciones donde más de una variable en una expresión es independientemente polimórfica. En tales casos, los mecanismos habituales de la POO dejan de funcionar, llevando a código no modular.
-
-El autor propone una técnica simple que preserva todos los beneficios de las buenas prácticas orientadas a objetos, sin importar el grado de polimorfismo. El ejemplo está escrito en sintaxis de Smalltalk-80, pero la técnica es aplicable a cualquier lenguaje orientado a objetos.
+# Resumen: Una Técnica Simple para Manejar el Polimorfismo Múltiple
+**Autor:** Daniel H. H. Ingalls (Apple Computer, Inc. / OOPSLA 1986)
 
 ---
 
-## Polimorfismo y Mensajes
+## 1. Introducción y Contexto Histórico
+El paper aborda las limitaciones del envío de mensajes convencional en la Programación Orientada a Objetos (POO) cuando nos enfrentamos a **expresiones con polimorfismo múltiple** —es decir, situaciones donde más de una variable involucrada en una operación o interacción varía dinámicamente de tipo de forma independiente.
 
-Al crear un lenguaje orientado a objetos, el envío de mensajes fue introducido como solución al problema del polimorfismo en lenguajes extensibles.
-
-Los intentos anteriores fallaban porque los procedimientos tenían que verificar explícitamente el tipo de cada argumento y ejecutar el código correspondiente. Esto violaba los principios de modularidad y generaba una explosión combinatoria de complejidad.
-
-La solución fue el **envío de mensajes**:
-
-- El mecanismo de búsqueda de mensajes absorbe la verificación de tipos.
-- Los métodos, siendo locales a su propia clase, no son polimórficos entre sí.
-- Solo el receptor es polimórfico, y el sistema selecciona el método correcto automáticamente.
-
-Todos los lenguajes orientados a objetos actuales soportan esta forma de **polimorfismo simple**, con un costo apenas mayor al de una llamada convencional a un procedimiento.
+Historicamente, los lenguajes de programación extensibles anteriores a la POO requerían que los procedimientos verificaran explícitamente el tipo de cada argumento mediante condicionales (`if/else` o `switch`). Esto violaba los principios básicos de la modularidad y provocaba una **explosión combinatoria de la complejidad** a medida que el sistema crecía.
 
 ---
 
-## El Problema
+## 2. Polimorfismo Simple vs. Polimorfismo Múltiple
 
-Surgen ciertas situaciones donde más de una variable en una expresión es independientemente polimórfica. En esos casos, el polimorfismo del receptor no alcanza y los programadores suelen revertirse a la verificación explícita de tipos.
+### Polimorfismo Simple
+* **Mecanismo:** El envío de mensajes estándar absorbe la verificación de clases.
+* **Comportamiento:** La búsqueda del método (*method dispatch*) se realiza únicamente en función de la clase del **receptor** del mensaje.
+* **Propiedad clave:** **Cada envío de mensaje reduce una variable polimórfica a una monomórfica**.
+* **Ventaja:** Los métodos son locales a sus clases, no dependen del resto del sistema, y el mecanismo tiene un costo apenas superior al de una llamada a procedimiento convencional.
 
-Tomemos como ejemplo la representación de objetos gráficos en distintos tipos de puertos de salida:
+### El Problema del Polimorfismo Múltiple
+Cuando la operación a realizar depende no solo del tipo del receptor, sino también del tipo de uno o más **argumentos**, el polimorfismo simple del receptor no alcanza. Ante esta limitación, muchos desarrolladores recaen involuntariamente en el estilo procedural: la **verificación explícita de tipos**.
 
-- Una variable que contiene un **objeto gráfico** puede ser un rectángulo, óvalo, bitmap, texto, overlay, etc.
-- Una variable que contiene un **puerto gráfico** puede ser un monitor, impresora, monitor remoto, etc.
+---
 
-Tenemos entonces una **interacción polimórfica doble**.
+## 3. Ejemplo del Paper: Objetos Gráficos y Puertos de Salida
 
-La solución ingenua consiste en verificar el tipo del puerto dentro de cada objeto gráfico:
+### Dominio
+* **Objetos Gráficos (Polimórficos):** `Rectangulo`, `Ovalo`, `MapaDeBits`, `Texto`, etc.
+* **Puertos Gráficos / Salida (Polimórficos):** `PuertoDePantalla` (Monitor), `PuertoDeImpresora`, `PuertoDeRemoto`, etc.
 
+### La Mala Práctica (Verificación Explícita de Tipos)
 ```smalltalk
 <Rectangulo> representarseEn: unPuertoGrafico
     unPuertoGrafico isMemberOf: PuertoDeMonitor
-        ifTrue: ["Codigo para representarse en un monitor"].
+        ifTrue: ["Código para dibujarse en un monitor"].
     unPuertoGrafico isMemberOf: PuertoDeImpresora
-        ifTrue: ["Codigo para representarse en una impresora"].
+        ifTrue: ["Código para dibujarse en una impresora"].
     unPuertoGrafico isMemberOf: PuertoDeRemoto
-        ifTrue: ["Codigo para representarse en un monitor remoto"].
+        ifTrue: ["Código para dibujarse en un monitor remoto"].
 ```
 
-Si bien el código queda distribuido por objeto gráfico, presenta serios problemas:
-
-- Agregar un nuevo tipo de puerto obliga a modificar **todos** los objetos gráficos existentes.
-- La complejidad crece combinatoriamente con el grado de polimorfismo.
-- Un error al modificar puede romper el soporte completo del ambiente.
-
-Todos estos son problemas que la programación orientada a objetos debería haber resuelto.
+#### Problemas de esta solución:
+1. **Falta de Extensibilidad:** Agregar un nuevo puerto obliga a modificar los métodos de **todos** los objetos gráficos existentes.
+2. **Fragilidad:** Modificar código existente para soportar nuevas variantes puede romper funcionalidades que ya funcionaban.
+3. **Escalabilidad Combinatoria:** La complejidad crece multiplicativamente con el número de tipos en cada dimensión.
 
 ---
 
-## La Solución
+## 4. La Solución: Doble Despacho (*Double Dispatch*)
 
-Afortunadamente, la solución está disponible en todos los lenguajes orientados a objetos. La clave está en comprender la conexión entre el polimorfismo y el envío de mensajes.
+### Idea Fundamental
+Dado que cada envío de mensaje elimina el polimorfismo de un objeto (convirtiéndolo en un tipo concreto dentro del método ejecutado), un problema con **$N$ variables polimórficas requiere una cadena de $N$ envíos de mensajes consecutivos**.
 
-**Cada envío de mensaje reduce una variable polimórfica a una monomórfica** por el tipo de despacho inherente a la búsqueda de mensajes. Si el problema tiene dos dimensiones de polimorfismo, entonces se necesitan **dos envíos de mensajes** en cadena.
+Para un problema de polimorfismo doble, se requieren **dos envíos de mensajes en cadena**.
 
-### Paso 1 — Retransmisión desde el objeto gráfico
+---
 
-Cada objeto gráfico reenvía el mensaje al puerto, pasándose a sí mismo como argumento con un mensaje específico de su tipo:
+### Paso a Paso de la Técnica
+
+#### Paso 1: Retransmisión desde la primera jerarquía (Receptor inicial)
+Cada clase de la primera dimensión (`ObjetoGrafico`) reenvía el mensaje al argumento (`Puerto`), enviando un **mensaje específico** que revela su propio tipo concreto pasándose a sí mismo (`self`) como argumento:
 
 ```smalltalk
 <Rectangulo> representarseEn: unPuerto
@@ -78,46 +72,61 @@ Cada objeto gráfico reenvía el mensaje al puerto, pasándose a sí mismo como 
     unPuerto representarMapaDeBits: self
 ```
 
-### Paso 2 — Implementación en cada clase de puerto
-
-Ahora cada clase de puerto implementa la familia completa de mensajes específicos:
+#### Paso 2: Implementación en la segunda jerarquía (Familia de mensajes polimórficos)
+Cada clase concreta de la segunda dimensión (`Puerto`) implementa la **familia completa** de mensajes específicos (`representarX:`):
 
 ```smalltalk
 <PuertoDePantalla> representarRectangulo: unRec
-    "Codigo para representar un rectangulo en pantalla"
+    "Código concreto para dibujar un rectángulo en pantalla"
 
 <PuertoDePantalla> representarOvalo: unOvalo
-    "Codigo para representar un ovalo en pantalla"
+    "Código concreto para dibujar un óvalo en pantalla"
 
 <PuertoDeImpresora> representarRectangulo: unRec
-    "Codigo para representar un rectangulo en impresora"
+    "Código concreto para dibujar un rectángulo en impresora"
 
 <PuertoDeImpresora> representarOvalo: unOvalo
-    "Codigo para representar un ovalo en impresora"
+    "Código concreto para dibujar un óvalo en impresora"
 ```
 
-Esta solución conserva la modularidad del estilo orientado a objetos:
+---
 
-- **Agregar un nuevo objeto gráfico:** solo definir el mensaje de retransmisión en la nueva clase y los métodos correspondientes en cada puerto. El código existente no se toca.
-- **Agregar un nuevo puerto:** solo implementar la familia completa de mensajes `representarX:`. Nada más.
+## 5. Matriz de Extensibilidad y Modularidad
 
-La solución inversa —donde los puertos se retransmiten a los objetos gráficos— tiene propiedades de modularidad igualmente buenas. La elección depende de una decisión de diseño sobre dónde pertenecen conceptualmente los métodos finales.
+La técnica mantiene la modularidad completa orientada a objetos:
 
-La técnica también se puede extender a **grados más altos de polimorfismo**: cada envío de mensaje subsiguiente reduce una dimensión adicional. Afortunadamente, así como el polimorfismo doble es mucho menos común que el simple, los grados más altos son aún más raros.
+| Operación de Mantenimiento | Acción Requerida | Impacto en Código Existente |
+|:--- |:--- |:--- |
+| **Agregar nuevo Objeto Gráfico** (`Triangulo`) | 1. Definir `representarseEn:` en `Triangulo`.<br>2. Agregar `representarTriangulo:` en cada `Puerto`. | **Cero impacto** en rectángulos, óvalos, etc. existentes. |
+| **Agregar nuevo Puerto** (`PuertoPDF`) | Implementar la familia `representarX:` en `PuertoPDF`. | **Cero impacto** en objetos gráficos ni puertos existentes. |
 
 ---
 
-## Experiencia
-
-El enfoque ha demostrado su eficacia en varias situaciones más allá del ejemplo de visualización:
-
-- **Eventos y controladores:** la interacción entre diferentes tipos de eventos y sus manejadores.
-- **Programación lógica:** el mensaje `unificarseCon:` donde tanto el receptor como el argumento son polimórficos en constantes, variables, términos y otras formas.
-- **Coerción aritmética:** una reescritura experimental de la lógica de coerción aritmética en el sistema Smalltalk-80.
+## 6. Decisión de Diseño: Dirección de la Retransmisión
+El paper aclara que la dirección de la llamada puede invertirse (los puertos retransmiten hacia los objetos gráficos). La decisión de cuál es la jerarquía que inicia el doble despacho depende de **dónde pertenecen conceptualmente los métodos finales** y cuál dimensión es más probable que se extienda con mayor frecuencia.
 
 ---
 
-## Analogia
+## 7. Analogía Conceptual
+Se puede entender el polimorfismo múltiple como **despejar incógnitas en un sistema de ecuaciones**:
+* El estado inicial tiene 2 incógnitas (dos variables de tipo desconocido).
+* El **primer envío de mensaje** resuelve/despeja la primera incógnita (identifica la clase concreta del receptor).
+* El **segundo envío de mensaje** resuelve la segunda incógnita (identifica la clase concreta del argumento).
+* Una vez resueltas ambas incógnitas, se ejecuta el bloque de código concreto sin condicionales ni `ifTrue:`.
 
-La analogia que se me ocurrio fue representar a la resolución del multiple polimorismo, como resolver un sistema de ecuaciones/despejas incognitas, donde en cada mensaje enviado, se va despejando el tipo polimorifco del receptor del mensaje inicial y asi con los sucesores.
-Para eso se debe crear una familia de mensajes polimorficos que esten presente en todas las posibles variables polimorficas que se tengas.
+---
+
+## 8. Casos de Aplicación y Experiencia Práctica
+El paper menciona tres aplicaciones reales donde esta técnica demostró su valor:
+1. **Eventos y Controladores (Handlers):** Despacho de interacciones entre distintos tipos de eventos de usuario y sus respectivos manejadores.
+2. **Programación Lógica (Unificación):** El método `unificarseCon:` donde tanto el receptor como el argumento pueden variar entre constantes, variables y términos.
+3. **Coerción Aritmética:** Reescritura de la lógica de conversión entre tipos numéricos (enteros, flotantes, fracciones) en Smalltalk-80.
+
+> **Nota sobre Multimétodos:** Algunos lenguajes (como CommonLoops o CLOS) soportan despacho múltiple nativo a nivel del lenguaje (*multimethods*). Para lenguajes con despacho simple (Smalltalk, Java, C++, C#, Python, etc.), esta técnica de **Doble Despacho** es el patrón estándar.
+
+---
+
+## 9. Conclusiones Clave
+* El polimorfismo múltiple es un problema común pero resolible dentro del paradigma estándar de POO sin recurrir a type checking explícito.
+* El principio rector es: **Chaining Messages / Double Dispatch**.
+* Previene la explosión combinatoria de `if/else` y maximiza la adhesión al principio Open/Closed (Abierto a extensión, cerrado a modificación).
