@@ -46,7 +46,7 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | [Null Pattern Object](isw/resumenes-papers/Null-Pattern-Object.md) | Resumen del paper Null Pattern Object de Bobby Woolf.                              |
 | [Method Object](/isw/resumenes-papers/Method-Objetc.md) | Resumen del capitulo 3 del libro Smalltalk Best Practic Patterns de Kent Beck.                              |
 | [Object Recursion](isw/resumenes-papers/Object-Recursion.md) | Resumen del paper Object Recursion de Bobby Woolf.                              |
-
+| [Modern Software Engineering](/isw/resumenes-papers/Modern-Software-Engineering.md) | Resumen de los capitulos 1, 2 y 3 del libro Modern Software Engineering de David Farley                              |
 
 
 ### Primeros parciales
