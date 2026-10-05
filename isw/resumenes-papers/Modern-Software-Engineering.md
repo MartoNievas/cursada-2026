@@ -15,12 +15,16 @@ Al aplicar las técnicas y estrategias de la ciencia nos referimos al método ci
 * **Predecir:** Realizar una predicción basada en la hipótesis.
 * **Experimentar:** Testear la predicción.
 
+### ¿Qué es la ingeniería de software?
+
 Para el autor, la ingeniería de software es la aplicación de un enfoque empírico y científico para encontrar soluciones eficientes y económicas a problemas prácticos en software.
 
 El enfoque de ingeniería es importante por 2 razones:
 
 1. El desarrollo de software es siempre un ejercicio de descubrimiento y aprendizaje (*learning*).
 2. Si nuestro objetivo es ser "eficientes" y "económicos", nuestra capacidad de aprender debe ser sustentable.
+
+Esto implica que debemos saber gestionar la complejidad de los sistemas que diseñamos de forma tal que preservemos nuestra capacidad de asimilar nuevos conocimientos y adaptarnos a ellos.
 
 Existen 5 técnicas que forman las raíces de este enfoque en el aprendizaje:
 
@@ -40,15 +44,30 @@ Para lograr esto debemos convertirnos en expertos en gestionar la complejidad, q
 * **Abstracción**
 * **Acoplamiento débil** (*Loose Coupling*)
 
-Las ideas principales del libro que actúan como herramientas prácticas para guiar el desarrollo son:
+Este texto detalla cómo emplear estas diez ideas como herramientas de dirección técnica. Luego expone una serie de principios que operan como instrumentos pragmáticos para articular una estrategia de desarrollo eficaz, entre ellos:
 
-* **Testeabilidad**
+* **Testeabilidad / Verificabilidad**
 * **Desplegabilidad**
 * **Velocidad**
 * **Controlar las variables**
 * **Continuous delivery**
 
+
+### Reivindicando la «ingeniería de software»
+
 El software no es simplemente un sinónimo de "código", ni debe confundirse con burocracia procedimental. Ingeniería es, en esencia, "lo que funciona".
+
+Si nuestras prácticas declaradas de "ingeniería de software" no nos permiten concebir software superior en menores plazos, entonces no constituyen ingeniería legítima.
+
+### Cómo avanzar
+
+Como bien sabemos, el desarrollo de software es una actividad compleja y sofisticada. Resulta insostenible asumir que cada profesional o equipo deba inventar de manera aislada y desde cero el enfoque operativo idóneo cada vez que inicia un proyecto.
+
+Aquí el autor plantea la siguiente pregunta: ¿cómo podemos, como colectivo técnico e industria, progresar? Es fundamental establecer principios consensuados y una disciplina rigurosa que guíe nuestra actividad.
+
+Otra problemática en nuestra área son las conductas dogmáticas. El autor plantea que, para poder desafiar estos dogmas, podemos hacer uso de un paradigma ejemplar al cual denominamos **ciencia**; este enfoque nos permitirá sustituir ideas defectuosas por postulados superiores y optimizar las prácticas eficaces.
+
+Pero cuando trasladamos el rigor analítico a la resolución de problemas pragmáticos, lo denominamos **¡ingeniería!**.
 
 ### Origen histórico y la anomalía de Brooks
 
@@ -72,6 +91,8 @@ El autor desarma la falsa analogía entre el software y la construcción tradici
 * **Ingeniería de producción (*Production engineering*):** Lidia con problemas físicos de manufactura, ensamblaje, tolerancias de materiales, transporte y logística para fabricar unidades idénticas a escala. En el mundo material, esta suele ser la fase más cara y compleja.
 * **Ingeniería de diseño (*Design engineering*):** Es el proceso analítico, intelectual y experimental de resolver un problema, modelar, calcular y diseñar una solución adecuada.
 
+El autor hace esta distinción ya que los activos digitales son distintos. El coste de producción de cualquier tipo de activo digital es esencialmente nulo o, al menos, debería serlo.
+
 ### La producción no es nuestro problema
 
 * **La singularidad del software:** Toda la actividad del desarrollo de software es 100% ingeniería de diseño. En el software, la "producción" (fabricar la copia ejecutable) equivale a disparar el *build* (`trigger the build`). Es un proceso automatizado, instantáneo, escalable y de costo marginal prácticamente cero.
@@ -85,7 +106,7 @@ Aquí se plantean dos problemas que surgen al crear un producto físico nuevo, u
 1. **El irrelevante para software (producción física):** En el mundo material, construir la primera unidad acarrea enormes fricciones de logística, materiales y montaje. En software, esto se ignora porque la replicación digital es trivial.
 2. **El relevante para software (diseño complejo):** El diseño de algo novedoso es intrínsecamente difícil. En ingeniería física, iterar sobre el diseño es lento y costoso, por lo que recurren a simulaciones y modelos que solo son aproximaciones inexactas de la realidad.
 
-* **Nuestra ventaja:** En software, **el modelo es el producto mismo**. No simulamos una aproximación: ejecutamos el sistema real. Podemos evaluarlo y modificarlo a un costo drásticamente inferior que en cualquier disciplina física.
+* **Nuestra ventaja:** En software, **el modelo es el producto mismo**. No simulamos una aproximación: ejecutamos el sistema real. Podemos evaluarlo y modificarlo a un costo drásticamente inferior que en cualquier disciplina física. Ya que no necesitamos que nuestros modelos se ajusten a la realidad porque estos constituyen la realidad ejecutable de nuestro sistema.
 
 ### La ingeniería como matemática y sus límites
 
@@ -95,7 +116,7 @@ A finales de los 80 y principios de los 90 se debatió intensamente sobre cómo 
 * **El límite del determinismo:** Funcionan en contextos muy reducidos, aislados y deterministas. Cuando aparecen la concurrencia, la interacción con usuarios/mundo real o la complejidad de dominio, la demostrabilidad matemática explota y se vuelve inviable.
 * **La postura aeroespacial (el caso SpaceX):** En ingeniería aeroespacial se usan modelos matemáticos rigurosos, pero aun así SpaceX construye prototipos rápidos y los presuriza hasta destruirlos. Los números y las fórmulas orientan el diseño, pero solo la prueba empírica valida el comportamiento real frente a variables imprevistas. El software debe seguir este mismo camino empírico y guiado por datos.
 
-### La primera definición de software
+### La primera definición de ingeniería de software
 
 **Margaret Hamilton** acuñó el término de **software engineering** para darle seriedad frente a las ingenierías tradicionales, en un contexto donde no había antecedentes ni literatura y el software debía ser **man-rated** (cero margen de error humano).
 
@@ -116,7 +137,7 @@ Citando a Glenn Vanderburg (*"Real Software Engineering"*):
 
 Todas las ingenierías (aeroespacial, civil, química) son diferentes en sus dominios materiales, pero comparten el mismo núcleo: **racionalismo científico y empirismo pragmático**. Para la ingeniería de software, los principios rectores deben ser duraderos y resistir el paso del tiempo frente a los cambios superficiales de la industria.
 
-### ¿Una industria en cambio?
+### ¿Una industria en constante cambio?
 
 Mucho de lo que la industria vende como "innovación" tecnológica o librerías de moda (como el caso Hibernate vs. SQL directo) resulta ser un cambio cosmético o introduce accidentalmente más complejidad y código innecesario. Por otro lado, el estancamiento conceptual y metodológico del software pasó desapercibido históricamente gracias a que el hardware se volvió exponencialmente más veloz y barato.
 
@@ -135,9 +156,15 @@ Una de las razones por las cuales nos resulta tan difícil descartar las malas i
   * **Estabilidad (*Stability* - calidad técnica):**
     * *Change Failure Rate:* Porcentaje de cambios desplegados que provocan una falla en el sistema.
     * *Recovery Failure Time (MTTR):* Tiempo que toma recuperar el servicio tras una degradación o incidente.
+
+  Monitorear la estabilidad es importante pues representa una medida objetiva de la calidad intrínseca del trabajo de ingeniería. Esta métrica no nos dice si las funcionalidades son las correctas para el mercado, pero sí cuantifica con certeza la eficacia del equipo para desplegar software provisto de calidad verificable.
+
   * **Rendimiento (*Throughput* - eficiencia y oportunidades de aprendizaje):**
     * *Lead Time for Changes:* Tiempo que tarda un cambio desde que se escribe la primera línea de código hasta que está ejecutándose en producción.
     * *Deployment Frequency:* Frecuencia con la que se despliegan cambios funcionales a producción.
+
+  El rendimiento del flujo mide la agilidad de un equipo técnico para materializar conceptos e hipótesis en software operativo.
+
 * **El fin del falso dilema (Velocidad vs. Calidad):** Los datos empíricos derriban el mito de que para ir rápido hay que sacrificar calidad. Velocidad y estabilidad van de la mano: el camino a la velocidad es el software de alta calidad; el camino a la alta calidad es la velocidad del feedback; y el camino hacia ambos es una ingeniería disciplinada (Continuous Delivery).
 
 ### Aplicando estabilidad y throughput
