@@ -23,9 +23,10 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 
 | Nombre                                                         | Descripción |
 | -------------------------------------------------------------- | ----------- |
-| [Guía 1 — Seccion 1](isw/guias/guia1/parte1/) | Terminada.  |
-| [Guía 1 — Seccion 2](isw/guias/guia1/parte2/guia1-parte2.md)  | Terminada.  |
-| [Guía 2 — Sacar ifs y codigo repetido](isw/guias/guia2/)       | Terminada.  |
+| [Guía 1 — Seccion 1](isw/guias/parte1/parte1/) | Terminada.  |
+| [Guía 1 — Seccion 2](isw/guias/parte1/parte2/guia1-parte2.md)  | Terminada.  |
+| [Guía 2 — Sacar ifs y codigo repetido](isw/guias/parte2/)       | Terminada.  |
+| [Guía 3 — TDD y Patrones de diseño](isw/guias/parte3/)       | En proceso.  |
 
 ### Resúmenes
 
@@ -114,3 +115,4 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 |[Clase7 — Resumen](complejidad-computacional/resumenes/clase7-resumen.md)|Espacio usado por un cómputo, espacio polinomial y teorema de Savicth. |
 |[Clase8 — Resumen](complejidad-computacional/resumenes/clase8-resumen.md)| Espacio logarítmicos y Teorema de Immerman-Szelepcsényi. |
 |[Clase9 — Resumen](complejidad-computacional/resumenes/clase9-resumen.md)| Jerarquía Polinomial y propiedades de la misma. |
+|[Clase10 — Resumen](complejidad-computacional/resumenes/clase10-resumen.md)| Máquinas con oráculo, Teorema de Baker, Gill, Solovay y jerarquía polinomial y NP con oráculos. |
