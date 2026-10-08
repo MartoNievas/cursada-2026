@@ -30,25 +30,27 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 
 ### Resúmenes
 
-| Nombre                                                                                                                                    | Descripción                                                                                             |
-| ----------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| [Resumen Teórico — Primer parcial](isw/resumen-teoricas/teorica-primer-parcial.md)                                                        | Resumen teorico de clase primer parcial.                                                                |
-| [Resumen Teórico —  Segundo parcial](isw/resumen-teoricas/teorica-segundo-parcial.md)                                                     | Resumen teorico del segundo parcial. (No terminado, hasta TDD)                                          |
-| [Resumen Method Lookup, Metamodelo y Excepciones](isw/resumen-teoricas/metamodelo-method-lookup-excepciones.md)                           | Meta-modelo de Smalltalk, algoritmo Method Lookup y Excepciones como mecanismo de error. (No terminado) |
-|[Cultures of Programming: The Development of Programming Concepts and Methodologies](isw/resumenes-papers/Cultures-of-Programming-The-Development-of-Programming-Concepts-and-Methodologies.md)| Resumen del prefacio y capitulo 1 del libro Cultures of Programming: The Development of Programming Concepts and Methodologies. |Cultures of Programming: The Development of Programming Concepts and Methodologies. |
-| [Programming as Theory Building](isw/resumenes-papers/Programming-as-Theory-Building.md)                                                  | Resumen del paper de Peter Naur.                                                                        |
-|[Blue Book: Capitulos 6, 7 y 8.](isw/resumenes-papers/Blue-Book.md)| Resumen de los capitulos 6, 7 y 8 del libro Blue Book|
-| [The Design of Everyday Things](isw/resumenes-papers/Norman-The-Desing-of-Everyday-Things.md)                                             | Resumen del libro de Donald Norman.                                                                     |
-| [No Silver Bullet](isw/resumenes-papers/No-Silver-Bullets.md)                                                                             | Resumen del paper de Fred Brooks.                                                                       |
-| [Self: The Power Of Simplicity](isw/resumenes-papers/Self:The-Power-Of-Simplicity.md)                                                     | Resumen del paper SELF: The Power of Simplicity de David Ungar y Randall B. Smith.                      |
-| [Desing Principles Behind Smalltalk](isw/resumenes-papers/Desing-Principles-Behind-Smalltalk.md)                                          | Resumen del paper Desgin Principles Behind Smalltalk de Daniel H. Ingalls.                              |
-| [Polymorphic Hierarchy](isw/resumenes-papers/Polymorphic-Hierarchy.md)                                                                    | Resumen del paper Polymorphic Hierarchy de Bobby Woolf.                                                 |
-| [A Simple Technique for Handling Multiple Polymorphism](isw/resumenes-papers/A-Simple-Technique-for-Handling-Multiple-Polymorphism.md) | Resumen del paper A Simple Technique for Handling Multiple Polymorphism.                              |
-| [Null Pattern Object](isw/resumenes-papers/Null-Pattern-Object.md) | Resumen del paper Null Pattern Object de Bobby Woolf.                              |
-| [Method Object](/isw/resumenes-papers/Method-Objetc.md) | Resumen del capitulo 3 del libro Smalltalk Best Practic Patterns de Kent Beck.                              |
-| [Object Recursion](isw/resumenes-papers/Object-Recursion.md) | Resumen del paper Object Recursion de Bobby Woolf.                              |
-| [Modern Software Engineering](/isw/resumenes-papers/Modern-Software-Engineering.md) | Resumen de los capitulos 1, 2 y 3 del libro Modern Software Engineering de David Farley                              |
-
+| Nombre | Descripción |
+| --- | --- |
+| [Resumen Teórico — Primer parcial](isw/resumen-teoricas/teorica-primer-parcial.md) | Resumen teórico de clase del primer parcial. |
+| [Resumen Teórico — Segundo parcial](isw/resumen-teoricas/teorica-segundo-parcial.md) | Resumen teórico del segundo parcial. (No terminado, hasta TDD) |
+| [Resumen Method Lookup, Metamodelo y Excepciones](isw/resumen-teoricas/metamodelo-method-lookup-excepciones.md) | Metamodelo de Smalltalk, algoritmo Method Lookup y excepciones como mecanismo de error. (No terminado) |
+| [Cultures of Programming: The Development of Programming Concepts and Methodologies](isw/resumenes-papers/Cultures-of-Programming-The-Development-of-Programming-Concepts-and-Methodologies.md) | Resumen del prefacio y del capítulo 1 del libro Cultures of Programming: The Development of Programming Concepts and Methodologies. |
+| [Programming as Theory Building](isw/resumenes-papers/Programming-as-Theory-Building.md) | Resumen del paper de Peter Naur. |
+| [Blue Book: Capítulos 6, 7 y 8](isw/resumenes-papers/Blue-Book.md) | Resumen de los capítulos 6, 7 y 8 del libro Blue Book. |
+| [The Design of Everyday Things](isw/resumenes-papers/Norman-The-Desing-of-Everyday-Things.md) | Resumen del libro de Donald Norman. |
+| [No Silver Bullet](isw/resumenes-papers/No-Silver-Bullets.md) | Resumen del paper de Fred Brooks. |
+| [Self: The Power of Simplicity](isw/resumenes-papers/Self:The-Power-Of-Simplicity.md) | Resumen del paper Self: The Power of Simplicity de David Ungar y Randall B. Smith. |
+| [Design Principles Behind Smalltalk](isw/resumenes-papers/Desing-Principles-Behind-Smalltalk.md) | Resumen del paper Design Principles Behind Smalltalk de Daniel H. Ingalls. |
+| [Polymorphic Hierarchy](isw/resumenes-papers/Polymorphic-Hierarchy.md) | Resumen del paper Polymorphic Hierarchy de Bobby Woolf. |
+| [A Simple Technique for Handling Multiple Polymorphism](isw/resumenes-papers/A-Simple-Technique-for-Handling-Multiple-Polymorphism.md) | Resumen del paper A Simple Technique for Handling Multiple Polymorphism. |
+| [Null Object Pattern](isw/patrones/Null-Pattern-Object.md) | Resumen del paper Null Object Pattern de Bobby Woolf. |
+| [Method Object](isw/patrones/Method-Objetc.md) | Resumen del capítulo 3 del libro Smalltalk Best Practice Patterns de Kent Beck. |
+| [Object Recursion](isw/patrones/Object-Recursion.md) | Resumen del paper Object Recursion de Bobby Woolf. |
+| [Modern Software Engineering](isw/resumenes-papers/Modern-Software-Engineering.md) | Resumen de los capítulos 1, 2 y 3 del libro Modern Software Engineering de David Farley. |
+| [Patrón State](isw/patrones/State.md) | Resumen del patrón **State** del GoF. |
+| [Patrón Strategy](isw/patrones/Strategy.md) | Resumen del patrón **Strategy** del GoF. |
+| [Patrón Template Method](isw/patrones/Template-Method.md) | Resumen del patrón **Template Method** del GoF. |
 
 ### Primeros parciales
 
