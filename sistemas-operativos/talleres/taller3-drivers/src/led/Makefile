@@ -1,4 +1,4 @@
-obj-m := hello.o
+obj-m := led.o
 KVERSION := $(shell uname -r)
 
 all:

@@ -1,4 +1,4 @@
-obj-m := azar.o
+obj-m := clave_valor.o
 KVERSION := $(shell uname -r)
 
 all:

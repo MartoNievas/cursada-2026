@@ -1,0 +1,11 @@
+make: Entering directory '/tmp/taller-drivers/nulo'
+make -C /lib/modules/6.1.0-53-amd64/build M=/tmp/taller-drivers/nulo modules
+make[1]: Entering directory '/usr/src/linux-headers-6.1.0-53-amd64'
+  CC [M]  /tmp/taller-drivers/nulo/nulo.o
+  MODPOST /tmp/taller-drivers/nulo/Module.symvers
+  CC [M]  /tmp/taller-drivers/nulo/nulo.mod.o
+  LD [M]  /tmp/taller-drivers/nulo/nulo.ko
+  BTF [M] /tmp/taller-drivers/nulo/nulo.ko
+make[1]: Leaving directory '/usr/src/linux-headers-6.1.0-53-amd64'
+make: Leaving directory '/tmp/taller-drivers/nulo'
+compilado (adentro de la VM, no aparece del lado host): /tmp/taller-drivers/nulo/nulo.ko

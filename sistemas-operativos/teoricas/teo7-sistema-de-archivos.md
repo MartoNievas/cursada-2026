@@ -13,6 +13,18 @@ El proceso de booteo o arranque es la secuencia de eventos que inicia un sistema
 3. **Init/Systemd:** arranca los servicios del sistema.
 4. **Login:** el usuario puede iniciar sesión.
 
+### Master Boot Record - MBR
+
+Es un esquema tradicional de particiona, asociado normalmente al arranque mediante **BIOS**, el primer sector del disco contiene el código de arranque y una tabla de particiones. Permite hasta 4 particiones primarias, con sectores lógicos de 512 bytes, permite direccionar aproximadamente 2 TB de disco.
+
+### Guid Partition Table - GPT
+
+Es un esquema moderno de particionado, asociado normalmente al arranque mediante **UEFI** (Unlimited Extensible Firmware Interface), permite discos y particiones de mayor tamaño que **MBR**, admite muchas más particiones 128 es lo habitual.
+
+### GRand Unified Bootloaded - GRUB
+
+**GRUB** permite elegir entre múltiples sistemas operativos, en **Linux** carga el kernel y le pasa el control. Es ampliamente configurable.
+
 ---
 
 ## 2. Archivos y Sistema de Archivos
