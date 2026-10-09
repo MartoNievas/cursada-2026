@@ -1,253 +1,113 @@
-!classDefinition: #CardinalPoint category: #MarsRover!
-Object subclass: #CardinalPoint
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'MarsRover'!
-
-!CardinalPoint methodsFor: 'evaluating' stamp: 'HAW 8/Oct/2026, 1:38:39 am (UTC)'!
-isRepresentedBy: unSimbolo
-	self subclassResponsibility! !
-
-
-!CardinalPoint methodsFor: 'comparing' stamp: 'AP 7/Oct/2026, 2:55:21 pm (UTC)'!
-= unObjeto
-	self == unObjeto ifTrue: [ ^ true ].
-	^ self class == unObjeto class! !
-
-!CardinalPoint methodsFor: 'comparing' stamp: 'AP 7/Oct/2026, 2:54:54 pm (UTC)'!
-hash
-	^ self class hash! !
-
-
-!CardinalPoint methodsFor: 'step' stamp: 'HAW 8/Oct/2026, 1:39:27 am (UTC)'!
-backwardVector
-	self subclassResponsibility.! !
-
-!CardinalPoint methodsFor: 'step' stamp: 'HAW 8/Oct/2026, 1:39:19 am (UTC)'!
-forwardVector
-	self subclassResponsibility.! !
-
-
-!CardinalPoint methodsFor: 'rotation' stamp: 'HAW 8/Oct/2026, 1:39:09 am (UTC)'!
-rotateLeft
-	self subclassResponsibility! !
-
-!CardinalPoint methodsFor: 'rotation' stamp: 'HAW 8/Oct/2026, 1:39:01 am (UTC)'!
-rotateRigth
-	self subclassResponsibility! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'CardinalPoint class' category: #MarsRover!
-CardinalPoint class
-	instanceVariableNames: ''!
-
-!CardinalPoint class methodsFor: 'instance creation' stamp: 'HAW 8/Oct/2026, 1:38:13 am (UTC)'!
-for: aHeading
-	^ (self subclasses detect: [ :cadaSubclase | cadaSubclase represents: aHeading ]) new! !
-
-
-!classDefinition: #East category: #MarsRover!
-CardinalPoint subclass: #East
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'MarsRover'!
-
-!East methodsFor: 'evaluating' stamp: 'HAW 8/Oct/2026, 1:38:39 am (UTC)'!
-isRepresentedBy: unSimbolo
-	^ unSimbolo = #East! !
-
-
-!East methodsFor: 'step' stamp: 'HAW 8/Oct/2026, 1:39:27 am (UTC)'!
-backwardVector
-	^ -1@0.! !
-
-!East methodsFor: 'step' stamp: 'HAW 8/Oct/2026, 1:39:19 am (UTC)'!
-forwardVector
-	^ 1@0.! !
-
-
-!East methodsFor: 'rotation' stamp: 'HAW 8/Oct/2026, 1:39:09 am (UTC)'!
-rotateLeft
-	^ North new.! !
-
-!East methodsFor: 'rotation' stamp: 'HAW 8/Oct/2026, 1:39:01 am (UTC)'!
-rotateRigth
-	^ South new.! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'East class' category: #MarsRover!
-East class
-	instanceVariableNames: ''!
-
-!East class methodsFor: 'evaluating' stamp: 'HAW 8/Oct/2026, 1:38:13 am (UTC)'!
-represents: aHeading
-	^ aHeading = #East! !
-
-
-!classDefinition: #North category: #MarsRover!
-CardinalPoint subclass: #North
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'MarsRover'!
-
-!North methodsFor: 'evaluating' stamp: 'HAW 8/Oct/2026, 1:38:39 am (UTC)'!
-isRepresentedBy: unSimbolo
-	^ unSimbolo = #North! !
-
-
-!North methodsFor: 'step' stamp: 'HAW 8/Oct/2026, 1:39:27 am (UTC)'!
-backwardVector
-	^ 0@-1.! !
-
-!North methodsFor: 'step' stamp: 'HAW 8/Oct/2026, 1:39:19 am (UTC)'!
-forwardVector
-	^ 0@1.! !
-
-
-!North methodsFor: 'rotation' stamp: 'HAW 8/Oct/2026, 1:39:09 am (UTC)'!
-rotateLeft
-	^ West new.! !
-
-!North methodsFor: 'rotation' stamp: 'HAW 8/Oct/2026, 1:39:01 am (UTC)'!
-rotateRigth
-	^ East new.! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'North class' category: #MarsRover!
-North class
-	instanceVariableNames: ''!
-
-!North class methodsFor: 'evaluating' stamp: 'HAW 8/Oct/2026, 1:38:13 am (UTC)'!
-represents: aHeading
-	^ aHeading = #North! !
-
-
-!classDefinition: #South category: #MarsRover!
-CardinalPoint subclass: #South
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'MarsRover'!
-
-!South methodsFor: 'evaluating' stamp: 'HAW 8/Oct/2026, 1:38:40 am (UTC)'!
-isRepresentedBy: unSimbolo
-	^ unSimbolo = #South! !
-
-
-!South methodsFor: 'step' stamp: 'HAW 8/Oct/2026, 1:39:27 am (UTC)'!
-backwardVector
-	^ 0@1.! !
-
-!South methodsFor: 'step' stamp: 'HAW 8/Oct/2026, 1:39:19 am (UTC)'!
-forwardVector
-	^ 0@-1.! !
-
-
-!South methodsFor: 'rotation' stamp: 'HAW 8/Oct/2026, 1:39:09 am (UTC)'!
-rotateLeft
-	^ East new.! !
-
-!South methodsFor: 'rotation' stamp: 'HAW 8/Oct/2026, 1:39:01 am (UTC)'!
-rotateRigth
-	^ West new.! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'South class' category: #MarsRover!
-South class
-	instanceVariableNames: ''!
-
-!South class methodsFor: 'evaluating' stamp: 'HAW 8/Oct/2026, 1:38:13 am (UTC)'!
-represents: aHeading
-	^ aHeading = #South! !
-
-
-!classDefinition: #West category: #MarsRover!
-CardinalPoint subclass: #West
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'MarsRover'!
-
-!West methodsFor: 'evaluating' stamp: 'HAW 8/Oct/2026, 1:38:40 am (UTC)'!
-isRepresentedBy: unSimbolo
-	^ unSimbolo = #West! !
-
-
-!West methodsFor: 'step' stamp: 'HAW 8/Oct/2026, 1:39:27 am (UTC)'!
-backwardVector
-	^ 1@0.! !
-
-!West methodsFor: 'step' stamp: 'HAW 8/Oct/2026, 1:39:19 am (UTC)'!
-forwardVector
-	^ -1@0.! !
-
-
-!West methodsFor: 'rotation' stamp: 'HAW 8/Oct/2026, 1:39:09 am (UTC)'!
-rotateLeft
-	^ South new.! !
-
-!West methodsFor: 'rotation' stamp: 'HAW 8/Oct/2026, 1:39:01 am (UTC)'!
-rotateRigth
-	^ North new.! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'West class' category: #MarsRover!
-West class
-	instanceVariableNames: ''!
-
-!West class methodsFor: 'evaluating' stamp: 'HAW 8/Oct/2026, 1:38:13 am (UTC)'!
-represents: aHeading
-	^ aHeading = #West! !
-
-
 !classDefinition: #MarsRover category: #MarsRover!
 Object subclass: #MarsRover
-	instanceVariableNames: 'position heading'
+	instanceVariableNames: 'position head'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'MarsRover'!
 
-!MarsRover methodsFor: 'initialization' stamp: 'MNW 8/Oct/2026, 1:30:00 am (UTC)'!
-initializeAt: aPosition heading: aHeading
+!MarsRover methodsFor: 'error handling' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+invalidCommandErrorDescription
+	^ 'Invalid command'! !
+
+!MarsRover methodsFor: 'error handling' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+signalInvalidCommand
+	self error: self invalidCommandErrorDescription! !
+
+
+!MarsRover methodsFor: 'initialization' stamp: 'HAW 9/Oct/2026, 11:02:30 am (UTC)'!
+initializeAt: aPosition heading: aHeadingSymbol
 	position := aPosition.
-	heading := aHeading.! !
+	head := (self class headingClassFor: aHeadingSymbol) for: self.! !
 
 
-!MarsRover methodsFor: 'testing' stamp: 'HAW 8/Oct/2026, 1:38:40 am (UTC)'!
-isAt: aPosition heading: aHeading
-	^ (position = aPosition) and: [ heading isRepresentedBy: aHeading ]! !
+!MarsRover methodsFor: 'heading changes' stamp: 'HAW 9/Oct/2026, 11:02:30 am (UTC)'!
+pointEast
+	head := MarsRoverHeadingEast for: self! !
+
+!MarsRover methodsFor: 'heading changes' stamp: 'HAW 9/Oct/2026, 11:02:30 am (UTC)'!
+pointNorth
+	head := MarsRoverHeadingNorth for: self! !
+
+!MarsRover methodsFor: 'heading changes' stamp: 'HAW 9/Oct/2026, 11:02:30 am (UTC)'!
+pointSouth
+	head := MarsRoverHeadingSouth for: self! !
+
+!MarsRover methodsFor: 'heading changes' stamp: 'HAW 9/Oct/2026, 11:02:30 am (UTC)'!
+pointWest
+	head := MarsRoverHeadingWest for: self! !
 
 
-!MarsRover methodsFor: 'asserting' stamp: 'HAW 8/Oct/2026, 1:35:36 am (UTC)'!
-acceptedCommands
-	^ #($f $b $l $r)! !
+!MarsRover methodsFor: 'rotating' stamp: 'HAW 9/Oct/2026, 11:02:30 am (UTC)'!
+rotateLeft
+	head rotateLeft! !
 
-!MarsRover methodsFor: 'asserting' stamp: 'HAW 8/Oct/2026, 1:37:51 am (UTC)'!
-assertIsValidCommand: aCommand
-	(self acceptedCommands includes: aCommand) ifFalse: [ self error: MarsRover invalidCommandErrorDescription ].! !
+!MarsRover methodsFor: 'rotating' stamp: 'HAW 9/Oct/2026, 11:02:30 am (UTC)'!
+rotateRight
+	head rotateRight! !
 
 
-!MarsRover methodsFor: 'process' stamp: 'HAW 8/Oct/2026, 1:36:16 am (UTC)'!
-process: unPaqueteDeComandos
-	unPaqueteDeComandos do: [ :comando |
-		self assertIsValidCommand: comando.
-		self processCommand: comando.
-	].! !
+!MarsRover methodsFor: 'testing' stamp: 'HAW 9/Oct/2026, 11:02:30 am (UTC)'!
+isAt: aPosition heading: aHeadingSymbol
+	| expectedHeadingClass |
+	expectedHeadingClass := self class headingClassFor: aHeadingSymbol.
+	^ (position = aPosition) & (head isHeading: expectedHeadingClass)! !
 
-!MarsRover methodsFor: 'process' stamp: 'HAW 8/Oct/2026, 1:39:27 am (UTC)'!
-processCommand: aCommand
-	(aCommand = $f) ifTrue: [ position := position + heading forwardVector ].
-	(aCommand = $b) ifTrue: [ position := position + heading backwardVector ].
-	(aCommand = $l) ifTrue: [ heading := heading rotateLeft ].
-	(aCommand = $r) ifTrue: [ heading := heading rotateRigth ].! !
+
+!MarsRover methodsFor: 'command matching' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+isBackwardCommand: aCharacter
+	^ aCharacter = $b! !
+
+!MarsRover methodsFor: 'command matching' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+isForwardCommand: aCharacter
+	^ aCharacter = $f! !
+
+!MarsRover methodsFor: 'command matching' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+isRotateLeftCommand: aCharacter
+	^ aCharacter = $l! !
+
+!MarsRover methodsFor: 'command matching' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+isRotateRightCommand: aCharacter
+	^ aCharacter = $r! !
+
+
+!MarsRover methodsFor: 'moving' stamp: 'HAW 9/Oct/2026, 11:02:30 am (UTC)'!
+stepBackward
+	head stepBackward! !
+
+!MarsRover methodsFor: 'moving' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+stepEast
+	position := position + (1@0)! !
+
+!MarsRover methodsFor: 'moving' stamp: 'HAW 9/Oct/2026, 11:02:30 am (UTC)'!
+stepForward
+	head stepForward! !
+
+!MarsRover methodsFor: 'moving' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+stepNorth
+	position := position + (0@1)! !
+
+!MarsRover methodsFor: 'moving' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+stepSouth
+	position := position + (0@-1)! !
+
+!MarsRover methodsFor: 'moving' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+stepWest
+	position := position + (-1@0)! !
+
+
+!MarsRover methodsFor: 'processing' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+process: aSequenceOfCommands
+	aSequenceOfCommands do: [ :aCommand | self processSingleCommand: aCommand ]! !
+
+!MarsRover methodsFor: 'processing' stamp: 'HAW 9/Oct/2026, 11:02:46 am (UTC)'!
+processSingleCommand: aCommand
+
+	(self isForwardCommand: aCommand) ifTrue: [ ^ self stepForward ].
+	(self isBackwardCommand: aCommand) ifTrue: [ ^ self stepBackward ].
+	(self isRotateRightCommand: aCommand) ifTrue: [ ^ self rotateRight ].
+	(self isRotateLeftCommand: aCommand) ifTrue: [ ^ self rotateLeft ].
+
+	self signalInvalidCommand.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -255,14 +115,208 @@ processCommand: aCommand
 MarsRover class
 	instanceVariableNames: ''!
 
-!MarsRover class methodsFor: 'instance creation' stamp: 'HAW 8/Oct/2026, 1:37:59 am (UTC)'!
-at: aPosition heading: aHeading
-	^ self new initializeAt: aPosition heading: (CardinalPoint for: aHeading)! !
+!MarsRover class methodsFor: 'instance creation' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+at: aPosition heading: aHeadingSymbol
+	^ self new initializeAt: aPosition heading: aHeadingSymbol! !
 
 
-!MarsRover class methodsFor: 'error messages' stamp: 'HAW 8/Oct/2026, 1:37:51 am (UTC)'!
-invalidCommandErrorDescription
-	^ 'Algun comando del paquete es invalido, abortando ejecucion'.! !
+!MarsRover class methodsFor: 'heading mapping' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+headingClassFor: aHeadingSymbol
+	| headingClasses |
+	headingClasses := { MarsRoverHeadingNorth. MarsRoverHeadingSouth. MarsRoverHeadingEast. MarsRoverHeadingWest }.
+	^ headingClasses
+		detect: [ :aClass | aClass matchesSymbol: aHeadingSymbol ]
+		ifNone: [ self error: 'Unknown cardinal point symbol' ]! !
+
+
+!classDefinition: #MarsRoverHeading category: #MarsRover!
+Object subclass: #MarsRoverHeading
+	instanceVariableNames: 'rover'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'MarsRover'!
+
+!MarsRoverHeading methodsFor: 'moving' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+stepBackward
+	self subclassResponsibility! !
+
+!MarsRoverHeading methodsFor: 'moving' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+stepForward
+	self subclassResponsibility! !
+
+
+!MarsRoverHeading methodsFor: 'rotating' stamp: 'HAW 9/Oct/2026, 11:01:11 am (UTC)'!
+rotateLeft
+	self subclassResponsibility! !
+
+!MarsRoverHeading methodsFor: 'rotating' stamp: 'HAW 9/Oct/2026, 11:01:41 am (UTC)'!
+rotateRight
+	self subclassResponsibility! !
+
+
+!MarsRoverHeading methodsFor: 'testing' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+isHeading: aHeadingClass
+	^ self isKindOf: aHeadingClass! !
+
+
+!MarsRoverHeading methodsFor: 'initialization' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+initializeFor: aMarsRover
+	rover := aMarsRover.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'MarsRoverHeading class' category: #MarsRover!
+MarsRoverHeading class
+	instanceVariableNames: ''!
+
+!MarsRoverHeading class methodsFor: 'instance creation' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+for: aMarsRover
+	^ self new initializeFor: aMarsRover! !
+
+
+!MarsRoverHeading class methodsFor: 'testing' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+matchesSymbol: aSymbol
+	self subclassResponsibility! !
+
+
+!classDefinition: #MarsRoverHeadingEast category: #MarsRover!
+MarsRoverHeading subclass: #MarsRoverHeadingEast
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'MarsRover'!
+
+!MarsRoverHeadingEast methodsFor: 'moving' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+stepBackward
+	^ rover stepWest! !
+
+!MarsRoverHeadingEast methodsFor: 'moving' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+stepForward
+	^ rover stepEast! !
+
+
+!MarsRoverHeadingEast methodsFor: 'rotating' stamp: 'HAW 9/Oct/2026, 11:01:11 am (UTC)'!
+rotateLeft
+	^ rover pointNorth! !
+
+!MarsRoverHeadingEast methodsFor: 'rotating' stamp: 'HAW 9/Oct/2026, 11:01:41 am (UTC)'!
+rotateRight
+	^ rover pointSouth! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'MarsRoverHeadingEast class' category: #MarsRover!
+MarsRoverHeadingEast class
+	instanceVariableNames: ''!
+
+!MarsRoverHeadingEast class methodsFor: 'testing' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+matchesSymbol: aSymbol
+	^ aSymbol = #East! !
+
+
+!classDefinition: #MarsRoverHeadingNorth category: #MarsRover!
+MarsRoverHeading subclass: #MarsRoverHeadingNorth
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'MarsRover'!
+
+!MarsRoverHeadingNorth methodsFor: 'moving' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+stepBackward
+	^ rover stepSouth! !
+
+!MarsRoverHeadingNorth methodsFor: 'moving' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+stepForward
+	^ rover stepNorth! !
+
+
+!MarsRoverHeadingNorth methodsFor: 'rotating' stamp: 'HAW 9/Oct/2026, 11:01:11 am (UTC)'!
+rotateLeft
+	^ rover pointWest! !
+
+!MarsRoverHeadingNorth methodsFor: 'rotating' stamp: 'HAW 9/Oct/2026, 11:01:41 am (UTC)'!
+rotateRight
+	^ rover pointEast! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'MarsRoverHeadingNorth class' category: #MarsRover!
+MarsRoverHeadingNorth class
+	instanceVariableNames: ''!
+
+!MarsRoverHeadingNorth class methodsFor: 'testing' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+matchesSymbol: aSymbol
+	^ aSymbol = #North! !
+
+
+!classDefinition: #MarsRoverHeadingSouth category: #MarsRover!
+MarsRoverHeading subclass: #MarsRoverHeadingSouth
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'MarsRover'!
+
+!MarsRoverHeadingSouth methodsFor: 'moving' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+stepBackward
+	^ rover stepNorth! !
+
+!MarsRoverHeadingSouth methodsFor: 'moving' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+stepForward
+	^ rover stepSouth! !
+
+
+!MarsRoverHeadingSouth methodsFor: 'rotating' stamp: 'HAW 9/Oct/2026, 11:01:11 am (UTC)'!
+rotateLeft
+	^ rover pointEast! !
+
+!MarsRoverHeadingSouth methodsFor: 'rotating' stamp: 'HAW 9/Oct/2026, 11:01:41 am (UTC)'!
+rotateRight
+	^ rover pointWest! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'MarsRoverHeadingSouth class' category: #MarsRover!
+MarsRoverHeadingSouth class
+	instanceVariableNames: ''!
+
+!MarsRoverHeadingSouth class methodsFor: 'testing' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+matchesSymbol: aSymbol
+	^ aSymbol = #South! !
+
+
+!classDefinition: #MarsRoverHeadingWest category: #MarsRover!
+MarsRoverHeading subclass: #MarsRoverHeadingWest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'MarsRover'!
+
+!MarsRoverHeadingWest methodsFor: 'moving' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+stepBackward
+	^ rover stepEast! !
+
+!MarsRoverHeadingWest methodsFor: 'moving' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+stepForward
+	^ rover stepWest! !
+
+
+!MarsRoverHeadingWest methodsFor: 'rotating' stamp: 'HAW 9/Oct/2026, 11:01:11 am (UTC)'!
+rotateLeft
+	^ rover pointSouth! !
+
+!MarsRoverHeadingWest methodsFor: 'rotating' stamp: 'HAW 9/Oct/2026, 11:01:41 am (UTC)'!
+rotateRight
+	^ rover pointNorth! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'MarsRoverHeadingWest class' category: #MarsRover!
+MarsRoverHeadingWest class
+	instanceVariableNames: ''!
+
+!MarsRoverHeadingWest class methodsFor: 'testing' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+matchesSymbol: aSymbol
+	^ aSymbol = #West! !
 
 
 !classDefinition: #TestMarsRover category: #MarsRover!
@@ -272,8 +326,8 @@ TestCase subclass: #TestMarsRover
 	poolDictionaries: ''
 	category: 'MarsRover'!
 
-!TestMarsRover methodsFor: 'tests' stamp: 'HAW 8/Oct/2026, 1:42:43 am (UTC)'!
-test01EmptyCommandSequenceDoesNothing
+!TestMarsRover methodsFor: 'tests' stamp: 'HAW 9/Oct/2026, 10:57:25 am (UTC)'!
+test01WhenCommandIsEmptyDoesNothing
 	| rover |
 	rover := MarsRover at: 0@0 heading: #North.
 
@@ -281,106 +335,146 @@ test01EmptyCommandSequenceDoesNothing
 
 	self assert: (rover isAt: 0@0 heading: #North).! !
 
-!TestMarsRover methodsFor: 'tests' stamp: 'HAW 8/Oct/2026, 1:43:15 am (UTC)'!
-test02CommandFMovesSouthWhenHeadingSouth
-	| rover |
-	rover := MarsRover at: 0@0 heading: #South.
-
-	rover process: 'f'.
-
-	self assert: (rover isAt: 0@-1 heading: #South).! !
-
-!TestMarsRover methodsFor: 'tests' stamp: 'HAW 8/Oct/2026, 1:43:34 am (UTC)'!
-test03CommandFMovesEastWhenHeadingEast
-	| rover |
-	rover := MarsRover at: 0@0 heading: #East.
-
-	rover process: 'f'.
-
-	self assert: (rover isAt: 1@0 heading: #East).! !
-
-!TestMarsRover methodsFor: 'tests' stamp: 'HAW 8/Oct/2026, 1:43:49 am (UTC)'!
-test04CommandFMovesNorthWhenHeadingNorth
+!TestMarsRover methodsFor: 'tests' stamp: 'HAW 9/Oct/2026, 10:55:42 am (UTC)'!
+test02IsAtDenyForDifferentPosition
 	| rover |
 	rover := MarsRover at: 0@0 heading: #North.
 
+	self deny: (rover isAt: 1@1 heading: #North).! !
+
+!TestMarsRover methodsFor: 'tests' stamp: 'HAW 9/Oct/2026, 10:55:49 am (UTC)'!
+test03IsAtDenyForDifferentHeading
+	| rover |
+	rover := MarsRover at: 1@1 heading: #North.
+
+	self deny: (rover isAt: 1@1 heading: #East).! !
+
+!TestMarsRover methodsFor: 'tests' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+test04MovingForwardWhenHeadingNorthIncrementsY
+	| rover |
+	rover := MarsRover at: 1@2 heading: #North.
+
 	rover process: 'f'.
 
-	self assert: (rover isAt: 0@1 heading: #North).! !
+	self assert: (rover isAt: 1@3 heading: #North).! !
 
-!TestMarsRover methodsFor: 'tests' stamp: 'HAW 8/Oct/2026, 1:44:02 am (UTC)'!
-test05CommandFMovesWestWhenHeadingWest
+!TestMarsRover methodsFor: 'tests' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+test05MovingBackwardWhenHeadingNorthDecrementsY
 	| rover |
-	rover := MarsRover at: 0@0 heading: #West.
+	rover := MarsRover at: 1@2 heading: #North.
 
-	rover process: 'f'.
+	rover process: 'b'.
 
-	self assert: (rover isAt: -1@0 heading: #West).! !
+	self assert: (rover isAt: 1@1 heading: #North).! !
 
-!TestMarsRover methodsFor: 'tests' stamp: 'HAW 8/Oct/2026, 1:44:22 am (UTC)'!
-test06CommandFRepeatedMovesMultipleTimesInHeadingDirection
+!TestMarsRover methodsFor: 'tests' stamp: 'HAW 9/Oct/2026, 11:00:09 am (UTC)'!
+test06RotatingRightWhileHeadingNorthPointsEast
 	| rover |
-	rover := MarsRover at: 0@0 heading: #North.
+	rover := MarsRover at: 1@2 heading: #North.
+
+	rover process: 'r'.
+
+	self assert: (rover isAt: 1@2 heading: #East).! !
+
+!TestMarsRover methodsFor: 'tests' stamp: 'HAW 9/Oct/2026, 11:00:17 am (UTC)'!
+test07RotatingLeftWhileHeadingNorthPointsWest
+	| rover |
+	rover := MarsRover at: 1@2 heading: #North.
+
+	rover process: 'l'.
+
+	self assert: (rover isAt: 1@2 heading: #West).! !
+
+!TestMarsRover methodsFor: 'tests' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+test08InvalidCommandAbortsExecutionAndSignalsError
+	| rover |
+	rover := MarsRover at: 1@2 heading: #North.
+
+	self should: [ rover process: 'x' ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText equals: rover invalidCommandErrorDescription.
+			self assert: (rover isAt: 1@2 heading: #North) ].! !
+
+!TestMarsRover methodsFor: 'tests' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+test09MultipleForwardCommandsExecuteSequentially
+	| rover |
+	rover := MarsRover at: 1@2 heading: #North.
 
 	rover process: 'ff'.
 
+	self assert: (rover isAt: 1@4 heading: #North).! !
+
+!TestMarsRover methodsFor: 'tests' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+test10MovingForwardWhenHeadingEastIncrementsX
+	| rover |
+	rover := MarsRover at: 1@2 heading: #East.
+
+	rover process: 'f'.
+
+	self assert: (rover isAt: 2@2 heading: #East).! !
+
+!TestMarsRover methodsFor: 'tests' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+test11MovingBackwardWhenHeadingEastDecrementsX
+	| rover |
+	rover := MarsRover at: 1@2 heading: #East.
+
+	rover process: 'b'.
+
+	self assert: (rover isAt: 0@2 heading: #East).! !
+
+!TestMarsRover methodsFor: 'tests' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+test12RotatingRightWhenHeadingEastPointsSouth
+	| rover |
+	rover := MarsRover at: 1@2 heading: #East.
+
+	rover process: 'r'.
+
+	self assert: (rover isAt: 1@2 heading: #South).! !
+
+!TestMarsRover methodsFor: 'tests' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+test13RotatingLeftWhenHeadingEastPointsNorth
+	| rover |
+	rover := MarsRover at: 1@2 heading: #East.
+
+	rover process: 'l'.
+
+	self assert: (rover isAt: 1@2 heading: #North).! !
+
+!TestMarsRover methodsFor: 'tests' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+test14MovingAndRotatingSequencesWorkAsExpectedWhenPointingSouth
+	| rover |
+	rover := MarsRover at: 1@2 heading: #South.
+
+	rover process: 'ffblrr'.
+
+	self assert: (rover isAt: 1@1 heading: #West).! !
+
+!TestMarsRover methodsFor: 'tests' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+test15MovingAndRotatingSequencesWorkAsExpectedWhenPointingWest
+	| rover |
+	rover := MarsRover at: 1@2 heading: #West.
+
+	rover process: 'ffblrr'.
+
 	self assert: (rover isAt: 0@2 heading: #North).! !
 
-!TestMarsRover methodsFor: 'tests' stamp: 'HAW 8/Oct/2026, 1:44:30 am (UTC)'!
-test07CommandBMovesBackwardInHeadingDirection
+!TestMarsRover methodsFor: 'tests' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+test16InvalidCommandStopsProcessingRemainingSequenceAtFailurePoint
 	| rover |
 	rover := MarsRover at: 0@0 heading: #North.
 
-	rover process: 'bbbff'.
-
-	self assert: (rover isAt: 0@-1 heading: #North).! !
-
-!TestMarsRover methodsFor: 'tests' stamp: 'HAW 8/Oct/2026, 1:44:40 am (UTC)'!
-test08CommandLChangesHeadingToWestFromNorth
-	| rover |
-	rover := MarsRover at: 0@0 heading: #North.
-
-	rover process: 'l'.
-
-	self assert: (rover isAt: 0@0 heading: #West).! !
-
-!TestMarsRover methodsFor: 'tests' stamp: 'HAW 8/Oct/2026, 1:44:47 am (UTC)'!
-test09CommandLChangesHeadingToSouthFromWest
-	| rover |
-	rover := MarsRover at: 0@0 heading: #West.
-
-	rover process: 'l'.
-
-	self assert: (rover isAt: 0@0 heading: #South).! !
-
-!TestMarsRover methodsFor: 'tests' stamp: 'HAW 8/Oct/2026, 1:44:52 am (UTC)'!
-test10CommandLRepeatedRotatesCounterClockwise
-	| rover |
-	rover := MarsRover at: 0@0 heading: #South.
-
-	rover process: 'lll'.
-
-	self assert: (rover isAt: 0@0 heading: #West).! !
-
-!TestMarsRover methodsFor: 'tests' stamp: 'HAW 8/Oct/2026, 1:45:05 am (UTC)'!
-test11CommandRRepeatedRotatesClockwise
-	| rover |
-	rover := MarsRover at: 0@0 heading: #South.
-
-	rover process: 'rrr'.
-
-	self assert: (rover isAt: 0@0 heading: #East).! !
-
-!TestMarsRover methodsFor: 'tests' stamp: 'HAW 8/Oct/2026, 1:45:11 am (UTC)'!
-test12InvalidCommandStopsProcessingRemainingSequence
-	| rover |
-	rover := MarsRover at: 0@0 heading: #North.
-
-	self should: [ rover process: 'frflfbXffff'. ]
+	self should: [ rover process: 'frflfbXffff' ]
 		raise: Error - MessageNotUnderstood
 		withExceptionDo: [ :anException |
-			self assert: anException messageText equals: MarsRover invalidCommandErrorDescription.
-		].
+			self assert: anException messageText equals: rover invalidCommandErrorDescription ].
 
 	self assert: (rover isAt: 1@1 heading: #North).! !
-(Smalltalk at: #qq__ ifAbsentPut: [OrderedCollection new]) add: (#(54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 54 74 124 112 122 80 116 104 110 108 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 54 74 124 112 122 80 116 104 110 108 54 74 124 112 122 92 117 112 125 108 121 122 112 123 128 62 53 64 52 63 56 61 61 53 112 116 104 110 108 17 124 117 112 127 17 83 112 117 124 127 39 62 53 56 53 60 52 104 121 106 111 56 52 57 17 127 63 61 102 61 59 17 86 119 108 117 39 90 116 104 115 115 123 104 115 114 39 74 118 110 98 90 119 124 121 100 39 93 84 39 98 83 112 125 108 91 128 119 112 117 110 74 118 80 117 123 108 121 119 121 108 123 108 121 39 49 39 93 84 84 104 114 108 121 53 118 122 106 118 110 52 79 72 94 53 58 62 63 55 100 17 95 56 56 17 92 117 112 127 39 105 124 112 115 123 39 118 117 39 72 124 110 39 56 63 39 57 55 57 61 39 56 63 65 59 64 65 59 57 39 74 118 116 119 112 115 108 121 65 39 56 56 53 59 53 55 17 83 112 125 108 91 128 119 112 117 110 74 118 80 117 123 108 121 119 121 108 123 108 121 39 49 39 93 84 84 104 114 108 121 53 118 122 106 118 110 52 79 72 94 53 58 62 63 55 39 124 124 112 107 65 39 106 57 62 108 59 59 64 104 52 64 107 104 55 52 59 57 60 107 52 63 108 61 64 52 63 56 108 62 107 59 104 59 55 106 109 63 39 72 124 110 39 56 63 39 57 55 57 61 17 83 112 125 108 91 128 119 112 117 110 74 118 110 112 123 39 49 39 93 84 84 104 114 108 121 53 118 122 106 118 110 52 79 72 94 53 58 62 63 55 39 124 124 112 107 65 39 106 57 62 108 59 59 64 104 52 64 107 104 55 52 59 57 60 107 52 63 108 61 64 52 63 56 108 62 107 59 104 59 55 106 109 63 39 72 124 110 39 56 63 39 57 55 57 61 17 93 84 65 39 57 55 57 61 55 62 57 64 56 59 56 56 52 115 112 125 108 123 128 119 112 117 110 52 105 124 112 115 107 52 119 121 118 106 108 122 122 39 121 118 118 123 71 59 56 106 104 104 107 56 104 59 62 56 59 65 54 126 118 121 114 39 75 104 123 108 65 39 94 108 107 39 81 124 115 39 57 64 39 56 56 65 56 56 65 58 56 39 57 55 57 61 39 74 118 116 116 112 123 79 104 122 111 65 39 61 64 55 108 106 105 57 61 58 39 87 115 124 110 112 117 122 65 39 57 55 57 61 55 62 57 64 56 59 56 56 52 115 112 125 108 123 128 119 112 117 110 52 105 124 112 115 107 52 119 121 118 106 108 122 122 39 121 118 118 123 71 59 56 106 104 104 107 56 104 59 62 56 59 65 54 126 118 121 114 17 199 175 8 20 17 56 64 57 53 56 61 63 53 56 53 56 58 17 104 121 106 111 115 112 117 124 127 52 107 108 122 114 123 118 119 17 104 121 106 111 115 112 117 124 127 52 107 108 122 114 123 118 119 17 52 52 52 52 52 52 52 52 52 52 17 17 52 52 52 52 52 52 52 52 52 52 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 57 91 56 56 65 55 57 65 56 59 53 64 60 63 63 63 62 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 52 92 122 108 121 77 112 115 108 122 54 77 112 115 108 86 124 123 122 54 57 55 57 60 52 57 74 52 56 108 121 87 104 121 106 112 104 115 53 122 123 17 57 61 63 63 60 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 57 91 56 56 65 60 56 65 56 59 53 60 59 63 60 63 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 52 92 122 108 121 77 112 115 108 122 54 77 112 115 108 86 124 123 122 54 57 55 57 60 52 57 74 52 56 108 121 87 104 121 106 112 104 115 53 122 123 17 57 63 64 58 62 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 57 91 56 63 65 58 59 65 56 60 53 60 57 55 57 63 63 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 52 92 122 108 121 77 112 115 108 122 54 77 112 115 108 86 124 123 122 54 57 55 57 60 52 57 74 52 56 108 121 87 104 121 106 112 104 115 53 122 123 17 58 56 55 61 59 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 57 91 56 63 65 59 59 65 56 55 53 59 61 55 62 63 60 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 52 92 122 108 121 77 112 115 108 122 54 77 112 115 108 86 124 123 122 54 57 55 57 60 52 57 74 52 56 108 121 87 104 121 106 112 104 115 53 122 123 17 58 56 60 57 55 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 57 91 56 63 65 59 61 65 56 59 53 57 60 58 64 57 59 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 52 92 122 108 121 77 112 115 108 122 54 77 112 115 108 86 124 123 122 54 57 55 57 60 52 57 74 52 56 108 121 87 104 121 106 112 104 115 53 122 123 17 58 56 60 57 56 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 59 91 56 56 65 56 61 65 56 59 53 59 55 60 58 62 59 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 52 92 122 108 121 77 112 115 108 122 54 77 112 115 108 86 124 123 122 54 57 55 57 60 52 57 74 52 56 108 121 87 104 121 106 112 104 115 53 122 123 17 58 56 58 64 61 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 59 91 56 56 65 57 61 65 60 61 53 63 61 64 56 64 62 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 52 92 122 108 121 77 112 115 108 122 54 77 112 115 108 86 124 123 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 106 118 117 80 109 122 52 57 53 122 123 17 58 60 59 62 55 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 59 91 56 56 65 57 62 65 56 64 53 57 57 59 64 60 64 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 52 92 122 108 121 77 112 115 108 122 54 77 112 115 108 86 124 123 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 106 118 117 80 109 122 52 57 53 122 123 17 58 60 59 62 55 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 59 91 56 57 65 60 57 65 57 58 53 60 64 63 57 57 59 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 52 92 122 108 121 77 112 115 108 122 54 77 112 115 108 86 124 123 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 106 118 117 80 109 122 52 57 53 122 123 17 58 64 55 62 59 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 59 91 56 59 65 60 59 65 56 61 53 63 55 56 58 55 60 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 52 92 122 108 121 77 112 115 108 122 54 77 112 115 108 86 124 123 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 106 118 117 80 109 122 52 57 53 122 123 17 59 59 61 62 56 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 59 91 56 64 65 60 63 65 58 61 53 64 60 64 61 60 59 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 52 92 122 108 121 77 112 115 108 122 54 77 112 115 108 86 124 123 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 106 118 117 80 109 122 52 57 53 122 123 17 59 60 62 63 57 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 59 91 56 64 65 60 64 65 56 59 53 58 60 57 60 60 60 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 106 118 117 80 109 122 52 57 53 122 123 17 59 60 62 63 57 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 59 91 57 55 65 55 55 65 57 61 53 58 64 57 62 63 62 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 59 60 62 63 57 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 60 91 56 55 65 56 58 65 57 57 53 58 61 60 64 56 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 60 56 63 64 64 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 60 91 56 55 65 57 59 65 60 56 53 59 57 63 62 64 57 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 60 57 57 62 59 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 60 91 56 55 65 59 62 65 55 56 53 62 63 55 61 61 56 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 60 58 62 62 61 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 60 91 56 56 65 55 63 65 59 63 53 57 59 57 55 57 56 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 60 62 55 64 59 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 60 91 56 57 65 59 57 65 59 58 53 64 64 59 57 59 61 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 59 62 62 55 62 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 60 91 56 58 65 56 61 65 59 57 53 58 64 60 57 59 64 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 60 56 60 58 56 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 60 91 56 59 65 56 56 65 56 57 53 55 58 64 56 60 61 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 61 55 60 62 56 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 60 91 56 59 65 57 55 65 60 57 53 55 61 55 55 57 56 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 61 55 62 63 62 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 60 91 56 59 65 58 61 65 55 61 53 62 64 64 61 55 57 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 61 57 58 57 58 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 60 91 56 59 65 58 63 65 57 55 53 58 63 62 61 61 57 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 61 57 58 57 58 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 60 91 56 59 65 60 56 65 57 64 53 61 58 63 57 60 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 61 57 60 58 64 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 61 91 55 64 65 60 60 65 59 64 53 55 64 59 59 60 59 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 60 61 56 56 63 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 61 91 56 55 65 60 59 65 57 56 53 57 64 63 56 61 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 60 63 61 57 63 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 61 91 56 55 65 60 61 65 58 60 53 63 64 63 59 58 62 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 60 63 61 64 58 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 61 91 56 58 65 57 55 65 55 56 53 63 57 55 63 61 64 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 60 52 56 74 54 80 90 94 52 87 104 121 106 112 104 115 56 52 56 74 57 60 52 122 118 115 124 106 112 118 117 52 106 118 117 80 109 122 53 122 123 17 17 58 55 56 57 62 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 61 91 56 58 65 57 55 65 58 55 53 62 59 61 62 62 61 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 60 52 56 74 54 80 90 94 52 87 104 121 106 112 104 115 56 52 56 74 57 60 52 122 118 115 124 106 112 118 117 52 106 118 117 80 109 122 53 122 123 17 58 55 56 57 62 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 63 91 56 55 65 55 56 65 59 59 53 57 63 57 63 60 57 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 111 118 115 104 53 122 123 17 58 56 62 62 61 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 63 91 56 55 65 58 63 65 55 55 53 56 64 59 60 59 58 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 60 52 56 74 54 80 90 94 52 87 104 121 106 112 104 115 56 52 56 74 57 60 52 122 118 115 124 106 112 118 117 52 106 118 117 80 109 122 53 122 123 17 58 61 62 59 57 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 63 91 56 57 65 56 62 65 60 56 53 62 58 64 60 59 60 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 60 52 56 74 54 80 90 94 52 87 104 121 106 112 104 115 56 52 56 74 57 60 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 59 58 59 56 57 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 63 91 56 57 65 57 58 65 56 64 53 57 62 63 59 63 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 60 52 56 74 54 80 90 94 52 87 104 121 106 112 104 115 56 52 56 74 57 60 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 59 58 58 57 57 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 64 91 56 56 65 55 62 65 55 58 53 63 61 56 55 55 63 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 59 52 57 74 54 57 55 57 59 52 57 74 52 87 104 121 106 112 104 115 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 56 61 60 58 59 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 64 91 56 56 65 59 60 65 55 60 53 58 64 55 57 57 57 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 59 52 57 74 54 57 55 57 59 52 57 74 52 87 104 121 106 112 104 115 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 56 64 55 64 61 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 64 91 56 56 65 60 62 65 55 64 53 60 55 62 57 56 64 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 59 52 57 74 54 57 55 57 59 52 57 74 52 87 104 121 106 112 104 115 52 56 53 122 123 17 56 63 58 56 61 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 64 91 56 56 65 60 62 65 58 56 53 62 61 57 62 61 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 59 52 57 74 54 57 55 57 59 52 57 74 52 87 104 121 106 112 104 115 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 56 63 58 56 61 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 64 91 56 57 65 56 55 65 60 56 53 64 55 56 59 63 64 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 59 52 57 74 54 57 55 57 59 52 57 74 52 87 104 121 106 112 104 115 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 56 63 61 62 57 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 64 91 56 57 65 56 57 65 55 56 53 62 55 62 64 61 57 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 59 52 57 74 54 57 55 57 59 52 57 74 52 87 104 121 106 112 104 115 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 56 63 61 62 64 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 64 91 56 57 65 56 57 65 58 61 53 60 60 55 56 55 60 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 59 52 57 74 54 57 55 57 59 52 57 74 52 87 104 121 106 112 104 115 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 56 63 61 62 60 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 64 91 56 57 65 60 56 65 55 62 53 57 57 57 62 56 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 59 52 57 74 54 57 55 57 59 52 57 74 52 87 104 121 106 112 104 115 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 56 63 60 61 56 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 64 91 56 57 65 60 58 65 57 62 53 55 55 56 56 56 60 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 59 52 57 74 54 57 55 57 59 52 57 74 52 87 104 121 106 112 104 115 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 56 63 60 57 61 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 57 56 91 56 61 65 59 57 65 59 61 53 60 64 64 63 59 64 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 111 118 115 104 53 122 123 17 56 57 61 58 56 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 57 56 91 56 62 65 57 56 65 57 63 53 59 56 64 62 61 59 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 80 90 94 56 52 57 55 57 59 52 56 74 52 87 104 121 106 112 104 115 52 56 53 122 123 17 56 61 61 60 62 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 57 56 91 56 63 65 58 58 65 56 57 53 57 59 57 60 56 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 80 90 94 56 52 57 55 57 59 52 56 74 52 87 104 121 106 112 104 115 52 56 53 122 123 17 57 56 59 55 58 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 57 56 91 56 63 65 60 63 65 58 64 53 57 56 55 58 57 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 80 90 94 56 52 57 55 57 59 52 56 74 52 87 104 121 106 112 104 115 52 56 53 122 123 17 57 60 55 63 57 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 57 56 91 56 64 65 55 63 65 60 60 53 59 59 55 61 57 58 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 59 52 56 74 54 80 90 94 56 52 57 55 57 59 52 56 74 52 87 104 121 106 112 104 115 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 57 59 56 56 61 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 56 55 52 55 62 91 57 57 65 57 60 65 60 64 53 64 55 62 59 58 56 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 59 52 56 74 54 84 104 121 122 89 118 125 108 121 53 122 123 17 56 56 55 64 57 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 56 55 52 55 62 91 57 57 65 59 62 65 57 62 53 64 55 58 55 60 62 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 119 104 121 123 108 58 54 55 56 52 116 104 121 122 52 121 118 125 108 121 54 84 104 121 122 89 118 125 108 121 17 56 55 63 63 56 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 56 55 52 55 62 91 57 57 65 59 62 65 59 63 53 60 60 58 57 64 63 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 119 104 121 123 108 58 54 55 56 52 116 104 121 122 52 121 118 125 108 121 54 84 104 121 122 89 118 125 108 121 53 122 123 17 56 55 63 63 56 17 52 52 52 52 52 52 52 52 52 52 17 17))!
+
+!TestMarsRover methodsFor: 'tests' stamp: 'MNW 9/Oct/2026, 3:30:00 am (UTC)'!
+test17CannotInstantiateRoverWithUnknownHeadingSymbol
+	self should: [ MarsRover at: 0@0 heading: #InvalidDirection ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText equals: 'Unknown cardinal point symbol' ].! !
+(Smalltalk at: #qq__ ifAbsentPut: [OrderedCollection new]) add: (#(54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 54 74 124 112 122 80 116 104 110 108 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 54 74 124 112 122 80 116 104 110 108 54 74 124 112 122 92 117 112 125 108 121 122 112 123 128 62 53 64 52 63 56 61 61 53 112 116 104 110 108 17 124 117 112 127 17 83 112 117 124 127 39 62 53 56 53 60 52 104 121 106 111 56 52 57 17 127 63 61 102 61 59 17 86 119 108 117 39 90 116 104 115 115 123 104 115 114 39 74 118 110 98 90 119 124 121 100 39 93 84 39 98 83 112 125 108 91 128 119 112 117 110 74 118 80 117 123 108 121 119 121 108 123 108 121 39 49 39 93 84 84 104 114 108 121 53 118 122 106 118 110 52 79 72 94 53 58 62 63 55 100 17 95 56 56 17 92 117 112 127 39 105 124 112 115 123 39 118 117 39 72 124 110 39 56 63 39 57 55 57 61 39 56 63 65 59 64 65 59 57 39 74 118 116 119 112 115 108 121 65 39 56 56 53 59 53 55 17 83 112 125 108 91 128 119 112 117 110 74 118 80 117 123 108 121 119 121 108 123 108 121 39 49 39 93 84 84 104 114 108 121 53 118 122 106 118 110 52 79 72 94 53 58 62 63 55 39 124 124 112 107 65 39 106 57 62 108 59 59 64 104 52 64 107 104 55 52 59 57 60 107 52 63 108 61 64 52 63 56 108 62 107 59 104 59 55 106 109 63 39 72 124 110 39 56 63 39 57 55 57 61 17 83 112 125 108 91 128 119 112 117 110 74 118 110 112 123 39 49 39 93 84 84 104 114 108 121 53 118 122 106 118 110 52 79 72 94 53 58 62 63 55 39 124 124 112 107 65 39 106 57 62 108 59 59 64 104 52 64 107 104 55 52 59 57 60 107 52 63 108 61 64 52 63 56 108 62 107 59 104 59 55 106 109 63 39 72 124 110 39 56 63 39 57 55 57 61 17 93 84 65 39 57 55 57 61 55 62 57 64 56 59 56 56 52 115 112 125 108 123 128 119 112 117 110 52 105 124 112 115 107 52 119 121 118 106 108 122 122 39 121 118 118 123 71 59 56 106 104 104 107 56 104 59 62 56 59 65 54 126 118 121 114 39 75 104 123 108 65 39 94 108 107 39 81 124 115 39 57 64 39 56 56 65 56 56 65 58 56 39 57 55 57 61 39 74 118 116 116 112 123 79 104 122 111 65 39 61 64 55 108 106 105 57 61 58 39 87 115 124 110 112 117 122 65 39 57 55 57 61 55 62 57 64 56 59 56 56 52 115 112 125 108 123 128 119 112 117 110 52 105 124 112 115 107 52 119 121 118 106 108 122 122 39 121 118 118 123 71 59 56 106 104 104 107 56 104 59 62 56 59 65 54 126 118 121 114 17 199 175 8 20 17 56 64 57 53 56 61 63 53 56 53 56 58 17 104 121 106 111 115 112 117 124 127 52 107 108 122 114 123 118 119 17 104 121 106 111 115 112 117 124 127 52 107 108 122 114 123 118 119 17 52 52 52 52 52 52 52 52 52 52 17 17 52 52 52 52 52 52 52 52 52 52 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 57 91 56 56 65 55 57 65 56 59 53 64 60 63 63 63 62 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 52 92 122 108 121 77 112 115 108 122 54 77 112 115 108 86 124 123 122 54 57 55 57 60 52 57 74 52 56 108 121 87 104 121 106 112 104 115 53 122 123 17 57 61 63 63 60 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 57 91 56 56 65 60 56 65 56 59 53 60 59 63 60 63 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 52 92 122 108 121 77 112 115 108 122 54 77 112 115 108 86 124 123 122 54 57 55 57 60 52 57 74 52 56 108 121 87 104 121 106 112 104 115 53 122 123 17 57 63 64 58 62 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 57 91 56 63 65 58 59 65 56 60 53 60 57 55 57 63 63 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 52 92 122 108 121 77 112 115 108 122 54 77 112 115 108 86 124 123 122 54 57 55 57 60 52 57 74 52 56 108 121 87 104 121 106 112 104 115 53 122 123 17 58 56 55 61 59 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 57 91 56 63 65 59 59 65 56 55 53 59 61 55 62 63 60 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 52 92 122 108 121 77 112 115 108 122 54 77 112 115 108 86 124 123 122 54 57 55 57 60 52 57 74 52 56 108 121 87 104 121 106 112 104 115 53 122 123 17 58 56 60 57 55 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 57 91 56 63 65 59 61 65 56 59 53 57 60 58 64 57 59 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 52 92 122 108 121 77 112 115 108 122 54 77 112 115 108 86 124 123 122 54 57 55 57 60 52 57 74 52 56 108 121 87 104 121 106 112 104 115 53 122 123 17 58 56 60 57 56 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 59 91 56 56 65 56 61 65 56 59 53 59 55 60 58 62 59 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 52 92 122 108 121 77 112 115 108 122 54 77 112 115 108 86 124 123 122 54 57 55 57 60 52 57 74 52 56 108 121 87 104 121 106 112 104 115 53 122 123 17 58 56 58 64 61 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 59 91 56 56 65 57 61 65 60 61 53 63 61 64 56 64 62 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 52 92 122 108 121 77 112 115 108 122 54 77 112 115 108 86 124 123 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 106 118 117 80 109 122 52 57 53 122 123 17 58 60 59 62 55 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 59 91 56 56 65 57 62 65 56 64 53 57 57 59 64 60 64 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 52 92 122 108 121 77 112 115 108 122 54 77 112 115 108 86 124 123 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 106 118 117 80 109 122 52 57 53 122 123 17 58 60 59 62 55 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 59 91 56 57 65 60 57 65 57 58 53 60 64 63 57 57 59 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 52 92 122 108 121 77 112 115 108 122 54 77 112 115 108 86 124 123 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 106 118 117 80 109 122 52 57 53 122 123 17 58 64 55 62 59 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 59 91 56 59 65 60 59 65 56 61 53 63 55 56 58 55 60 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 52 92 122 108 121 77 112 115 108 122 54 77 112 115 108 86 124 123 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 106 118 117 80 109 122 52 57 53 122 123 17 59 59 61 62 56 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 59 91 56 64 65 60 63 65 58 61 53 64 60 64 61 60 59 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 112 122 52 92 122 108 121 77 112 115 108 122 54 77 112 115 108 86 124 123 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 106 118 117 80 109 122 52 57 53 122 123 17 59 60 62 63 57 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 59 91 56 64 65 60 64 65 56 59 53 58 60 57 60 60 60 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 106 118 117 80 109 122 52 57 53 122 123 17 59 60 62 63 57 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 59 91 57 55 65 55 55 65 57 61 53 58 64 57 62 63 62 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 59 60 62 63 57 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 60 91 56 55 65 56 58 65 57 57 53 58 61 60 64 56 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 60 56 63 64 64 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 60 91 56 55 65 57 59 65 60 56 53 59 57 63 62 64 57 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 60 57 57 62 59 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 60 91 56 55 65 59 62 65 55 56 53 62 63 55 61 61 56 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 60 58 62 62 61 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 60 91 56 56 65 55 63 65 59 63 53 57 59 57 55 57 56 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 60 62 55 64 59 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 60 91 56 57 65 59 57 65 59 58 53 64 64 59 57 59 61 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 59 62 62 55 62 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 60 91 56 58 65 56 61 65 59 57 53 58 64 60 57 59 64 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 60 56 60 58 56 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 60 91 56 59 65 56 56 65 56 57 53 55 58 64 56 60 61 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 61 55 60 62 56 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 60 91 56 59 65 57 55 65 60 57 53 55 61 55 55 57 56 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 61 55 62 63 62 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 60 91 56 59 65 58 61 65 55 61 53 62 64 64 61 55 57 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 61 57 58 57 58 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 60 91 56 59 65 58 63 65 57 55 53 58 63 62 61 61 57 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 61 57 58 57 58 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 60 91 56 59 65 60 56 65 57 64 53 61 58 63 57 60 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 61 57 60 58 64 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 61 91 55 64 65 60 60 65 59 64 53 55 64 59 59 60 59 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 60 61 56 56 63 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 61 91 56 55 65 60 59 65 57 56 53 57 64 63 56 61 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 60 63 61 57 63 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 61 91 56 55 65 60 61 65 58 60 53 63 64 63 59 58 62 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 110 124 112 104 57 54 55 62 52 119 108 117 104 115 108 122 54 119 108 117 104 115 108 122 52 108 127 108 121 106 112 122 108 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 60 63 61 64 58 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 61 91 56 58 65 57 55 65 55 56 53 63 57 55 63 61 64 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 60 52 56 74 54 80 90 94 52 87 104 121 106 112 104 115 56 52 56 74 57 60 52 122 118 115 124 106 112 118 117 52 106 118 117 80 109 122 53 122 123 17 17 58 55 56 57 62 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 61 91 56 58 65 57 55 65 58 55 53 62 59 61 62 62 61 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 60 52 56 74 54 80 90 94 52 87 104 121 106 112 104 115 56 52 56 74 57 60 52 122 118 115 124 106 112 118 117 52 106 118 117 80 109 122 53 122 123 17 58 55 56 57 62 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 63 91 56 55 65 55 56 65 59 59 53 57 63 57 63 60 57 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 111 118 115 104 53 122 123 17 58 56 62 62 61 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 63 91 56 55 65 58 63 65 55 55 53 56 64 59 60 59 58 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 60 52 56 74 54 80 90 94 52 87 104 121 106 112 104 115 56 52 56 74 57 60 52 122 118 115 124 106 112 118 117 52 106 118 117 80 109 122 53 122 123 17 58 61 62 59 57 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 63 91 56 57 65 56 62 65 60 56 53 62 58 64 60 59 60 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 60 52 56 74 54 80 90 94 52 87 104 121 106 112 104 115 56 52 56 74 57 60 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 59 58 59 56 57 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 63 91 56 57 65 57 58 65 56 64 53 57 62 63 59 63 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 60 52 56 74 54 80 90 94 52 87 104 121 106 112 104 115 56 52 56 74 57 60 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 59 58 58 57 57 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 64 91 56 56 65 55 62 65 55 58 53 63 61 56 55 55 63 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 59 52 57 74 54 57 55 57 59 52 57 74 52 87 104 121 106 112 104 115 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 56 61 60 58 59 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 64 91 56 56 65 59 60 65 55 60 53 58 64 55 57 57 57 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 59 52 57 74 54 57 55 57 59 52 57 74 52 87 104 121 106 112 104 115 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 56 64 55 64 61 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 64 91 56 56 65 60 62 65 55 64 53 60 55 62 57 56 64 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 59 52 57 74 54 57 55 57 59 52 57 74 52 87 104 121 106 112 104 115 52 56 53 122 123 17 56 63 58 56 61 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 64 91 56 56 65 60 62 65 58 56 53 62 61 57 62 61 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 59 52 57 74 54 57 55 57 59 52 57 74 52 87 104 121 106 112 104 115 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 56 63 58 56 61 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 64 91 56 57 65 56 55 65 60 56 53 64 55 56 59 63 64 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 59 52 57 74 54 57 55 57 59 52 57 74 52 87 104 121 106 112 104 115 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 56 63 61 62 57 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 64 91 56 57 65 56 57 65 55 56 53 62 55 62 64 61 57 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 59 52 57 74 54 57 55 57 59 52 57 74 52 87 104 121 106 112 104 115 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 56 63 61 62 64 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 64 91 56 57 65 56 57 65 58 61 53 60 60 55 56 55 60 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 59 52 57 74 54 57 55 57 59 52 57 74 52 87 104 121 106 112 104 115 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 56 63 61 62 60 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 64 91 56 57 65 60 56 65 55 62 53 57 57 57 62 56 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 59 52 57 74 54 57 55 57 59 52 57 74 52 87 104 121 106 112 104 115 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 56 63 60 61 56 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 56 64 91 56 57 65 60 58 65 57 62 53 55 55 56 56 56 60 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 59 52 57 74 54 57 55 57 59 52 57 74 52 87 104 121 106 112 104 115 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 56 63 60 57 61 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 57 56 91 56 61 65 59 57 65 59 61 53 60 64 64 63 59 64 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 111 118 115 104 53 122 123 17 56 57 61 58 56 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 57 56 91 56 62 65 57 56 65 57 63 53 59 56 64 62 61 59 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 80 90 94 56 52 57 55 57 59 52 56 74 52 87 104 121 106 112 104 115 52 56 53 122 123 17 56 61 61 60 62 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 57 56 91 56 63 65 58 58 65 56 57 53 57 59 57 60 56 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 80 90 94 56 52 57 55 57 59 52 56 74 52 87 104 121 106 112 104 115 52 56 53 122 123 17 57 56 59 55 58 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 57 56 91 56 63 65 60 63 65 58 64 53 57 56 55 58 57 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 80 90 94 56 52 57 55 57 59 52 56 74 52 87 104 121 106 112 104 115 52 56 53 122 123 17 57 60 55 63 57 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 55 64 52 57 56 91 56 64 65 55 63 65 60 60 53 59 59 55 61 57 58 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 59 52 56 74 54 80 90 94 56 52 57 55 57 59 52 56 74 52 87 104 121 106 112 104 115 52 122 118 115 124 106 112 118 117 52 122 112 117 80 109 122 52 57 53 122 123 17 57 59 56 56 61 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 56 55 52 55 62 91 57 57 65 57 60 65 60 64 53 64 55 62 59 58 56 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 119 121 112 116 108 121 118 122 52 119 104 121 106 112 104 115 108 122 54 57 55 57 59 52 56 74 54 84 104 121 122 89 118 125 108 121 53 122 123 17 56 56 55 64 57 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 56 55 52 55 62 91 57 57 65 59 62 65 57 62 53 64 55 58 55 60 62 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 119 104 121 123 108 58 54 55 56 52 116 104 121 122 52 121 118 125 108 121 54 84 104 121 122 89 118 125 108 121 17 56 55 63 63 56 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 56 55 52 55 62 91 57 57 65 59 62 65 59 63 53 60 60 58 57 64 63 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 119 104 121 123 108 58 54 55 56 52 116 104 121 122 52 121 118 125 108 121 54 84 104 121 122 89 118 125 108 121 53 122 123 17 56 55 63 63 56 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 56 55 52 55 64 91 55 63 65 55 60 65 57 58 53 61 62 63 63 55 64 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 84 104 121 122 89 118 125 108 121 53 122 123 17 56 59 64 63 56 17 52 52 52 52 52 52 52 52 52 52 17 57 55 57 61 52 56 55 52 55 64 91 55 63 65 55 60 65 59 59 53 63 64 59 57 61 52 55 58 65 55 55 17 54 111 118 116 108 54 116 104 121 123 112 117 54 75 108 122 114 123 118 119 54 106 124 121 122 104 107 104 52 57 55 57 61 54 112 122 126 54 110 124 112 104 122 54 119 104 121 123 108 58 54 55 56 52 116 104 121 122 52 121 118 125 108 121 54 84 104 121 122 89 118 125 108 121 53 122 123 17 56 59 64 63 56 17 52 52 52 52 52 52 52 52 52 52 17 17))!
