@@ -159,11 +159,6 @@ escudosInutilizables
 
 !NaveEspacial methodsFor: 'modificar' stamp: 'HAW 18/Sep/2026, 7:52:07 pm (UTC)'!
 gastoNormalDeCombustible
-<<<<<<< Updated upstream
-
-=======
-	
->>>>>>> Stashed changes
 	^ 10.! !
 
 !NaveEspacial methodsFor: 'modificar' stamp: 'HAW 18/Sep/2026, 1:10:29 pm (UTC)'!
@@ -188,24 +183,13 @@ atravesandoSectorNebulosaConPropulsorDeGravitones: unSectorNebulosa
 	"Consume 3 veces mas de combustible"
 
 	self consumirCombustible: self gastoNormalDeCombustible * 3;
-<<<<<<< Updated upstream
 	aplicarCondicionesDelSector: unSectorNebulosa
-=======
-	aplicarCondicionesDelSector: unSectorNebulosa 
->>>>>>> Stashed changes
+	aplicarCondicionesDelSector: unSectorNebulosa
 ! !
 
 !NaveEspacial methodsFor: 'atravesar - nebulosa' stamp: 'HAW 18/Sep/2026, 7:49:58 pm (UTC)'!
 atravesandoSectorNebulosaConPropulsorDeImpulsoEstandar: unSectorNebulosa
-<<<<<<< Updated upstream
-
 	"Se reduce el escudo en un 30%"
-
-=======
-	
-	"Se reduce el escudo en un 30%"
-	
->>>>>>> Stashed changes
 	self consumoNormalDeCombustible;
 	reducirEscudosEn:  nivelEscudo * 0.30;
 	aplicarCondicionesDelSector: unSectorNebulosa! !
@@ -246,11 +230,7 @@ atravesandoSectorPlanetarioConPropulsorDeVelocidadLuz: unSectorPlanetario
 atravesandoSectorDeAsteroidesConPropulsorDeGravitones: unSectorAsteroides
 
 	"Consume el doble de combustible y aplican todas las condiciones del sector"
-<<<<<<< Updated upstream
 
-=======
-	
->>>>>>> Stashed changes
 	self consumirCombustible: self gastoNormalDeCombustible * 2.
 	self aplicarRadiacionDelSector: unSectorAsteroides! !
 
