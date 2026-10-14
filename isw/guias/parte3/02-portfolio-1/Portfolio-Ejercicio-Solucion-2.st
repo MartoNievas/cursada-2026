@@ -86,8 +86,68 @@ for: aValue
 	^ self new initializeFor: aValue ! !
 
 
+!classDefinition: #FinancialEntity category: #'Portfolio-Ejercicio'!
+Object subclass: #FinancialEntity
+	instanceVariableNames: 'parents'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!FinancialEntity methodsFor: 'transactions' stamp: 'HAW 13/Oct/2026, 10:56:42 pm (UTC)'!
+register: aFinancialEntity
+
+	self subclassResponsibility .! !
+
+!FinancialEntity methodsFor: 'transactions' stamp: 'HAW 13/Oct/2026, 10:56:58 pm (UTC)'!
+transactions
+
+	self subclassResponsibility ! !
+
+
+!FinancialEntity methodsFor: 'testing' stamp: 'HAW 13/Oct/2026, 10:58:44 pm (UTC)'!
+hasRegistered: aTrasaction
+
+	self subclassResponsibility .! !
+
+!FinancialEntity methodsFor: 'testing' stamp: 'HAW 13/Oct/2026, 11:42:07 pm (UTC)'!
+manage: aFinancialEntityToAdd
+
+	self subclassResponsibility .! !
+
+!FinancialEntity methodsFor: 'testing' stamp: 'HAW 14/Oct/2026, 2:30:00 am (UTC)'!
+sharesWith: aFinancialEntity
+
+	self subclassResponsibility .! !
+
+
+!FinancialEntity methodsFor: 'initialization' stamp: 'HAW 14/Oct/2026, 1:29:35 am (UTC)'!
+initialize
+
+	parents := OrderedCollection new.! !
+
+
+!FinancialEntity methodsFor: 'tree structure' stamp: 'HAW 14/Oct/2026, 1:52:41 am (UTC)'!
+becomeChildOf: aPortfolio
+
+	parents add: aPortfolio .! !
+
+!FinancialEntity methodsFor: 'tree structure' stamp: 'HAW 14/Oct/2026, 1:33:18 am (UTC)'!
+roots
+
+	parents ifEmpty: [^ Set with: self].
+	^ parents inject: Set new into: [:allRoots :aParent |
+			allRoots addAll: aParent roots; yourself
+		] .! !
+
+
+!FinancialEntity methodsFor: 'balance' stamp: 'HAW 13/Oct/2026, 10:55:59 pm (UTC)'!
+balance
+
+	self subclassResponsibility .! !
+
+
 !classDefinition: #Portfolio category: #'Portfolio-Ejercicio'!
-Object subclass: #Portfolio
+FinancialEntity subclass: #Portfolio
 	instanceVariableNames: 'financialEntities'
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -100,15 +160,29 @@ balance
 	! !
 
 
-!Portfolio methodsFor: 'register' stamp: 'HAW 11/Oct/2026, 6:58:14 pm (UTC)'!
-register: anAcount
+!Portfolio methodsFor: 'trasactions' stamp: 'HAW 14/Oct/2026, 1:49:13 am (UTC)'!
+assertCanAdd: aFinancialEntityToAdd
 
-	financialEntities add: anAcount .
+	self roots do: [:aRoot |
+			aRoot assertCanAddUnderTree: aFinancialEntityToAdd
+		]! !
+
+!Portfolio methodsFor: 'trasactions' stamp: 'HAW 14/Oct/2026, 1:29:15 am (UTC)'!
+register: aFinancialEntityToAdd
+
+	self assertCanAdd: aFinancialEntityToAdd.
+	aFinancialEntityToAdd becomeChildOf: self.
+	financialEntities add: aFinancialEntityToAdd .
 	! !
 
-!Portfolio methodsFor: 'register' stamp: 'HAW 11/Oct/2026, 7:35:53 pm (UTC)'!
+!Portfolio methodsFor: 'trasactions' stamp: 'HAW 13/Oct/2026, 11:14:29 pm (UTC)'!
+signalCannotAdd
+
+	^ self error: self class cannotAddErrorDescription! !
+
+!Portfolio methodsFor: 'trasactions' stamp: 'HAW 13/Oct/2026, 11:19:04 pm (UTC)'!
 transactions
-	^ financialEntities inject: OrderedCollection new into: [:acc :aFinancialEntity | acc addAll: aFinancialEntity transactions. acc ].
+	^ financialEntities inject: OrderedCollection new into: [:aCollection :aFinancialEntity | aCollection addAll: aFinancialEntity transactions ; yourself ].
 
 ! !
 
@@ -118,23 +192,63 @@ hasRegistered: aTrasaction
 
 	^ financialEntities anySatisfy: [:aFinancialEntity | aFinancialEntity hasRegistered: aTrasaction ] .! !
 
+!Portfolio methodsFor: 'testing' stamp: 'HAW 14/Oct/2026, 1:51:44 am (UTC)'!
+manage: aFinancialEntityToManage
 
-!Portfolio methodsFor: 'initialization' stamp: 'HAW 11/Oct/2026, 6:58:20 pm (UTC)'!
+	^ (self = aFinancialEntityToManage) or: [
+		financialEntities anySatisfy: [ :aFinancialEntity | aFinancialEntity manage: aFinancialEntityToManage ]
+	]! !
+
+!Portfolio methodsFor: 'testing' stamp: 'HAW 13/Oct/2026, 11:15:10 pm (UTC)'!
+numberOfFinancialEntities
+
+	^ financialEntities size.! !
+
+!Portfolio methodsFor: 'testing' stamp: 'HAW 14/Oct/2026, 2:30:10 am (UTC)'!
+sharesWith: aFinancialEntity
+
+	^ (self = aFinancialEntity) or: [
+		financialEntities anySatisfy: [ :each | each sharesWith: aFinancialEntity ]
+	]! !
+
+
+!Portfolio methodsFor: 'initialization' stamp: 'HAW 14/Oct/2026, 1:29:50 am (UTC)'!
 initialize
 
+	super initialize .
 	financialEntities := OrderedCollection new.! !
+
+
+!Portfolio methodsFor: 'asserting' stamp: 'HAW 14/Oct/2026, 2:30:20 am (UTC)'!
+assertCanAddUnderTree: aFinancialEntityToAdd
+
+	(self sharesWith: aFinancialEntityToAdd) ifTrue: [
+		self signalCannotAdd
+	]! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'Portfolio class' category: #'Portfolio-Ejercicio'!
+Portfolio class
+	instanceVariableNames: ''!
+
+!Portfolio class methodsFor: 'error description' stamp: 'HAW 13/Oct/2026, 11:12:28 pm (UTC)'!
+cannotAddErrorDescription
+
+	^ 'Cannot add a financial entity'! !
 
 
 !classDefinition: #ReceptiveAccount category: #'Portfolio-Ejercicio'!
-Object subclass: #ReceptiveAccount
+FinancialEntity subclass: #ReceptiveAccount
 	instanceVariableNames: 'transactions'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!ReceptiveAccount methodsFor: 'initialization' stamp: 'NR 17/Oct/2019, 6:06:56 pm (UTC)'!
+!ReceptiveAccount methodsFor: 'initialization' stamp: 'HAW 14/Oct/2026, 1:29:55 am (UTC)'!
 initialize
 
+	super initialize .
 	transactions := OrderedCollection new.! !
 
 
@@ -161,6 +275,16 @@ hasRegistered: aTransaction
 
 	^ transactions includes: aTransaction
 ! !
+
+!ReceptiveAccount methodsFor: 'testing' stamp: 'HAW 13/Oct/2026, 11:42:21 pm (UTC)'!
+manage: aFinancialEntityToAdd
+
+	^ self = aFinancialEntityToAdd! !
+
+!ReceptiveAccount methodsFor: 'testing' stamp: 'HAW 14/Oct/2026, 2:30:30 am (UTC)'!
+sharesWith: aFinancialEntity
+
+	^ aFinancialEntity manage: self! !
 
 
 !classDefinition: #PortfolioTest category: #'Portfolio-Ejercicio'!
@@ -293,10 +417,10 @@ test08PortfolioKnowsRegisteredTransactionsWhenHavingMultipleAccounts
 
 !PortfolioTest methodsFor: 'test' stamp: 'HAW 12/Oct/2026, 1:47:56 am (UTC)'!
 test09EmptyPortfolioHasNoTransactions
-	
+
 	|portofolio|
 	portofolio := Portfolio new.
-	
+
 	self assert: OrderedCollection new equals: portofolio transactions .! !
 
 !PortfolioTest methodsFor: 'test' stamp: 'HAW 11/Oct/2026, 7:37:59 pm (UTC)'!
@@ -336,6 +460,122 @@ test11PortfolioTransactionsIncludesTransactionsFromAccountsAndNestedPortfolios
 	expectedTransactions := OrderedCollection with: deposit1 with: withdraw1 with: deposit2 with: deposit3.
 
 	self assert: rootPortfolio transactions equals: expectedTransactions.! !
+
+!PortfolioTest methodsFor: 'test' stamp: 'HAW 13/Oct/2026, 11:23:38 pm (UTC)'!
+test12CannotAddDirectlyTheSameFinancialEntityTwice
+
+	| portfolio acount |
+
+	portfolio := Portfolio new.
+	acount := self accountWithBalance: 500.
+
+	portfolio register: acount .
+	self
+	should: [portfolio register: acount ]
+	raise:  Error - MessageNotUnderstood
+	withExceptionDo: [:anError |
+			self assert: anError messageText equals: Portfolio cannotAddErrorDescription.
+			self assert: 1 equals: portfolio numberOfFinancialEntities.
+		]
+
+	! !
+
+!PortfolioTest methodsFor: 'test' stamp: 'HAW 14/Oct/2026, 2:09:29 am (UTC)'!
+test13CannotAddAccountAlreadyContainedInASubPortfolio
+
+	| rootPortfolio account childPortfolio |
+	account := self accountWithBalance: 500.
+	rootPortfolio := Portfolio new.
+	childPortfolio := self createPortfolioWith: account.
+
+	rootPortfolio register: childPortfolio .
+
+	self
+	should: [rootPortfolio register: account ]
+	raise:   Error - MessageNotUnderstood
+	withExceptionDo: [:anError |
+			self assert: anError messageText equals: Portfolio cannotAddErrorDescription .
+			self assert: 1 equals: rootPortfolio numberOfFinancialEntities .
+		]
+
+
+
+
+! !
+
+!PortfolioTest methodsFor: 'test' stamp: 'HAW 14/Oct/2026, 2:10:04 am (UTC)'!
+test14PortfolioCannotAddItself
+
+	| account portfolio |
+	account := self accountWithBalance: 500.
+	portfolio := self createPortfolioWith: account .
+
+	self
+	should: [portfolio register: portfolio ]
+	raise:  Error - MessageNotUnderstood
+	withExceptionDo: [:anError |
+			self assert: anError messageText equals: Portfolio cannotAddErrorDescription .
+			self assert: 1 equals: portfolio numberOfFinancialEntities .
+		]! !
+
+!PortfolioTest methodsFor: 'test' stamp: 'HAW 14/Oct/2026, 2:10:44 am (UTC)'!
+test15ChildPortfolioCannotAddAccountAlreadyContainerInParent
+
+	| account rootPortfolio childPortfolio|
+	account := self accountWithBalance: 500.
+	rootPortfolio := self createPortfolioWith: account .
+	childPortfolio := Portfolio new.
+	rootPortfolio register: childPortfolio .
+
+	self
+	should: [childPortfolio register: account ]
+	raise:  Error - MessageNotUnderstood
+	withExceptionDo: [:anError |
+			self assert: anError messageText equals: Portfolio cannotAddErrorDescription .
+			self assert: 0 equals: childPortfolio numberOfFinancialEntities .
+			self assert: 2 equals: rootPortfolio numberOfFinancialEntities .
+		]! !
+
+!PortfolioTest methodsFor: 'test' stamp: 'HAW 14/Oct/2026, 2:10:57 am (UTC)'!
+test16ChildPortfolioCannotAddAccountAlreadyContainedInGrandParent
+
+	| account rootPortfolio childPortfolio1 childPortfolio2 |
+	account := self accountWithBalance: 500.
+	rootPortfolio := self createPortfolioWith: account .
+	childPortfolio1 := Portfolio new.
+	childPortfolio2 := Portfolio new.
+	childPortfolio1 register: childPortfolio2 .
+	rootPortfolio register: childPortfolio1 .
+
+
+	self
+	should: [childPortfolio2 register: account ]
+	raise:  Error - MessageNotUnderstood
+	withExceptionDo: [:anError |
+			self assert: anError messageText equals: Portfolio cannotAddErrorDescription .
+			self assert: 2 equals: rootPortfolio numberOfFinancialEntities .
+			self assert: 1 equals: childPortfolio1 numberOfFinancialEntities .
+			self assert: 0 equals: childPortfolio2 numberOfFinancialEntities .
+		]! !
+
+!PortfolioTest methodsFor: 'test' stamp: 'HAW 14/Oct/2026, 1:26:29 am (UTC)'!
+test17CannotAddPortfolioWhenSharingAnAccountWithAnotherRegisteredPortfolio
+
+	| account portfolio1 portfolio2 rootPortfolio |
+	account := self accountWithBalance: 500.
+	portfolio1 := self createPortfolioWith: account.
+	portfolio2 := self createPortfolioWith: account.
+
+	rootPortfolio := Portfolio new.
+	rootPortfolio register: portfolio1.
+
+	self
+		should: [ rootPortfolio register: portfolio2 ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText equals: Portfolio cannotAddErrorDescription.
+			self assert: 1 equals: rootPortfolio numberOfFinancialEntities.
+		]! !
 
 
 !classDefinition: #ReceptiveAccountTest category: #'Portfolio-Ejercicio'!
