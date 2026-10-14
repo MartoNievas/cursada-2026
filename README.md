@@ -51,7 +51,7 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | [Patrón State](isw/patrones/State.md) | Resumen del patrón **State** del GoF. |
 | [Patrón Strategy](isw/patrones/Strategy.md) | Resumen del patrón **Strategy** del GoF. |
 | [Patrón Template Method](isw/patrones/Template-Method.md) | Resumen del patrón **Template Method** del GoF. |
-
+| [Respuesta de Alan Kay en Quora](isw/resumenes-papers/Respuesta-Alan-Kay-En-Quara.md)| Respuesta sobre las ciencias de la computacion de Alan Kay en Quora|
 ### Primeros parciales
 
 | Fecha | Nombre |
