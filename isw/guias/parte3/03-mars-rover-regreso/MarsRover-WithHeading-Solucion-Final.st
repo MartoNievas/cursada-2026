@@ -361,15 +361,27 @@ rotateRight
 
 !classDefinition: #MarsRoverLogger category: #'MarsRover-WithHeading'!
 Object subclass: #MarsRoverLogger
-	instanceVariableNames: 'marsRover log'
+	instanceVariableNames: 'log'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'MarsRover-WithHeading'!
 
-!MarsRoverLogger methodsFor: 'initialization' stamp: 'HAW 17/Oct/2026, 12:07:10 pm (UTC)'!
-initializeFor: aRover
+!MarsRoverLogger methodsFor: 'initialization' stamp: 'HAW 19/Oct/2026, 6:13:09 pm (UTC)'!
+followingHeadingChangesOn: aMarsRover
 
-	marsRover := aRover.
+	aMarsRover addObserverForHeading: [:aNewHeading | self headingChangedTo: aNewHeading ].
+
+	! !
+
+!MarsRoverLogger methodsFor: 'initialization' stamp: 'HAW 19/Oct/2026, 6:13:02 pm (UTC)'!
+followingPostionChangesOn: aMarsRover
+
+	aMarsRover addObserverForPosition: [:aNewPosition | self positionChangedTo: aNewPosition ].
+	! !
+
+!MarsRoverLogger methodsFor: 'initialization' stamp: 'HAW 19/Oct/2026, 6:12:22 pm (UTC)'!
+initialize
+
 	log := WriteStream on: ''.
 ! !
 
@@ -387,17 +399,6 @@ positionChangedTo: aPostionToChange
 	log nextPutAll: aPostionToChange asString; newLine .
 
 	! !
-
-
-!MarsRoverLogger methodsFor: 'subscriptions' stamp: 'HAW 17/Oct/2026, 10:38:05 pm (UTC)'!
-followHeading
-
-	marsRover addObserverForHeading: [:aNewHeading | self headingChangedTo: aNewHeading ].! !
-
-!MarsRoverLogger methodsFor: 'subscriptions' stamp: 'HAW 17/Oct/2026, 12:07:10 pm (UTC)'!
-followPosition
-
-	marsRover addObserverForPosition: [:aNewHeading | self positionChangedTo: aNewHeading ].! !
 
 
 !MarsRoverLogger methodsFor: 'log reading' stamp: 'AP 15/Oct/2026, 3:05:05 pm (UTC)'!
@@ -431,59 +432,71 @@ formatWest: aMarsRoverObserver
 MarsRoverLogger class
 	instanceVariableNames: ''!
 
-!MarsRoverLogger class methodsFor: 'instance creation' stamp: 'AP 15/Oct/2026, 3:06:57 pm (UTC)'!
-for: aRover
-	^ self new initializeFor: aRover.! !
+!MarsRoverLogger class methodsFor: 'instance creation' stamp: 'HAW 19/Oct/2026, 6:11:58 pm (UTC)'!
+followHeadingChangesOn: aMarsRover
+
+	^ self new followingHeadingChangesOn: aMarsRover .! !
+
+!MarsRoverLogger class methodsFor: 'instance creation' stamp: 'HAW 19/Oct/2026, 6:12:05 pm (UTC)'!
+followPositionAndHeadingChangesOn: aMarsRover
+
+	^ self new followingHeadingChangesOn: aMarsRover ;followingPostionChangesOn: aMarsRover ! !
+
+!MarsRoverLogger class methodsFor: 'instance creation' stamp: 'HAW 19/Oct/2026, 6:12:08 pm (UTC)'!
+followPositionChangesOn: aMarsRover
+
+		^self new followingPostionChangesOn: aMarsRover ! !
 
 
 !classDefinition: #MarsRoverStatusWindow category: #'MarsRover-WithHeading'!
 Object subclass: #MarsRoverStatusWindow
-	instanceVariableNames: 'marsRover textFieldPosition textFieldHeading'
+	instanceVariableNames: 'positionTextFieldModel headingTextFieldModel'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'MarsRover-WithHeading'!
 
-!MarsRoverStatusWindow methodsFor: 'text fields' stamp: 'HAW 17/Oct/2026, 10:53:10 am (UTC)'!
-textFieldHeading
+!MarsRoverStatusWindow methodsFor: 'text fields' stamp: 'HAW 19/Oct/2026, 6:15:48 pm (UTC)'!
+headingTextFieldModel
 
-	^ textFieldHeading .! !
+	^ headingTextFieldModel .! !
 
-!MarsRoverStatusWindow methodsFor: 'text fields' stamp: 'HAW 17/Oct/2026, 10:53:19 am (UTC)'!
-textFieldPosition
+!MarsRoverStatusWindow methodsFor: 'text fields' stamp: 'HAW 19/Oct/2026, 6:15:55 pm (UTC)'!
+positionTextFieldModel
 
-	^ textFieldPosition ! !
-
-
-!MarsRoverStatusWindow methodsFor: 'initialization' stamp: 'HAW 17/Oct/2026, 12:45:49 am (UTC)'!
-initializeFor: aMarsRover
-
-	marsRover := aMarsRover.
-	textFieldPosition := ''.
-	textFieldHeading := ''.! !
+	^ positionTextFieldModel ! !
 
 
-!MarsRoverStatusWindow methodsFor: 'events' stamp: 'HAW 17/Oct/2026, 10:34:26 pm (UTC)'!
-newHeading: aHeadingToChange
+!MarsRoverStatusWindow methodsFor: 'initialization' stamp: 'HAW 19/Oct/2026, 6:08:21 pm (UTC)'!
+followingHeadingChangesOn: aMarsRover
 
-	textFieldHeading := aHeadingToChange formatOn: self.
+	aMarsRover addObserverForHeading: [:aNewHeading | self newHeading: aNewHeading ].
 
 	! !
 
-!MarsRoverStatusWindow methodsFor: 'events' stamp: 'HAW 17/Oct/2026, 10:35:02 pm (UTC)'!
+!MarsRoverStatusWindow methodsFor: 'initialization' stamp: 'HAW 19/Oct/2026, 6:10:36 pm (UTC)'!
+followingPostionChangesOn: aMarsRover
+
+	aMarsRover addObserverForPosition: [:aNewPosition | self newPosition: aNewPosition ].
+	! !
+
+!MarsRoverStatusWindow methodsFor: 'initialization' stamp: 'HAW 19/Oct/2026, 6:15:55 pm (UTC)'!
+initialize
+
+	positionTextFieldModel := ''.
+	headingTextFieldModel := ''.! !
+
+
+!MarsRoverStatusWindow methodsFor: 'events' stamp: 'HAW 19/Oct/2026, 6:15:48 pm (UTC)'!
+newHeading: aHeadingToChange
+
+	headingTextFieldModel := aHeadingToChange formatOn: self.
+
+	! !
+
+!MarsRoverStatusWindow methodsFor: 'events' stamp: 'HAW 19/Oct/2026, 6:15:55 pm (UTC)'!
 newPosition: aPostionToChange
 
-	textFieldPosition := aPostionToChange asString .! !
-
-
-!MarsRoverStatusWindow methodsFor: 'subscription' stamp: 'HAW 17/Oct/2026, 10:34:26 pm (UTC)'!
-followHeading
-
-	marsRover addObserverForHeading: [:aNewHeading | self newHeading: aNewHeading ].! !
-
-!MarsRoverStatusWindow methodsFor: 'subscription' stamp: 'HAW 17/Oct/2026, 10:35:02 pm (UTC)'!
-followPosition
-
-	marsRover addObserverForPosition: [:aNewPosition | self newPosition: aNewPosition ].! !
+	positionTextFieldModel := aPostionToChange asString .! !
 
 
 !MarsRoverStatusWindow methodsFor: 'formating' stamp: 'HAW 17/Oct/2026, 11:59:29 am (UTC)'!
@@ -512,10 +525,20 @@ formatWest: aMarsRoverHeading
 MarsRoverStatusWindow class
 	instanceVariableNames: ''!
 
-!MarsRoverStatusWindow class methodsFor: 'instance creation' stamp: 'HAW 15/Oct/2026, 7:44:06 pm (UTC)'!
-for: aMarsRover
+!MarsRoverStatusWindow class methodsFor: 'instance creation' stamp: 'HAW 19/Oct/2026, 6:09:28 pm (UTC)'!
+followHeadingChangesOn: aMarsRover
 
-	^self new initializeFor: aMarsRover ! !
+	^ self new followingHeadingChangesOn: aMarsRover .! !
+
+!MarsRoverStatusWindow class methodsFor: 'instance creation' stamp: 'HAW 19/Oct/2026, 6:09:18 pm (UTC)'!
+followPositionAndHeadingChangesOn: aMarsRover
+
+	^ self new followingHeadingChangesOn: aMarsRover ;followingPostionChangesOn: aMarsRover ! !
+
+!MarsRoverStatusWindow class methodsFor: 'instance creation' stamp: 'HAW 19/Oct/2026, 6:08:58 pm (UTC)'!
+followPositionChangesOn: aMarsRover
+
+		^self new followingPostionChangesOn: aMarsRover ! !
 
 
 !classDefinition: #ObservedValue category: #'MarsRover-WithHeading'!
@@ -589,200 +612,201 @@ west
 	^ MarsRoverHeadingWest! !
 
 
-!MarsRoverObserversTest methodsFor: 'assertions' stamp: 'HAW 17/Oct/2026, 11:42:49 am (UTC)'!
-assertLogIs: aExpectedLog afterProcessing: aCommandSequence startingAt: aPosition heading: aHeadingType configuringObserverWith: aConfigurationBlock
-
-	|marsRover logger actualLog stream |
-	marsRover := MarsRover at: aPosition heading: aHeadingType .
-	logger := MarsRoverLogger for: marsRover .
-	aConfigurationBlock value: logger.
-
-	marsRover process: aCommandSequence .
-
-	stream := logger readStream .
-	actualLog := OrderedCollection new.
-
-	[stream atEnd ] whileFalse: [actualLog add: stream nextLine ].
-
-	self assert: aExpectedLog asOrderedCollection equals: actualLog .
-	self assert: stream atEnd .
-
-
-	! !
-
-!MarsRoverObserversTest methodsFor: 'assertions' stamp: 'HAW 17/Oct/2026, 11:51:52 am (UTC)'!
-assertStatusWindowShowsPosition: expectedPositionText heading: expectedHeadingText afterProcessing: aCommandSequence startingAt: aPosition heading: aHeading configuringWith: aConfigurationBlock
-
-	| rover window |
-	rover := MarsRover at: aPosition heading: aHeading.
-	window := MarsRoverStatusWindow for: rover.
-	aConfigurationBlock value: window.
-
-	rover process: aCommandSequence.
-
-	self assert: expectedPositionText equals: window textFieldPosition.
-	self assert: expectedHeadingText equals: window textFieldHeading.! !
-
-
-!MarsRoverObserversTest methodsFor: 'tests' stamp: 'HAW 17/Oct/2026, 11:35:14 am (UTC)'!
+!MarsRoverObserversTest methodsFor: 'tests' stamp: 'StreamRead 19/Oct/2026, 3:20:00 pm (UTC)'!
 test01EmptyCommandDoesNotChangeLogger
 
-	self
-	assertLogIs:  #()
-	afterProcessing: ''
-	startingAt:  0@0
-	heading:  self north
-	configuringObserverWith: [:aLogger | aLogger followPosition ].
-	! !
+	| marsRover logger stream |
+	marsRover := MarsRover at: 0@0 heading: self north.
+	logger := MarsRoverLogger followPositionChangesOn: marsRover.
 
-!MarsRoverObserversTest methodsFor: 'tests' stamp: 'HAW 17/Oct/2026, 11:38:18 am (UTC)'!
+	marsRover process: ''.
+
+	stream := logger readStream.
+	self assert: stream atEnd.! !
+
+!MarsRoverObserversTest methodsFor: 'tests' stamp: 'StreamRead 19/Oct/2026, 3:20:00 pm (UTC)'!
 test02LogsAllMovementCommandsOnYAxis
 
-	self
-	assertLogIs:  #('0@ -1' '0@0')
-	afterProcessing:  'fb'
-	startingAt:  0@0
-	heading:  self south
-	configuringObserverWith: [:aLogger | aLogger followPosition ].! !
+	| marsRover logger stream |
+	marsRover := MarsRover at: 0@0 heading: self south.
+	logger := MarsRoverLogger followPositionChangesOn: marsRover.
 
-!MarsRoverObserversTest methodsFor: 'tests' stamp: 'HAW 17/Oct/2026, 11:39:29 am (UTC)'!
+	marsRover process: 'fb'.
+
+	stream := logger readStream.
+	self assert: '0@ -1' equals: stream nextLine.
+	self assert: '0@0' equals: stream nextLine.
+	self assert: stream atEnd.! !
+
+!MarsRoverObserversTest methodsFor: 'tests' stamp: 'StreamRead 19/Oct/2026, 3:20:00 pm (UTC)'!
 test03LogsAllMovementCommandsOnXAxis
 
-	self
-	assertLogIs: #('1@0' '0@0')
-	afterProcessing:  'fb'
-	startingAt:  0@0
-	heading:  self east
-	configuringObserverWith: [:aLogger | aLogger followPosition ].! !
+	| marsRover logger stream |
+	marsRover := MarsRover at: 0@0 heading: self east.
+	logger := MarsRoverLogger followPositionChangesOn: marsRover.
 
-!MarsRoverObserversTest methodsFor: 'tests' stamp: 'HAW 17/Oct/2026, 11:40:33 am (UTC)'!
+	marsRover process: 'fb'.
+
+	stream := logger readStream.
+	self assert: '1@0' equals: stream nextLine.
+	self assert: '0@0' equals: stream nextLine.
+	self assert: stream atEnd.! !
+
+!MarsRoverObserversTest methodsFor: 'tests' stamp: 'StreamRead 19/Oct/2026, 3:20:00 pm (UTC)'!
 test04LogsNorthsLeftAndWestsRightCommands
 
-	self
-	assertLogIs:  #('West' 'North')
-	afterProcessing:  'lr'
-	startingAt:  0@0
-	heading:  self north
-	configuringObserverWith: [:aLogger | aLogger followHeading ].! !
+	| marsRover logger stream |
+	marsRover := MarsRover at: 0@0 heading: self north.
+	logger := MarsRoverLogger followHeadingChangesOn: marsRover.
 
-!MarsRoverObserversTest methodsFor: 'tests' stamp: 'HAW 17/Oct/2026, 11:42:33 am (UTC)'!
+	marsRover process: 'lr'.
+
+	stream := logger readStream.
+	self assert: 'West' equals: stream nextLine.
+	self assert: 'North' equals: stream nextLine.
+	self assert: stream atEnd.! !
+
+!MarsRoverObserversTest methodsFor: 'tests' stamp: 'StreamRead 19/Oct/2026, 3:20:00 pm (UTC)'!
 test05LogsAllRotationCommands
 
-	self
-	assertLogIs: #('North' 'West' 'South' 'East' 'South' 'West')
-	afterProcessing:  'llllrr'
-	startingAt:  0@0
-	heading:  self east
-	configuringObserverWith: [:aLogger | aLogger followHeading ]! !
+	| marsRover logger stream |
+	marsRover := MarsRover at: 0@0 heading: self east.
+	logger := MarsRoverLogger followHeadingChangesOn: marsRover.
 
-!MarsRoverObserversTest methodsFor: 'tests' stamp: 'HAW 17/Oct/2026, 11:44:27 am (UTC)'!
+	marsRover process: 'llllrr'.
+
+	stream := logger readStream.
+	self assert: 'North' equals: stream nextLine.
+	self assert: 'West' equals: stream nextLine.
+	self assert: 'South' equals: stream nextLine.
+	self assert: 'East' equals: stream nextLine.
+	self assert: 'South' equals: stream nextLine.
+	self assert: 'West' equals: stream nextLine.
+	self assert: stream atEnd.! !
+
+!MarsRoverObserversTest methodsFor: 'tests' stamp: 'StreamRead 19/Oct/2026, 3:20:00 pm (UTC)'!
 test06LogsPositionAndHeadingForForwardAndRightCommandsStartingOnNorth
 
-	self
-	assertLogIs: #('0@1' 'East')
-	afterProcessing:  'fr'
-	startingAt:  0@0
-	heading:  self north
-	configuringObserverWith: [:aLogger | aLogger followPosition; followHeading ] .! !
+	| marsRover logger stream |
+	marsRover := MarsRover at: 0@0 heading: self north.
+	logger := MarsRoverLogger followPositionAndHeadingChangesOn: marsRover.
 
-!MarsRoverObserversTest methodsFor: 'tests' stamp: 'HAW 17/Oct/2026, 11:45:20 am (UTC)'!
+	marsRover process: 'fr'.
+
+	stream := logger readStream.
+	self assert: '0@1' equals: stream nextLine.
+	self assert: 'East' equals: stream nextLine.
+	self assert: stream atEnd.! !
+
+!MarsRoverObserversTest methodsFor: 'tests' stamp: 'StreamRead 19/Oct/2026, 3:20:00 pm (UTC)'!
 test07LogsPositionAndHeadingForAllCommands
 
-	self
-	assertLogIs: #('1@0' 'South')
-	afterProcessing:  'bl'
-	startingAt:  0@0
-	heading:  self west
-	configuringObserverWith: [:aLogger | aLogger followPosition; followHeading ] .
-	! !
+	| marsRover logger stream |
+	marsRover := MarsRover at: 0@0 heading: self west.
+	logger := MarsRoverLogger followPositionAndHeadingChangesOn: marsRover.
 
-!MarsRoverObserversTest methodsFor: 'tests' stamp: 'HAW 17/Oct/2026, 11:46:03 am (UTC)'!
+	marsRover process: 'bl'.
+
+	stream := logger readStream.
+	self assert: '1@0' equals: stream nextLine.
+	self assert: 'South' equals: stream nextLine.
+	self assert: stream atEnd.! !
+
+!MarsRoverObserversTest methodsFor: 'tests' stamp: 'StreamRead 19/Oct/2026, 3:20:00 pm (UTC)'!
 test08HeadingLoggerDoesNotLogMovements
 
-	self
-	assertLogIs: #()
-	afterProcessing:  'fb'
-	startingAt:  0@0
-	heading:  self north
-	configuringObserverWith: [:aLogger | aLogger followHeading ] .! !
+	| marsRover logger stream |
+	marsRover := MarsRover at: 0@0 heading: self north.
+	logger := MarsRoverLogger followHeadingChangesOn: marsRover.
 
-!MarsRoverObserversTest methodsFor: 'tests' stamp: 'HAW 17/Oct/2026, 11:48:11 am (UTC)'!
+	marsRover process: 'fb'.
+
+	stream := logger readStream.
+	self assert: stream atEnd.! !
+
+!MarsRoverObserversTest methodsFor: 'tests' stamp: 'StreamRead 19/Oct/2026, 3:20:00 pm (UTC)'!
 test09PositionLoggerDoesNotLogRotations
 
-	self
-	assertLogIs: #()
-	afterProcessing:  'lr'
-	startingAt:  0@0
-	heading:  self north
-	configuringObserverWith: [:aLogger | aLogger followPosition ] .! !
+	| marsRover logger stream |
+	marsRover := MarsRover at: 0@0 heading: self north.
+	logger := MarsRoverLogger followPositionChangesOn: marsRover.
 
-!MarsRoverObserversTest methodsFor: 'tests' stamp: 'HAW 17/Oct/2026, 11:53:02 am (UTC)'!
+	marsRover process: 'lr'.
+
+	stream := logger readStream.
+	self assert: stream atEnd.! !
+
+!MarsRoverObserversTest methodsFor: 'tests' stamp: 'StreamRead 19/Oct/2026, 3:20:00 pm (UTC)'!
 test10EmptyCommandDoesNotChangeStatusWindow
 
-	self
-	assertStatusWindowShowsPosition:  ''
-	heading:  ''
-	afterProcessing: ''
-	startingAt:  0@0
-	heading:  self north
-	configuringWith: [:aWindow | aWindow followPosition; followHeading ].! !
+	| rover window |
+	rover := MarsRover at: 0@0 heading: self north.
+	window := MarsRoverStatusWindow followPositionChangesOn: rover.
 
-!MarsRoverObserversTest methodsFor: 'tests' stamp: 'HAW 17/Oct/2026, 11:53:44 am (UTC)'!
+	rover process: ''.
+
+	self assert: '' equals: window positionTextFieldModel.
+	self assert: '' equals: window headingTextFieldModel.! !
+
+!MarsRoverObserversTest methodsFor: 'tests' stamp: 'StreamRead 19/Oct/2026, 3:20:00 pm (UTC)'!
 test11PositionWindowUpdatesOnNorthAndWestAndIgnoresRotations
 
-	self
-	assertStatusWindowShowsPosition:  '-1@1'
-	heading:  ''
-	afterProcessing: 'frb'
-	startingAt:  0@0
-	heading:  self north
-	configuringWith: [:aWindow | aWindow followPosition].
-	! !
+	| rover window |
+	rover := MarsRover at: 0@0 heading: self north.
+	window := MarsRoverStatusWindow followPositionChangesOn: rover.
 
-!MarsRoverObserversTest methodsFor: 'tests' stamp: 'HAW 17/Oct/2026, 11:54:21 am (UTC)'!
+	rover process: 'frb'.
+
+	self assert: '-1@1' equals: window positionTextFieldModel.
+	self assert: '' equals: window headingTextFieldModel.! !
+
+!MarsRoverObserversTest methodsFor: 'tests' stamp: 'StreamRead 19/Oct/2026, 3:20:00 pm (UTC)'!
 test12PositionWindowUpdatesOnSouthAndEastAndIgnoresRotations
 
-	self
-	assertStatusWindowShowsPosition:  '-1@ -1'
-	heading:  ''
-	afterProcessing: 'flb'
-	startingAt:  0@0
-	heading:  self south
-	configuringWith: [:aWindow | aWindow followPosition ].
-! !
+	| rover window |
+	rover := MarsRover at: 0@0 heading: self south.
+	window := MarsRoverStatusWindow followPositionChangesOn: rover.
 
-!MarsRoverObserversTest methodsFor: 'tests' stamp: 'HAW 17/Oct/2026, 11:55:01 am (UTC)'!
+	rover process: 'flb'.
+
+	self assert: '-1@ -1' equals: window positionTextFieldModel.
+	self assert: '' equals: window headingTextFieldModel.! !
+
+!MarsRoverObserversTest methodsFor: 'tests' stamp: 'StreamRead 19/Oct/2026, 3:20:00 pm (UTC)'!
 test13HeadingWindowUpdatesHeadingOnLeftRotationsAndIgnoresMovements
 
-	self
-	assertStatusWindowShowsPosition:  ''
-	heading:  'Apuntando Al Norte'
-	afterProcessing: 'ffrrrrl'
-	startingAt:  0@0
-	heading:  self east
-	configuringWith: [:aWindow | aWindow  followHeading ].! !
+	| rover window |
+	rover := MarsRover at: 0@0 heading: self east.
+	window := MarsRoverStatusWindow followHeadingChangesOn: rover.
 
-!MarsRoverObserversTest methodsFor: 'tests' stamp: 'HAW 17/Oct/2026, 11:55:43 am (UTC)'!
+	rover process: 'ffrrrrl'.
+
+	self assert: '' equals: window positionTextFieldModel.
+	self assert: 'Apuntando Al Norte' equals: window headingTextFieldModel.! !
+
+!MarsRoverObserversTest methodsFor: 'tests' stamp: 'StreamRead 19/Oct/2026, 3:20:00 pm (UTC)'!
 test14HeadingWindowUpdatesHeadingOnRightRotationsAndIgnoresMovements
 
-	self
-	assertStatusWindowShowsPosition:  ''
-	heading:  'Apuntando Al Sur'
-	afterProcessing: 'ffllllr'
-	startingAt:  0@0
-	heading:  self east
-	configuringWith: [:aWindow | aWindow followHeading ].! !
+	| rover window |
+	rover := MarsRover at: 0@0 heading: self east.
+	window := MarsRoverStatusWindow followHeadingChangesOn: rover.
 
-!MarsRoverObserversTest methodsFor: 'tests' stamp: 'HAW 17/Oct/2026, 11:56:23 am (UTC)'!
+	rover process: 'ffllllr'.
+
+	self assert: '' equals: window positionTextFieldModel.
+	self assert: 'Apuntando Al Sur' equals: window headingTextFieldModel.! !
+
+!MarsRoverObserversTest methodsFor: 'tests' stamp: 'StreamRead 19/Oct/2026, 3:20:00 pm (UTC)'!
 test15HeadingAndPositionWindowUpdatesBothOnMovementsAndRotations
 
-	self
-	assertStatusWindowShowsPosition:  '1@1'
-	heading:  'Apuntando Al Sur'
-	afterProcessing: 'flbl'
-	startingAt:  0@0
-	heading:  self north
-	configuringWith: [:aWindow | aWindow followPosition; followHeading ].! !
+	| rover window |
+	rover := MarsRover at: 0@0 heading: self north.
+	window := MarsRoverStatusWindow followPositionAndHeadingChangesOn: rover.
+
+	rover process: 'flbl'.
+
+	self assert: '1@1' equals: window positionTextFieldModel.
+	self assert: 'Apuntando Al Sur' equals: window headingTextFieldModel.! !
 
 
 !classDefinition: #MarsRoverTest category: #'MarsRover-WithHeading'!

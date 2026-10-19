@@ -158,6 +158,7 @@ La metafora debe cumplir:
 4. Reemplazar el código repetido original por el uso de la nueva abstracción
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 ---
 
 ## 9. Psuedo-variables
@@ -172,6 +173,8 @@ En smalltalk tenemos distintas psudo-variables:
     4. **Variables locales y argumentos** el estado interno de las temporales en ese punto de computo.
 - **super:** Es el mismo objeto que self, pero tiene la implicacion sintactica de que al enviarle un mensaje, el algoritmo de **method lookup** empiza la busqueda de la implementacion del mensaje en la superclase.
 
+=======
+>>>>>>> Stashed changes
 ---
 
 ## 10. Igualdad vs Identidad
