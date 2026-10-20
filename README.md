@@ -35,7 +35,7 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | [Resumen Teórico — Primer parcial](isw/resumen-teoricas/teorica-primer-parcial.md) | Resumen teórico de clase del primer parcial. |
 | [Resumen Teórico — Segundo parcial](isw/resumen-teoricas/teorica-segundo-parcial.md) | Resumen teórico del segundo parcial. (No terminado, hasta TDD) |
 | [Resumen Method Lookup, Metamodelo y Excepciones](isw/resumen-teoricas/metamodelo-method-lookup-excepciones.md) | Metamodelo de Smalltalk, algoritmo Method Lookup y excepciones como mecanismo de error. (No terminado) |
-| [Cultures of Programming: The Development of Programming Concepts and Methodologies](isw/resumenes-papers/Cultures-of-Programming-The-Development-of-Programming-Concepts-and-Methodologies.md) | Resumen del prefacio y del capítulo 1 del libro Cultures of Programming: The Development of Programming Concepts and Methodologies. |
+| [Cultures of Programming: The Development of Programming Concepts and Methodologies](isw/resumenes-papers/Cultures-of-Programming-The-Development-of-Programming-Concepts-and-Methodologies.md) | Resumen del prefacio, del capítulo 1 y de las conclusiones del libro Cultures of Programming: The Development of Programming Concepts and Methodologies. |
 | [Programming as Theory Building](isw/resumenes-papers/Programming-as-Theory-Building.md) | Resumen del paper de Peter Naur. |
 | [Blue Book: Capítulos 6, 7 y 8](isw/resumenes-papers/Blue-Book.md) | Resumen de los capítulos 6, 7 y 8 del libro Blue Book. |
 | [The Design of Everyday Things](isw/resumenes-papers/Norman-The-Desing-of-Everyday-Things.md) | Resumen del libro de Donald Norman. |
@@ -52,6 +52,11 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | [Patrón Strategy](isw/patrones/Strategy.md) | Resumen del patrón **Strategy** del GoF. |
 | [Patrón Template Method](isw/patrones/Template-Method.md) | Resumen del patrón **Template Method** del GoF. |
 | [Respuesta de Alan Kay en Quora](isw/resumenes-papers/Respuesta-Alan-Kay-En-Quara.md)| Respuesta sobre las ciencias de la computacion de Alan Kay en Quora|
+| [Patrón Active Variable ](/isw/patrones/Active-Variable.md)| Resumen del patrón **Active Variable** basado en el libro *The Design Patterns Smalltalk Companion* |
+| [Patrón Observer](/isw/patrones/Observer.md)| Resumen del patrón **Observer** basado en el libro *The Design Patterns Smalltalk Companion* |
+| [Patrón Composite](/isw/patrones/Composite.md)| Resumen del patrón **Composite** basado en el libro *The Design Patterns Smalltalk Companion* |
+
+
 ### Primeros parciales
 
 | Fecha | Nombre |
