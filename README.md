@@ -28,34 +28,41 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | [Guía 2 — Sacar ifs y codigo repetido](isw/guias/parte2/)       | Terminada.  |
 | [Guía 3 — TDD y Patrones de diseño](isw/guias/parte3/)       | En proceso.  |
 
-### Resúmenes
+
+### Patrones de Diseño
+
+| Nombre | Descripción |
+| --- | --- |
+| [Null Object Pattern](isw/patrones/Null-Pattern-Object.md) | Resumen del patrón **Null Object** basado en el paper de Bobby Woolf. |
+| [Method Object](isw/patrones/Method-Objetc.md) | Resumen del patrón **Method Object** basado en el capítulo 3 del libro *Smalltalk Best Practice Patterns* de Kent Beck. |
+| [Object Recursion](isw/patrones/Object-Recursion.md) | Resumen del patrón **Object Recursion** basado en el paper de Bobby Woolf. |
+| [Patrón State](isw/patrones/State.md) | Resumen del patrón **State** del GoF. |
+| [Patrón Strategy](isw/patrones/Strategy.md) | Resumen del patrón **Strategy** del GoF. |
+| [Patrón Template Method](isw/patrones/Template-Method.md) | Resumen del patrón **Template Method** del GoF. |
+| [Patrón Active Variable](isw/patrones/Active-Variable.md) | Resumen del patrón **Active Variable** basado en el libro *The Design Patterns Smalltalk Companion*. |
+| [Patrón Observer](isw/patrones/Observer.md) | Resumen del patrón **Observer** basado en el libro *The Design Patterns Smalltalk Companion*. |
+| [Patrón Composite](isw/patrones/Composite.md) | Resumen del patrón **Composite** basado en el libro *The Design Patterns Smalltalk Companion*. |
+
+---
+
+### Libros, Papers y Teóricas
 
 | Nombre | Descripción |
 | --- | --- |
 | [Resumen Teórico — Primer parcial](isw/resumen-teoricas/teorica-primer-parcial.md) | Resumen teórico de clase del primer parcial. |
 | [Resumen Teórico — Segundo parcial](isw/resumen-teoricas/teorica-segundo-parcial.md) | Resumen teórico del segundo parcial. (No terminado, hasta TDD) |
 | [Resumen Method Lookup, Metamodelo y Excepciones](isw/resumen-teoricas/metamodelo-method-lookup-excepciones.md) | Metamodelo de Smalltalk, algoritmo Method Lookup y excepciones como mecanismo de error. (No terminado) |
-| [Cultures of Programming: The Development of Programming Concepts and Methodologies](isw/resumenes-papers/Cultures-of-Programming-The-Development-of-Programming-Concepts-and-Methodologies.md) | Resumen del prefacio, del capítulo 1 y de las conclusiones del libro Cultures of Programming: The Development of Programming Concepts and Methodologies. |
+| [Cultures of Programming: The Development of Programming Concepts and Methodologies](isw/resumenes-papers/Cultures-of-Programming-The-Development-of-Programming-Concepts-and-Methodologies.md) | Resumen del prefacio, del capítulo 1 y de las conclusiones del libro *Cultures of Programming: The Development of Programming Concepts and Methodologies*. |
 | [Programming as Theory Building](isw/resumenes-papers/Programming-as-Theory-Building.md) | Resumen del paper de Peter Naur. |
-| [Blue Book: Capítulos 6, 7 y 8](isw/resumenes-papers/Blue-Book.md) | Resumen de los capítulos 6, 7 y 8 del libro Blue Book. |
+| [Blue Book: Capítulos 6, 7 y 8](isw/resumenes-papers/Blue-Book.md) | Resumen de los capítulos 6, 7 y 8 del libro *Blue Book*. |
 | [The Design of Everyday Things](isw/resumenes-papers/Norman-The-Desing-of-Everyday-Things.md) | Resumen del libro de Donald Norman. |
 | [No Silver Bullet](isw/resumenes-papers/No-Silver-Bullets.md) | Resumen del paper de Fred Brooks. |
-| [Self: The Power of Simplicity](isw/resumenes-papers/Self:The-Power-Of-Simplicity.md) | Resumen del paper Self: The Power of Simplicity de David Ungar y Randall B. Smith. |
-| [Design Principles Behind Smalltalk](isw/resumenes-papers/Desing-Principles-Behind-Smalltalk.md) | Resumen del paper Design Principles Behind Smalltalk de Daniel H. Ingalls. |
-| [Polymorphic Hierarchy](isw/resumenes-papers/Polymorphic-Hierarchy.md) | Resumen del paper Polymorphic Hierarchy de Bobby Woolf. |
-| [A Simple Technique for Handling Multiple Polymorphism](isw/resumenes-papers/A-Simple-Technique-for-Handling-Multiple-Polymorphism.md) | Resumen del paper A Simple Technique for Handling Multiple Polymorphism. |
-| [Null Object Pattern](isw/patrones/Null-Pattern-Object.md) | Resumen del paper Null Object Pattern de Bobby Woolf. |
-| [Method Object](isw/patrones/Method-Objetc.md) | Resumen del capítulo 3 del libro Smalltalk Best Practice Patterns de Kent Beck. |
-| [Object Recursion](isw/patrones/Object-Recursion.md) | Resumen del paper Object Recursion de Bobby Woolf. |
-| [Modern Software Engineering](isw/resumenes-papers/Modern-Software-Engineering.md) | Resumen de los capítulos 1, 2 y 3 del libro Modern Software Engineering de David Farley. |
-| [Patrón State](isw/patrones/State.md) | Resumen del patrón **State** del GoF. |
-| [Patrón Strategy](isw/patrones/Strategy.md) | Resumen del patrón **Strategy** del GoF. |
-| [Patrón Template Method](isw/patrones/Template-Method.md) | Resumen del patrón **Template Method** del GoF. |
-| [Respuesta de Alan Kay en Quora](isw/resumenes-papers/Respuesta-Alan-Kay-En-Quara.md)| Respuesta sobre las ciencias de la computacion de Alan Kay en Quora|
-| [Patrón Active Variable ](/isw/patrones/Active-Variable.md)| Resumen del patrón **Active Variable** basado en el libro *The Design Patterns Smalltalk Companion* |
-| [Patrón Observer](/isw/patrones/Observer.md)| Resumen del patrón **Observer** basado en el libro *The Design Patterns Smalltalk Companion* |
-| [Patrón Composite](/isw/patrones/Composite.md)| Resumen del patrón **Composite** basado en el libro *The Design Patterns Smalltalk Companion* |
-
+| [Self: The Power of Simplicity](isw/resumenes-papers/Self:The-Power-Of-Simplicity.md) | Resumen del paper *Self: The Power of Simplicity* de David Ungar y Randall B. Smith. |
+| [Design Principles Behind Smalltalk](isw/resumenes-papers/Desing-Principles-Behind-Smalltalk.md) | Resumen del paper *Design Principles Behind Smalltalk* de Daniel H. Ingalls. |
+| [Polymorphic Hierarchy](isw/resumenes-papers/Polymorphic-Hierarchy.md) | Resumen del paper *Polymorphic Hierarchy* de Bobby Woolf. |
+| [A Simple Technique for Handling Multiple Polymorphism](isw/resumenes-papers/A-Simple-Technique-for-Handling-Multiple-Polymorphism.md) | Resumen del paper *A Simple Technique for Handling Multiple Polymorphism*. |
+| [Modern Software Engineering](isw/resumenes-papers/Modern-Software-Engineering.md) | Resumen de los capítulos 1, 2 y 3 del libro *Modern Software Engineering* de David Farley. |
+| [Respuesta de Alan Kay en Quora](isw/resumenes-papers/Respuesta-Alan-Kay-En-Quara.md) | Respuesta sobre las ciencias de la computación de Alan Kay en Quora. |
 
 ### Primeros parciales
 
@@ -123,7 +130,4 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 |[Clase7 — Resumen](complejidad-computacional/resumenes/clase7-resumen.md)|Espacio usado por un cómputo, espacio polinomial y teorema de Savicth. |
 |[Clase8 — Resumen](complejidad-computacional/resumenes/clase8-resumen.md)| Espacio logarítmicos y Teorema de Immerman-Szelepcsényi. |
 |[Clase9 — Resumen](complejidad-computacional/resumenes/clase9-resumen.md)| Jerarquía Polinomial y propiedades de la misma. |
-<<<<<<< Updated upstream
 |[Clase10 — Resumen](complejidad-computacional/resumenes/clase10-resumen.md)| Máquinas con oráculo, Teorema de Baker, Gill, Solovay y jerarquía polinomial y NP con oráculos. |
-=======
->>>>>>> Stashed changes
