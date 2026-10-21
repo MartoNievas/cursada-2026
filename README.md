@@ -131,3 +131,4 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 |[Clase8 — Resumen](complejidad-computacional/resumenes/clase8-resumen.md)| Espacio logarítmicos y Teorema de Immerman-Szelepcsényi. |
 |[Clase9 — Resumen](complejidad-computacional/resumenes/clase9-resumen.md)| Jerarquía Polinomial y propiedades de la misma. |
 |[Clase10 — Resumen](complejidad-computacional/resumenes/clase10-resumen.md)| Máquinas con oráculo, Teorema de Baker, Gill, Solovay y jerarquía polinomial y NP con oráculos. |
+|[Clase11 — Resumen](complejidad-computacional/resumenes/clase11-resumen.md)| Circuitos booleanos, la clase Poly y profuncidad de circuitos |

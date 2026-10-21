@@ -2,6 +2,8 @@
 
 **Complejidad Computacional — FCEyN, Universidad de Buenos Aires**
 
+---
+
 ## Máquinas con oráculo
 
 Son idénticas a las máquinas de Turing estándar, con las siguientes diferencias:
