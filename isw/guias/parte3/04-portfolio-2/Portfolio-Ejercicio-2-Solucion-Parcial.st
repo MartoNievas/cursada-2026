@@ -33,6 +33,26 @@ transactions
 	self subclassResponsibility ! !
 
 
+!Account methodsFor: 'reports' stamp: 'HAW 22/Oct/2026, 2:32:20 pm (UTC)'!
+accountSummary
+
+    | summary |
+    summary := OrderedCollection new.
+    self addSummaryLinesTo: summary.
+    summary add: 'Balance = ', self balance asString.
+    ^ summary! !
+
+!Account methodsFor: 'reports' stamp: 'HAW 22/Oct/2026, 2:00:47 pm (UTC)'!
+addSummaryLinesTo: aReportLinesCollection
+
+	self subclassResponsibility .! !
+
+!Account methodsFor: 'reports' stamp: 'HAW 22/Oct/2026, 2:31:55 pm (UTC)'!
+transferNetReport
+
+	self subclassResponsibility .! !
+
+
 !Account methodsFor: 'composition' stamp: 'HAW 25/May/2019, 3:24:04 pm (UTC)'!
 addedTo: aPortfolio
 
@@ -150,6 +170,18 @@ signalCanNotAddAccount
 	
 	self error: self class canNotAddAccountErrorMessage! !
 
+
+!Portfolio methodsFor: 'reports' stamp: 'HAW 22/Oct/2026, 2:00:00 pm (UTC)'!
+addSummaryLinesTo: aReportLinesCollection
+
+    accounts do: [ :anAccount | 
+        anAccount addSummaryLinesTo: aReportLinesCollection ]! !
+
+!Portfolio methodsFor: 'reports' stamp: 'HAW 22/Oct/2026, 2:16:44 pm (UTC)'!
+transferNetReport
+	
+	^ accounts sum: [:anAccount | anAccount transferNetReport ] ifEmpty: [0].! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'Portfolio class' category: #'Portfolio-Solucion'!
@@ -184,11 +216,12 @@ Account subclass: #ReceptiveAccount
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!ReceptiveAccount methodsFor: 'initialization' stamp: 'HernanWilkinson 13/Jul/2011, 9:35:00 pm (UTC)'!
+!ReceptiveAccount methodsFor: 'initialization' stamp: 'HAW 22/Oct/2026, 1:25:41 pm (UTC)'!
 initialize
 
 	super initialize.
-	transactions := OrderedCollection new.! !
+	transactions := OrderedCollection new.
+	accountSummary := OrderedCollection new.! !
 
 
 !ReceptiveAccount methodsFor: 'transactions' stamp: 'HAW 25/May/2019, 2:38:52 pm (UTC)'!
@@ -196,10 +229,11 @@ addTransactionsTo: aCollectionOfTransactions
 
 	aCollectionOfTransactions addAll: transactions ! !
 
-!ReceptiveAccount methodsFor: 'transactions' stamp: 'HernanWilkinson 13/Jul/2011, 9:37:00 pm (UTC)'!
+!ReceptiveAccount methodsFor: 'transactions' stamp: 'HAW 22/Oct/2026, 1:27:12 pm (UTC)'!
 register: aTransaction
 
-	transactions add: aTransaction 
+	transactions add: aTransaction.
+	accountSummary add: aTransaction report.
 ! !
 
 !ReceptiveAccount methodsFor: 'transactions' stamp: 'HernanWilkinson 13/Jul/2011, 9:37:00 pm (UTC)'!
@@ -233,6 +267,22 @@ addedTo: aPortfolio
 	
 	! !
 
+
+!ReceptiveAccount methodsFor: 'reports' stamp: 'HAW 22/Oct/2026, 1:59:32 pm (UTC)'!
+addSummaryLinesTo: aReportLinesCollection
+
+    transactions do: [ :aTransaction | 
+        aReportLinesCollection add: aTransaction report ]! !
+
+!ReceptiveAccount methodsFor: 'reports' stamp: 'HAW 22/Oct/2026, 2:08:25 pm (UTC)'!
+transferNetReport
+	
+	
+	^ transactions 
+		inject: 0
+		into: [ :currentBalance :transaction | transaction affectTransferBalance: currentBalance ]
+	! !
+
 
 !classDefinition: #AccountTransaction category: #'Portfolio-Solucion'!
 Object subclass: #AccountTransaction
@@ -247,10 +297,21 @@ value
 	self subclassResponsibility ! !
 
 
+!AccountTransaction methodsFor: 'report' stamp: 'HAW 22/Oct/2026, 1:27:48 pm (UTC)'!
+report
+
+	self subclassResponsibility .! !
+
+
 !AccountTransaction methodsFor: 'balance' stamp: 'HAW 25/May/2019, 2:25:39 pm (UTC)'!
 affectBalance: aBalance
 
 	self subclassResponsibility ! !
+
+!AccountTransaction methodsFor: 'balance' stamp: 'HAW 22/Oct/2026, 2:09:22 pm (UTC)'!
+affectTransferBalance: aCurrentBalance
+
+	^ aCurrentBalance.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -286,6 +347,12 @@ initializeFor: aValue
 value
 
 	^ value! !
+
+
+!Deposit methodsFor: 'report' stamp: 'HAW 22/Oct/2026, 1:28:26 pm (UTC)'!
+report
+
+	^ 'Deposito por ', value asString .! !
 
 
 !Deposit methodsFor: 'balance' stamp: 'HAW 25/May/2019, 2:25:02 pm (UTC)'!
@@ -329,6 +396,11 @@ affectBalance: aBalance
 
 	self subclassResponsibility .! !
 
+!TransferLeg methodsFor: 'balance' stamp: 'HAW 22/Oct/2026, 2:09:35 pm (UTC)'!
+affectTransferBalance: aCurrentBalance
+
+	self subclassResponsibility .! !
+
 
 !TransferLeg methodsFor: 'value' stamp: 'HAW 21/Oct/2026, 12:56:20 am (UTC)'!
 value
@@ -362,11 +434,22 @@ affectBalance: aBalance
 
 	^ aBalance + self value .! !
 
+!DepositLeg methodsFor: 'balance' stamp: 'HAW 22/Oct/2026, 2:33:02 pm (UTC)'!
+affectTransferBalance: aCurrentBalance
+
+	^ aCurrentBalance + self value .! !
+
 
 !DepositLeg methodsFor: 'testing' stamp: 'HAW 21/Oct/2026, 12:44:22 am (UTC)'!
 associatedTransfer
 
 	^ associatedTransfer.! !
+
+
+!DepositLeg methodsFor: 'report' stamp: 'HAW 22/Oct/2026, 1:36:50 pm (UTC)'!
+report
+	
+	^ 'Entrada por transferencia de ', associatedTransfer value asString .! !
 
 
 !classDefinition: #WithdrawLeg category: #'Portfolio-Solucion'!
@@ -380,6 +463,18 @@ TransferLeg subclass: #WithdrawLeg
 affectBalance: aBalance
 
 	^ aBalance - self value .! !
+
+!WithdrawLeg methodsFor: 'balance' stamp: 'HAW 22/Oct/2026, 2:33:06 pm (UTC)'!
+affectTransferBalance: aCurrentBalance
+
+	^ aCurrentBalance - self value.
+	! !
+
+
+!WithdrawLeg methodsFor: 'report' stamp: 'HAW 22/Oct/2026, 1:36:59 pm (UTC)'!
+report
+	
+	^ 'Salida por transferencia de ', associatedTransfer value asString .! !
 
 
 !WithdrawLeg methodsFor: 'testing' stamp: 'HAW 21/Oct/2026, 12:44:28 am (UTC)'!
@@ -405,6 +500,12 @@ initializeFor: aValue
 value
 
 	^ value! !
+
+
+!Withdraw methodsFor: 'report' stamp: 'HAW 22/Oct/2026, 1:28:40 pm (UTC)'!
+report
+
+	^ 'Extraccion por ', value asString .! !
 
 
 !Withdraw methodsFor: 'balance' stamp: 'HAW 25/May/2019, 2:25:15 pm (UTC)'!
@@ -812,8 +913,8 @@ test01TransferDebitsOriginAccountAndCreditsDestinationAccount
 	self assert: originAccount balance equals: 5000.
 	! !
 
-!TransferTest methodsFor: 'tests' stamp: 'HAW 20/Oct/2026, 11:44:35 pm (UTC)'!
-test02
+!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 1:14:17 pm (UTC)'!
+test02TransferAmountMustBeStrictlyPositive
 
 	|transfer account1 account2 |
 	
@@ -829,8 +930,8 @@ test02
 			self assert: anError messageText equals: Transfer amountMustBeStrictlyPositiveErrorDescription.
 		]! !
 
-!TransferTest methodsFor: 'tests' stamp: 'HAW 21/Oct/2026, 12:55:30 am (UTC)'!
-test03
+!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 1:16:21 pm (UTC)'!
+test03AccountRegisterTheAssociatedTransferAsLegs
 
 	|transfer account1 account2 |
 	
@@ -846,8 +947,8 @@ test03
 	self assert: (account2 hasRegistered: transfer withdrawLeg ).
 ! !
 
-!TransferTest methodsFor: 'tests' stamp: 'HAW 21/Oct/2026, 12:55:20 am (UTC)'!
-test04
+!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 2:33:38 pm (UTC)'!
+test04BothLegsAreAssociatedToTheSameTransfer
 
 	|transfer account1 account2 |
 	
@@ -860,5 +961,175 @@ test04
 	
 	
 	self assert: (transfer withdrawLeg associatedTransfer) equals: transfer .
-	self assert: (transfer withdrawLeg associatedTransfer) equals: transfer.
+	self assert: (transfer depositLeg associatedTransfer) equals: transfer.
 ! !
+
+!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 1:18:18 pm (UTC)'!
+test05CanGoFromOneLegToAnother
+
+	|transfer account1 account2 |
+	
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	Deposit register: 1000 on: account1 .
+	Deposit register: 10000 on: account2.
+	
+	transfer :=  Transfer from: account2 to: account1 withAmount: 5000.
+	
+	
+	self assert: (transfer withdrawLeg associatedTransfer depositLeg ) equals: (transfer depositLeg associatedTransfer depositLeg ) .
+	self assert: (transfer withdrawLeg associatedTransfer withdrawLeg ) equals: (transfer depositLeg associatedTransfer withdrawLeg ) .
+! !
+
+!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 1:37:31 pm (UTC)'!
+test06AnEmptyAccountHasEmptySummaryReport
+
+	|account|
+	account := ReceptiveAccount new.
+	
+	
+	self assert: account accountSummary equals: (OrderedCollection with: 'Balance = 0').! !
+
+!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 2:18:48 pm (UTC)'!
+test07AnAccountWithoutTransfersHasAnAccountSummaryWithoutTransfers
+
+	|account expectedSummary |
+	account := ReceptiveAccount new.
+	Deposit register: 100 on: account .
+	Withdraw register: 50 on: account .
+	
+	expectedSummary := OrderedCollection with: 'Deposito por 100' with: 'Extraccion por 50' with: 'Balance = 50'.
+	
+	self assert: account accountSummary equals: expectedSummary .! !
+
+!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 2:19:13 pm (UTC)'!
+test08AnAccountWithTransfersHasAccountSummaryWithTransferReport
+
+	|account1 expectedSummaryAccount1 account2 expectedSummaryAccount2 |
+	account1 := ReceptiveAccount new.
+	Deposit register: 100 on: account1 .
+	account2 := ReceptiveAccount new.
+	Transfer from: account1 to: account2  withAmount: 100.
+	Transfer from: account2 to: account1  withAmount: 50.
+	
+	
+	
+	expectedSummaryAccount1 := OrderedCollection with: 'Deposito por 100' with: 'Salida por transferencia de 100' with: 'Entrada por transferencia de 50' with: 'Balance = 50'.
+	expectedSummaryAccount2 := OrderedCollection with: 'Entrada por transferencia de 100' with: 'Salida por transferencia de 50' with: 'Balance = 50'..
+	
+	self assert: account1 accountSummary equals: expectedSummaryAccount1 .
+	self assert: account2 accountSummary equals: expectedSummaryAccount2 .! !
+
+!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 2:27:44 pm (UTC)'!
+test09EmptyPortfolioAccountSummaryHasOnlyZeroBalance
+
+    | portfolio expectedSummary |
+    
+    portfolio := Portfolio new.
+    expectedSummary := OrderedCollection with: 'Balance = 0'.
+    
+    self assert: expectedSummary equals: portfolio accountSummary! !
+
+!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 2:27:48 pm (UTC)'!
+test10PortfolioAccountSummaryIncludesDirectAccountsTransactions
+
+    | account1 account2 portfolio expectedSummary |
+    
+    account1 := ReceptiveAccount new.
+    account2 := ReceptiveAccount new.
+    Deposit register: 100 on: account1.
+    Withdraw register: 30 on: account2.
+    
+    portfolio := Portfolio with: account1 with: account2.
+    
+    expectedSummary := OrderedCollection new.
+    expectedSummary add: 'Deposito por 100'.
+    expectedSummary add: 'Extraccion por 30'.
+    expectedSummary add: 'Balance = 70'.
+    
+    self assert: expectedSummary equals: portfolio accountSummary! !
+
+!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 2:28:00 pm (UTC)'!
+test11ComposedPortfolioAccountSummaryIncludesSubportfolioTransactions
+
+    | account1 account2 childPortfolio rootPortfolio expectedSummary |
+    
+    account1 := ReceptiveAccount new.
+    account2 := ReceptiveAccount new.
+    Deposit register: 100 on: account1.
+    Withdraw register: 30 on: account2.
+    
+    childPortfolio := Portfolio with: account1.
+    rootPortfolio := Portfolio with: childPortfolio with: account2.
+    
+    expectedSummary := OrderedCollection new.
+    expectedSummary add: 'Deposito por 100'.
+    expectedSummary add: 'Extraccion por 30'.
+    expectedSummary add: 'Balance = 70'.
+    
+    self assert: expectedSummary equals: rootPortfolio accountSummary! !
+
+!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 2:29:31 pm (UTC)'!
+test12AnAccountWithOnlyTransferHasNetReportEqualsToBalance
+
+	| account1 account2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	Transfer  from:  account1 to: account2  withAmount: 100. 
+	
+	
+	self assert: account1 transferNetReport equals: -100.
+	self assert: account2 transferNetReport equals: 100.
+	! !
+
+!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 2:30:10 pm (UTC)'!
+test13AnEmptyPortfolioHasNetTranferEqualsZero
+
+	|portfolio|
+	portfolio := Portfolio new.
+	
+	self assert: portfolio transferNetReport equals: 0.	! !
+
+!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 2:30:16 pm (UTC)'!
+test14AnAccountWithTransferAndTrasactionsHasNetReportEqualsToSumOfTransfersAmount
+
+	| account1 account2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	Deposit register: 200 on: account1 .
+	Withdraw register: 50 on: account1.
+	Transfer  from:  account1 to: account2  withAmount: 100. 
+
+	
+	self assert: account1 transferNetReport equals: -100.
+	self assert: account2 transferNetReport equals: 100.
+	! !
+
+!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 2:30:23 pm (UTC)'!
+test15APortfolioWithAccountWithOnlyTransfersHasNetReportIsSumTransfersAmount
+
+	|portfolio account1 account2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	Transfer from: account1 to: account2  withAmount: 100.
+	portfolio := Portfolio with: account1 .
+	
+	self assert: portfolio transferNetReport equals: -100.	! !
+
+!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 2:30:27 pm (UTC)'!
+test16ComposedPortfolioTransferNetReportConsidersSubportfolios
+
+    | rootPortfolio childPortfolio account1 account2 account3 |
+    account1 := ReceptiveAccount new.
+    account2 := ReceptiveAccount new.
+    account3 := ReceptiveAccount new.
+    
+    Deposit register: 200 on: account1.
+    Withdraw register: 50 on: account1.
+    Transfer from: account2 to: account1 withAmount: 100.
+    Transfer from: account1 to: account3 withAmount: 30.
+    
+    childPortfolio := Portfolio with: account1.
+    rootPortfolio := Portfolio with: childPortfolio with: account3.
+    
+    self assert: rootPortfolio transferNetReport equals: 100.! !
