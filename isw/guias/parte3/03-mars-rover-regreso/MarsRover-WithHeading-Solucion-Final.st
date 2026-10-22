@@ -16,54 +16,54 @@ signalInvalidCommand
 	self error: self invalidCommandErrorDescription ! !
 
 
-!MarsRover methodsFor: 'initialization' stamp: 'HAW 17/Oct/2026, 12:44:17 am (UTC)'!
+!MarsRover methodsFor: 'initialization' stamp: 'HAW 20/Oct/2026, 9:27:20 pm (UTC)'!
 initializeAt: aPosition heading: aHeadingType
 
-	position := ObservedValue for: aPosition .
-	head := ObservedValue for: (aHeadingType for: self) .
+	position := ObservedValue with: aPosition .
+	head := ObservedValue with: (aHeadingType for: self) .
 	. ! !
 
 
-!MarsRover methodsFor: 'heading' stamp: 'HAW 17/Oct/2026, 12:44:52 am (UTC)'!
+!MarsRover methodsFor: 'heading' stamp: 'HAW 20/Oct/2026, 9:27:33 pm (UTC)'!
 headEast
 
 	head changeValue: (​ MarsRoverHeadingEast for: self).
 ! !
 
-!MarsRover methodsFor: 'heading' stamp: 'HAW 17/Oct/2026, 12:44:52 am (UTC)'!
+!MarsRover methodsFor: 'heading' stamp: 'HAW 20/Oct/2026, 9:27:57 pm (UTC)'!
 headNorth
 
 	head changeValue: (MarsRoverHeadingNorth for: self) .
 ! !
 
-!MarsRover methodsFor: 'heading' stamp: 'HAW 17/Oct/2026, 12:44:52 am (UTC)'!
+!MarsRover methodsFor: 'heading' stamp: 'HAW 20/Oct/2026, 9:27:49 pm (UTC)'!
 headSouth
 
 	head changeValue:​( MarsRoverHeadingSouth for: self).
 ! !
 
-!MarsRover methodsFor: 'heading' stamp: 'HAW 17/Oct/2026, 12:44:52 am (UTC)'!
+!MarsRover methodsFor: 'heading' stamp: 'HAW 20/Oct/2026, 9:27:40 pm (UTC)'!
 headWest
 
 	head changeValue:​( MarsRoverHeadingWest for: self) .
 ! !
 
-!MarsRover methodsFor: 'heading' stamp: 'HAW 17/Oct/2026, 12:04:40 am (UTC)'!
+!MarsRover methodsFor: 'heading' stamp: 'HAW 20/Oct/2026, 9:25:28 pm (UTC)'!
 rotateLeft
 
-	head value rotateLeft.! !
+	head  rotateLeft.! !
 
-!MarsRover methodsFor: 'heading' stamp: 'HAW 17/Oct/2026, 12:04:46 am (UTC)'!
+!MarsRover methodsFor: 'heading' stamp: 'HAW 20/Oct/2026, 9:25:32 pm (UTC)'!
 rotateRight
 
-	head value rotateRight.
+	head  rotateRight.
 	! !
 
 
-!MarsRover methodsFor: 'testing' stamp: 'HAW 16/Oct/2026, 11:13:48 pm (UTC)'!
+!MarsRover methodsFor: 'testing' stamp: 'HAW 20/Oct/2026, 9:28:47 pm (UTC)'!
 isAt: aPosition heading: aHeadingType
 
-	^position value = aPosition and: [ head value isHeading: aHeadingType ]! !
+	^position = aPosition and: [ head  isHeading: aHeadingType ]! !
 
 !MarsRover methodsFor: 'testing' stamp: 'HAW 6/Jul/2018, 9:16:51 pm (UTC)'!
 isBackwardCommand: aCommand
@@ -86,41 +86,41 @@ isRotateRightCommand: aCommand
 	^aCommand = $r! !
 
 
-!MarsRover methodsFor: 'moving' stamp: 'HAW 17/Oct/2026, 12:03:47 am (UTC)'!
+!MarsRover methodsFor: 'moving' stamp: 'HAW 20/Oct/2026, 9:28:18 pm (UTC)'!
 moveBackward
 
-	head value moveBackward.
+	head  moveBackward.
 ! !
 
-!MarsRover methodsFor: 'moving' stamp: 'HAW 17/Oct/2026, 12:44:52 am (UTC)'!
+!MarsRover methodsFor: 'moving' stamp: 'HAW 20/Oct/2026, 9:18:37 pm (UTC)'!
 moveEast
 
-	position changeValue: ​ position value + (1@0).
+	position changeValue: ​ position + (1@0).
 
 ! !
 
-!MarsRover methodsFor: 'moving' stamp: 'HAW 17/Oct/2026, 12:03:43 am (UTC)'!
+!MarsRover methodsFor: 'moving' stamp: 'HAW 20/Oct/2026, 9:28:28 pm (UTC)'!
 moveForward
 
-	head value moveForward.
+	head  moveForward.
 ! !
 
-!MarsRover methodsFor: 'moving' stamp: 'HAW 17/Oct/2026, 12:44:52 am (UTC)'!
+!MarsRover methodsFor: 'moving' stamp: 'HAW 20/Oct/2026, 9:24:47 pm (UTC)'!
 moveNorth
 
-	position  changeValue: ​ position value + (0@1).
+	position  changeValue: ​ position + (0@1).
 ! !
 
-!MarsRover methodsFor: 'moving' stamp: 'HAW 17/Oct/2026, 12:44:52 am (UTC)'!
+!MarsRover methodsFor: 'moving' stamp: 'HAW 20/Oct/2026, 9:24:56 pm (UTC)'!
 moveSouth
 
-	position changeValue:  position value + (0@-1).
+	position changeValue:  position + (0@-1).
 ! !
 
-!MarsRover methodsFor: 'moving' stamp: 'HAW 17/Oct/2026, 12:44:52 am (UTC)'!
+!MarsRover methodsFor: 'moving' stamp: 'HAW 20/Oct/2026, 9:24:59 pm (UTC)'!
 moveWest
 
-	position changeValue:  position value + (-1@0).
+	position changeValue:  position  + (-1@0).
 ! !
 
 
@@ -539,49 +539,6 @@ followPositionAndHeadingChangesOn: aMarsRover
 followPositionChangesOn: aMarsRover
 
 		^self new followingPostionChangesOn: aMarsRover ! !
-
-
-!classDefinition: #ObservedValue category: #'MarsRover-WithHeading'!
-Object subclass: #ObservedValue
-	instanceVariableNames: 'observedValue observers'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'MarsRover-WithHeading'!
-
-!ObservedValue methodsFor: 'observing' stamp: 'HAW 17/Oct/2026, 11:56:39 am (UTC)'!
-addObserver: aObserverToAdd
-
-	observers add: aObserverToAdd .! !
-
-!ObservedValue methodsFor: 'observing' stamp: 'HAW 17/Oct/2026, 11:56:39 am (UTC)'!
-changeValue: aValueToChange
-
-	observedValue := aValueToChange .
-	observers do: [:anObserver | anObserver value: observedValue ]! !
-
-
-!ObservedValue methodsFor: 'accesing' stamp: 'HAW 17/Oct/2026, 12:44:32 am (UTC)'!
-value
-
-	^ observedValue .! !
-
-
-!ObservedValue methodsFor: 'initialization' stamp: 'HAW 17/Oct/2026, 11:56:39 am (UTC)'!
-initializeFor: aValueToObserve
-
-	observedValue := aValueToObserve .
-	observers := OrderedCollection new.! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'ObservedValue class' category: #'MarsRover-WithHeading'!
-ObservedValue class
-	instanceVariableNames: ''!
-
-!ObservedValue class methodsFor: 'instance creation' stamp: 'HAW 17/Oct/2026, 12:45:35 am (UTC)'!
-for: aValueToObserve
-
-	^ self new initializeFor: aValueToObserve .! !
 
 
 !classDefinition: #MarsRoverObserversTest category: #'MarsRover-WithHeading'!
@@ -1012,3 +969,52 @@ assertIsAt: newPosition heading: newHeadingType afterProcessing: commands whenSt
 	marsRover process: commands.
 
 	self assert: (marsRover isAt: newPosition heading: newHeadingType)! !
+
+
+!classDefinition: #ObservedValue category: #'MarsRover-WithHeading'!
+ProtoObject subclass: #ObservedValue
+	instanceVariableNames: 'observedValue observers'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'MarsRover-WithHeading'!
+
+!ObservedValue methodsFor: 'observing' stamp: 'HAW 17/Oct/2026, 11:56:39 am (UTC)'!
+addObserver: aObserverToAdd
+
+	observers add: aObserverToAdd .! !
+
+!ObservedValue methodsFor: 'observing' stamp: 'HAW 17/Oct/2026, 11:56:39 am (UTC)'!
+changeValue: aValueToChange
+
+	observedValue := aValueToChange .
+	observers do: [:anObserver | anObserver value: observedValue ]! !
+
+
+!ObservedValue methodsFor: 'accesing' stamp: 'HAW 17/Oct/2026, 12:44:32 am (UTC)'!
+value
+
+	^ observedValue .! !
+
+
+!ObservedValue methodsFor: 'initialization' stamp: 'HAW 17/Oct/2026, 11:56:39 am (UTC)'!
+initializeFor: aValueToObserve
+
+	observedValue := aValueToObserve .
+	observers := OrderedCollection new.! !
+
+
+!ObservedValue methodsFor: 'proxy protocol' stamp: 'HAW 20/Oct/2026, 9:24:27 pm (UTC)'!
+doesNotUnderstand: aMessage
+
+	^ aMessage sendTo: observedValue .! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'ObservedValue class' category: #'MarsRover-WithHeading'!
+ObservedValue class
+	instanceVariableNames: ''!
+
+!ObservedValue class methodsFor: 'instance creation' stamp: 'HAW 20/Oct/2026, 9:26:01 pm (UTC)'!
+with: aValueToObserve
+
+	^ self new initializeFor: aValueToObserve .! !
