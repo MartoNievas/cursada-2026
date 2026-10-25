@@ -42,6 +42,11 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | [Patrón Active Variable](isw/patrones/Active-Variable.md) | Resumen del patrón **Active Variable** basado en el libro *The Design Patterns Smalltalk Companion*. |
 | [Patrón Observer](isw/patrones/Observer.md) | Resumen del patrón **Observer** basado en el libro *The Design Patterns Smalltalk Companion*. |
 | [Patrón Composite](isw/patrones/Composite.md) | Resumen del patrón **Composite** basado en el libro *The Design Patterns Smalltalk Companion*. |
+| [Patrón Decorator](/isw/patrones/Decorator.md) | Resumen del patrón **Decorator** basado en el libro *The Design Patterns Smalltalk Companion*. |
+| [Patrón Adapter](/isw/patrones/Adapter.md) | Resumen del patrón **Adapter** basado en el libro *The Design Patterns Smalltalk Companion*. |
+| [Patrón Proxy](isw/patrones/Proxy.md) | Resumen del patrón **Proxy** basado en el libro *The Design Patterns Smalltalk Companion*. |
+| [Patrón Builder](isw/patrones/Builder.md) | Resumen del patrón **Composite** basado en el libro *The Design Patterns Smalltalk Companion*. |
+| [Patrón Visitor](isw/patrones/Visitor.md) | Resumen del patrón **Composite** basado en el libro *The Design Patterns Smalltalk Companion*. |
 
 ---
 
@@ -91,6 +96,7 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | [Practica 4 — Administración de memoria](sistemas-operativos/guias/guia4-administracion-memoria/guia4-administracion-de-memoria.md) | Sistema de paginación, políticas de remplazo y análisis de algoritmos de remplazo . |
 | [Práctica 5 — Drivers y Administración de E/S](sistemas-operativos/teoricas/teo6-drivers-entrada-salida.md)                            | Administración de la Entrada/Salida y creación de drivers.                          |
 | [Practica 6 — Sistema de Archivos](sistemas-operativos/guias/guia6-sistema-archivos/guia6-sistema-de-archivos.md)                   | Análisis de los FS ext2 y FAT.                                                      |
+| [Practica 7 — Seguridad](/sistemas-operativos/guias/guia7-seguridad/guia7-seguridad.md)                   | Formas de ataques, principios de seguridad.                                  |
 
 ### Resúmenes
 
