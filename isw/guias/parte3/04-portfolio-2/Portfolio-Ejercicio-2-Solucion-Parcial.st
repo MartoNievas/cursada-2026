@@ -981,8 +981,16 @@ test05CanGoFromOneLegToAnother
 	self assert: (transfer withdrawLeg associatedTransfer withdrawLeg ) equals: (transfer depositLeg associatedTransfer withdrawLeg ) .
 ! !
 
-!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 1:37:31 pm (UTC)'!
-test06AnEmptyAccountHasEmptySummaryReport
+
+!classDefinition: #XXXTest category: #'Portfolio-Solucion'!
+TestCase subclass: #XXXTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!XXXTest methodsFor: 'tests' stamp: 'HAW 23/Oct/2026, 9:39:02 pm (UTC)'!
+test01AnEmptyAccountHasEmptySummaryReport
 
 	|account|
 	account := ReceptiveAccount new.
@@ -990,8 +998,8 @@ test06AnEmptyAccountHasEmptySummaryReport
 	
 	self assert: account accountSummary equals: (OrderedCollection with: 'Balance = 0').! !
 
-!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 2:18:48 pm (UTC)'!
-test07AnAccountWithoutTransfersHasAnAccountSummaryWithoutTransfers
+!XXXTest methodsFor: 'tests' stamp: 'HAW 23/Oct/2026, 9:39:14 pm (UTC)'!
+test02AnAccountWithoutTransfersHasAnAccountSummaryWithoutTransfers
 
 	|account expectedSummary |
 	account := ReceptiveAccount new.
@@ -1002,8 +1010,8 @@ test07AnAccountWithoutTransfersHasAnAccountSummaryWithoutTransfers
 	
 	self assert: account accountSummary equals: expectedSummary .! !
 
-!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 2:19:13 pm (UTC)'!
-test08AnAccountWithTransfersHasAccountSummaryWithTransferReport
+!XXXTest methodsFor: 'tests' stamp: 'HAW 23/Oct/2026, 9:39:25 pm (UTC)'!
+test03AnAccountWithTransfersHasAccountSummaryWithTransferReport
 
 	|account1 expectedSummaryAccount1 account2 expectedSummaryAccount2 |
 	account1 := ReceptiveAccount new.
@@ -1020,8 +1028,8 @@ test08AnAccountWithTransfersHasAccountSummaryWithTransferReport
 	self assert: account1 accountSummary equals: expectedSummaryAccount1 .
 	self assert: account2 accountSummary equals: expectedSummaryAccount2 .! !
 
-!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 2:27:44 pm (UTC)'!
-test09EmptyPortfolioAccountSummaryHasOnlyZeroBalance
+!XXXTest methodsFor: 'tests' stamp: 'HAW 23/Oct/2026, 9:39:34 pm (UTC)'!
+test04EmptyPortfolioAccountSummaryHasOnlyZeroBalance
 
     | portfolio expectedSummary |
     
@@ -1030,8 +1038,8 @@ test09EmptyPortfolioAccountSummaryHasOnlyZeroBalance
     
     self assert: expectedSummary equals: portfolio accountSummary! !
 
-!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 2:27:48 pm (UTC)'!
-test10PortfolioAccountSummaryIncludesDirectAccountsTransactions
+!XXXTest methodsFor: 'tests' stamp: 'HAW 23/Oct/2026, 9:39:44 pm (UTC)'!
+test05PortfolioAccountSummaryIncludesDirectAccountsTransactions
 
     | account1 account2 portfolio expectedSummary |
     
@@ -1049,8 +1057,8 @@ test10PortfolioAccountSummaryIncludesDirectAccountsTransactions
     
     self assert: expectedSummary equals: portfolio accountSummary! !
 
-!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 2:28:00 pm (UTC)'!
-test11ComposedPortfolioAccountSummaryIncludesSubportfolioTransactions
+!XXXTest methodsFor: 'tests' stamp: 'HAW 23/Oct/2026, 9:39:54 pm (UTC)'!
+test06ComposedPortfolioAccountSummaryIncludesSubportfolioTransactions
 
     | account1 account2 childPortfolio rootPortfolio expectedSummary |
     
@@ -1069,8 +1077,8 @@ test11ComposedPortfolioAccountSummaryIncludesSubportfolioTransactions
     
     self assert: expectedSummary equals: rootPortfolio accountSummary! !
 
-!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 2:29:31 pm (UTC)'!
-test12AnAccountWithOnlyTransferHasNetReportEqualsToBalance
+!XXXTest methodsFor: 'tests' stamp: 'HAW 23/Oct/2026, 9:40:28 pm (UTC)'!
+test07AnAccountWithOnlyTransferHasNetReportEqualsToBalance
 
 	| account1 account2 |
 	account1 := ReceptiveAccount new.
@@ -1082,16 +1090,16 @@ test12AnAccountWithOnlyTransferHasNetReportEqualsToBalance
 	self assert: account2 transferNetReport equals: 100.
 	! !
 
-!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 2:30:10 pm (UTC)'!
-test13AnEmptyPortfolioHasNetTranferEqualsZero
+!XXXTest methodsFor: 'tests' stamp: 'HAW 23/Oct/2026, 9:40:46 pm (UTC)'!
+test08AnEmptyPortfolioHasNetTranferEqualsZero
 
 	|portfolio|
 	portfolio := Portfolio new.
 	
 	self assert: portfolio transferNetReport equals: 0.	! !
 
-!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 2:30:16 pm (UTC)'!
-test14AnAccountWithTransferAndTrasactionsHasNetReportEqualsToSumOfTransfersAmount
+!XXXTest methodsFor: 'tests' stamp: 'HAW 23/Oct/2026, 9:40:56 pm (UTC)'!
+test09AnAccountWithTransferAndTrasactionsHasNetReportEqualsToSumOfTransfersAmount
 
 	| account1 account2 |
 	account1 := ReceptiveAccount new.
@@ -1105,8 +1113,8 @@ test14AnAccountWithTransferAndTrasactionsHasNetReportEqualsToSumOfTransfersAmoun
 	self assert: account2 transferNetReport equals: 100.
 	! !
 
-!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 2:30:23 pm (UTC)'!
-test15APortfolioWithAccountWithOnlyTransfersHasNetReportIsSumTransfersAmount
+!XXXTest methodsFor: 'tests' stamp: 'HAW 23/Oct/2026, 9:41:04 pm (UTC)'!
+test10APortfolioWithAccountWithOnlyTransfersHasNetReportIsSumTransfersAmount
 
 	|portfolio account1 account2 |
 	account1 := ReceptiveAccount new.
@@ -1116,8 +1124,8 @@ test15APortfolioWithAccountWithOnlyTransfersHasNetReportIsSumTransfersAmount
 	
 	self assert: portfolio transferNetReport equals: -100.	! !
 
-!TransferTest methodsFor: 'tests' stamp: 'HAW 22/Oct/2026, 2:30:27 pm (UTC)'!
-test16ComposedPortfolioTransferNetReportConsidersSubportfolios
+!XXXTest methodsFor: 'tests' stamp: 'HAW 23/Oct/2026, 9:41:14 pm (UTC)'!
+test11ComposedPortfolioTransferNetReportConsidersSubportfolios
 
     | rootPortfolio childPortfolio account1 account2 account3 |
     account1 := ReceptiveAccount new.
