@@ -1,149 +1,235 @@
-# Resumen del Patrón: Strategy Pattern
-**Autores:** Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides (Gang of Four)
+# Resumen del Paper / Libro: El Patrón Strategy
+**Referencia:** *Design Patterns: Elements of Reusable Object-Oriented Software* (Gamma, Helm, Johnson, Vlissides - GoF) / Adaptación y consideraciones idiomáticas en *The Design Patterns Smalltalk Companion*.
 
 ---
 
-## 1. Intención
+## 1. Intención y Otros Nombres
+- **Intención:** Define una familia de algoritmos, encapsula cada uno de ellos y los hace intercambiables. Strategy permite que el algoritmo varíe independientemente de los clientes que lo utilizan.
+- **Otros Nombres:** *Policy* (Política).
 
-Define una familia de algoritmos, encapsula cada uno de ellos y los hace intercambiables. **Strategy** permite que el algoritmo varíe independientemente de los clientes que lo utilizan.
+---
 
-El patrón también es conocido como **Policy**.
+## 2. Motivación y Diagnóstico
+En el diseño de sistemas interactivos (como procesadores de texto, sistemas de layout gráfico o motores de enrutamiento), a menudo una clase central requiere aplicar algoritmos complejos que admiten múltiples variantes (por ejemplo, partición de líneas de texto, compresión de datos o cálculo de rutas).
 
-## 2. Motivación
+### El Diagnóstico del Problema:
+1. **Acoplamiento rígido e inflación del cliente (Intento ingenuo):**
+   * Incorporar la lógica del algoritmo dentro de la propia clase `Context` (como `Composition`) satura al objeto con responsabilidades ajenas a su dominio principal, dificultando su comprensión y mantenimiento.
+   * Si coexisten múltiples algoritmos dentro de la misma clase, el código se fragmenta en ramas condicionales masivas para alternar entre ellos.
+2. **Proliferación de subclases estáticas (Intento por herencia):**
+   * Subclasificar `Composition` para cada algoritmo (`SimpleComposition`, `TeXComposition`) produce una explosión jerárquica rígida. No permite alterar el algoritmo de un objeto en tiempo de ejecución ni reutilizar el mismo algoritmo en otras clases cliente.
+3. **Solución polimórfica (Encapsulación de políticas):**
+   * Se crea una raíz abstracta `Compositor` que define una interfaz polimórfica de ejecución para la familia de algoritmos.
+   * Cada variante algorítmica se encapsula en una subclase independiente (`SimpleCompositor`, `TeXCompositor`, `ArrayCompositor`).
+   * `Composition` delega el formateo en una instancia de `Compositor` almacenada en una variable de instancia, pudiendo reemplazar la estrategia en cualquier momento sin afectar a los consumidores del contexto.
 
-La motivación esencial es poder encapsular comportamiento el cual no es esencial a la clase cliente, ya que de otro modo tiene varios inconvenientes, como:
-
-* Los clientes que precisan de ese comportamiento tienen que incorporar el código, lo cual genera código repetido, además hace más difícil de mantener la clase del cliente, sobre todo si tiene múltiples algoritmos/comportamientos.
-
-* No es deseable tener algoritmos/comportamientos diferentes en una misma clase si no se usan de manera concurrente.
-
-* Resulta complejo añadir nuevos comportamientos y alterar los existentes cuando la lógica forma parte de una clase cliente.
-
-Esto se puede evitar encapsulando los distintos algoritmos en clases, a estas clases se las denomina **estrategias**.
-
-Podemos considerar el siguiente ejemplo: tenemos la clase `Composition` que se encarga de mantener y actualizar saltos de línea del texto en un editor. Las estrategias de salto de línea no se implementan dentro de `Composition`, sino que están por separado en subclases mediante la clase abstracta `Compositor`, las subclases se encargan de resolver el algoritmo específico:
-
-* `SimpleCompositor`: Implementa una estrategia simple que calcula un salto de línea a la vez.
-
-* `TeXCompositor`: Implementa el algoritmo de **TeX**.
-
-* `ArrayCompositor`: Implementa una estrategia que determina los cortes de modo que cada fila posea un número fijo de elementos.
-
-Una instancia de `Composition` mantiene una referencia a un objeto `Compositor` y la responsabilidad de formatear el texto se delega al `Compositor` concreto.
+---
 
 ## 3. Aplicabilidad
+El patrón Strategy se utiliza cuando:
+- Múltiples clases relacionadas difieren únicamente en su comportamiento. Las estrategias proveen un mecanismo para configurar una clase con uno de entre varios comportamientos posibles.
+- Se necesitan distintas variantes de un algoritmo (por ejemplo, algoritmos que reflejan diferentes compromisos de espacio vs. tiempo o precisión vs. rendimiento).
+- Un algoritmo utiliza datos o estructuras auxiliares complejas que los clientes no deberían conocer ni manipular.
+- Una clase define múltiples comportamientos representados por sentencias condicionales múltiples (`switch` o `if-else` encadenados). Strategy permite trasladar cada rama condicional a una clase propia y resolver la selección por polimorfismo.
 
-El patrón **Strategy** se puede utilizar en las siguientes situaciones:
-
-* Múltiples clases relacionadas difieren únicamente en su comportamiento. Las estrategias proveen un mecanismo para configurar cada comportamiento.
-
-* Si se requieren múltiples variantes de un algoritmo. Por ejemplo, si tuviéramos diferentes algoritmos de ordenamiento, podríamos tener una jerarquía polimórfica de los mismos que se usen en diferentes situaciones, cada uno con sus **Trade-Offs**.
-
-* Un algoritmo utiliza una estructura de datos que el cliente no debería conocer.
-
-* Si una clase define múltiples comportamientos que se manifiestan a partir de estructuras condicionales, en lugar de ramificar se puede crear una jerarquía polimórfica y utilizar polimorfismo para reemplazar **ifs**.
+---
 
 ## 4. Estructura y Participantes
 
-* **Strategy (`Compositor`):**
-  * Declara una interfaz común y polimórfica para todos los algoritmos soportados.
-  * Es la abstracción que `Context` utiliza para ejecutar un algoritmo específico.
+```
+             Cliente (Client)
+                   │
+                   ▼
+           Context (Composition) ──────────────┐
+         - compositor (Compositor)             │ compone / delega
+         - repair()                            │
+         - compositor: aCompositor             │
+                                               ▼
+                                      Strategy (Compositor)
+                                    - compose()
+                                          /   \
+                                         /     \
+                                        /       \
+        ConcreteStrategyA (SimpleCompositor)    ConcreteStrategyB (TeXCompositor)
+        - compose()                             - compose()
+```
 
-* **ConcreteStrategy (ej. `SimpleCompositor`, `TeXCompositor`, `ArrayCompositor`):**
-  * Implementa el algoritmo/comportamiento concreto definido en la interfaz `Strategy` que utilizará `Context` para delegar.
+- **Strategy (`Strategy` / `Compositor`):** Declara una interfaz común para todos los algoritmos soportados. Es la abstracción que `Context` utiliza para invocar el algoritmo definido por un `ConcreteStrategy`.
+- **ConcreteStrategy (`SimpleCompositor`, `TeXCompositor`, `ArrayCompositor`):** Implementa el algoritmo concreto utilizando la interfaz declarada por `Strategy`.
+- **Context (`Context` / `Composition`):**
+  - Mantiene una referencia a un objeto `ConcreteStrategy`.
+  - Se configura con un objeto `Strategy` (en la inicialización o dinámicamente).
+  - Puede definir una interfaz que permita a `Strategy` acceder a sus datos internos.
+- **Cliente (`Client`):** Crea un objeto `ConcreteStrategy` específico y lo pasa al `Context`. A partir de allí, el cliente interactúa exclusivamente con el `Context`.
 
-* **Context (`Composition`):**
-  * Mantiene una referencia a un objeto `ConcreteStrategy`.
-  * Expone la interfaz a los clientes (`ContextInterface`).
-  * Puede suministrar datos a la estrategia o pasarse a sí mismo como colaborador para que la estrategia consulte su estado interno.
+---
 
 ## 5. Colaboraciones
+1. El cliente crea una instancia de un `ConcreteStrategy` y la asocia al `Context`.
+2. Cuando el `Context` necesita ejecutar el algoritmo (por ejemplo, ante el mensaje `#repair`), delega el cómputo en su estrategia (`compositor compose`).
+3. Para realizar el cálculo, el `Context` transfiere los datos requeridos a la estrategia:
+   * Enviando los valores directamente como argumentos del método.
+   * Pasándose a sí mismo (`self`) como colaborador para que la estrategia invoque callbacks sobre el contexto.
+4. El cliente interactúa habitualmente con el `Context`, aunque es el encargado de proveer la estrategia inicial o de conmutarla cuando las condiciones operacionales lo requieran.
 
-1. **Ejecución delegada:** `Context` redirige las operaciones de los clientes hacia su objeto `ConcreteStrategy` actual para realizar el cómputo.
-
-2. **Paso de datos:** `Context` y `ConcreteStrategy` colaboran pasando información como argumentos directos o mediante callbacks sobre `Context`.
-
-3. **Configuración por el cliente:** El cliente generalmente crea una instancia de `ConcreteStrategy` y configura el `Context` con ella, a partir de ese momento el cliente solo interactúa con `Context`.
+---
 
 ## 6. Consecuencias
 
-El patrón **Strategy** presenta las siguientes ventajas y desventajas:
+### Ventajas:
+- **Familias de algoritmos reutilizables:** Las jerarquías de `Strategy` definen familias de algoritmos aislados que pueden ser reutilizados por diferentes contextos a lo largo del sistema.
+- **Alternativa superior al subclasificado:** Evita heredar del `Context`, lo que mezclaría la lógica del algoritmo con la gestión de los datos del dominio y congelaría la elección del comportamiento en tiempo de compilación.
+- **Eliminación sistemática de condicionales:** Suprime bloques `if-else` o sentencias `switch` en el `Context`, reemplazando la selección manual de rutas por despacho dinámico polimórfico.
+- **Libertad en la elección de implementaciones:** Permite a los clientes seleccionar estrategias optimizadas para contextos particulares (por ejemplo, priorizar velocidad de procesamiento sobre uso de memoria).
 
-1. **Familias de algoritmos relacionados:** Las jerarquías de clases `Strategy` definen una familia de algoritmos o comportamientos que se pueden reutilizar. La herencia permite factorizar y compartir la funcionalidad común de los algoritmos.
-
-2. **Una alternativa a la creación de subclases (*Subclassing*):** Podríamos subclasificar directamente `Context`, pero esto cablea rígidamente el comportamiento a `Context`, mezclando la implementación del algoritmo con la de `Context`. Además, esta forma imposibilita cambiar el algoritmo de forma dinámica.
-
-3. **Las estrategias eliminan sentencias condicionales:** Encapsular el comportamiento en las diferentes `Strategy` permite eliminar las sentencias condicionales que vivían en `Context` utilizando polimorfismo.
-
-4. **Elección de implementaciones:** Las estrategias brindan diferentes implementaciones para un mismo comportamiento, las cuales permiten decidir al cliente cuál sería la óptima para su caso particular.
-
-5. **Los clientes deben conocer las distintas estrategias:** Una desventaja clara es que el cliente debe conocer las diferentes estrategias, ya que la creación del `Context` depende de asignarle una estrategia, por lo que los clientes pueden quedar expuestos a detalles de implementación. Por eso **Strategy** solo debe emplearse cuando la variación del comportamiento resulta relevante para los clientes.
-
-6. **Sobrecosto de comunicación entre Strategy y Context (*Communication overhead*):** Como `Strategy` es una jerarquía polimórfica, todas las subclases implementan la misma interfaz, el mismo algoritmo/comportamiento, por lo que si en algún caso la implementación resulta trivial podrían no utilizarse todos los colaboradores del mensaje. Esto genera un acoplamiento más estrecho entre `Strategy` y `Context`.
-
-7. **Incremento en el número de objetos:** Las estrategias aumentan la cantidad de objetos dentro del sistema. A veces este costo puede mitigarse implementando estrategias sin estado (*stateless*) que los contextos puedan compartir como Flyweights.
-
-## 7. Implementación
-
-Al implementar el patrón **Strategy**, deben considerarse los siguientes aspectos técnicos y compromisos de diseño:
-
-### 1. Definición de las interfaces de `Strategy` y `Context`
-
-Las interfaces de `Strategy` y `Context` deben permitir que un `ConcreteStrategy` acceda de forma eficiente y no invasiva a cualquier dato requerido del contexto para computar el algoritmo. Existen dos enfoques habituales para el flujo de información:
-
-* **Pasaje de datos como argumentos (`Data Passing`):**
-  * `Context` envía los datos explícitamente a través de los parámetros del método del algoritmo (por ejemplo, `strategy computeWith: data1 and: data2`).
-  * **Ventaja:** Desacopla por completo a `Strategy` respecto de la clase e interfaz de `Context`.
-  * **Desventaja (*Overhead*):** Obliga a definir una interfaz lo bastante amplia para el peor caso. Ciertas estrategias concretas simples recibirán argumentos que nunca utilizarán.
-
-* **Pasaje de la referencia del contexto (`Context Passing / Callbacks`):**
-  * `Context` se pasa a sí mismo (`this` o `self`) como argumento en la invocación (`strategy computeFor: self`), o la estrategia guarda una referencia persistente a su contexto.
-  * **Ventaja:** Elimina el pasaje superfluo de parámetros; la estrategia solicita únicamente los colaboradores o atributos específicos que necesita.
-  * **Desventaja:** Aumenta el acoplamiento, ya que las subclases de `Strategy` quedan atadas a la interfaz pública o a los métodos de acceso de `Context`.
+### Desventajas / Consideraciones en Smalltalk:
+- **Exposición del cliente a detalles de diseño:** El cliente debe comprender las diferencias y *trade-offs* entre las distintas estrategias para elegir la apropiada, exponiendo criterios de implementación que idealmente estarían ocultos.
+- **Sobrecosto de comunicación (*Communication Overhead*):** La interfaz abstracta de `Strategy` debe acomodar las necesidades de todas las estrategias de la familia. Esto suele provocar que estrategias simples reciban parámetros o colaboradores que jamás utilizarán.
+- **Incremento en el volumen de objetos:** Se multiplica el número de instancias y clases en memoria, aunque puede mitigarse mediante estrategias desprovistas de variables de instancia compartidas como *Flyweights*.
 
 ---
 
-### 2. Estrategias como parámetros de plantilla (*Templates / Generics*)
+## 7. Detalles de Implementación en Smalltalk
 
-En lenguajes con tipado estático como C++, si no es un requisito intercambiar la estrategia dinámicamente en tiempo de ejecución, se puede configurar el contexto mediante plantillas (`template <class AStrategy> class Context`).
-
-* **Ventajas:**
-  * Enlaza el algoritmo en tiempo de compilación (*early/static binding*).
-  * Elimina la sobrecarga de indirección asociada a tablas de funciones virtuales (`vtable lookup`).
-  * Ahorra el almacenamiento en memoria del puntero o referencia hacia el objeto estrategia.
-* **Limitación:** Congela la estrategia seleccionada durante la compilación, perdiendo la mutabilidad dinámica característica del patrón en tiempo de ejecución.
-
----
-
-### 3. Hacer que los objetos `Strategy` sean opcionales (*Default Behavior*)
-
-Para simplificar el uso del contexto por parte de los clientes:
-
-* La clase `Context` puede verificar la presencia de su colaborador `Strategy` antes de invocarlo.
-* Si la referencia es nula o no fue configurada, `Context` ejecuta un comportamiento predeterminado por defecto.
-* **Beneficio:** Los clientes únicamente configuran una instancia de `ConcreteStrategy` cuando desean sobrescribir el comportamiento estándar, reduciendo el código repetitivo en escenarios comunes.
+1. **Estrategias basadas en bloques (Pluggable Strategies):**
+   * En Smalltalk, no siempre es obligatorio construir una jerarquía completa de clases `Strategy`. Si el algoritmo es conciso, una instancia de `BlockClosure` funciona como una estrategia idiomática ligera (por ejemplo, el bloque de ordenamiento provisto a un `SortedCollection`: `[ :a :b | a < b ]`).
+2. **Estrategia por defecto en el Contexto:**
+   * El `Context` puede inicializar una estrategia por defecto en su método `#initialize` (por ejemplo, un algoritmo simple y rápido). Así, los clientes comunes evitan la obligación de configurarlo a mano y solo inyectan una estrategia cuando necesitan un comportamiento especializado.
+3. **Técnicas de pasaje de información:**
+   * *Data Passing:* El contexto pasa valores escalares (`strategy calculateFor: width and: height`). Máximo desacoplamiento, pero la firma del método puede inflarse.
+   * *Context Passing:* El contexto pasa `self` (`strategy compose: self`). Simplifica las firmas polimórficas y permite a la estrategia pedir únicamente los accesores que requiere, a costa de acoplar la estrategia al protocolo público del `Context`.
+4. **Estrategias sin estado (Stateless / Flyweight):**
+   * En Smalltalk es habitual mantener instancias únicas de estrategias en variables de clase o en un diccionario global si estas no retienen variables de instancia, evitando la sobrecarga en el *Garbage Collector*.
 
 ---
 
-### 4. Ciclo de vida y compartición de instancias (`Flyweight / Stateless Strategies`)
+## 8. Código de Ejemplo (Smalltalk - Formateador de Líneas de Texto)
 
-* Si las clases `ConcreteStrategy` no poseen variables de instancia (es decir, encapsulan lógica pura y no mantienen estado intrínseco), no es necesario instanciarlas repetidamente.
-* Pueden compartirse entre múltiples instancias de `Context` modelándolas como *Singletons* o reutilizándolas a través del patrón *Flyweight*, minimizando el consumo de memoria y la presión sobre el recolector de basura (*garbage collector*).
+Contexto:
 
-## Usos Conocidos
+```smalltalk
+Object subclass: #ComposicionTexto
+    instanceVariableNames: 'texto compositor lineasFormateadas'
+    classVariableNames: ''
+    poolDictionaries: ''
+    category: 'Ejemplo-Strategy'
 
-* **ET++:** Emplea el patrón Strategy para encapsular diferentes algoritmos de distribución de texto en líneas (TextCompositor y sus variantes).
+ComposicionTexto >> initialize
+    super initialize.
+    texto := ''.
+    compositor := CompositorSimple new. "Estrategia por defecto"
+    lineasFormateadas := OrderedCollection new.
 
-* **InterViews:** Utiliza estrategias denominadas Layouts para encapsular diversas políticas de alineación y distribución espacial de elementos de interfaz gráfica.
+ComposicionTexto >> texto: unString
+    texto := unString.
+    self formatear.
 
-* **RTL System (Compiladores):** Utiliza estrategias para abstraer diferentes mecanismos de asignación de registros de procesador y esquemas de generación de código según la arquitectura del hardware de destino.
+ComposicionTexto >> compositor: unCompositor
+    compositor := unCompositor.
+    self formatear.
 
-* **Frameworks de Colecciones en Smalltalk/CLI:** Algoritmos de ordenamiento parametrizados por bloques o clausuras (sorting blocks) constituyen instanciaciones directas del patrón Strategy.
+ComposicionTexto >> texto
+    ^texto
 
-## Patrones Relacionados
+ComposicionTexto >> lineasFormateadas
+    ^lineasFormateadas
 
-* **Flyweight:** Las instancias de ConcreteStrategy frecuentemente carecen de estado interno propio, lo que permite compartirlas entre múltiples contextos como Flyweights.
+ComposicionTexto >> formatear
+    "Delega la responsabilidad del cómputo pasando self como colaborador"
+    lineasFormateadas := compositor componerLineasPara: self.
+```
 
-* **State:** Comparte una estructura idéntica basada en delegación y composición, pero difiere en la intención: State varía el comportamiento asociado a transiciones internas automáticas del ciclo de vida del objeto, mientras que Strategy provee algoritmos independientes configurados típicamente por el cliente.
+Estrategia abstracta:
 
-* **Template Method:** Emplea herencia para variar partes internas de un algoritmo en subclases; Strategy emplea delegación y composición para intercambiar el algoritmo entero de forma dinámica.
+```smalltalk
+Object subclass: #Compositor
+    instanceVariableNames: ''
+    classVariableNames: ''
+    poolDictionaries: ''
+    category: 'Ejemplo-Strategy'
+
+Compositor >> componerLineasPara: unaComposicion
+    self subclassResponsibility
+```
+
+Estrategias concretas:
+
+```smalltalk
+Compositor subclass: #CompositorSimple
+    instanceVariableNames: ''
+    classVariableNames: ''
+    poolDictionaries: ''
+    category: 'Ejemplo-Strategy'
+
+CompositorSimple >> componerLineasPara: unaComposicion
+    "Corta el texto simplemente cada vez que encuentra un espacio"
+    ^unaComposicion texto findTokens: ' '
+```
+
+```smalltalk
+Compositor subclass: #CompositorTeX
+    instanceVariableNames: 'longitudLinea'
+    classVariableNames: ''
+    poolDictionaries: ''
+    category: 'Ejemplo-Strategy'
+
+CompositorTeX >> initialize
+    super initialize.
+    longitudLinea := 15.
+
+CompositorTeX >> longitudLinea: unEntero
+    longitudLinea := unEntero
+
+CompositorTeX >> componerLineasPara: unaComposicion
+    "Algoritmo simulado que agrupa palabras respetando una longitud fija"
+    | palabras lineas lineaActual |
+    palabras := unaComposicion texto findTokens: ' '.
+    lineas := OrderedCollection new.
+    lineaActual := ''.
+    
+    palabras do: [ :cadaPalabra |
+        (lineaActual size + cadaPalabra size > longitudLinea)
+            ifTrue: [
+                lineas add: lineaActual.
+                lineaActual := cadaPalabra ]
+            ifFalse: [
+                lineaActual := lineaActual isEmpty
+                    ifTrue: [ cadaPalabra ]
+                    ifFalse: [ lineaActual , ' ' , cadaPalabra ] ] ].
+                    
+    lineaActual isEmpty ifFalse: [ lineas add: lineaActual ].
+    ^lineas
+```
+
+Uso por el cliente:
+
+```smalltalk
+| composicion |
+composicion := ComposicionTexto new.
+composicion texto: 'El patron Strategy encapsula familias de algoritmos intercambiables'.
+
+"1. Utiliza la estrategia simple por defecto"
+Transcript show: 'Salida Simple: '; cr.
+composicion lineasFormateadas do: [ :cada | Transcript show: cada; cr ].
+
+"2. El cliente conmuta a una estrategia avanzada en tiempo de ejecución"
+composicion compositor: (CompositorTeX new longitudLinea: 20).
+
+Transcript show: 'Salida TeX: '; cr.
+composicion lineasFormateadas do: [ :cada | Transcript show: cada; cr ].
+```
+
+---
+
+## 9. Usos Conocidos en el Entorno Smalltalk
+- **`SortedCollection` (SortBlock):** La colección ordenada utiliza una estrategia basada en un bloque binario (`sortBlock: [ :a :b | a <= b ]`) para gobernar el criterio de ordenamiento sin alterar la estructura interna de la colección.
+- **VisualWorks (LayoutManagers / Controllers):** La distribución de submorfos o vistas hijas en contenedores gráficos delega en clases `LayoutManager` (como `RowLayout`, `TableLayout`), desacoplando el dibujo del cálculo de coordenadas.
+- **Streams y Serializadores (Formatters):** Las herramientas de persistencia y serialización de objetos delegan el formato de salida (binario, JSON, XML) en formateadores intercambiables configurados sobre el stream base.
+
+---
+
+## 10. Patrones Relacionados
+- **State:** Presenta una estructura idéntica basada en composición y delegación hacia una jerarquía polimórfica. Se diferencian radicalmente en la **intención**: Strategy parametriza un algoritmo estático o intercambiable configurado generalmente desde afuera por el cliente; State modela un ciclo de vida con transiciones automáticas y reactivas al estado interno del contexto.
+- **Flyweight:** Es sumamente común que las instancias de `ConcreteStrategy` carezcan de variables de instancia, permitiendo que múltiples contextos compartan las mismas instancias como Flyweights.
+- **Template Method:** Resuelve la variación de algoritmos mediante herencia estática (sobrescribiendo métodos hook en subclases); Strategy lo resuelve mediante composición dinámica (delegando la totalidad del algoritmo en un colaborador externo).
+- **Decorator:** Decorator altera al componente agregándole responsabilidades por fuera (envolviéndolo); Strategy altera el comportamiento del contexto desde adentro reemplazando una de sus partes operativas.

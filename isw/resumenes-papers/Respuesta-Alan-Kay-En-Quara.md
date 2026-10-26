@@ -1,11 +1,19 @@
 # Respuestas de Alan Kay en Quora
 
-El texto de **Alan Kay** plantea que las ciencias de la computación sufrieron un proceso de degradación itelectual a medida que la disciplina se expandío masivamente. Los puntos centrales son:
+Para empezar, la pregunta a la que **Alan Kay** responde es:
 
-* **El origen frente a la masificación:** En los años 60, la investigación en un puñado de unviersidades de élite era de altísimo nivel. El declive comenzó a partir de 1980, cuando miles de universidades crearon departamentos de computación sin contar con suficientes docentes calificados para sostener ese rigor.
+**¿Fue la computación idiotizada (simplificada/degradada) por la llegada de las ciencias de la computación?**
 
-* **De ciencia a formación vocacional:** Las universidades adoptaron un modelo de negocio orientado al mercado laboral en lugar de la comprensión profunda. Como ejemplo, cita cómo instituciones de primer nivel (como Stanford) pasaron a enseñar lenguajes comerciales como Java para complacer demandas corporativas, en vez de priorizar los fundamentos de la computación.
+Como primera reacción **Alan Kay** dice que no, pero ahora vamos a mencionar todos los puntos que menciona de por qué la computación sí se idiotizó; también dice que la verdadera ciencia de la computación en los 60 se hacía en las mejores universidades.
 
-* **Pérdida de curiosidad y perspectiva histórica:** Los estudiantes y profesores actuales desconocen la historia del campo y a figuras clave (como Douglas Engelbart), reduciendo la disciplina a mera ingeniería de software o ensamblaje de código, sin comprender el concepto de *ciencia*.
+1. **Masificación de la computación:** Como primer punto, **Alan Kay** menciona que la computación se masificó poco antes de los 80; pasó de unas pocas instituciones a haber más de 4000 en **EE. UU.** Como argumento para defender la inviabilidad de esto, fue que en ese entonces no había ni por asomo 4000 personas de primer nivel en computación en el **mundo**. **Alan Kay** atribuye esto a la transformación de las universidades en entidades más parecidas a las empresas.
 
-* **La verdadera definición de computación:** Siguiendo a pioneros como Herbert Simon y Alan Perlis, Kay argumenta que la computación no se reduce a algoritmos ni a sintaxis, es la *ciencia de los procesos y de los sistemas* (una ciencia de lo artificial). Su valor reside en modelar fenómenos dinámicos y construir sistemas para entenderlos y mejorarlos de forma iterativa, enfoque con el que Xerox PARC logró sus mayores hitos.
+2. **De ciencia a formación vocacional:** El segundo punto es la transición de la **comprensión profunda de problemas complejos** hacia la **formación vocacional**. **Alan Kay** presenta como argumento defensor de este suceso el aumento en el costo de vida, lo que llevó a que los estudiantes aspiraran a conseguir un trabajo lo más rápido posible antes que la **iluminación intelectual**. Y da como ejemplo al departamento de **CS de Stanford**, que utilizaba como lenguaje introductorio a **Java**, el cual era demandado por el mercado empresarial a pesar de las quejas de profesores.
+
+3. **Pérdida de curiosidad y desconocimiento de la historia:** Como tercer punto, **Alan Kay** menciona que a través de charlas y visitas a muchos departamentos ha notado que los estudiantes no saben casi nada sobre la historia de la computación; también nota una falta de curiosidad tanto en estudiantes como en profesores. Tampoco encontró ningún estudiante que pudiera definir las **ciencias de la computación** como algo distinto a una suerte de ingeniería.
+
+Para cerrar su argumentación, **Alan Kay** cierra con 2 puntos clave muy importantes:
+
+- **La culpa compartida:** Por un lado señala a las empresas de operar bajo el efecto **Dunning-Kruger** y trasladar esa versión reduccionista a la educación; por otro, acusa a la **academia** de fallar en su deber de mantener la llama viva contra la mediocridad exterior.
+
+- **La degradación de la definición de "Ciencias de la Computación":** **Kay** aclara que la computación no es solo escribir algoritmos o aprender herramientas, sino una **ciencia de lo artificial / ciencia de los procesos y sistemas**. Al reducir la disciplina a programar para el mercado laboral, se perdió la esencia de usar la computadora como un meta-vehículo para modelar ideas dinámicas, explorar sistemas y crear nueva matemática. Así es como **Kay** y la gente en los 60 concebía la **Ciencia de la Computación**.
