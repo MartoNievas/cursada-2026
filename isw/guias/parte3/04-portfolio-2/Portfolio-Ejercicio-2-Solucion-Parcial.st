@@ -1,6 +1,6 @@
 !classDefinition: #Account category: #'Portfolio-Solucion'!
 Object subclass: #Account
-	instanceVariableNames: ''
+	instanceVariableNames: 'name'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
@@ -33,22 +33,13 @@ transactions
 	self subclassResponsibility ! !
 
 
-!Account methodsFor: 'reports' stamp: 'HAW 22/Oct/2026, 2:32:20 pm (UTC)'!
-accountSummary
-
-    | summary |
-    summary := OrderedCollection new.
-    self addSummaryLinesTo: summary.
-    summary add: 'Balance = ', self balance asString.
-    ^ summary! !
-
-!Account methodsFor: 'reports' stamp: 'HAW 22/Oct/2026, 2:00:47 pm (UTC)'!
-addSummaryLinesTo: aReportLinesCollection
+!Account methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 1:20:45 pm (UTC)'!
+accept: anAccountReport
 
 	self subclassResponsibility .! !
 
-!Account methodsFor: 'reports' stamp: 'HAW 22/Oct/2026, 2:31:55 pm (UTC)'!
-transferNetReport
+!Account methodsFor: 'visiting' stamp: 'AP 26/Oct/2026, 3:06:10 pm (UTC)'!
+transactionsDo: aBlock
 
 	self subclassResponsibility .! !
 
@@ -57,6 +48,16 @@ transferNetReport
 addedTo: aPortfolio
 
 	self subclassResponsibility ! !
+
+
+!Account methodsFor: 'initialization' stamp: 'AP 26/Oct/2026, 2:08:14 pm (UTC)'!
+initializeNamed: aName
+	name := aName.! !
+
+
+!Account methodsFor: 'accessing' stamp: 'AP 26/Oct/2026, 2:39:45 pm (UTC)'!
+name
+	^ name.! !
 
 
 !classDefinition: #Portfolio category: #'Portfolio-Solucion'!
@@ -171,16 +172,21 @@ signalCanNotAddAccount
 	self error: self class canNotAddAccountErrorMessage! !
 
 
-!Portfolio methodsFor: 'reports' stamp: 'HAW 22/Oct/2026, 2:00:00 pm (UTC)'!
-addSummaryLinesTo: aReportLinesCollection
+!Portfolio methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 1:31:01 pm (UTC)'!
+accept: anAccountReport
 
-    accounts do: [ :anAccount | 
-        anAccount addSummaryLinesTo: aReportLinesCollection ]! !
+	^ anAccountReport visitPortfolio: self.
+! !
 
-!Portfolio methodsFor: 'reports' stamp: 'HAW 22/Oct/2026, 2:16:44 pm (UTC)'!
-transferNetReport
-	
-	^ accounts sum: [:anAccount | anAccount transferNetReport ] ifEmpty: [0].! !
+!Portfolio methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 1:36:37 pm (UTC)'!
+accountsDo: aBlock
+
+	^ accounts do: aBlock .! !
+
+!Portfolio methodsFor: 'visiting' stamp: 'AP 26/Oct/2026, 3:06:10 pm (UTC)'!
+transactionsDo: aBlock
+
+	^ accounts do: [:anAccount | anAccount transactionsDo: aBlock ].! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -192,6 +198,14 @@ Portfolio class
 canNotAddAccountErrorMessage
 	
 	^'Can not add repeated account to a portfolio'! !
+
+!Portfolio class methodsFor: 'as yet unclassified' stamp: 'AP 26/Oct/2026, 2:10:52 pm (UTC)'!
+named: aName with: anAccount with: anotherAccount
+	
+	^self new initializeNamed: aName ;
+		add: anAccount;
+		add: anotherAccount;
+		yourself! !
 
 !Portfolio class methodsFor: 'as yet unclassified' stamp: 'HAW 25/May/2019, 2:18:21 pm (UTC)'!
 with: anAccount
@@ -216,12 +230,11 @@ Account subclass: #ReceptiveAccount
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!ReceptiveAccount methodsFor: 'initialization' stamp: 'HAW 22/Oct/2026, 1:25:41 pm (UTC)'!
+!ReceptiveAccount methodsFor: 'initialization' stamp: 'AP 26/Oct/2026, 2:09:20 pm (UTC)'!
 initialize
 
 	super initialize.
-	transactions := OrderedCollection new.
-	accountSummary := OrderedCollection new.! !
+	transactions := OrderedCollection new.! !
 
 
 !ReceptiveAccount methodsFor: 'transactions' stamp: 'HAW 25/May/2019, 2:38:52 pm (UTC)'!
@@ -229,11 +242,10 @@ addTransactionsTo: aCollectionOfTransactions
 
 	aCollectionOfTransactions addAll: transactions ! !
 
-!ReceptiveAccount methodsFor: 'transactions' stamp: 'HAW 22/Oct/2026, 1:27:12 pm (UTC)'!
+!ReceptiveAccount methodsFor: 'transactions' stamp: 'AP 26/Oct/2026, 2:44:21 pm (UTC)'!
 register: aTransaction
 
 	transactions add: aTransaction.
-	accountSummary add: aTransaction report.
 ! !
 
 !ReceptiveAccount methodsFor: 'transactions' stamp: 'HernanWilkinson 13/Jul/2011, 9:37:00 pm (UTC)'!
@@ -268,20 +280,290 @@ addedTo: aPortfolio
 	! !
 
 
-!ReceptiveAccount methodsFor: 'reports' stamp: 'HAW 22/Oct/2026, 1:59:32 pm (UTC)'!
-addSummaryLinesTo: aReportLinesCollection
+!ReceptiveAccount methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 1:31:27 pm (UTC)'!
+accept: anAccountReport
 
-    transactions do: [ :aTransaction | 
-        aReportLinesCollection add: aTransaction report ]! !
+	^ anAccountReport visitReceptiveAccount: self.! !
 
-!ReceptiveAccount methodsFor: 'reports' stamp: 'HAW 22/Oct/2026, 2:08:25 pm (UTC)'!
-transferNetReport
+!ReceptiveAccount methodsFor: 'visiting' stamp: 'AP 26/Oct/2026, 3:06:10 pm (UTC)'!
+transactionsDo: aBlock
+
+	^ transactions do: aBlock .! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'ReceptiveAccount class' category: #'Portfolio-Solucion'!
+ReceptiveAccount class
+	instanceVariableNames: ''!
+
+!ReceptiveAccount class methodsFor: 'instance creation' stamp: 'AP 26/Oct/2026, 2:08:49 pm (UTC)'!
+named: aName
+	^ self new initializeNamed: aName.! !
+
+
+!classDefinition: #AccountReport category: #'Portfolio-Solucion'!
+Object subclass: #AccountReport
+	instanceVariableNames: 'financialAsset'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!AccountReport methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 1:51:25 pm (UTC)'!
+visitDeposit: aDeposit 
+
+	self subclassResponsibility .! !
+
+!AccountReport methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 1:51:21 pm (UTC)'!
+visitDepositLeg: aDepositLeg 
+
+	self subclassResponsibility .! !
+
+!AccountReport methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 1:53:45 pm (UTC)'!
+visitPortfolio: aPortfolio
+
+	 aPortfolio accountsDo: [:anAccount | anAccount accept: self].! !
+
+!AccountReport methodsFor: 'visiting' stamp: 'AP 26/Oct/2026, 3:06:10 pm (UTC)'!
+visitReceptiveAccount: aReceptiveAccount
+
+	 aReceptiveAccount transactionsDo: [:aTrasaction | aTrasaction accept: self].! !
+
+!AccountReport methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 1:51:42 pm (UTC)'!
+visitWithdraw: aWithdraw 
+
+	self subclassResponsibility .! !
+
+!AccountReport methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 1:51:53 pm (UTC)'!
+visitWithdrawLeg: aWithdrawLeg 
+
+	self subclassResponsibility .! !
+
+
+!AccountReport methodsFor: 'report' stamp: 'HAW 26/Oct/2026, 1:59:14 pm (UTC)'!
+report
+
+	self subclassResponsibility .! !
+
+
+!AccountReport methodsFor: 'initialization' stamp: 'HAW 26/Oct/2026, 1:17:42 pm (UTC)'!
+initializeFor: aFinancialAsset
 	
+	financialAsset := aFinancialAsset .! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'AccountReport class' category: #'Portfolio-Solucion'!
+AccountReport class
+	instanceVariableNames: ''!
+
+!AccountReport class methodsFor: 'instance creation' stamp: 'HAW 26/Oct/2026, 1:17:14 pm (UTC)'!
+for: aFinancialAsset
+
+	^ self new initializeFor: aFinancialAsset .! !
+
+
+!classDefinition: #AccountSummary category: #'Portfolio-Solucion'!
+AccountReport subclass: #AccountSummary
+	instanceVariableNames: 'lines'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!AccountSummary methodsFor: 'report' stamp: 'HAW 26/Oct/2026, 1:56:56 pm (UTC)'!
+report
 	
-	^ transactions 
-		inject: 0
-		into: [ :currentBalance :transaction | transaction affectTransferBalance: currentBalance ]
+	financialAsset accept: self.
+	lines add: 'Balance = ', financialAsset balance asString.
+	^ lines! !
+
+
+!AccountSummary methodsFor: 'initialization' stamp: 'HAW 26/Oct/2026, 1:40:04 pm (UTC)'!
+initializeFor: aFinancialAsset
+
+	super initializeFor: aFinancialAsset .
+	lines := OrderedCollection new.! !
+
+
+!AccountSummary methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 1:44:46 pm (UTC)'!
+visitDeposit: aDeposit 
+	
+	lines add: 'Deposito por ', aDeposit value asString .! !
+
+!AccountSummary methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 1:47:57 pm (UTC)'!
+visitDepositLeg: aDepositLeg 
+	
+	lines add: 'Entrada por transferencia de ', aDepositLeg value asString.! !
+
+!AccountSummary methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 1:43:56 pm (UTC)'!
+visitWithdraw: aWithdraw 
+	
+	^ lines add: 'Extraccion por ', aWithdraw value asString.! !
+
+!AccountSummary methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 1:46:47 pm (UTC)'!
+visitWithdrawLeg: aWithdrawLeg 
+	
+	lines add: 'Salida por transferencia de ', aWithdrawLeg value asString! !
+
+
+!classDefinition: #PortfolioTreeReport category: #'Portfolio-Solucion'!
+AccountReport subclass: #PortfolioTreeReport
+	instanceVariableNames: 'lines indentationLevel'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!PortfolioTreeReport methodsFor: 'report' stamp: 'HAW 26/Oct/2026, 4:16:27 pm (UTC)'!
+report
+	
+	financialAsset accept: self.
+	^ lines! !
+
+
+!PortfolioTreeReport methodsFor: 'initialization' stamp: 'HAW 26/Oct/2026, 4:16:43 pm (UTC)'!
+initializeFor: aFinancialAsset
+
+	super initializeFor: aFinancialAsset .
+	lines := OrderedCollection new.
+	indentationLevel := 0.! !
+
+
+!PortfolioTreeReport methodsFor: 'indentation' stamp: 'HAW 26/Oct/2026, 4:15:33 pm (UTC)'!
+currentIndentation
+    ^ String new: indentationLevel withAll: Character tab.! !
+
+!PortfolioTreeReport methodsFor: 'indentation' stamp: 'HAW 26/Oct/2026, 4:18:18 pm (UTC)'!
+indentDuring: aBlock
+
+	indentationLevel := indentationLevel + 1.
+	aBlock ensure: [ indentationLevel := indentationLevel - 1 ]! !
+
+
+!PortfolioTreeReport methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 6:33:30 pm (UTC)'!
+visitPortfolio: aPortfolio
+
+	self subclassResponsibility .! !
+
+!PortfolioTreeReport methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 6:33:24 pm (UTC)'!
+visitReceptiveAccount: aReceptiveAccount
+
+	self subclassResponsibility .! !
+
+
+!PortfolioTreeReport methodsFor: 'printing' stamp: 'HAW 26/Oct/2026, 4:18:14 pm (UTC)'!
+addLine: aString
+
+	lines add: self currentIndentation , aString.! !
+
+
+!classDefinition: #PortfolioAccountSummary category: #'Portfolio-Solucion'!
+PortfolioTreeReport subclass: #PortfolioAccountSummary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!PortfolioAccountSummary methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 6:36:41 pm (UTC)'!
+visitDeposit: aDeposit 
+
+	self addLine: 'Deposito por ', aDeposit value asString.
+! !
+
+!PortfolioAccountSummary methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 6:37:31 pm (UTC)'!
+visitDepositLeg: aDepositLeg 
+
+	self addLine: 'Entrada por transferencia de ', aDepositLeg value asString.
+! !
+
+!PortfolioAccountSummary methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 4:18:50 pm (UTC)'!
+visitPortfolio: aPortfolio
+
+	self addLine: aPortfolio name.
+	self indentDuring: [
+		aPortfolio accountsDo: [ :anAccount | anAccount accept: self ].
+		self addLine: 'Balance = ' , aPortfolio balance asString.
+	].! !
+
+!PortfolioAccountSummary methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 6:51:24 pm (UTC)'!
+visitReceptiveAccount: aReceptiveAccount
+
+	| accountSummaryLines |
+	self addLine: aReceptiveAccount name.
+	accountSummaryLines := (AccountSummary for: aReceptiveAccount) report.
+	self indentDuring: [
+		accountSummaryLines do: [ :aLine | self addLine: aLine ]
+	].! !
+
+!PortfolioAccountSummary methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 6:37:01 pm (UTC)'!
+visitWithdraw: aWithdraw 
+	
+	self addLine: 'Extraccion por ', aWithdraw value asString.
+! !
+
+!PortfolioAccountSummary methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 6:37:16 pm (UTC)'!
+visitWithdrawLeg: aWithdrawLeg 
+
+	self addLine: 'Salida por transferencia de ', aWithdrawLeg value asString.
+! !
+
+
+!classDefinition: #PortfolioStructureReport category: #'Portfolio-Solucion'!
+PortfolioTreeReport subclass: #PortfolioStructureReport
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!PortfolioStructureReport methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 4:19:08 pm (UTC)'!
+visitPortfolio: aPortfolio
+	self addLine: aPortfolio name.
+	self indentDuring: [
+		aPortfolio accountsDo: [ :anAccount | anAccount accept: self ].
+	].! !
+
+!PortfolioStructureReport methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 4:20:32 pm (UTC)'!
+visitReceptiveAccount: aReceptiveAccount
+
+	self addLine: aReceptiveAccount name.! !
+
+
+!classDefinition: #TransferNet category: #'Portfolio-Solucion'!
+AccountReport subclass: #TransferNet
+	instanceVariableNames: 'transferNetBalance'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!TransferNet methodsFor: 'initialization' stamp: 'HAW 26/Oct/2026, 1:54:37 pm (UTC)'!
+initializeFor: aFinancialAsset
+
+	super initializeFor: aFinancialAsset .
+	transferNetBalance := 0.! !
+
+
+!TransferNet methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 1:55:08 pm (UTC)'!
+visitDeposit: aDeposit
+
 	! !
+
+!TransferNet methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 1:55:25 pm (UTC)'!
+visitDepositLeg: aDepositLeg
+
+	transferNetBalance := transferNetBalance + aDepositLeg value .! !
+
+!TransferNet methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 1:52:48 pm (UTC)'!
+visitWithdraw: aWithdraw ! !
+
+!TransferNet methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 1:55:39 pm (UTC)'!
+visitWithdrawLeg: aWithdrawLeg 
+
+	transferNetBalance := transferNetBalance - aWithdrawLeg value .! !
+
+
+!TransferNet methodsFor: 'report' stamp: 'HAW 26/Oct/2026, 1:59:33 pm (UTC)'!
+report
+	
+	financialAsset accept: self.
+	^ transferNetBalance .! !
 
 
 !classDefinition: #AccountTransaction category: #'Portfolio-Solucion'!
@@ -297,8 +579,8 @@ value
 	self subclassResponsibility ! !
 
 
-!AccountTransaction methodsFor: 'report' stamp: 'HAW 22/Oct/2026, 1:27:48 pm (UTC)'!
-report
+!AccountTransaction methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 1:50:33 pm (UTC)'!
+accept: anAccountReport
 
 	self subclassResponsibility .! !
 
@@ -349,16 +631,17 @@ value
 	^ value! !
 
 
-!Deposit methodsFor: 'report' stamp: 'HAW 22/Oct/2026, 1:28:26 pm (UTC)'!
-report
-
-	^ 'Deposito por ', value asString .! !
-
-
 !Deposit methodsFor: 'balance' stamp: 'HAW 25/May/2019, 2:25:02 pm (UTC)'!
 affectBalance: aBalance
 
 	^aBalance + value ! !
+
+
+!Deposit methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 1:42:07 pm (UTC)'!
+accept: anAccountReport
+
+	anAccountReport visitDeposit: self
+! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -407,6 +690,12 @@ value
 
 	^associatedTransfer value.! !
 
+
+!TransferLeg methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 6:40:46 pm (UTC)'!
+accept: anAccountReport 
+	
+	self subclassResponsibility ! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'TransferLeg class' category: #'Portfolio-Solucion'!
@@ -434,11 +723,6 @@ affectBalance: aBalance
 
 	^ aBalance + self value .! !
 
-!DepositLeg methodsFor: 'balance' stamp: 'HAW 22/Oct/2026, 2:33:02 pm (UTC)'!
-affectTransferBalance: aCurrentBalance
-
-	^ aCurrentBalance + self value .! !
-
 
 !DepositLeg methodsFor: 'testing' stamp: 'HAW 21/Oct/2026, 12:44:22 am (UTC)'!
 associatedTransfer
@@ -450,6 +734,12 @@ associatedTransfer
 report
 	
 	^ 'Entrada por transferencia de ', associatedTransfer value asString .! !
+
+
+!DepositLeg methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 1:47:25 pm (UTC)'!
+accept: anAccountReport 
+
+	anAccountReport visitDepositLeg: self ! !
 
 
 !classDefinition: #WithdrawLeg category: #'Portfolio-Solucion'!
@@ -464,12 +754,6 @@ affectBalance: aBalance
 
 	^ aBalance - self value .! !
 
-!WithdrawLeg methodsFor: 'balance' stamp: 'HAW 22/Oct/2026, 2:33:06 pm (UTC)'!
-affectTransferBalance: aCurrentBalance
-
-	^ aCurrentBalance - self value.
-	! !
-
 
 !WithdrawLeg methodsFor: 'report' stamp: 'HAW 22/Oct/2026, 1:36:59 pm (UTC)'!
 report
@@ -481,6 +765,12 @@ report
 associatedTransfer
 
 	^associatedTransfer! !
+
+
+!WithdrawLeg methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 1:46:09 pm (UTC)'!
+accept: anAccountReport
+
+	anAccountReport visitWithdrawLeg: self ! !
 
 
 !classDefinition: #Withdraw category: #'Portfolio-Solucion'!
@@ -502,16 +792,16 @@ value
 	^ value! !
 
 
-!Withdraw methodsFor: 'report' stamp: 'HAW 22/Oct/2026, 1:28:40 pm (UTC)'!
-report
-
-	^ 'Extraccion por ', value asString .! !
-
-
 !Withdraw methodsFor: 'balance' stamp: 'HAW 25/May/2019, 2:25:15 pm (UTC)'!
 affectBalance: aBalance
 
 	^aBalance - value! !
+
+
+!Withdraw methodsFor: 'visiting' stamp: 'HAW 26/Oct/2026, 1:43:31 pm (UTC)'!
+accept: anAccountReport 
+	
+	anAccountReport visitWithdraw: self ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -567,11 +857,17 @@ amountMustBeStrictlyPositiveErrorDescription
 
 	^'Amount must be strictly positive'! !
 
+!Transfer class methodsFor: 'error description' stamp: 'AP 26/Oct/2026, 3:34:27 pm (UTC)'!
+cantTransferToYourselfErrorDescription
 
-!Transfer class methodsFor: 'instance creation' stamp: 'HAW 21/Oct/2026, 12:13:56 am (UTC)'!
+	^'You cant transfer money to yourself!!'.! !
+
+
+!Transfer class methodsFor: 'instance creation' stamp: 'AP 26/Oct/2026, 3:32:33 pm (UTC)'!
 from: aSourceAccount to: aDestinationAccount withAmount: anAmountToTransfer
 	
 	self assertAmountIsGreaterThanZero: anAmountToTransfer .
+	self assertNotTransferingTo: aSourceAccount whileBeingPossiblyYourself: aDestinationAccount.
 	
 	^self new initializeFrom: aSourceAccount to: aDestinationAccount withAmount: anAmountToTransfer.
 
@@ -582,6 +878,298 @@ from: aSourceAccount to: aDestinationAccount withAmount: anAmountToTransfer
 assertAmountIsGreaterThanZero: anAmountToTransfer
 
 	anAmountToTransfer strictlyPositive ifFalse: [self error: self amountMustBeStrictlyPositiveErrorDescription ]! !
+
+!Transfer class methodsFor: 'asserting' stamp: 'AP 26/Oct/2026, 3:34:27 pm (UTC)'!
+assertNotTransferingTo: aSourceAccount whileBeingPossiblyYourself: aPossiblyYourselfAccount
+
+	aSourceAccount == aPossiblyYourselfAccount ifTrue: [self error: self cantTransferToYourselfErrorDescription ].! !
+
+
+!classDefinition: #AccountReportsTest category: #'Portfolio-Solucion'!
+TestCase subclass: #AccountReportsTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!AccountReportsTest methodsFor: 'tests' stamp: 'HAW 26/Oct/2026, 1:56:57 pm (UTC)'!
+test01AnEmptyAccountHasEmptySummaryReport
+
+	|account accountReport |
+	account := ReceptiveAccount new.
+	accountReport := AccountSummary for: account .
+	
+	self assert: accountReport report equals: (OrderedCollection with: 'Balance = 0').! !
+
+!AccountReportsTest methodsFor: 'tests' stamp: 'HAW 26/Oct/2026, 1:56:57 pm (UTC)'!
+test02AnAccountWithoutTransfersHasAnAccountSummaryWithoutTransfers
+
+	|account expectedSummary accountReport |
+	account := ReceptiveAccount new.
+	Deposit register: 100 on: account .
+	Withdraw register: 50 on: account .
+	accountReport := AccountSummary for: account .
+	
+	expectedSummary := OrderedCollection with: 'Deposito por 100' with: 'Extraccion por 50' with: 'Balance = 50'.
+	
+	self assert: accountReport report equals: expectedSummary .! !
+
+!AccountReportsTest methodsFor: 'tests' stamp: 'HAW 26/Oct/2026, 1:56:57 pm (UTC)'!
+test03AnAccountWithTransfersHasAccountSummaryWithTransferReport
+
+	|account1 expectedSummaryAccount1 account2 expectedSummaryAccount2 accountReport1 accountReport2 |
+	account1 := ReceptiveAccount new.
+	Deposit register: 100 on: account1 .
+	account2 := ReceptiveAccount new.
+	Transfer from: account1 to: account2  withAmount: 100.
+	Transfer from: account2 to: account1  withAmount: 50.
+	
+	accountReport1 := AccountSummary for: account1. 
+	accountReport2 := AccountSummary for: account2 .
+	
+	
+	
+	expectedSummaryAccount1 := OrderedCollection with: 'Deposito por 100' with: 'Salida por transferencia de 100' with: 'Entrada por transferencia de 50' with: 'Balance = 50'.
+	expectedSummaryAccount2 := OrderedCollection with: 'Entrada por transferencia de 100' with: 'Salida por transferencia de 50' with: 'Balance = 50'..
+	
+	self assert: accountReport1 report equals: expectedSummaryAccount1 .
+	self assert: accountReport2 report equals: expectedSummaryAccount2 .! !
+
+!AccountReportsTest methodsFor: 'tests' stamp: 'HAW 26/Oct/2026, 1:56:57 pm (UTC)'!
+test04EmptyPortfolioAccountSummaryHasOnlyZeroBalance
+
+    | portfolio expectedSummary portfolioReport |
+    
+    portfolio := Portfolio new.
+    expectedSummary := OrderedCollection with: 'Balance = 0'.
+    portfolioReport := AccountSummary for: portfolio .
+    
+    self assert: expectedSummary equals: portfolioReport report! !
+
+!AccountReportsTest methodsFor: 'tests' stamp: 'HAW 26/Oct/2026, 1:56:57 pm (UTC)'!
+test05PortfolioAccountSummaryIncludesDirectAccountsTransactions
+
+    | account1 account2 portfolio expectedSummary portfolioReport |
+    
+    account1 := ReceptiveAccount new.
+    account2 := ReceptiveAccount new.
+    Deposit register: 100 on: account1.
+    Withdraw register: 30 on: account2.
+    
+    portfolio := Portfolio with: account1 with: account2.
+    portfolioReport := AccountSummary for: portfolio .  
+
+    expectedSummary := OrderedCollection new.
+    expectedSummary add: 'Deposito por 100'.
+    expectedSummary add: 'Extraccion por 30'.
+    expectedSummary add: 'Balance = 70'.
+    
+    self assert: expectedSummary equals: portfolioReport report! !
+
+!AccountReportsTest methodsFor: 'tests' stamp: 'HAW 26/Oct/2026, 1:56:57 pm (UTC)'!
+test06ComposedPortfolioAccountSummaryIncludesSubportfolioTransactions
+
+    | account1 account2 childPortfolio rootPortfolio expectedSummary rootReport |
+    
+    account1 := ReceptiveAccount new.
+    account2 := ReceptiveAccount new.
+    Deposit register: 100 on: account1.
+    Withdraw register: 30 on: account2.
+    
+    childPortfolio := Portfolio with: account1.
+    rootPortfolio := Portfolio with: childPortfolio with: account2.
+    rootReport := AccountSummary for: rootPortfolio .
+
+    expectedSummary := OrderedCollection new.
+    expectedSummary add: 'Deposito por 100'.
+    expectedSummary add: 'Extraccion por 30'.
+    expectedSummary add: 'Balance = 70'.
+    
+    self assert: expectedSummary equals: rootReport report! !
+
+!AccountReportsTest methodsFor: 'tests' stamp: 'HAW 26/Oct/2026, 1:58:15 pm (UTC)'!
+test07AnAccountWithOnlyTransferHasNetReportEqualsToBalance
+
+	| account1 account2 transferNet1 transferNet2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	Transfer  from:  account1 to: account2  withAmount: 100. 
+	transferNet1 := TransferNet for: account1 .
+	transferNet2 := TransferNet for: account2 .
+	
+	self assert: transferNet1 report equals: -100.
+	self assert: transferNet2 report equals: 100.
+	! !
+
+!AccountReportsTest methodsFor: 'tests' stamp: 'HAW 26/Oct/2026, 2:00:12 pm (UTC)'!
+test08AnEmptyPortfolioHasNetTranferEqualsZero
+
+	|portfolio portfolioTransferNet |
+	portfolio := Portfolio new.
+	portfolioTransferNet := TransferNet for: portfolio .
+	
+	self assert: portfolioTransferNet report equals: 0.	! !
+
+!AccountReportsTest methodsFor: 'tests' stamp: 'HAW 26/Oct/2026, 2:00:50 pm (UTC)'!
+test09AnAccountWithTransferAndTrasactionsHasNetReportEqualsToSumOfTransfersAmount
+
+	| account1 account2 transferNet1 transferNet2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	Deposit register: 200 on: account1 .
+	Withdraw register: 50 on: account1.
+	Transfer  from:  account1 to: account2  withAmount: 100. 
+	
+	transferNet1 := TransferNet for: account1 .
+	transferNet2 := TransferNet for: account2 .
+	
+	
+	self assert: transferNet1 report equals: -100.
+	self assert: transferNet2 report equals: 100.
+	! !
+
+!AccountReportsTest methodsFor: 'tests' stamp: 'HAW 26/Oct/2026, 2:01:37 pm (UTC)'!
+test10APortfolioWithAccountWithOnlyTransfersHasNetReportIsSumTransfersAmount
+
+	|portfolio account1 account2 portfolioTransferNet |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	Transfer from: account1 to: account2  withAmount: 100.
+	portfolio := Portfolio with: account1 .
+	
+	portfolioTransferNet := TransferNet for: portfolio .
+	
+	self assert: portfolioTransferNet report equals: -100.	! !
+
+!AccountReportsTest methodsFor: 'tests' stamp: 'HAW 26/Oct/2026, 2:02:18 pm (UTC)'!
+test11ComposedPortfolioTransferNetReportConsidersSubportfolios
+
+    | rootPortfolio childPortfolio account1 account2 account3 rootTransferNet |
+    account1 := ReceptiveAccount new.
+    account2 := ReceptiveAccount new.
+    account3 := ReceptiveAccount new.
+    
+    Deposit register: 200 on: account1.
+    Withdraw register: 50 on: account1.
+    Transfer from: account2 to: account1 withAmount: 100.
+    Transfer from: account1 to: account3 withAmount: 30.
+    
+    childPortfolio := Portfolio with: account1.
+    rootPortfolio := Portfolio with: childPortfolio with: account3.
+    rootTransferNet := TransferNet for: rootPortfolio .  
+
+    self assert: rootTransferNet report equals: 100.! !
+
+!AccountReportsTest methodsFor: 'tests' stamp: 'HAW 26/Oct/2026, 4:23:20 pm (UTC)'!
+test12TreeStructureReportForASimplePortfolio
+
+	| account1 account2 portfolio treeReport expectedReport |
+	account1 := ReceptiveAccount named: 'Juancete01'.
+	account2 := ReceptiveAccount named: 'ElMomoLaDinastia'.
+	
+	portfolio := Portfolio named: 'Portfolio de la CoscuArmy' with: account1 with: account2.
+	treeReport := PortfolioStructureReport for: portfolio.
+	
+	expectedReport := OrderedCollection with: 'Portfolio de la CoscuArmy' with: '	Juancete01' with: '	ElMomoLaDinastia'.
+	
+	self assert: expectedReport equals: treeReport report.
+	
+	! !
+
+!AccountReportsTest methodsFor: 'tests' stamp: 'HAW 26/Oct/2026, 4:23:20 pm (UTC)'!
+test13TreeStructureReportForPortfolioWithSubPortfolios
+
+	| account1 account2 portfolio1 treeReport expectedReport account3 portfolio2|
+	account1 := ReceptiveAccount named: 'Juancete01'.
+	account2 := ReceptiveAccount named: 'ElMomoLaDinastia'.
+	account3 := ReceptiveAccount named: 'ElVikingo'.
+	
+	portfolio2 := Portfolio named: 'Portfolio Fantasmagorico' with: account2 with: account3.
+	portfolio1 := Portfolio named: 'Portfolio de la CoscuArmy' with: account1 with: portfolio2.
+	treeReport := PortfolioStructureReport for: portfolio1.
+	
+	expectedReport := OrderedCollection with: 'Portfolio de la CoscuArmy' with: '	Juancete01' with: '	Portfolio Fantasmagorico' with: '		ElMomoLaDinastia' with: '		ElVikingo'.
+	
+	self assert: expectedReport equals: treeReport report.
+	
+	! !
+
+!AccountReportsTest methodsFor: 'tests' stamp: 'HAW 26/Oct/2026, 4:23:08 pm (UTC)'!
+test14PortfolioTreePrinterSummaryForAPortfolioWithAccountsWithDeposits
+
+	| account1 account2 portfolio1 treeSummaryReport expectedReport |
+	account1 := ReceptiveAccount named: 'Juancete01'.
+	account2 := ReceptiveAccount named: 'ElMomoLaDinastia'.
+	Deposit register: 100 on: account1. 
+	Deposit register: 67 on: account2. 
+	
+	portfolio1 := Portfolio named: 'Portfolio de la CoscuArmy' with: account1 with: account2.
+	treeSummaryReport := PortfolioAccountSummary for: portfolio1.
+	
+	expectedReport := 
+		OrderedCollection with: 'Portfolio de la CoscuArmy' 
+			with: '	Juancete01' 
+			with: '		Deposito por 100' 
+			with: '		Balance = 100' 
+			with: '	ElMomoLaDinastia' 
+			with: '		Deposito por 67'.
+	expectedReport add: '		Balance = 67' .
+	expectedReport add: '	Balance = 167' .
+	
+	self assert: expectedReport equals: treeSummaryReport report.
+	
+	! !
+
+!AccountReportsTest methodsFor: 'tests' stamp: 'HAW 26/Oct/2026, 4:23:08 pm (UTC)'!
+test15PortfolioTreePrinterSummaryForAPortolioWithAccountsWithWithdraws
+
+	| account1 account2 portfolio1 treeSummaryReport expectedReport |
+	account1 := ReceptiveAccount named: 'Juancete01'.
+	account2 := ReceptiveAccount named: 'ElMomoLaDinastia'.
+	Withdraw register: 100 on: account1. 
+	Withdraw register: 67 on: account2. 
+	
+	portfolio1 := Portfolio named: 'Portfolio de la CoscuArmy' with: account1 with: account2.
+	treeSummaryReport := PortfolioAccountSummary for: portfolio1.
+	
+	expectedReport := 
+		OrderedCollection with: 'Portfolio de la CoscuArmy' 
+			with: '	Juancete01' 
+			with: '		Extraccion por 100' 
+			with: '		Balance = -100' 
+			with: '	ElMomoLaDinastia' 
+			with: '		Extraccion por 67'.
+	expectedReport add: '		Balance = -67' .
+	expectedReport add: '	Balance = -167' .
+	
+	self assert: expectedReport equals: treeSummaryReport report.
+	
+	! !
+
+!AccountReportsTest methodsFor: 'tests' stamp: 'HAW 26/Oct/2026, 4:23:08 pm (UTC)'!
+test16PortfolioTreePrinterSummaryForAPortolioWithAccountsWithTransfers
+
+	| account1 account2 portfolio1 treeSummaryReport expectedReport |
+	account1 := ReceptiveAccount named: 'Juancete01'.
+	account2 := ReceptiveAccount named: 'ElMomoLaDinastia'.
+	Transfer from:  account1 to: account2 withAmount: 100.
+	
+	portfolio1 := Portfolio named: 'Portfolio de la CoscuArmy' with: account1 with: account2.
+	treeSummaryReport := PortfolioAccountSummary for: portfolio1.
+	
+	expectedReport := 
+		OrderedCollection with: 'Portfolio de la CoscuArmy' 
+			with: '	Juancete01' 
+			with: '		Salida por transferencia de 100' 
+			with: '		Balance = -100' 
+			with: '	ElMomoLaDinastia' 
+			with: '		Entrada por transferencia de 100'.
+	expectedReport add: '		Balance = 100' .
+	expectedReport add: '	Balance = 0' .
+	
+	self assert: expectedReport equals: treeSummaryReport report.
+	
+	! !
 
 
 !classDefinition: #PortfolioTest category: #'Portfolio-Solucion'!
@@ -981,163 +1569,18 @@ test05CanGoFromOneLegToAnother
 	self assert: (transfer withdrawLeg associatedTransfer withdrawLeg ) equals: (transfer depositLeg associatedTransfer withdrawLeg ) .
 ! !
 
-
-!classDefinition: #XXXTest category: #'Portfolio-Solucion'!
-TestCase subclass: #XXXTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Portfolio-Solucion'!
+!TransferTest methodsFor: 'tests' stamp: 'AP 26/Oct/2026, 3:34:27 pm (UTC)'!
+test06CannotTransferToYourself
 
-!XXXTest methodsFor: 'tests' stamp: 'HAW 23/Oct/2026, 9:39:02 pm (UTC)'!
-test01AnEmptyAccountHasEmptySummaryReport
-
-	|account|
-	account := ReceptiveAccount new.
+	|transfer account1 |
 	
-	
-	self assert: account accountSummary equals: (OrderedCollection with: 'Balance = 0').! !
-
-!XXXTest methodsFor: 'tests' stamp: 'HAW 23/Oct/2026, 9:39:14 pm (UTC)'!
-test02AnAccountWithoutTransfersHasAnAccountSummaryWithoutTransfers
-
-	|account expectedSummary |
-	account := ReceptiveAccount new.
-	Deposit register: 100 on: account .
-	Withdraw register: 50 on: account .
-	
-	expectedSummary := OrderedCollection with: 'Deposito por 100' with: 'Extraccion por 50' with: 'Balance = 50'.
-	
-	self assert: account accountSummary equals: expectedSummary .! !
-
-!XXXTest methodsFor: 'tests' stamp: 'HAW 23/Oct/2026, 9:39:25 pm (UTC)'!
-test03AnAccountWithTransfersHasAccountSummaryWithTransferReport
-
-	|account1 expectedSummaryAccount1 account2 expectedSummaryAccount2 |
 	account1 := ReceptiveAccount new.
-	Deposit register: 100 on: account1 .
-	account2 := ReceptiveAccount new.
-	Transfer from: account1 to: account2  withAmount: 100.
-	Transfer from: account2 to: account1  withAmount: 50.
+	Deposit register: 1000 on: account1 .
 	
 	
-	
-	expectedSummaryAccount1 := OrderedCollection with: 'Deposito por 100' with: 'Salida por transferencia de 100' with: 'Entrada por transferencia de 50' with: 'Balance = 50'.
-	expectedSummaryAccount2 := OrderedCollection with: 'Entrada por transferencia de 100' with: 'Salida por transferencia de 50' with: 'Balance = 50'..
-	
-	self assert: account1 accountSummary equals: expectedSummaryAccount1 .
-	self assert: account2 accountSummary equals: expectedSummaryAccount2 .! !
-
-!XXXTest methodsFor: 'tests' stamp: 'HAW 23/Oct/2026, 9:39:34 pm (UTC)'!
-test04EmptyPortfolioAccountSummaryHasOnlyZeroBalance
-
-    | portfolio expectedSummary |
-    
-    portfolio := Portfolio new.
-    expectedSummary := OrderedCollection with: 'Balance = 0'.
-    
-    self assert: expectedSummary equals: portfolio accountSummary! !
-
-!XXXTest methodsFor: 'tests' stamp: 'HAW 23/Oct/2026, 9:39:44 pm (UTC)'!
-test05PortfolioAccountSummaryIncludesDirectAccountsTransactions
-
-    | account1 account2 portfolio expectedSummary |
-    
-    account1 := ReceptiveAccount new.
-    account2 := ReceptiveAccount new.
-    Deposit register: 100 on: account1.
-    Withdraw register: 30 on: account2.
-    
-    portfolio := Portfolio with: account1 with: account2.
-    
-    expectedSummary := OrderedCollection new.
-    expectedSummary add: 'Deposito por 100'.
-    expectedSummary add: 'Extraccion por 30'.
-    expectedSummary add: 'Balance = 70'.
-    
-    self assert: expectedSummary equals: portfolio accountSummary! !
-
-!XXXTest methodsFor: 'tests' stamp: 'HAW 23/Oct/2026, 9:39:54 pm (UTC)'!
-test06ComposedPortfolioAccountSummaryIncludesSubportfolioTransactions
-
-    | account1 account2 childPortfolio rootPortfolio expectedSummary |
-    
-    account1 := ReceptiveAccount new.
-    account2 := ReceptiveAccount new.
-    Deposit register: 100 on: account1.
-    Withdraw register: 30 on: account2.
-    
-    childPortfolio := Portfolio with: account1.
-    rootPortfolio := Portfolio with: childPortfolio with: account2.
-    
-    expectedSummary := OrderedCollection new.
-    expectedSummary add: 'Deposito por 100'.
-    expectedSummary add: 'Extraccion por 30'.
-    expectedSummary add: 'Balance = 70'.
-    
-    self assert: expectedSummary equals: rootPortfolio accountSummary! !
-
-!XXXTest methodsFor: 'tests' stamp: 'HAW 23/Oct/2026, 9:40:28 pm (UTC)'!
-test07AnAccountWithOnlyTransferHasNetReportEqualsToBalance
-
-	| account1 account2 |
-	account1 := ReceptiveAccount new.
-	account2 := ReceptiveAccount new.
-	Transfer  from:  account1 to: account2  withAmount: 100. 
+	self should: [ transfer :=  Transfer from: account1 to: account1 withAmount: 1000. ]  
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Transfer cantTransferToYourselfErrorDescription].
 	
 	
-	self assert: account1 transferNetReport equals: -100.
-	self assert: account2 transferNetReport equals: 100.
-	! !
-
-!XXXTest methodsFor: 'tests' stamp: 'HAW 23/Oct/2026, 9:40:46 pm (UTC)'!
-test08AnEmptyPortfolioHasNetTranferEqualsZero
-
-	|portfolio|
-	portfolio := Portfolio new.
-	
-	self assert: portfolio transferNetReport equals: 0.	! !
-
-!XXXTest methodsFor: 'tests' stamp: 'HAW 23/Oct/2026, 9:40:56 pm (UTC)'!
-test09AnAccountWithTransferAndTrasactionsHasNetReportEqualsToSumOfTransfersAmount
-
-	| account1 account2 |
-	account1 := ReceptiveAccount new.
-	account2 := ReceptiveAccount new.
-	Deposit register: 200 on: account1 .
-	Withdraw register: 50 on: account1.
-	Transfer  from:  account1 to: account2  withAmount: 100. 
-
-	
-	self assert: account1 transferNetReport equals: -100.
-	self assert: account2 transferNetReport equals: 100.
-	! !
-
-!XXXTest methodsFor: 'tests' stamp: 'HAW 23/Oct/2026, 9:41:04 pm (UTC)'!
-test10APortfolioWithAccountWithOnlyTransfersHasNetReportIsSumTransfersAmount
-
-	|portfolio account1 account2 |
-	account1 := ReceptiveAccount new.
-	account2 := ReceptiveAccount new.
-	Transfer from: account1 to: account2  withAmount: 100.
-	portfolio := Portfolio with: account1 .
-	
-	self assert: portfolio transferNetReport equals: -100.	! !
-
-!XXXTest methodsFor: 'tests' stamp: 'HAW 23/Oct/2026, 9:41:14 pm (UTC)'!
-test11ComposedPortfolioTransferNetReportConsidersSubportfolios
-
-    | rootPortfolio childPortfolio account1 account2 account3 |
-    account1 := ReceptiveAccount new.
-    account2 := ReceptiveAccount new.
-    account3 := ReceptiveAccount new.
-    
-    Deposit register: 200 on: account1.
-    Withdraw register: 50 on: account1.
-    Transfer from: account2 to: account1 withAmount: 100.
-    Transfer from: account1 to: account3 withAmount: 30.
-    
-    childPortfolio := Portfolio with: account1.
-    rootPortfolio := Portfolio with: childPortfolio with: account3.
-    
-    self assert: rootPortfolio transferNetReport equals: 100.! !
+! !
