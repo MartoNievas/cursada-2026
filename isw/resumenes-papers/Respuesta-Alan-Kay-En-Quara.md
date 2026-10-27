@@ -17,3 +17,9 @@ Para cerrar su argumentación, **Alan Kay** cierra con 2 puntos clave muy import
 - **La culpa compartida:** Por un lado señala a las empresas de operar bajo el efecto **Dunning-Kruger** y trasladar esa versión reduccionista a la educación; por otro, acusa a la **academia** de fallar en su deber de mantener la llama viva contra la mediocridad exterior.
 
 - **La degradación de la definición de "Ciencias de la Computación":** **Kay** aclara que la computación no es solo escribir algoritmos o aprender herramientas, sino una **ciencia de lo artificial / ciencia de los procesos y sistemas**. Al reducir la disciplina a programar para el mercado laboral, se perdió la esencia de usar la computadora como un meta-vehículo para modelar ideas dinámicas, explorar sistemas y crear nueva matemática. Así es como **Kay** y la gente en los 60 concebía la **Ciencia de la Computación**.
+
+La concepción de la «ciencia» en los 60 (Simon y Perlis):
+
+* **Herbert Simon («Ciencia de lo Artificial»):** Concibe a la computación como la ciencia que estudia los fenómenos, leyes y comportamientos emergentes de los sistemas y artefactos creados por el ser humano, análogo a cómo la ingeniería estudia las propiedades científicas de las estructuras artificiales.
+
+* **Alan Perlis («Ciencia de los Procesos»):** La define como el estudio de los sistemas dinámicos y sus procesos en el tiempo. La computadora no es solo una calculadora, sino un meta-vehículo para modelar teorías complejas, experimentar con ellas interactivamente y corregirlas empíricamente.
