@@ -120,6 +120,7 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 |[Taller 1](sistemas-operativos/talleres/taller1-syscalls) | Syscall y señales |
 |[Taller 2](sistemas-operativos/talleres/taller2-ipc) | InterProcess Comunication (IPC). |
 |[Taller 3](sistemas-operativos/talleres/taller3-drivers)| Creación de drivers. |
+|[Taller 4](sistemas-operativos/talleres/taller4-fs)| Implementación de un File System Ext2 de solo lectura. |
 
 ## Complejidad Computacional
 
