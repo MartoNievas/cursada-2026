@@ -102,3 +102,20 @@ Se definen igual que antes nada nuevo y se preservan todos los resultadas ya vis
 Decimos que un problema tiene una **solucion paralela eficiente** cuando puede ser resuelto para entradad de tamaño $n$ usando una computadora paralela con una cantidad polinomial ($n^{O(1)}$) de procesadores en tiempo polilogaritmico ($\log^{O(1)}{n}$).
 
 **Teorema:** $L$ tiene una solucion paralela eficiente sii $L \in NC$.
+
+[idea de la demostración en las páginas 18](../teoricas/clase12.pdf).
+
+**Teorema:** $NC^1 \subseteq L$
+
+[idea de la demostración en las páginas 22](../teoricas/clase12.pdf).
+
+**Teorema:** Sea $\textbf{L} \in NSPACE(S(n))$, con $S(n) \geq \log{n}$. Existe una familia de circuitos $(C_n)_{n \in N}$ y una máquina determinística $M$ tal que para todo $n$ y $x \in \{0,1\}^n$
+
+* $x \in \textbf{L} \iff C_n(x) = 1$
+* $M(1^n) = \langle C_n \rangle$
+* $C_n$ puede usar compuertas $\land$ t $\lor$ de $fan-in$ arbitrario
+* $prof(C_n) = O(S(n))$
+
+[idea de la demostración en las páginas 25](../teoricas/clase12.pdf).
+
+**Corolario:** $NL \subseteq AC^1$
