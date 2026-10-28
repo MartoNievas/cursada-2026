@@ -38,7 +38,7 @@ int driver_write(void* udata) {
   sema_wait(&mutex);                    // Entramos en la sección crítica
   OUT(CHRONO_CTRL, CHRONO_RESET);
   sema_signal(&mutex);                  // Saliendo de la sección crítica
-  return 0;
+  return sizeof(CHRONO_RESET);
 }
 
 // Ahora vamos con read
@@ -104,13 +104,13 @@ int driver_init() {
 
 int driver_read(void* udata) {
   // Busy-waiting hasta que se presione una tecla
-  while ((IN(BTN_STATUS) & 0b1) != 1) {}
+  while (!(IN(BTN_STATUS) & 0x01)) {}
 
   sema_wait(&mutex);   // Inicio de sección crítica
 
   // Cuando llegamos acá, se presionó una tecla
-  OUT(BTN_STATUS, 0);
   int res = IN(BTN_PRESSED);
+  OUT(BTN_STATUS, res & ~0x02);
   copy_to_user(udata, &res, sizeof(res));
 
   sema_signal(&mutex); // Fin de sección crítica
@@ -148,7 +148,6 @@ int driver_remove() {
 
 // Hacemos el handler de la interrupción
 void handler() {
-  (void) sig;
   sema_signal(&sem_read);
 }
 
@@ -217,7 +216,14 @@ Vamos con el driver. Notemos que vamos a tener que utilizar polling, ya que no t
 
 ```C
 // Requerimos sincronización, por lo tanto necesitamos un semáforo
-semaphore mutex;
+sem_t mutex;
+
+//Asumo que me llega por data el siguiente struct
+struct disk_write_req {
+  int sector;
+  void* data;
+  size_t data_size;
+};
 
 int driver_disco_init() {
   sema_init(&mutex, 1);
@@ -225,16 +231,21 @@ int driver_disco_init() {
 }
 
 // Ahora la operación de escritura
-int driver_disco_write(int sector, void* data) {
+int driver_disco_write(void* data) {
 
-  // Primero debemos tener permiso para realizar la escritura
-  sema_wait(&mutex);
+  // Primero nos tramemos el struct
+  struct disk_write_req status;
+  copy_from_user(&status,data, sizeof(struct disk_write_req));
+  unisgned char kbuffer[status.data_size];
+  copy_from_user(kbuffer,status.data, sizeof(kbuffer));
+
 
   // Una vez que tenemos permisos, hacemos los cálculos de sector relativo y pista
   int cantidad_sectores_pista = cantidad_sectores_por_pista();
-  int pista = sector / cantidad_sectores_pista;
-  int sector_relativo = sector % cantidad_sectores_pista;
+  int pista = status.sector / cantidad_sectores_pista;
+  int sector_relativo = status.sector % cantidad_sectores_pista;
 
+  sema_wait(&mutex);
   if (IN(DOR_STATUS) == 0) {
     OUT(DOR_IO, 1);
     // Esperamos 50 ms a que se estabilice
@@ -252,12 +263,8 @@ int driver_disco_write(int sector, void* data) {
   // Una vez en la pista, seleccionamos el sector donde escribiremos
   OUT(SEEK_SECTOR, sector_relativo);
 
-  // Capturamos los datos a escribir
-  unsigned char* info[512];
-  copy_from_user(info, data, sizeof(info));
-
   // Escribimos los datos
-  escribir_datos((void*) info);
+  escribir_datos((void*) buffer);
 
   // Esperamos a que se complete la operación
   while (IN(DATA_READY) != 1) {
@@ -269,7 +276,7 @@ int driver_disco_write(int sector, void* data) {
   sleep(200);
 
   sema_signal(&mutex); // Salimos de la sección crítica
-  return 0;
+  return sizeof(disk_write_req);
 }
 ```
 
@@ -328,15 +335,21 @@ void handler_7() {
 }
 
 // Operación de escritura con interrupciones
-int driver_disco_write(int sector, void* data) {
-
-  // Esperamos nuestro turno
-  sema_wait(&mutex);
+int driver_disco_write(void* data) {
 
   // Calculamos pista y sector relativo
   int cantidad_sectores_pista = cantidad_sectores_por_pista();
-  int pista = sector / cantidad_sectores_pista;
-  int sector_relativo = sector % cantidad_sectores_pista;
+  int pista = write_disk.sector / cantidad_sectores_pista;
+  int sector_relativo = write_disk.sector % cantidad_sectores_pista;
+
+  struct disk_write_req write_disk = {0};
+  copy_from_user(write_disk, data, sizeof(struct disk_write_req));
+
+  char kbuf[write_disk.data_size];
+  copy_from_user(kbuf, data, sizeof(kbuf));
+
+  // Esperamos nuestro turno
+  sema_wait(&mutex);
 
   if (IN(DOR_STATUS) == 0) {
     // Seteamos los ticks antes de prender el motor para evitar race condition con la IRQ 7
@@ -354,10 +367,8 @@ int driver_disco_write(int sector, void* data) {
   // Seleccionamos el sector relativo dentro de la pista
   OUT(SEEK_SECTOR, sector_relativo);
 
-  // Copiamos los datos del usuario y escribimos
-  char buffer[512];
-  copy_from_user(buffer, data, sizeof(buffer));
-  escribir_datos(buffer);
+  //escribimos los datos del usuario
+  escribir_datos(kbuf);
 
   // Esperamos a que se complete la escritura
   sema_wait(&data_ready);
@@ -393,6 +404,17 @@ Vamos con la escritura de `int driver_init()`, `int driver_remove()` y `int driv
 
 > **Aclaración:** En el ejercicio estoy asumiendo que `LOC_CTRL` se estabiliza a partir de la quinta pasada, es decir, el quinto intento es el resultado definitivo.
 
+Para la parte de verificacion de la tinta vamos a usar polling en lugar de de usar interrupciones ya que tenemos que hacerlo por lo menos 5 veces al chequeo para asegurarlos que el valor es estable, entonces con los cambios de contexto resulta mas caro que simplemente hacer polling para esperar, para el caso del `FINISH` si vamos a utilizar interrupciones debido a que se dispara una vez por impresión.
+
+Ademas vamos a asumir que el usuario nos envia el siguente struct:
+
+```C
+struct print_data {
+  uint32_t string_addr;
+  uint32_t string_size;
+}
+```
+
 ```C
 semaphore mutex;
 semaphore finish;
@@ -401,37 +423,31 @@ void handler_finish() {
   sema_signal(&finish);
 }
 
-void handler_ink() {
-  // Sin acción: la verificación se hace por polling en driver_write
-}
-
 int driver_init() {
   sema_init(&mutex, 1);
   sema_init(&finish, 0);
-  request_irq(HP_LOW_INK_INT, handler_ink);
   request_irq(HP_FINISHED_INT, handler_finish);
   return 0;
 }
 
 int driver_remove() {
-  free_irq(HP_LOW_INK_INT);
   free_irq(HP_FINISHED_INT);
   return 0;
 }
 
 // Ahora vamos con la escritura
-int driver_write(void* data, size_t size) {
+int driver_write(void* data) {
+
+  // Copiamos los datos del usuario al espacio del kernel
+  struct print_data info = {0};
+  copy_from_user(&info, data, sizeof(struct print_data));
 
   // Esperamos a que tengamos el turno
   sema_wait(&mutex);
 
-  // Copiamos los datos del usuario al espacio del kernel
-  void* dire = kmalloc(size);
-  copy_from_user(dire, data, size);
-
   // Configuramos los registros de la impresora
-  OUT(LOC_TEXT_POINTER, dire);
-  OUT(LOCK_TEXT_SIZE, size);   // El tamaño se pasa por valor, vive en la función
+  OUT(LOC_TEXT_POINTER, info.string_addr);
+  OUT(LOCK_TEXT_SIZE, info.string_size);   // El tamaño se pasa por valor, vive en la función
   OUT(LOC_CTRL, START);
 
   // Verificamos 5 veces si hay suficiente tinta
@@ -441,24 +457,21 @@ int driver_write(void* data, size_t size) {
   }
 
   if (ctrl == LOW_INK) {
-    // Sin tinta: liberamos recursos y retornamos error
-    kfree(dire);
+    // Sin tinta: retornamos error
     sema_signal(&mutex);
     return -1;
   } else if (ctrl == PRINTING) {
     // Impresión iniciada: esperamos que termine via interrupción
     sema_wait(&finish);
   } else {
-    // Estado inesperado: liberamos recursos y retornamos error
-    kfree(dire);
+    // Estado inesperado: retornamos error
     sema_signal(&mutex);
     return -1;
   }
 
   // Impresión finalizada correctamente
-  kfree(dire);
   sema_signal(&mutex);
-  return size;
+  return info.string_size;
 }
 ```
 --
