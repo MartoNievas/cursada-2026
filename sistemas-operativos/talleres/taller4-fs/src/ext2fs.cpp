@@ -428,7 +428,7 @@ Ext2FS::get_file_inode_from_dir_inode(struct Ext2FSInode *from,
   
   // Variables auxiliares para calculos
   unsigned int block_size = 1024 << _superblock->log_block_size;
-  unsigned int dir_entries_number = (from->size + block_size - 1) / block_size;
+  unsigned int num_dir_blocks = (from->size + block_size - 1) / block_size;
   
   // Obetenemos la longitud del nombre ya que el campo name/path de DirEntry no contiene '\0' entonces la coparacion fallaria
   unsigned int filename_length = strlen(filename);
@@ -438,9 +438,9 @@ Ext2FS::get_file_inode_from_dir_inode(struct Ext2FSInode *from,
   
   // Mientras estemos en rango y no hallemos el resultado seguimos iterando
   for (unsigned int block_number = 0;
-       block_number < dir_entries_number && result == NULL; block_number++) {
+       block_number < num_dir_blocks && result == NULL; block_number++) {
     
-    // Utilizamo `get_block_address` para obtener la direccion de memoria del i-esimo bloque de la entrada del directori y lo cargamos en el buffer
+    // Utilizamo `get_block_address` para obtener la direccion de memoria del i-esimo bloque de la entrada del directorio y lo cargamos en el buffer
     read_block(get_block_address(from, block_number), buffer);
     // Definimos el offset dentro del bloque a donde debemos acceder
     unsigned int offset_in_block = 0;
