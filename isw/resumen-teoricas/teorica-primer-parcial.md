@@ -95,16 +95,17 @@ El cambio es una característica esencial del software, no accidental porque:
 > Son reglas a seguir según el contexto, no reglas absolutas.
 
 ### 6.1 H1 — Minimizar el acoplamiento
-- Medida de relación entre objetos
+- Medida de relación entre objetos, a mas acoplamiento mayor es el efecto onda del cambio en el sistema
 - A menor acoplamiento, mejor
 
 ### 6.2 H2 — Maximizar la cohesión funcional
-- Cuanto menos cosas hace un objeto, más cohesivo es
+- Cuanto menos cosas hace un objeto, más cohesivo es y ademas tiene que tener un responsabilidad bien definida y correcta con respecto al dominio del problema
 - Hace más, hace bien.
 
 ### 6.3 H3 — No romper el encapsulamiento
 - Evitar getters innecesarios
 - Evitar setters innecesarios
+- Si permitimos romper el encapsulamiento estamos generando acoplamiento innecesario y le estamos quitando responsabilidad al objeto
 
 ### 6.4 H4 — Reglas de creación de objetos
 
@@ -112,8 +113,8 @@ El cambio es una característica esencial del software, no accidental porque:
 - Un único mensaje de creación de instancia que use `new`, el resto se implementa en base a él
 - Un único mensaje de inicialización de la memoria de la instancia, es decir un único `initialize`
 - Solo crear objetos **válidos** (verificar en el momento de creación, antes de hacer new es decir antes de asignar memoria)
-- Favorecer objetos **inmutables**
-- Evitar `nil` / `null`
+- Favorecer objetos **inmutables**, nos evita tener que modelar el paso del tiempo
+- Evitar `nil` / `null`, esto porque perdemos declaratividad ya que `nil` o `null` no tienen una identidad definida sino que son la nada universal.
 
 ### 6.5 H5 — Modelos que enseñan
 
@@ -157,8 +158,6 @@ La metafora debe cumplir:
 3. **Nombrar** la nueva abstracción ← *lo más importante*
 4. Reemplazar el código repetido original por el uso de la nueva abstracción
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 ---
 
 ## 9. Psuedo-variables
@@ -173,8 +172,6 @@ En smalltalk tenemos distintas psudo-variables:
     4. **Variables locales y argumentos** el estado interno de las temporales en ese punto de computo.
 - **super:** Es el mismo objeto que self, pero tiene la implicacion sintactica de que al enviarle un mensaje, el algoritmo de **method lookup** empiza la busqueda de la implementacion del mensaje en la superclase.
 
-=======
->>>>>>> Stashed changes
 ---
 
 ## 10. Igualdad vs Identidad

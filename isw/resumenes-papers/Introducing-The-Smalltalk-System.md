@@ -1,0 +1,17 @@
+El artículo escrito por Adele Goldberg para la revista BYTE en agosto de 1981 presenta el lanzamiento público del sistema de programación Smalltalk-80. Mientras que en 1978 el sistema era percibido como una "torre de marfil" aislada, esta publicación y la liberación del software buscaban integrarlo al ecosistema informático general.
+
+Smalltalk constituye la base de software del "Dynabook" ideado por Alan Kay: una computadora portátil de alto rendimiento, con pantalla de alta resolución y capacidades de red, orientada a potenciar la creatividad del individuo. A diferencia del desarrollo tradicional, donde los usuarios deben adaptarse a programas monolíticos y cerrados, Smalltalk propone que los programadores diseñen "kits". Estos módulos permiten a los usuarios finales ensamblar y personalizar sus propias aplicaciones de acuerdo a sus necesidades. El entorno de Smalltalk se distingue por sus gráficos interactivos, el desarrollo modular orientado a objetos y el enfoque en otorgar al usuario un verdadero sentido de dominio sobre la complejidad del sistema. Sus diversas iteraciones fueron probadas y evaluadas históricamente en entornos educativos con estudiantes de diversas edades.
+
+**Preguntas de Análisis y Respuestas**
+
+* **¿Qué simboliza la transición de la "isla aislada" de 1978 al globo aerostático en la portada de 1981 respecto al nuevo enfoque de la comunidad de Smalltalk?**
+El paso de la isla aislada (vista como una "torre de marfil" inaccesible) al globo aerostático simboliza que el sistema Smalltalk-80 se está liberando para un acceso más general. Representa al sistema "tomando vuelo hacia la corriente principal" de la comunidad de programación y disipando el aislamiento previo.
+
+* **¿Cómo se integra el diseño de software de Smalltalk con la visión de hardware interactivo y conectividad del "Dynabook"?**
+Smalltalk es la contraparte de software de la visión del Dynabook, diseñada para apoyar la capacidad de un individuo de usar creativamente una computadora portátil de alto rendimiento con pantalla de alta resolución, capacidades de audio y conexiones a información compartida en red. Esto requiere comprender y facilitar las interacciones entre el lenguaje, el conocimiento y la comunicación.
+
+* **¿En qué se diferencia la construcción de un sistema convencional (ilustrado como un "Taj Mahal") del uso de "kits" adaptables y personalizables?**
+En un entorno de desarrollo de software convencional ("Taj Mahal"), el programador construye una aplicación completa y el usuario debe transitar exactamente por el puente o estructura que el programador diseñó. En Smalltalk, el programador crea "kits de aplicaciones" (extensiones especializadas) para que sea el propio usuario no programador quien ensamble las partes y construya una solución personalizada.
+
+* **¿Qué elementos específicos de la interfaz de usuario y del lenguaje fueron implementados para garantizar el "dominio individual" sobre la complejidad técnica?**
+Smalltalk facilita el dominio individual sobre la complejidad al enfatizar los gráficos interactivos, el desarrollo modular de los programas y un enfoque integrado para el acceso a las herramientas de desarrollo. Para lograrlo, trasciende la idea de ser solo un "lenguaje de programación" para convertirse en un sistema de programación completo y maleable.

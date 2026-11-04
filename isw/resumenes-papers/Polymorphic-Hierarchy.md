@@ -1,4 +1,4 @@
-# Resumen: Principles of the Polymorphic Hierarchy
+# Resumen: Polymorphic Hierarchy
 **Autor:** Bobby Woolf (1996)
 **Traducción y Referencias:** Leveroni - Algoritmos y Programación III (FIUBA)
 
