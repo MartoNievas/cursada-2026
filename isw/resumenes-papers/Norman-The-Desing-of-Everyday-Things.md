@@ -32,7 +32,8 @@ La mente humana tiende a asociar que un evento ocurrido inmediatamente después 
 * **Falsa causalidad**: Ocurre cuando dos eventos coincidentes se vinculan falsamente, creando supersticiones o hábitos erróneos de uso. Si no hay una respuesta visible inmediata, el usuario tiende a repetir la orden de forma impulsiva, generando efectos no deseados.
 
 #### E. Modelo Conceptual y Modelo Mental
-El modelo conceptual es la representación mental que el usuario construye sobre cómo funciona un sistema para predecir los resultados de sus acciones.
+El modelo mental es la representación mental que el usuario construye sobre cómo funciona un sistema para predecir los resultados de sus acciones, mientras que el modelo conceptual es la representación abstracta, lógica y coherente concebida por el diseñador para estructurar cómo debería operar el sistema de manera precisa, entendible y predecible..
+
 * **El caso de la nevera**: La mayoría de las neveras tienen dos mandos etiquetados como "congelador" y "alimentos frescos". Esto induce al usuario a construir un modelo conceptual falso (creer que existen dos termostatos independientes). En realidad, hay un solo termostato y un regulador de flujo de aire frío, lo que provoca constantes frustraciones al intentar ajustar la temperatura.
 
 #### F. Imagen del Sistema
