@@ -82,6 +82,8 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 
 | Fecha | Nombre |
 | -------------- | --------------- |
+| [2025-2C](isw/segundos-parciales/2025-2C) | TarjetaBAJE. |
+
 
 ## Sistemas Operativos
 
