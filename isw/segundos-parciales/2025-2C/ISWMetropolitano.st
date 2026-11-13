@@ -1,3 +1,44 @@
+!classDefinition: #CuadroTarifario category: #ISWMetropolitano!
+Object subclass: #CuadroTarifario
+	instanceVariableNames: 'tarifasPorDistancia'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ISWMetropolitano'!
+
+!CuadroTarifario methodsFor: 'initialization' stamp: 'HAW 13/Nov/2026, 6:14:07 pm (UTC)'!
+initializeConTarifas: unaTarifasPorDistancia 
+	
+	tarifasPorDistancia := unaTarifasPorDistancia.! !
+
+
+!CuadroTarifario methodsFor: 'calculo importe' stamp: 'HAW 13/Nov/2026, 6:21:57 pm (UTC)'!
+importeDesde: unaParadaOrigen hasta: unaParadaDestino 
+	
+	| distanciaEntreParadas |
+	distanciaEntreParadas := unaParadaOrigen distanciaHasta: unaParadaDestino.
+	^ self importeParaDistancia: distanciaEntreParadas .! !
+
+!CuadroTarifario methodsFor: 'calculo importe' stamp: 'HAW 13/Nov/2026, 6:19:31 pm (UTC)'!
+importeParaDistancia: unaDistanciaEntreParadas 
+	
+	| tramo |
+	tramo := tarifasPorDistancia detect: [:unaAsociacion |  
+			unaDistanciaEntreParadas <= unaAsociacion key
+		] .
+	^ tramo value.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'CuadroTarifario class' category: #ISWMetropolitano!
+CuadroTarifario class
+	instanceVariableNames: ''!
+
+!CuadroTarifario class methodsFor: 'instance creation' stamp: 'HAW 13/Nov/2026, 6:13:58 pm (UTC)'!
+conTarifas: unaTarifasPorDistancia 
+
+	^self new initializeConTarifas: unaTarifasPorDistancia ! !
+
+
 !classDefinition: #MedioDeTransporte category: #ISWMetropolitano!
 Object subclass: #MedioDeTransporte
 	instanceVariableNames: 'paradas cuadroTarifario reloj'
@@ -24,16 +65,6 @@ assertViajeDesde: unOrigen hasta: unDestino
 	self assertParadaDentroDelRecorrido: unOrigen.
 	self assertParadaDentroDelRecorrido: unDestino! !
 
-
-!MedioDeTransporte methodsFor: 'cobro' stamp: 'HAW 12/Nov/2026, 4:19:17 pm (UTC)'!
-calcularImporteEnBaseA: unaDistanciaEntreParadas 
-	
-	| tramo |
-	tramo := cuadroTarifario detect: [:unaAsociacion |  
-			unaDistanciaEntreParadas <= unaAsociacion key
-		].
-	
-	^ tramo value ! !
 
 
 !MedioDeTransporte methodsFor: 'initialization' stamp: 'HAW 12/Nov/2026, 4:03:35 pm (UTC)'!
@@ -80,15 +111,13 @@ MedioDeTransporte subclass: #Colectivo
 	poolDictionaries: ''
 	category: 'ISWMetropolitano'!
 
-!Colectivo methodsFor: 'cobro' stamp: 'HAW 12/Nov/2026, 4:10:23 pm (UTC)'!
+!Colectivo methodsFor: 'cobro' stamp: 'HAW 13/Nov/2026, 6:22:32 pm (UTC)'!
 cobrarViajeCon: unaTarjeta desde: unaParadaOrigen hasta: unaParadaDestino 
 	
-	| distanciaEntreParadas importeACobrar |
+	| importeACobrar |
 	self assertViajeDesde: unaParadaOrigen hasta: unaParadaDestino.
 	
-	distanciaEntreParadas := unaParadaOrigen distanciaHasta: unaParadaDestino .
-	
-	importeACobrar := self calcularImporteEnBaseA: distanciaEntreParadas .
+	importeACobrar := cuadroTarifario importeDesde: unaParadaOrigen hasta: unaParadaDestino .
 	
 	unaTarjeta cobrar: importeACobrar enFechaYHora: reloj ahora ! !
 
@@ -138,22 +167,21 @@ MedioDeTransporteConDireccion subclass: #Tren
 	poolDictionaries: ''
 	category: 'ISWMetropolitano'!
 
-!Tren methodsFor: 'cobro' stamp: 'HAW 12/Nov/2026, 4:48:27 pm (UTC)'!
+!Tren methodsFor: 'cobro' stamp: 'HAW 13/Nov/2026, 6:21:23 pm (UTC)'!
 cobrarViajeCon: unaTarjeta desde: unaParadaOrigen conDireccion: unaParadaCabecera
-	| distanciaEntreParadas importeACobrar |
+	| importeACobrar |
 	self assertViajeDesde: unaParadaOrigen hasta: unaParadaCabecera.
 	self assertDireccionEsCabecera: unaParadaCabecera.
 	
-	distanciaEntreParadas := unaParadaOrigen distanciaHasta: unaParadaCabecera.
-	importeACobrar := self calcularImporteEnBaseA: distanciaEntreParadas.
+	importeACobrar := cuadroTarifario importeDesde: unaParadaOrigen hasta: unaParadaCabecera .
 	unaTarjeta iniciarViajeEnTrenDesde: unaParadaOrigen
 		conTarifa: importeACobrar enFechaYHora: reloj ahora! !
 
-!Tren methodsFor: 'cobro' stamp: ''!
+!Tren methodsFor: 'cobro' stamp: 'HAW 13/Nov/2026, 6:19:31 pm (UTC)'!
 finalizarViajeCon: unaTarjeta enEstacion: unaEstacionDestino
 	| distancia tarifaReal |
 	distancia := unaTarjeta origenEnTren distanciaHasta: unaEstacionDestino.
-	tarifaReal := self calcularImporteEnBaseA: distancia.
+	tarifaReal := cuadroTarifario importeParaDistancia: distancia.
 	unaTarjeta finalizarViajeEnTrenConTarifa: tarifaReal! !
 
 
@@ -773,7 +801,7 @@ test21LaTarjetaDeJubiladoPagaLaMitadPorTrasbordoEnElTercerViajeDelDia
 
 	self assert: tarjeta saldo equals: 1500 * peso! !
 
-!TarjetaBAJETest methodsFor: 'tests'!
+!TarjetaBAJETest methodsFor: 'tests' stamp: ''!
 test22LaTarjetaSinDescuentoCalculaCadaTrasbordoDesdeElUltimoViaje
 
 	| tarjeta congreso palermo subte |
@@ -924,7 +952,7 @@ test29ElColectivoNoPuedeCrearseConMenosDeDosParadas
 
 	! !
 
-!TarjetaBAJETest methodsFor: 'tests'!
+!TarjetaBAJETest methodsFor: 'tests' stamp: ''!
 test30ElColectivoCobra1000PesosPorExactamenteDiezKilometrosSinDescuento
 
 	| tarjeta constitucion destino colectivo |
@@ -938,7 +966,7 @@ test30ElColectivoCobra1000PesosPorExactamenteDiezKilometrosSinDescuento
 	self assert: tarjeta saldo equals: 1000 * peso.
 	self assert: tarjeta viajes size equals: 1.! !
 
-!TarjetaBAJETest methodsFor: 'tests'!
+!TarjetaBAJETest methodsFor: 'tests' stamp: ''!
 test31ElColectivoCobraLaMismaTarifaAlViajarEnSentidoInverso
 
 	| tarjeta constitucion belgrano colectivo |
@@ -1083,7 +1111,7 @@ test37ElTrenReintegraLaDiferenciaAlSalirSinRegistrarOtroViaje
 	self assert: tarjeta viajes size equals: 1.
 	! !
 
-!TarjetaBAJETest methodsFor: 'tests'!
+!TarjetaBAJETest methodsFor: 'tests' stamp: ''!
 test38ElTrenNoReintegraDineroAlFinalizarUnViajeGratisDeJubilado
 
 	| tarjeta retiro belgrano sanIsidro tigre tren |
@@ -1101,7 +1129,7 @@ test38ElTrenNoReintegraDineroAlFinalizarUnViajeGratisDeJubilado
 	self assert: tarjeta saldo equals: 2000 * peso.
 	self assert: tarjeta viajes size equals: 1.! !
 
-!TarjetaBAJETest methodsFor: 'tests'!
+!TarjetaBAJETest methodsFor: 'tests' stamp: ''!
 test39ElTrenReintegraLaDiferenciaRespetandoElDescuentoPorTrasbordo
 
 	| tarjeta retiro belgrano sanIsidro tigre tren congreso palermo subte |
@@ -1125,7 +1153,7 @@ test39ElTrenReintegraLaDiferenciaRespetandoElDescuentoPorTrasbordo
 	self assert: tarjeta saldo equals: 800 * peso.
 	self assert: tarjeta viajes size equals: 2.! !
 
-!TarjetaBAJETest methodsFor: 'tests'!
+!TarjetaBAJETest methodsFor: 'tests' stamp: ''!
 test40ElTrenNoReintegraDineroSiLaSalidaMantieneElTramoTarifario
 
 	| tarjeta retiro belgrano sanIsidro tigre tren |
@@ -1143,7 +1171,7 @@ test40ElTrenNoReintegraDineroSiLaSalidaMantieneElTramoTarifario
 	self assert: tarjeta saldo equals: 1400 * peso.
 	self assert: tarjeta viajes size equals: 1.! !
 
-!TarjetaBAJETest methodsFor: 'tests'!
+!TarjetaBAJETest methodsFor: 'tests' stamp: ''!
 test41ElTrenMantieneIndependientesLosViajesDeDosTarjetas
 
 	| tarjeta otraTarjeta retiro belgrano sanIsidro tigre tren |
@@ -1166,7 +1194,7 @@ test41ElTrenMantieneIndependientesLosViajesDeDosTarjetas
 	self assert: tarjeta viajes size equals: 1.
 	self assert: otraTarjeta viajes size equals: 1.! !
 
-!TarjetaBAJETest methodsFor: 'tests'!
+!TarjetaBAJETest methodsFor: 'tests' stamp: ''!
 test42ElTrenCobra400PesosPorExactamenteQuinceKilometrosSinDescuento
 
 	| tarjeta retiro destino tren |
@@ -1180,7 +1208,7 @@ test42ElTrenCobra400PesosPorExactamenteQuinceKilometrosSinDescuento
 	self assert: tarjeta saldo equals: 1600 * peso.
 	self assert: tarjeta viajes size equals: 1.! !
 
-!TarjetaBAJETest methodsFor: 'tests'!
+!TarjetaBAJETest methodsFor: 'tests' stamp: ''!
 test43ElTrenCobraSegunLaDistanciaAlViajarHaciaLaUltimaParada
 
 	| tarjeta retiro belgrano sanIsidro tigre tren |
@@ -1196,7 +1224,7 @@ test43ElTrenCobraSegunLaDistanciaAlViajarHaciaLaUltimaParada
 	self assert: tarjeta saldo equals: 1600 * peso.
 	self assert: tarjeta viajes size equals: 1.! !
 
-!TarjetaBAJETest methodsFor: 'tests'!
+!TarjetaBAJETest methodsFor: 'tests' stamp: ''!
 test44ElTrenRechazaUnOrigenFueraDelRecorrido
 
 	| tarjeta retiro belgrano sanIsidro tigre tren |
@@ -1215,7 +1243,7 @@ test44ElTrenRechazaUnOrigenFueraDelRecorrido
 			self assert: tarjeta saldo equals: 2000 * peso.
 			self assert: tarjeta viajes isEmpty ].! !
 
-!TarjetaBAJETest methodsFor: 'tests'!
+!TarjetaBAJETest methodsFor: 'tests' stamp: ''!
 test45ElTrenNoPuedeCrearseConMenosDeDosParadas
 
 	| retiro |
@@ -1270,13 +1298,19 @@ test46LaTarjetaSinDescuentoPagaLaMitadDelSubteAlHacerTrasbordoDesdeUnColectivo
 	self assert: tarjeta viajes size equals: 2.! !
 
 
-
-
 !TarjetaBAJETest methodsFor: 'setup' stamp: 'HAW 12/Nov/2026, 1:19:20 pm (UTC)'!
 setUp
 
 	fechaYHoraActual := November / 28 / 2025 at: 10:00! !
 
+
+!TarjetaBAJETest methodsFor: 'paradas' stamp: ''!
+belgranoDelColectivo
+	^ Parada llamada: 'Belgrano' aDistanciaDeCabecera: 12 * kilometer! !
+
+!TarjetaBAJETest methodsFor: 'paradas' stamp: ''!
+belgranoDelTren
+	^ Parada llamada: 'Belgrano' aDistanciaDeCabecera: 8 * kilometer! !
 
 !TarjetaBAJETest methodsFor: 'paradas' stamp: 'HAW 12/Nov/2026, 12:50:42 pm (UTC)'!
 callao
@@ -1288,15 +1322,39 @@ congreso
 
 	^ Parada llamada: 'Congreso de Tucumán' aDistanciaDeCabecera: 0 * kilometer! !
 
+!TarjetaBAJETest methodsFor: 'paradas' stamp: ''!
+constitucion
+	^ Parada llamada: 'Constitución' aDistanciaDeCabecera: 0 * kilometer! !
+
+!TarjetaBAJETest methodsFor: 'paradas' stamp: ''!
+constitucionSinTilde
+	^ Parada llamada: 'Constitucion' aDistanciaDeCabecera: 0 * kilometer! !
+
 !TarjetaBAJETest methodsFor: 'paradas' stamp: 'HAW 12/Nov/2026, 12:49:40 pm (UTC)'!
 palermo
 
 	^ Parada llamada: 'Palermo' aDistanciaDeCabecera: 6 * kilometer! !
 
+!TarjetaBAJETest methodsFor: 'paradas' stamp: ''!
+plazaDeMayo
+	^ Parada llamada: 'Plaza de Mayo' aDistanciaDeCabecera: 5 * kilometer! !
+
 !TarjetaBAJETest methodsFor: 'paradas' stamp: 'HAW 12/Nov/2026, 12:51:07 pm (UTC)'!
 retiro
 
 	^ Parada llamada: 'Retiro' aDistanciaDeCabecera: 8 * kilometer! !
+
+!TarjetaBAJETest methodsFor: 'paradas' stamp: ''!
+retiroDelTren
+	^ Parada llamada: 'Retiro' aDistanciaDeCabecera: 0 * kilometer! !
+
+!TarjetaBAJETest methodsFor: 'paradas' stamp: ''!
+sanIsidro
+	^ Parada llamada: 'San Isidro' aDistanciaDeCabecera: 18 * kilometer! !
+
+!TarjetaBAJETest methodsFor: 'paradas' stamp: ''!
+tigre
+	^ Parada llamada: 'Tigre' aDistanciaDeCabecera: 28 * kilometer! !
 
 !TarjetaBAJETest methodsFor: 'paradas' stamp: 'HAW 12/Nov/2026, 12:55:01 pm (UTC)'!
 tribunales
@@ -1332,47 +1390,15 @@ trenConParadas: unasParadas
 		conReloj: self! !
 
 
-!TarjetaBAJETest methodsFor: 'cuadros tarifarios' stamp: ''!
+!TarjetaBAJETest methodsFor: 'cuadros tarifarios' stamp: 'HAW 13/Nov/2026, 6:13:33 pm (UTC)'!
 cuadroTarifarioDeColectivo
-	^ {
+	^ CuadroTarifario conTarifas: {
 		(5 * kilometer) -> (600 * peso).
 		(10 * kilometer) -> (1000 * peso).
 		PlusInfinity new -> (1300 * peso) }! !
 
-!TarjetaBAJETest methodsFor: 'cuadros tarifarios' stamp: ''!
+!TarjetaBAJETest methodsFor: 'cuadros tarifarios' stamp: 'HAW 13/Nov/2026, 6:17:43 pm (UTC)'!
 cuadroTarifarioDeTren
-	^ {
+	^ CuadroTarifario conTarifas: {
 		(15 * kilometer) -> (400 * peso).
 		PlusInfinity new -> (600 * peso) }! !
-
-!TarjetaBAJETest methodsFor: 'paradas'!
-retiroDelTren
-	^ Parada llamada: 'Retiro' aDistanciaDeCabecera: 0 * kilometer! !
-
-!TarjetaBAJETest methodsFor: 'paradas'!
-belgranoDelTren
-	^ Parada llamada: 'Belgrano' aDistanciaDeCabecera: 8 * kilometer! !
-
-!TarjetaBAJETest methodsFor: 'paradas'!
-belgranoDelColectivo
-	^ Parada llamada: 'Belgrano' aDistanciaDeCabecera: 12 * kilometer! !
-
-!TarjetaBAJETest methodsFor: 'paradas'!
-sanIsidro
-	^ Parada llamada: 'San Isidro' aDistanciaDeCabecera: 18 * kilometer! !
-
-!TarjetaBAJETest methodsFor: 'paradas'!
-tigre
-	^ Parada llamada: 'Tigre' aDistanciaDeCabecera: 28 * kilometer! !
-
-!TarjetaBAJETest methodsFor: 'paradas'!
-constitucion
-	^ Parada llamada: 'Constitución' aDistanciaDeCabecera: 0 * kilometer! !
-
-!TarjetaBAJETest methodsFor: 'paradas'!
-constitucionSinTilde
-	^ Parada llamada: 'Constitucion' aDistanciaDeCabecera: 0 * kilometer! !
-
-!TarjetaBAJETest methodsFor: 'paradas'!
-plazaDeMayo
-	^ Parada llamada: 'Plaza de Mayo' aDistanciaDeCabecera: 5 * kilometer! !
