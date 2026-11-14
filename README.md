@@ -26,8 +26,8 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | [Guía 1 — Seccion 1](isw/guias/parte1/parte1/) | Terminada.  |
 | [Guía 1 — Seccion 2](isw/guias/parte1/parte2/guia1-parte2.md)  | Terminada.  |
 | [Guía 2 — Sacar ifs y codigo repetido](isw/guias/parte2/)       | Terminada.  |
-| [Guía 3 — TDD y Patrones de diseño](isw/guias/parte3/)       | En proceso.  |
-
+| [Guía 3 — TDD y Patrones de diseño](isw/guias/parte3/)       | Terminada.  |
+| [Guía 4 — Tus Libros (TDD y Patrones)](isw/guias/parte4/)       | Terminada.  |
 
 ### Patrones de Diseño
 
@@ -83,7 +83,7 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | Fecha | Nombre |
 | -------------- | --------------- |
 | [2025-2C](isw/segundos-parciales/2025-2C) | TarjetaBAJE. |
-
+| [2021-1C](isw/segundos-parciales/2021-1C) | Truco. |
 
 ## Sistemas Operativos
 
@@ -113,7 +113,7 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | [Teorica 5 — Administración de memoria](sistemas-operativos/teoricas/teo5-memoria.md)|Organización de la memoria, segmentación, paginación, algoritmos de paginación, etc. |
 | [Teorica 6 — Entrada/Salida — Drivers](sistemas-operativos/teoricas/teo6-drivers.md)|Organización de la memoria, segmentación, paginación, algoritmos de paginación, etc. |
 | [Teorica 7 — Sistema de archivos](sistemas-operativos/teoricas/teo7-sistema-de-archivos.md)| Sistema de archivos de un **SO**. |
-| [Teorica 8 — Seguridad](/sistemas-operativos/teoricas/teo8-seguridad.md)| Sistema de archivos de un **SO**. |
+| [Teorica 8 — Seguridad](/sistemas-operativos/teoricas/teo8-seguridad.md)| Seguridad de la informacion. |
 
 ### Talleres
 
