@@ -41,7 +41,7 @@ conTarifas: unaTarifasPorDistancia
 
 !classDefinition: #MedioDeTransporte category: #ISWMetropolitano!
 Object subclass: #MedioDeTransporte
-	instanceVariableNames: 'paradas cuadroTarifario reloj'
+	instanceVariableNames: 'paradas cuadroTarifario'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ISWMetropolitano'!
@@ -68,11 +68,10 @@ assertViajeDesde: unOrigen hasta: unDestino
 
 
 !MedioDeTransporte methodsFor: 'initialization' stamp: 'HAW 12/Nov/2026, 4:03:35 pm (UTC)'!
-initializeConParadas: unaParadas yCuadroTarifario: unCuadroTarifario enFechaYHora: unReloj 
+initializeConParadas: unaParadas yCuadroTarifario: unCuadroTarifario
 	
 	paradas := unaParadas.
-	cuadroTarifario := unCuadroTarifario.
-	reloj := unReloj.! !
+	cuadroTarifario := unCuadroTarifario.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -97,11 +96,11 @@ paradasDebenSerDistintasErrorDescription
 
 
 !MedioDeTransporte class methodsFor: 'instance creation' stamp: 'HAW 12/Nov/2026, 7:57:08 pm (UTC)'!
-conParadas: unaParadas yCuadroTarifario: unCuadroTarifario conReloj: unReloj
+conParadas: unaParadas yCuadroTarifario: unCuadroTarifario
 
 	unaParadas size < 2 ifTrue: [self error: self cantidadDeParadasMenorADosErrorDescription].
 
-	^self new initializeConParadas: unaParadas yCuadroTarifario: unCuadroTarifario enFechaYHora: unReloj ! !
+	^self new initializeConParadas: unaParadas yCuadroTarifario: unCuadroTarifario ! !
 
 
 !classDefinition: #Colectivo category: #ISWMetropolitano!
@@ -111,16 +110,10 @@ MedioDeTransporte subclass: #Colectivo
 	poolDictionaries: ''
 	category: 'ISWMetropolitano'!
 
-!Colectivo methodsFor: 'cobro' stamp: 'HAW 13/Nov/2026, 6:22:32 pm (UTC)'!
-cobrarViajeCon: unaTarjeta desde: unaParadaOrigen hasta: unaParadaDestino 
-	
-	| importeACobrar |
+!Colectivo methodsFor: 'tarifas' stamp: ''!
+importeDesde: unaParadaOrigen hasta: unaParadaDestino
 	self assertViajeDesde: unaParadaOrigen hasta: unaParadaDestino.
-	
-	importeACobrar := cuadroTarifario importeDesde: unaParadaOrigen hasta: unaParadaDestino .
-	
-	unaTarjeta cobrar: importeACobrar enFechaYHora: reloj ahora ! !
-
+	^ cuadroTarifario importeDesde: unaParadaOrigen hasta: unaParadaDestino! !
 
 !classDefinition: #MedioDeTransporteConDireccion category: #ISWMetropolitano!
 MedioDeTransporte subclass: #MedioDeTransporteConDireccion
@@ -152,13 +145,11 @@ MedioDeTransporteConDireccion subclass: #Subte
 	poolDictionaries: ''
 	category: 'ISWMetropolitano'!
 
-!Subte methodsFor: 'cobro' stamp: 'HAW 12/Nov/2026, 4:10:52 pm (UTC)'!
-cobrarViajeCon: tarjeta desde: unaParadaDeOrigen conDireccion: unaParadaCabecera
-	
-	self assertViajeDesde: unaParadaDeOrigen hasta: unaParadaCabecera.
-	self assertDireccionEsCabecera: unaParadaCabecera .
-	tarjeta cobrar: cuadroTarifario enFechaYHora: reloj ahora .! !
-
+!Subte methodsFor: 'tarifas' stamp: ''!
+importeDesde: unaParadaOrigen conDireccion: unaParadaCabecera
+	self assertViajeDesde: unaParadaOrigen hasta: unaParadaCabecera.
+	self assertDireccionEsCabecera: unaParadaCabecera.
+	^ cuadroTarifario! !
 
 !classDefinition: #Tren category: #ISWMetropolitano!
 MedioDeTransporteConDireccion subclass: #Tren
@@ -167,23 +158,15 @@ MedioDeTransporteConDireccion subclass: #Tren
 	poolDictionaries: ''
 	category: 'ISWMetropolitano'!
 
-!Tren methodsFor: 'cobro' stamp: 'HAW 13/Nov/2026, 6:21:23 pm (UTC)'!
-cobrarViajeCon: unaTarjeta desde: unaParadaOrigen conDireccion: unaParadaCabecera
-	| importeACobrar |
+!Tren methodsFor: 'tarifas' stamp: ''!
+importeDesde: unaParadaOrigen conDireccion: unaParadaCabecera
 	self assertViajeDesde: unaParadaOrigen hasta: unaParadaCabecera.
 	self assertDireccionEsCabecera: unaParadaCabecera.
-	
-	importeACobrar := cuadroTarifario importeDesde: unaParadaOrigen hasta: unaParadaCabecera .
-	unaTarjeta iniciarViajeEnTrenDesde: unaParadaOrigen
-		conTarifa: importeACobrar enFechaYHora: reloj ahora! !
+	^ cuadroTarifario importeDesde: unaParadaOrigen hasta: unaParadaCabecera! !
 
-!Tren methodsFor: 'cobro' stamp: 'HAW 13/Nov/2026, 6:19:31 pm (UTC)'!
-finalizarViajeCon: unaTarjeta enEstacion: unaEstacionDestino
-	| distancia tarifaReal |
-	distancia := unaTarjeta origenEnTren distanciaHasta: unaEstacionDestino.
-	tarifaReal := cuadroTarifario importeParaDistancia: distancia.
-	unaTarjeta finalizarViajeEnTrenConTarifa: tarifaReal! !
-
+!Tren methodsFor: 'tarifas' stamp: ''!
+importeDesde: unaParadaOrigen hasta: unaParadaDestino
+	^ cuadroTarifario importeDesde: unaParadaOrigen hasta: unaParadaDestino! !
 
 !classDefinition: #Parada category: #ISWMetropolitano!
 Object subclass: #Parada
@@ -423,6 +406,104 @@ desde: unaParada conTarifa: unaTarifa importePagado: unImporte
 	^ self new initializeDesde: unaParada conTarifa: unaTarifa importePagado: unImporte! !
 
 
+!classDefinition: #LectorDeColectivo category: #ISWMetropolitano!
+Object subclass: #LectorDeColectivo
+	instanceVariableNames: 'linea reloj'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ISWMetropolitano'!
+
+!LectorDeColectivo methodsFor: 'initialization' stamp: ''!
+initializeEn: unaLinea conReloj: unReloj
+	linea := unaLinea.
+	reloj := unReloj! !
+
+!LectorDeColectivo methodsFor: 'cobro' stamp: ''!
+cobrarViajeCon: unaTarjeta desde: origen hasta: destino
+	| importe |
+	importe := linea importeDesde: origen hasta: destino.
+	^ unaTarjeta cobrar: importe enFechaYHora: reloj ahora! !
+
+!classDefinition: 'LectorDeColectivo class' category: #ISWMetropolitano!
+LectorDeColectivo class
+	instanceVariableNames: ''!
+
+!LectorDeColectivo class methodsFor: 'instance creation' stamp: ''!
+en: unaLinea conReloj: unReloj
+	^ self new initializeEn: unaLinea conReloj: unReloj! !
+
+
+!classDefinition: #LectorDeSubte category: #ISWMetropolitano!
+Object subclass: #LectorDeSubte
+	instanceVariableNames: 'linea parada direccion reloj'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ISWMetropolitano'!
+
+!LectorDeSubte methodsFor: 'initialization' stamp: ''!
+initializeEn: unaLinea enParada: unaParada conDireccion: unaDireccion conReloj: unReloj
+	linea := unaLinea.
+	parada := unaParada.
+	direccion := unaDireccion.
+	reloj := unReloj! !
+
+!LectorDeSubte methodsFor: 'cobro' stamp: ''!
+cobrarViajeCon: unaTarjeta
+	| importe |
+	importe := linea importeDesde: parada conDireccion: direccion.
+	^ unaTarjeta cobrar: importe enFechaYHora: reloj ahora! !
+
+!classDefinition: 'LectorDeSubte class' category: #ISWMetropolitano!
+LectorDeSubte class
+	instanceVariableNames: ''!
+
+!LectorDeSubte class methodsFor: 'instance creation' stamp: ''!
+en: unaLinea enParada: unaParada conDireccion: unaDireccion conReloj: unReloj
+	^ self new initializeEn: unaLinea enParada: unaParada
+		conDireccion: unaDireccion conReloj: unReloj! !
+
+
+!classDefinition: #LectorDeTren category: #ISWMetropolitano!
+Object subclass: #LectorDeTren
+	instanceVariableNames: 'linea parada direccion reloj'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ISWMetropolitano'!
+
+!LectorDeTren methodsFor: 'initialization' stamp: ''!
+initializeEn: unaLinea enParada: unaParada conDireccion: unaDireccion conReloj: unReloj
+	linea := unaLinea.
+	parada := unaParada.
+	direccion := unaDireccion.
+	reloj := unReloj! !
+
+!LectorDeTren methodsFor: 'cobro' stamp: ''!
+cobrarViajeCon: unaTarjeta
+	| importe |
+	importe := linea importeDesde: parada conDireccion: direccion.
+	^ unaTarjeta iniciarViajeEnTrenDesde: parada
+		conTarifa: importe enFechaYHora: reloj ahora! !
+
+!LectorDeTren methodsFor: 'cobro' stamp: ''!
+finalizarViajeCon: unaTarjeta
+	| tarifaReal |
+	tarifaReal := linea importeDesde: unaTarjeta origenEnTren hasta: parada.
+	^ unaTarjeta finalizarViajeEnTrenConTarifa: tarifaReal! !
+
+!classDefinition: 'LectorDeTren class' category: #ISWMetropolitano!
+LectorDeTren class
+	instanceVariableNames: ''!
+
+!LectorDeTren class methodsFor: 'instance creation' stamp: ''!
+en: unaLinea enParada: unaParada conReloj: unReloj
+	^ self en: unaLinea enParada: unaParada conDireccion: nil conReloj: unReloj! !
+
+!LectorDeTren class methodsFor: 'instance creation' stamp: ''!
+en: unaLinea enParada: unaParada conDireccion: unaDireccion conReloj: unReloj
+	^ self new initializeEn: unaLinea enParada: unaParada
+		conDireccion: unaDireccion conReloj: unReloj! !
+
+
 !classDefinition: #TarjetaBAJETest category: #ISWMetropolitano!
 TestCase subclass: #TarjetaBAJETest
 	instanceVariableNames: 'fechaYHoraActual'
@@ -440,7 +521,7 @@ test01ElSubteCobraLaTarifaCompletaAUnaTarjetaSinDescuento
 
 	lineaD := self subteConParadas: {congreso. palermo} tarifa: 1000*peso.
 
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 
 	self assert: tarjeta saldo equals: 1000*peso! !
 
@@ -459,7 +540,7 @@ test02ElSubteRechazaElCobroConSaldoInsuficiente
 
 	lineaD := self subteConParadas: {congreso. palermo} tarifa: 1000*peso.
 
-	self should: [lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.]
+	self should: [(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.]
 		raise: Error - MessageNotUnderstood
 		withExceptionDo: [:anError |
 				self assert: anError messageText equals: TarjetaBAJE saldoInsuficienteErrorDescription.
@@ -477,7 +558,7 @@ test03ElSubteRechazaUnViajeConOrigenYDireccionIguales
 
 	lineaD := self subteConParadas: {congreso. palermo } tarifa: 1000*peso.
 
-	self should: [lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: congreso .]
+	self should: [(LectorDeSubte en: lineaD enParada: congreso conDireccion: congreso conReloj: self) cobrarViajeCon: tarjeta .]
 		raise: Error - MessageNotUnderstood
 		withExceptionDo: [:anError |
 				self assert: anError messageText equals: Subte paradasDebenSerDistintasErrorDescription.
@@ -496,7 +577,7 @@ test04ElSubteRechazaUnaDireccionFueraDelRecorrido
 
 	lineaD := self subteConParadas: {congreso. palermo } tarifa: 1000*peso.
 
-	self should: [lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: retiro .]
+	self should: [(LectorDeSubte en: lineaD enParada: congreso conDireccion: retiro conReloj: self) cobrarViajeCon: tarjeta .]
 		raise: Error - MessageNotUnderstood
 		withExceptionDo: [:anError |
 				self assert: anError messageText equals: Subte paradaFueraDelRecorridoErrorDescription.
@@ -521,7 +602,7 @@ test05ElSubteRechazaUnaDireccionQueEsUnaParadaIntermedia
 
 	lineaD := self subteConParadas: {congreso. tribunales . callao . palermo } tarifa: 1000*peso.
 
-	self should: [lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: callao  .]
+	self should: [(LectorDeSubte en: lineaD enParada: congreso conDireccion: callao conReloj: self) cobrarViajeCon: tarjeta  .]
 		raise: Error - MessageNotUnderstood
 		withExceptionDo: [:anError |
 				self assert: anError messageText equals: Subte direccionDebeSerUnaCabeceraErrorDescription.
@@ -546,7 +627,7 @@ test06ElSubtePermiteViajarHaciaLaPrimeraParadaConTarjetaSinDescuento
 
 	lineaD := self subteConParadas: {congreso. tribunales . callao . palermo } tarifa: 1000*peso.
 
-	lineaD cobrarViajeCon: tarjeta desde: tribunales conDireccion: congreso.
+	(LectorDeSubte en: lineaD enParada: tribunales conDireccion: congreso conReloj: self) cobrarViajeCon: tarjeta.
 	self assert: tarjeta saldo equals: 1000*peso.
 	! !
 
@@ -583,7 +664,7 @@ test08ElSubteRechazaUnOrigenFueraDelRecorrido
 
 	lineaD := self subteConParadas: {congreso. palermo } tarifa: 1000*peso.
 
-	self should: [lineaD cobrarViajeCon: tarjeta desde: retiro conDireccion: palermo .]
+	self should: [(LectorDeSubte en: lineaD enParada: retiro conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta .]
 		raise: Error - MessageNotUnderstood
 		withExceptionDo: [:anError |
 				self assert: anError messageText equals: Subte paradaFueraDelRecorridoErrorDescription.
@@ -601,7 +682,7 @@ test09ElSubteCobraLaTarifaConfiguradaAUnaTarjetaSinDescuento
 
 	lineaD := self subteConParadas: {congreso. palermo} tarifa: 500*peso.
 
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 
 	self assert: tarjeta saldo equals: 1500*peso! !
 
@@ -615,7 +696,7 @@ test10LaTarjetaEstudiantilPagaLaMitadDeLaTarifaUnDiaDeSemana
 
 	lineaD := self subteConParadas: {congreso. palermo} tarifa: 1000*peso.
 
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 
 	self assert: tarjeta saldo equals: 1500*peso! !
 
@@ -630,7 +711,7 @@ test11LaTarjetaEstudiantilPagaLaTarifaCompletaUnSabado
 
 	lineaD := self subteConParadas: {congreso. palermo} tarifa: 1000*peso.
 
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 
 	self assert: tarjeta saldo equals: 1000*peso! !
 
@@ -645,7 +726,7 @@ test12LaTarjetaEstudiantilPagaLaTarifaCompletaUnDomingo
 
 	lineaD := self subteConParadas: {congreso. palermo} tarifa: 1000*peso.
 
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 
 	self assert: tarjeta saldo equals: 1000*peso! !
 
@@ -660,7 +741,7 @@ test13LaTarjetaEstudiantilPuedePagarConSaldoJustoParaLaTarifaConDescuento
 
 	lineaD := self subteConParadas: {congreso. palermo} tarifa: 1000*peso.
 
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 
 	self assert: tarjeta saldo equals: 0*peso! !
 
@@ -675,7 +756,7 @@ test14LaTarjetaDeJubiladoTieneElPrimerViajeDelDiaGratis
 
 	lineaD := self subteConParadas: {congreso. palermo} tarifa: 1000*peso.
 
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 
 	self assert: tarjeta saldo equals: 2000*peso! !
 
@@ -690,11 +771,11 @@ test15LaTarjetaDeJubiladoPagaLaTarifaCompletaEnElTercerViajeDelDiaSinTrasbordo
 
 	lineaD := self subteConParadas: {congreso. palermo} tarifa: 1000*peso.
 
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 	"Avanzo 3 horas para que no haya trasbordo"
 	fechaYHoraActual := fechaYHoraActual next: 3*hour.
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 
 	self assert: tarjeta saldo equals: 1000*peso! !
 
@@ -709,11 +790,11 @@ test16LaTarjetaDeJubiladoVuelveATenerViajesGratisAlCambiarDeDia
 
 	lineaD := self subteConParadas: {congreso. palermo} tarifa: 1000*peso.
 
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 
 	fechaYHoraActual := fechaYHoraActual next: 1*day.
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 
 	self assert: tarjeta saldo equals: 2000*peso! !
 
@@ -728,9 +809,9 @@ test17LaTarjetaSinDescuentoPagaLaMitadPorTrasbordoDentroDeLasDosHoras
 
 	lineaD := self subteConParadas: {congreso. palermo} tarifa: 1000*peso.
 
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 	fechaYHoraActual := fechaYHoraActual next: 30*minute .
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 
 	self assert: tarjeta saldo equals: 500*peso! !
 
@@ -745,9 +826,9 @@ test18LaTarjetaSinDescuentoPagaLaTarifaCompletaTresHorasDespuesDelUltimoViaje
 
 	lineaD := self subteConParadas: {congreso. palermo} tarifa: 1000*peso.
 
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 	fechaYHoraActual := fechaYHoraActual next: 3*hour .
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 
 	self assert: tarjeta saldo equals: 0*peso! !
 
@@ -763,9 +844,9 @@ test19LaTarjetaEstudiantilPagaLaMitadPorTrasbordoUnSabado
 	lineaD := self subteConParadas: {congreso. palermo} tarifa: 1000*peso.
 
 	fechaYHoraActual := fechaYHoraActual next: 1*day .
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 	fechaYHoraActual := fechaYHoraActual next: 30*minute .
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 
 	self assert: tarjeta saldo equals: 500*peso! !
 
@@ -778,9 +859,9 @@ test20LaTarjetaDeJubiladoTieneLosDosPrimerosViajesGratisAunqueHagaTrasbordo
 	palermo := self palermo.
 	lineaD := self subteConParadas: { congreso. palermo } tarifa: 1000 * peso.
 
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 	fechaYHoraActual := fechaYHoraActual next: 30 * minute.
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 
 	self assert: tarjeta saldo equals: 2000 * peso! !
 
@@ -793,11 +874,11 @@ test21LaTarjetaDeJubiladoPagaLaMitadPorTrasbordoEnElTercerViajeDelDia
 	palermo := self palermo.
 	lineaD := self subteConParadas: { congreso. palermo } tarifa: 1000 * peso.
 
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 	fechaYHoraActual := fechaYHoraActual next: 30 * minute.
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 	fechaYHoraActual := fechaYHoraActual next: 30 * minute.
-	lineaD cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: lineaD enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 
 	self assert: tarjeta saldo equals: 1500 * peso! !
 
@@ -810,11 +891,11 @@ test22LaTarjetaSinDescuentoCalculaCadaTrasbordoDesdeElUltimoViaje
 	palermo := self palermo.
 	subte := self subteConParadas: { congreso. palermo } tarifa: 1000 * peso.
 
-	subte cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: subte enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 	fechaYHoraActual := fechaYHoraActual next: 90 * minute.
-	subte cobrarViajeCon: tarjeta desde: palermo conDireccion: congreso.
+	(LectorDeSubte en: subte enParada: palermo conDireccion: congreso conReloj: self) cobrarViajeCon: tarjeta.
 	fechaYHoraActual := fechaYHoraActual next: 90 * minute.
-	subte cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: subte enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 
 	self assert: tarjeta saldo equals: 1000 * peso.
 	self assert: tarjeta viajes size equals: 3.! !
@@ -835,7 +916,7 @@ test23ElColectivoCobra600PesosPorUnViajeDeCincoKilometrosSinDescuento
 	
 	linea60 := self colectivoConParadas: {constitucion . plazaDeMayo }.
 	
-	linea60 cobrarViajeCon: tarjeta desde: constitucion hasta: plazaDeMayo .
+	(LectorDeColectivo en: linea60 conReloj: self) cobrarViajeCon: tarjeta desde: constitucion hasta: plazaDeMayo .
 	self assert: tarjeta saldo equals: 1400 * peso
 ! !
 
@@ -849,7 +930,7 @@ test24ElColectivoCobra1000PesosPorUnViajeDeOchoKilometrosSinDescuento
 
 	linea60 := self colectivoConParadas: { constitucion. retiro }.
 
-	linea60 cobrarViajeCon: tarjeta desde: constitucion hasta: retiro.
+	(LectorDeColectivo en: linea60 conReloj: self) cobrarViajeCon: tarjeta desde: constitucion hasta: retiro.
 
 	self assert: tarjeta saldo equals: 1000 * peso! !
 
@@ -863,7 +944,7 @@ test25ElColectivoCobra1300PesosPorUnViajeDeDoceKilometrosSinDescuento
 
 	linea60 := self colectivoConParadas: { constitucion. belgrano }.
 
-	linea60 cobrarViajeCon: tarjeta desde: constitucion hasta: belgrano.
+	(LectorDeColectivo en: linea60 conReloj: self) cobrarViajeCon: tarjeta desde: constitucion hasta: belgrano.
 
 	self assert: tarjeta saldo equals: 700 * peso! !
 
@@ -879,7 +960,7 @@ test26ElColectivoRechazaUnOrigenFueraDelRecorrido
 	linea60 := self colectivoConParadas: { constitucion. belgrano }.
 
 	self 
-	should: [	linea60 cobrarViajeCon: tarjeta desde: retiro hasta: belgrano.]  
+	should: [	(LectorDeColectivo en: linea60 conReloj: self) cobrarViajeCon: tarjeta desde: retiro hasta: belgrano.]
 	raise:  Error - MessageNotUnderstood 
 	withExceptionDo: [:anError | 
 			self assert: anError messageText equals: Colectivo paradaFueraDelRecorridoErrorDescription.
@@ -901,7 +982,7 @@ test27ElColectivoRechazaUnDestinoFueraDelRecorrido
 	linea60 := self colectivoConParadas: { constitucion. belgrano }.
 
 	self 
-	should: [	linea60 cobrarViajeCon: tarjeta desde: constitucion hasta: retiro .]  
+	should: [	(LectorDeColectivo en: linea60 conReloj: self) cobrarViajeCon: tarjeta desde: constitucion hasta: retiro .]
 	raise:  Error - MessageNotUnderstood 
 	withExceptionDo: [:anError | 
 			self assert: anError messageText equals: Colectivo paradaFueraDelRecorridoErrorDescription.
@@ -923,7 +1004,7 @@ test28ElColectivoRechazaUnViajeConOrigenYDestinoIguales
 	linea60 := self colectivoConParadas: { constitucion. belgrano }.
 
 	self 
-	should: [	linea60 cobrarViajeCon: tarjeta desde: constitucion hasta: constitucion .]  
+	should: [	(LectorDeColectivo en: linea60 conReloj: self) cobrarViajeCon: tarjeta desde: constitucion hasta: constitucion .]
 	raise:  Error - MessageNotUnderstood 
 	withExceptionDo: [:anError | 
 			self assert: anError messageText equals: Colectivo paradasDebenSerDistintasErrorDescription.
@@ -961,7 +1042,7 @@ test30ElColectivoCobra1000PesosPorExactamenteDiezKilometrosSinDescuento
 	destino := Parada llamada: 'Destino' aDistanciaDeCabecera: 10 * kilometer.
 	colectivo := self colectivoConParadas: { constitucion. destino }.
 
-	colectivo cobrarViajeCon: tarjeta desde: constitucion hasta: destino.
+	(LectorDeColectivo en: colectivo conReloj: self) cobrarViajeCon: tarjeta desde: constitucion hasta: destino.
 
 	self assert: tarjeta saldo equals: 1000 * peso.
 	self assert: tarjeta viajes size equals: 1.! !
@@ -975,7 +1056,7 @@ test31ElColectivoCobraLaMismaTarifaAlViajarEnSentidoInverso
 	belgrano := self belgranoDelColectivo.
 	colectivo := self colectivoConParadas: { constitucion. belgrano }.
 
-	colectivo cobrarViajeCon: tarjeta desde: belgrano hasta: constitucion.
+	(LectorDeColectivo en: colectivo conReloj: self) cobrarViajeCon: tarjeta desde: belgrano hasta: constitucion.
 
 	self assert: tarjeta saldo equals: 700 * peso.
 	self assert: tarjeta viajes size equals: 1.! !
@@ -991,7 +1072,7 @@ test32ElTrenCobraHastaLaCabeceraIndicadaAlEntrarSinDescuento
 		
 	tren := self trenConParadas: { retiro. sanIsidro. tigre }. 
 		
-	tren cobrarViajeCon: tarjeta desde: sanIsidro  conDireccion: retiro.
+	(LectorDeTren en: tren enParada: sanIsidro conDireccion: retiro conReloj: self) cobrarViajeCon: tarjeta.
 	
 	self assert: tarjeta saldo equals: 1400*peso.
 	self assert: tarjeta viajes size equals: 1 .
@@ -1009,9 +1090,9 @@ test33ElTrenReintegraLaDiferenciaAlSalirSinRegistrarOtroViaje
 		
 	tren := self trenConParadas: { retiro. belgrano. sanIsidro. tigre }. 
 		
-	tren cobrarViajeCon: tarjeta desde: sanIsidro  conDireccion: retiro.
+	(LectorDeTren en: tren enParada: sanIsidro conDireccion: retiro conReloj: self) cobrarViajeCon: tarjeta.
 	fechaYHoraActual := fechaYHoraActual next: 30*minute.
-	tren finalizarViajeCon: tarjeta enEstacion: belgrano .
+	(LectorDeTren en: tren enParada: belgrano conReloj: self) finalizarViajeCon: tarjeta .
 	
 	
 	self assert: tarjeta saldo equals: 1600*peso.
@@ -1031,7 +1112,7 @@ test34ElTrenRechazaUnaDireccionQueEsUnaParadaIntermedia
 	tren := self trenConParadas: { retiro. belgrano. sanIsidro. tigre }. 
 		
 	self 
-	should: [	tren cobrarViajeCon: tarjeta desde: belgrano  conDireccion: sanIsidro ]  
+	should: [	(LectorDeTren en: tren enParada: belgrano conDireccion: sanIsidro conReloj: self) cobrarViajeCon: tarjeta ]
 	raise:  Error - MessageNotUnderstood 
 	withExceptionDo: [:anError |
 			self assert: anError messageText equals: Tren direccionDebeSerUnaCabeceraErrorDescription .
@@ -1055,7 +1136,7 @@ test35ElTrenRechazaUnViajeConOrigenYDireccionIguales
 	tren := self trenConParadas: { retiro. belgrano. sanIsidro. tigre}. 
 		
 	self 
-	should: [	tren cobrarViajeCon: tarjeta desde: retiro conDireccion: retiro ]  
+	should: [	(LectorDeTren en: tren enParada: retiro conDireccion: retiro conReloj: self) cobrarViajeCon: tarjeta ]
 	raise:  Error - MessageNotUnderstood 
 	withExceptionDo: [:anError |
 			self assert: anError messageText equals: Tren paradasDebenSerDistintasErrorDescription .
@@ -1079,7 +1160,7 @@ test36ElTrenRechazaUnaDireccionFueraDelRecorrido
 	tren := self trenConParadas: { retiro. belgrano. sanIsidro.}. 
 		
 	self 
-	should: [	tren cobrarViajeCon: tarjeta desde: retiro conDireccion: tigre ]  
+	should: [	(LectorDeTren en: tren enParada: retiro conDireccion: tigre conReloj: self) cobrarViajeCon: tarjeta ]
 	raise:  Error - MessageNotUnderstood 
 	withExceptionDo: [:anError |
 			self assert: anError messageText equals: Tren paradaFueraDelRecorridoErrorDescription .
@@ -1102,9 +1183,9 @@ test37ElTrenReintegraLaDiferenciaAlSalirSinRegistrarOtroViaje
 		
 	tren := self trenConParadas: { retiro. belgrano. sanIsidro. tigre }. 
 		
-	tren cobrarViajeCon: tarjeta desde: sanIsidro  conDireccion: retiro.
+	(LectorDeTren en: tren enParada: sanIsidro conDireccion: retiro conReloj: self) cobrarViajeCon: tarjeta.
 	fechaYHoraActual := fechaYHoraActual next: 30*minute.
-	tren finalizarViajeCon: tarjeta enEstacion: belgrano .
+	(LectorDeTren en: tren enParada: belgrano conReloj: self) finalizarViajeCon: tarjeta .
 	
 	
 	self assert: tarjeta saldo equals: 1800*peso.
@@ -1122,9 +1203,9 @@ test38ElTrenNoReintegraDineroAlFinalizarUnViajeGratisDeJubilado
 	tigre := self tigre.
 	tren := self trenConParadas: { retiro. belgrano. sanIsidro. tigre }.
 
-	tren cobrarViajeCon: tarjeta desde: sanIsidro conDireccion: retiro.
+	(LectorDeTren en: tren enParada: sanIsidro conDireccion: retiro conReloj: self) cobrarViajeCon: tarjeta.
 	fechaYHoraActual := fechaYHoraActual next: 30 * minute.
-	tren finalizarViajeCon: tarjeta enEstacion: belgrano.
+	(LectorDeTren en: tren enParada: belgrano conReloj: self) finalizarViajeCon: tarjeta.
 
 	self assert: tarjeta saldo equals: 2000 * peso.
 	self assert: tarjeta viajes size equals: 1.! !
@@ -1143,12 +1224,12 @@ test39ElTrenReintegraLaDiferenciaRespetandoElDescuentoPorTrasbordo
 	palermo := self palermo.
 	subte := self subteConParadas: { congreso. palermo } tarifa: 1000 * peso.
 
-	subte cobrarViajeCon: tarjeta desde: congreso conDireccion: palermo.
+	(LectorDeSubte en: subte enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta.
 	fechaYHoraActual := fechaYHoraActual next: 30 * minute.
-	tren cobrarViajeCon: tarjeta desde: sanIsidro conDireccion: retiro.
+	(LectorDeTren en: tren enParada: sanIsidro conDireccion: retiro conReloj: self) cobrarViajeCon: tarjeta.
 	self assert: tarjeta saldo equals: 700 * peso.
 	fechaYHoraActual := fechaYHoraActual next: 30 * minute.
-	tren finalizarViajeCon: tarjeta enEstacion: belgrano.
+	(LectorDeTren en: tren enParada: belgrano conReloj: self) finalizarViajeCon: tarjeta.
 
 	self assert: tarjeta saldo equals: 800 * peso.
 	self assert: tarjeta viajes size equals: 2.! !
@@ -1164,9 +1245,9 @@ test40ElTrenNoReintegraDineroSiLaSalidaMantieneElTramoTarifario
 	tigre := self tigre.
 	tren := self trenConParadas: { retiro. belgrano. sanIsidro. tigre }.
 
-	tren cobrarViajeCon: tarjeta desde: tigre conDireccion: retiro.
+	(LectorDeTren en: tren enParada: tigre conDireccion: retiro conReloj: self) cobrarViajeCon: tarjeta.
 	fechaYHoraActual := fechaYHoraActual next: 30 * minute.
-	tren finalizarViajeCon: tarjeta enEstacion: belgrano.
+	(LectorDeTren en: tren enParada: belgrano conReloj: self) finalizarViajeCon: tarjeta.
 
 	self assert: tarjeta saldo equals: 1400 * peso.
 	self assert: tarjeta viajes size equals: 1.! !
@@ -1183,11 +1264,11 @@ test41ElTrenMantieneIndependientesLosViajesDeDosTarjetas
 	tren := self trenConParadas: { retiro. belgrano. sanIsidro. tigre }.
 	otraTarjeta := TarjetaBAJE sinDescuentoConSaldo: 2000 * peso.
 
-	tren cobrarViajeCon: tarjeta desde: sanIsidro conDireccion: retiro.
-	tren cobrarViajeCon: otraTarjeta desde: tigre conDireccion: retiro.
+	(LectorDeTren en: tren enParada: sanIsidro conDireccion: retiro conReloj: self) cobrarViajeCon: tarjeta.
+	(LectorDeTren en: tren enParada: tigre conDireccion: retiro conReloj: self) cobrarViajeCon: otraTarjeta.
 	fechaYHoraActual := fechaYHoraActual next: 30 * minute.
-	tren finalizarViajeCon: tarjeta enEstacion: belgrano.
-	tren finalizarViajeCon: otraTarjeta enEstacion: belgrano.
+	(LectorDeTren en: tren enParada: belgrano conReloj: self) finalizarViajeCon: tarjeta.
+	(LectorDeTren en: tren enParada: belgrano conReloj: self) finalizarViajeCon: otraTarjeta.
 
 	self assert: tarjeta saldo equals: 1600 * peso.
 	self assert: otraTarjeta saldo equals: 1400 * peso.
@@ -1203,7 +1284,7 @@ test42ElTrenCobra400PesosPorExactamenteQuinceKilometrosSinDescuento
 	destino := Parada llamada: 'Destino' aDistanciaDeCabecera: 15 * kilometer.
 	tren := self trenConParadas: { retiro. destino }.
 
-	tren cobrarViajeCon: tarjeta desde: retiro conDireccion: destino.
+	(LectorDeTren en: tren enParada: retiro conDireccion: destino conReloj: self) cobrarViajeCon: tarjeta.
 
 	self assert: tarjeta saldo equals: 1600 * peso.
 	self assert: tarjeta viajes size equals: 1.! !
@@ -1219,7 +1300,7 @@ test43ElTrenCobraSegunLaDistanciaAlViajarHaciaLaUltimaParada
 	tigre := self tigre.
 	tren := self trenConParadas: { retiro. belgrano. sanIsidro. tigre }.
 
-	tren cobrarViajeCon: tarjeta desde: sanIsidro conDireccion: tigre.
+	(LectorDeTren en: tren enParada: sanIsidro conDireccion: tigre conReloj: self) cobrarViajeCon: tarjeta.
 
 	self assert: tarjeta saldo equals: 1600 * peso.
 	self assert: tarjeta viajes size equals: 1.! !
@@ -1236,7 +1317,7 @@ test44ElTrenRechazaUnOrigenFueraDelRecorrido
 	tren := self trenConParadas: { retiro. sanIsidro. tigre }.
 
 	self
-		should: [ tren cobrarViajeCon: tarjeta desde: belgrano conDireccion: retiro ]
+		should: [ (LectorDeTren en: tren enParada: belgrano conDireccion: retiro conReloj: self) cobrarViajeCon: tarjeta ]
 		raise: Error - MessageNotUnderstood
 		withExceptionDo: [ :error |
 			self assert: error messageText equals: Tren paradaFueraDelRecorridoErrorDescription.
@@ -1290,9 +1371,9 @@ test46LaTarjetaSinDescuentoPagaLaMitadDelSubteAlHacerTrasbordoDesdeUnColectivo
 	
 	subte := self subteConParadas: {congreso . tribunales . callao . palermo } tarifa: 1000*peso.
 	
-	colectivo cobrarViajeCon: tarjeta desde: constitucion hasta: plazaDeMayo .
+	(LectorDeColectivo en: colectivo conReloj: self) cobrarViajeCon: tarjeta desde: constitucion hasta: plazaDeMayo .
 	fechaYHoraActual := fechaYHoraActual next: 30*minute.
-	subte cobrarViajeCon: tarjeta desde: congreso  conDireccion: palermo .
+	(LectorDeSubte en: subte enParada: congreso conDireccion: palermo conReloj: self) cobrarViajeCon: tarjeta .
 	
 	self assert: tarjeta saldo equals: 900*peso.
 	self assert: tarjeta viajes size equals: 2.! !
@@ -1372,22 +1453,19 @@ ahora
 colectivoConParadas: unasParadas
 	^ Colectivo
 		conParadas: unasParadas
-		yCuadroTarifario: self cuadroTarifarioDeColectivo
-		conReloj: self! !
+		yCuadroTarifario: self cuadroTarifarioDeColectivo! !
 
 !TarjetaBAJETest methodsFor: 'creacion de medios de transporte' stamp: ''!
 subteConParadas: unasParadas tarifa: unaTarifa
 	^ Subte
 		conParadas: unasParadas
-		yCuadroTarifario: unaTarifa
-		conReloj: self! !
+		yCuadroTarifario: unaTarifa! !
 
 !TarjetaBAJETest methodsFor: 'creacion de medios de transporte' stamp: ''!
 trenConParadas: unasParadas
 	^ Tren
 		conParadas: unasParadas
-		yCuadroTarifario: self cuadroTarifarioDeTren
-		conReloj: self! !
+		yCuadroTarifario: self cuadroTarifarioDeTren! !
 
 
 !TarjetaBAJETest methodsFor: 'cuadros tarifarios' stamp: 'HAW 13/Nov/2026, 6:13:33 pm (UTC)'!
