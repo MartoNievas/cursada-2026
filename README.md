@@ -85,6 +85,7 @@ Repositorio con guías resueltas, resúmenes, parciales y talleres de mi cursada
 | [2025-2C](isw/segundos-parciales/2025-2C) | TarjetaBAJE. |
 |[2025-1C](isw/segundos-parciales/2025-1C/)| Pintor.|
 | [2021-1C](isw/segundos-parciales/2021-1C) | Truco. |
+| [2021-2C](isw/segundos-parciales/2021-2C) | SmartBuilding. |
 
 ## Sistemas Operativos
 
